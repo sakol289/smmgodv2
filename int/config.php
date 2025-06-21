@@ -8,7 +8,7 @@
        define('ADMIN_URL', 'admin');//dont change if dont know about that
 
   
-    ini_set('display_errors', 1);
+    ini_set('display_errors', 0);
     date_default_timezone_set('Asia/Bangkok');
     
     return [
