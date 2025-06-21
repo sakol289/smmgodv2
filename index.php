@@ -1,5 +1,6 @@
 <?php
 
+echo "testtttttttt";
 
 require_once __DIR__.'/core/lib/autoload.php';
 require_once __DIR__.'/int/int.php';
