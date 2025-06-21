@@ -1,0 +1,297 @@
+{% include 'header.twig' %}
+
+
+<!-- Main variables *content* -->
+			<main>
+         <div class="container-fluid mt-3">
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="card p-4">
+                     <div class="row align-items-center">
+                        <div class="col-md-auto col-12">
+							  <div class="dropdown">
+								<button class="btn btn-primary btn-100 dropdown-toggle dd-btn ps-5" type="button" data-toggle="dropdown" aria-expanded="false">
+								  <div class="d-flex fw-400">
+									<i class="ri-filter-2-line me-2"></i>
+									<span>Filter Status</span>
+									<i class="ri-arrow-down-s-line ms-auto ms-md-3"></i>
+								  </div>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="filterServicesDd">
+									<li><a class="dropdown-item" href="/orders">All</a></li>
+									<li><a class="dropdown-item" href="/orders/pending">Pending</a></li>
+									<li><a class="dropdown-item" href="/orders/inprogress">In progress</a></li>
+									<li><a class="dropdown-item" href="/orders/completed">Completed</a></li>
+									<li><a class="dropdown-item" href="/orders/partial">Partial</a></li>
+									<li><a class="dropdown-item" href="/orders/processing">Processing</a></li>
+									<li><a class="dropdown-item" href="/orders/canceled">Canceled</a></li>
+								</ul>
+							  </div>
+                        </div>
+
+                        <div class="col-lg">
+						<form action="/orders" method="get" id="history-search">
+                           <div class="search-services">
+                              <div class="icon">
+                                 <i class="ri-search-line"></i>
+                              </div>
+                              <input type="text" name="search" class="textbox" value="" placeholder="Search">
+                           </div>
+						</form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  	{% if orders is empty and 'all' == status %}
+			 <div class="row">
+               <div class="col-lg-12">
+                  <div class="page overflow-hidden">
+                     <div class="page-body pb-4 pb-xl-6 mt-4">
+			
+							<div class="category-card">
+                              
+						<div class="card mt-3 p-3">
+				<div class="card-body">
+					<div class="noorders text-center">
+							<p>Hello <strong>{{ user['username'] }}</strong>, you've never placed an order before.</p>
+							<p>You can add a balance and order any service on the <a href="/">New Order</a> page.</p>
+						<div class="d-flex justify-content-center mt-5">
+							 <a href="/addfunds"><button class="btn btn-primary mb-4 mx-1">Add funds</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <div class="row">
+               <div class="col-lg-12">
+                  <div class="page overflow-hidden">
+                     <div class="page-body pb-4 pb-xl-6 mt-4">
+			
+							<div class="category-card">
+                              
+			
+          
+    
+								  
+              </div>
+              
+	{% for order in orders %}
+      	<div class="order-container">
+	      <div class="card mb-3">
+        <div class="card-body">
+          <div class="op-card--top">
+            <div class="row align-items-center">
+              <div class="col-lg-auto col-md-auto mb-3 mb-lg-0">
+{% if order['status'] == lang['orders.status.completed'] %}
+               <div class="op-stats completed">
+                   {{ order['id'] }}
+                </div>
+{% endif %}
+{% if order['status'] == lang['orders.status.processing'] %}
+                <div class="op-stats processing">
+                   {{ order['id'] }}
+                </div>
+{% endif %}
+{% if order['status'] == lang['orders.status.pending'] %}
+                <div class="op-stats pending">
+                   {{ order['id'] }}
+                </div>
+{% endif %}
+{% if order['status'] == lang['orders.status.partial'] %}
+               <div class="op-stats op-stats-sm partial">
+                   {{ order['id'] }}
+                </div>
+{% endif %}
+{% if order['status'] == lang['orders.status.inprogress'] %}
+               <div class="op-stats inprogress">
+                   {{ order['id'] }}
+                </div>
+{% endif %}
+{% if order['status'] == lang['orders.status.canceled'] %}
+               <div class="op-stats cancelled">
+                   {{ order['id'] }}
+                </div>
+{% endif %}  
+              </div><!-- ./col (ID)  -->
+              <div class="col-lg-3 col-md mb-3 mb-lg-0">
+                <h3 class="op-service-title">
+                    
+              <!--      <span style="background:var(--color-6);color:#fff!important; border-radius: 5px; padding: 1px 3px">{{ order["service_id"] }}</span>&nbsp;-->
+                    
+                  {{ order['service'] }}
+                </h3>
+              </div><!-- ./col (service title) -->
+              <div class="col-12 d-none d-md-block d-lg-none"></div>
+              <div class="col-lg-3 col-md-6  mb-3 mb-lg-0">
+                <a href="{{ order['link'] }}" target="_blank" class="orders-nav-link op-search-box op-order-link mb-0">
+                  <div class="icon">
+                    <i class="ri-share-box-fill"></i>
+                  </div>
+                  <div class="link">{{ order['link'] }}</div>
+                </a>
+              </div><!-- ./col (service title) -->
+              <div class="col-lg col-md-6 mb-3 mb-lg-0">
+                <div class="op-date">{{ order['date'] }}</div>
+              </div>
+              <div class="col-lg-auto">
+                      {% if order['status'] == lang['orders.status.completed'] %}
+                         <div class="op-stats completed">{{ order['status'] }}</div>
+                      {% endif %}
+                      {% if order['status'] == lang['orders.status.processing'] %}
+                          <div class="op-stats processing">{{ order['status'] }}</div>
+                      {% endif %}
+                      {% if order['status'] == lang['orders.status.pending'] %}
+                          <div class="op-stats pending">{{ order['status'] }}</div>
+                      {% endif %}
+                      {% if order['status'] == lang['orders.status.partial'] %}
+                        <div class="op-stats op-stats-sm partial">{{ order['status'] }}</div>
+                      {% endif %}
+                      {% if order['status'] == lang['orders.status.inprogress'] %}
+                          <div class="op-stats inprogress">{{ order['status'] }}</div>
+                      {% endif %}
+                      {% if order['status'] == lang['orders.status.canceled'] %}
+                          <div class="op-stats cancelled">{{ order['status'] }}</div>
+                      {% endif %}  
+              </div>
+            </div>
+          </div><!-- ./op-card--top -->
+          <div class="op-card--bottom">
+            <div class="row align-items-center row-cols-md-4 row-cols-2">
+              <div class="col-lg-auto mt-3 mt-md-0">
+                <div class="op-item">
+                  <div class="title">{{lang["orders.charge"]}}</div>
+                  <div class="icon">
+                    <i class="ri-sort-asc"></i>
+                  </div>
+                  <div class="text">{{ currency['symbol'] }}{{ (order['charge']*currency['value']) |round(4, 'floor') }}</div>
+                </div>
+              </div><!-- ./col -->
+              <div class="col-lg-auto mt-3 mt-md-0">
+                <div class="op-item">
+                  <div class="title">{{lang["orders.quantity"]}}</div>
+                  <div class="icon">
+                    <i class="ri-money-dollar-circle-line"></i>
+                  </div>
+                  <div class="text">{{ order['quantity'] }}</div>
+                </div>
+              </div><!-- ./col -->
+              <div class="col-lg-auto mt-3 mt-md-0">
+                <div class="op-item">
+                  <div class="title">{{lang["orders.start.count"]}}</div>
+                  <div class="icon">
+                    <i class="ri-sort-asc"></i>
+                  </div>
+                  <div class="text">{{ order['start_count'] }}</div>
+                </div>
+              </div><!-- ./col -->
+              <div class="col-lg-auto mt-3 mt-md-0">
+                <div class="op-item">
+                  <div class="title">{{lang["orders.remains"]}}</div>
+                  <div class="icon">
+                    <i class="ri-sort-asc"></i>
+                  </div>
+                  <div class="text">{{ order['remains'] }}</div>
+                </div>
+              </div><!-- ./col -->
+              <div class="col-lg-auto col-12 col-md-12 ms-lg-auto d-flex align-items-center justify-content-center mt-3 mt-lg-0">
+            
+
+                  <span class="order-actions">
+                      {% if order['refillButton'] %}
+                        <a href="/orders/refill/{{ order['id'] }}" class="op-stats op-stats-btn me-2"><i class="ri-restart-line me-2"></i> <span>{{ lang['orders.button.refill'] }} </span></a>
+                      {% endif %}
+                      {% if order['cancelButton'] %}
+					  <a href="/orders/cancel/{{ order['id'] }}" class="btn btn-xs btn-default">{{ lang['orders.button.cancel'] }}</a>
+					  {% endif %}
+                  </span>
+              </div>
+              
+              
+              
+              <div class="col-lg-auto col-12 col-md-12 ms-lg-auto d-flex align-items-center justify-content-center mt-3 mt-lg-0 ms-auto">
+              
+                  <span class="order-actions">                                                                     </span>
+   
+                              <a href="/tickets" class="op-stats op-stats-btn warning-btn cs-btn" style="cursor: pointer">
+                  <i class="ri-customer-service-2-line"></i>
+                </a>
+              </div>
+              
+              
+            </div><!-- ./row -->
+          </div><!-- ./op-card--bottom -->
+        </div>
+      </div><!-- ./card -->
+                               
+       
+	{% endfor %}
+  </section>
+									
+      {% if pagination["count"] > 1 %}
+        <ul class="pagination">
+
+          {% if pagination["current"] != 1 %}
+            <li>
+              <a href="orders/{{ status }}/{{ pagination["previous"] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true">«</span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% set r, l = 3, 3 %}
+
+          {% if pagination['current'] == 1 %}
+            {% set r = 7 %}
+          {% endif %}
+
+          {% if pagination['current'] == 2 %}
+            {% set r = 5 %}
+          {% endif %}
+
+          {% if pagination['current'] >= pagination['count'] %}
+            {% set l = 5 %}
+          {% endif %}
+
+          {% for page in 1..pagination["count"] %}
+            {% if page >= (pagination['current']-l) and page <= (pagination['current']+r) %}
+              <li{% if page == pagination['current'] %} class="active" {%endif%}><a href="orders/{{ status }}/{{ page }}{% if search %}?search={{ search }}{% endif %}">{{ page }}</a></li>
+            {%endif%}
+          {% endfor %}
+
+          {% if pagination['current'] < pagination['count'] %}
+            <li>
+              <a href="orders/{{ status }}/{{ pagination['next'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">»</span>
+              </a>
+            </li>
+          {% endif %}
+
+        </ul>
+      {% endif %}
+
+									
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+    </div>
+ {% include 'footer.twig' %}

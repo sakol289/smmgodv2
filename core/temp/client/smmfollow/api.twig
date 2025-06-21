@@ -1,0 +1,727 @@
+{% include 'header.twig' %}
+
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="well">
+        <div class="table-responsive">
+          <table class="table ">
+            <tbody>
+              <tr>
+                <td class="width-40">HTTP Method</td>
+                <td>POST</td>
+              </tr>
+              <tr>
+                <td>API URL</td>
+                <td>{{ site["url"] }}/api/v2</td>
+              </tr>
+                            <tr>
+                <td>API Key</td>
+                <td>Get an API key on the <a href="/account">Account</a> page</td>
+              </tr>
+                            <tr>
+                <td>Response format</td>
+                <td>JSON</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+                <div class="well">
+            <h2 class="dash-title">Service list</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>services</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+[
+    {
+        "service": 1,
+        "name": "Followers",
+        "type": "Default",
+        "category": "First Category",
+        "rate": "0.90",
+        "min": "50",
+        "max": "10000",
+        "refill": true,
+        "cancel": true
+    },
+    {
+        "service": 2,
+        "name": "Comments",
+        "type": "Custom Comments",
+        "category": "Second Category",
+        "rate": "8",
+        "min": "10",
+        "max": "1500",
+        "refill": false,
+        "cancel": true
+    }
+]
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">Add order</h2>
+                                          <p>
+                <form class="form-inline">
+                  <div class="form-group">
+                    <select class="form-control input-sm" id="service_type">
+                                                  <option value="0">Default</option>
+                                                  <option value="10">Package</option>
+                                                  <option value="2">Custom Comments</option>
+                                                  <option value="9">Mentions</option>
+                                                  <option value="4">Mentions Custom List</option>
+                                                  <option value="7">Mentions User Followers</option>
+                                                  <option value="14">Custom Comments Package</option>
+                                                  <option value="15">Comment Likes</option>
+                                                  <option value="17">Poll</option>
+                                                  <option value="18">Comment Replies</option>
+                                                  <option value="100">Subscriptions</option>
+                                            </select>
+                  </div>
+                </form>
+                </p>
+                                            <div id="type_0" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>quantity</td>
+                          <td>Needed quantity</td>
+                        </tr>
+                                                <tr>
+                          <td>runs (optional)</td>
+                          <td>Runs to deliver</td>
+                        </tr>
+                                                <tr>
+                          <td>interval (optional)</td>
+                          <td>Interval in minutes</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_10" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_2" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>comments</td>
+                          <td>Comments list separated by \r\n or \n</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_9" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>quantity</td>
+                          <td>Needed quantity</td>
+                        </tr>
+                                                <tr>
+                          <td>usernames</td>
+                          <td>Usernames list separated by \r\n or \n</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_4" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>usernames</td>
+                          <td>Usernames list separated by \r\n or \n</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_7" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>quantity</td>
+                          <td>Needed quantity</td>
+                        </tr>
+                                                <tr>
+                          <td>username</td>
+                          <td>URL to scrape followers from</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_100" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>username</td>
+                          <td>Username</td>
+                        </tr>
+                                                <tr>
+                          <td>min</td>
+                          <td>Quantity min</td>
+                        </tr>
+                                                <tr>
+                          <td>max</td>
+                          <td>Quantity max</td>
+                        </tr>
+                                                <tr>
+                          <td>posts (optional)</td>
+                          <td>Use this parameter if you want to limit the number of new (future) posts that will be parsed and for which orders will be created. If posts parameter is not set, the subscription will be created for an unlimited number of posts.</td>
+                        </tr>
+                                                <tr>
+                          <td>old_posts (optional)</td>
+                          <td>Number of existing posts that will be parsed and for which orders will be created, can be used if this option is available for the service.</td>
+                        </tr>
+                                                <tr>
+                          <td>delay</td>
+                          <td>Delay in minutes. Possible values: 0, 5, 10, 15, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 360, 420, 480, 540, 600</td>
+                        </tr>
+                                                <tr>
+                          <td>expiry (optional)</td>
+                          <td>Expiry date. Format d/m/Y</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_14" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>comments</td>
+                          <td>Comments list separated by \r\n or \n</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_15" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>quantity</td>
+                          <td>Needed quantity</td>
+                        </tr>
+                                                <tr>
+                          <td>username</td>
+                          <td>Username of the comment owner</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_17" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>quantity</td>
+                          <td>Needed quantity</td>
+                        </tr>
+                                                <tr>
+                          <td>answer_number</td>
+                          <td>Answer number of the poll</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                              <div id="type_18" style="display:none;">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="width-40">Parameters</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                                                <tr>
+                          <td>key</td>
+                          <td>Your API key</td>
+                        </tr>
+                                                <tr>
+                          <td>action</td>
+                          <td>add</td>
+                        </tr>
+                                                <tr>
+                          <td>service</td>
+                          <td>Service ID</td>
+                        </tr>
+                                                <tr>
+                          <td>link</td>
+                          <td>Link to page</td>
+                        </tr>
+                                                <tr>
+                          <td>username</td>
+                          <td>Username</td>
+                        </tr>
+                                                <tr>
+                          <td>comments</td>
+                          <td>Comments list separated by \r\n or \n</td>
+                        </tr>
+                                              </tbody>
+                    </table>
+                  </div>
+                </div>
+                          
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "order": 23501
+}
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">Order status</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>status</td>
+            </tr>
+                        <tr>
+              <td>order</td>
+              <td>Order ID</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "charge": "0.27819",
+    "start_count": "3572",
+    "status": "Partial",
+    "remains": "157",
+    "currency": "USD"
+}
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">Multiple orders status</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>status</td>
+            </tr>
+                        <tr>
+              <td>orders</td>
+              <td>Order IDs separated by comma</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "1": {
+        "charge": "0.27819",
+        "start_count": "3572",
+        "status": "Partial",
+        "remains": "157",
+        "currency": "USD"
+    },
+    "10": {
+        "error": "Incorrect order ID"
+    },
+    "100": {
+        "charge": "1.44219",
+        "start_count": "234",
+        "status": "In progress",
+        "remains": "10",
+        "currency": "USD"
+    }
+}
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">Create refill</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>refill</td>
+            </tr>
+                        <tr>
+              <td>order</td>
+              <td>Order ID</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "refill": "1"
+}
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">Get refill status</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>refill_status</td>
+            </tr>
+                        <tr>
+              <td>refill</td>
+              <td>Refill ID</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "status": "Completed"
+}
+</pre>
+      </div>
+                <div class="well">
+            <h2 class="dash-title">User balance</h2>
+                  <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="width-40">Parameters</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                        <tr>
+              <td>key</td>
+              <td>Your API key</td>
+            </tr>
+                        <tr>
+              <td>action</td>
+              <td>balance</td>
+            </tr>
+                      </tbody>
+        </table>
+      </div>
+            
+      <h2 class="dash-title">Example response</h2>
+<pre>
+{
+    "balance": "100.84292",
+    "currency": "USD"
+}
+</pre>
+      </div>
+              <br>
+          <a href="/example.txt" class="btn btn-primary" target="_blank">Example of PHP code</a>
+        
+      
+    </div>
+  </div>
+</div>
+
+{% include 'footer.twig' %}

@@ -1,0 +1,97 @@
+{% include 'header.twig' %}
+
+
+
+<!-- Main variables *content* -->
+
+        <div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="well">
+          
+           {% if errorText %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if successText %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+          
+        <form  action="" method="post">
+                              <div class="form-group">
+            <label for="username" class="control-label">Username</label>
+            <input type="text" class="form-control" id="username" value="{{ data['username'] }}" name="username">
+          </div>
+          
+          {% if settings['name_secret'] == 2 %}
+                      <div class="form-group">
+              <label for="firstname" class="control-label">First name</label>
+              <input type="text" class="form-control" id="first_name" value="{{ data['first_name'] }}" name="first_name">
+            </div>
+            <div class="form-group">
+              <label for="lastname" class="control-label">Last name</label>
+              <input type="text" class="form-control" id="last_name" value="{{ data['last_name'] }}" name="last_name">
+            </div>
+            {% endif %}
+            
+                    <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="email" class="form-control" id="email" value="{{ data['email'] }}" name="email">
+          </div>
+                      
+                      
+                      {% if settings['skype_area'] == 2 %}
+                      
+                      <div class="form-group">
+              <label for="skype" class="control-label">Whatsapp | Calling Number</label>
+              <input type="text" class="form-control" id="skype" value="{{ data['telephone'] }}" name="telephone">
+            </div>{% endif %}
+            
+            
+                    <div class="form-group">
+            <label for="password" class="control-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="form-group">
+            <label for="confirm" class="control-label">Confirm password</label>
+            <input type="password" class="form-control" id="confirm" name="password_again">
+          </div>
+          
+          	
+                   
+					
+          
+                      <div class="g-recaptcha form-group" data-sitekey="{{ captchaKey }}">
+            </div>
+            
+            {% if settings['terms_checkbox'] == 2 %}
+                                <div class="form-group">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="terms-accept-checkbox" name="terms"> I have read and agreed with <a href="/terms" target="_blank">Terms of Service</a>
+                </label>
+              </div>
+            </div>{% endif %}
+          
+        
+          <button type="submit" class="btn btn-primary">Sign up</button>
+          <span class="pull-right pull-right-middle">Already have an account? <a href="/">Sign in</a></span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

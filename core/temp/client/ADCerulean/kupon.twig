@@ -1,0 +1,161 @@
+{% include 'header.twig' %}
+
+
+<style>
+  #dc-body .checkbox label {
+    color: white;
+}
+</style>
+
+
+<div class="app-content mt-1">
+
+    
+    <div class="container-fluid text-white text-center">
+        <div class="p-4 rounded bg-pattern text-white">
+            <div class="h3 mb-3">Coupon</div>
+        </div> </div> <br>
+    
+    
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+
+     
+
+        <div class="g-card">
+            <div class="g-card-body text-white">
+              	 {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}	
+						 <form method="post" action="kupon">
+            <div class="form-group">
+              <label style="padding: 10px;
+    font-size: 25px;
+    font-weight: 700;" for="subject" class="control-label">Coupon Code</label>
+              <input type="text" class="form-control" id="kuponadi" name="kuponadi">
+            </div>
+            <button  type="submit" class="w-100 btn btn-primary">Redeem</button>
+          </form>
+          </div>
+        </div>
+    
+    <!--   <div class="g-card mt-3"> 
+            <div class="g-card-body text-white">
+                 {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+      <form method="post" action="tickets">
+                <div class="form-group">
+                  <label for="subject" class="control-label">{{ lang['tickets.subject'] }}</label>
+                    <select class="form-control" id="subject" name="subject">
+                      {% for subjects in orders %}
+                       <option value"{{ subjects['subject'] }}">{{ subjects['subject'] }}</option>
+                      {% endfor %}
+                    </select>  
+                </div>
+                <div class="form-group">
+                  <label for="message" class="control-label">{{ lang['tickets.message'] }}</label>
+                  <textarea class="form-control" rows="7" id="message" name="message">{{ data['message'] }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">{{ lang['tickets.button'] }}</button>
+              </form>
+        </div>
+        </div> 
+    
+      </div>
+    <div class="col-md-4">
+        <div class="accordion text-white" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+         How to Order?
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        Before you can place an order, you must add a balance. The next frequently asked question is about how the balance is loaded. If you have a balance in your account<strong>New order</strong> You can place an order after choosing your category and service on the page.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+         How to Load Balance?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+          You can load your balance to our panel automatically whenever you want. For this, after clicking on the <strong>Add Balance</strong> page, specify the payment method and the balance amount you want to load on the page that opens and click the button. Then you can pay online.
+      </div>
+    </div>
+  </div>
+ <!-- <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+         Why Are My Followers Declining?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+         The followers or products you have purchased can sometimes be automatically dropped by Instagram or related social media. In this case, there is no action that our panel or you can take. If you have ordered from services with a compensation guarantee, you can click the compensate button.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingFour">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+         How Do I Get Dealership?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+      <div class="card-body">
+         Our panel also offers dealership service for you. By connecting our api information to the SMM Panel or Package Sales software you are using, you can display our services on your own site and make a profit. For detailed information, you can contact us via technical support.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingFive">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Can My Order Be Expedited?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+      <div class="card-body">
+        Your orders are processed automatically and there is no chance of manual intervention. Therefore, when services are busy, delivery speeds may be slow. You can rest assured that we are working hard to deliver your orders as soon as possible.
+      </div>
+    </div> -->
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+</div>
+{% include 'footer.twig' %}

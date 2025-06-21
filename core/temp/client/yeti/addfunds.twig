@@ -1,0 +1,210 @@
+{% include 'header.twig' %}
+
+{% if paymentsList %}
+ <!-- app-header -->
+         <div class="app-content">
+            <!-- page-content -->
+            <div class="container-fluid">
+               <div class="row mt-4">
+                  <div class="col-lg-12">
+               <section class="order-side">
+                  <div class="row">
+                     <div class="col-lg-7 col-12 mb-5 mb-lg-0">
+                        <div class="d-card dc-dblue">
+                           <div class="d-card-body" id="dc-body">
+							  <form method="post" action="addfunds">
+								{% if error %}
+								  <div class="alert alert-dismissible alert-danger">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									{{ errorText }}
+								  </div>
+								{% endif %}
+								{% if success %}
+								  <div class="alert alert-dismissible alert-success">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									{{ successText }}
+								  </div>
+								{% endif %}
+                              <div class="form-group">
+                                 <label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
+								  <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+								   {% for payment in paymentsList %}
+									  <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+									{% endfor %}
+								  </select>
+                              </div>
+                              
+                              
+                              
+                              <!-- Start -->
+                
+    <div id="qr">
+  
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->
+                              
+                              
+                              <div class="form-group">
+							     <label for="amount" class="control-label">{{ lang['addfunds.amount'] }}</label>
+                                 <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+                              </div>
+
+                              <button type="submit" class="btn btn-primary btn-lg btn-block mb-4">  {{ lang['smmspot.addfunds.payment.submit.button'] }}</button>
+                             
+                              </form>
+                           </div>
+                        </div>
+                        <!-- d-card end -->
+                     </div>
+                     <!-- col item end-->
+                     <div class="col-lg-5 col-12 mb-5 mb-lg-0">				 
+                        <div class="d-card dc-dblue">
+                           <ul class="nav nav-pills fastside">
+                              <li class="nav-item col-6 mb-2" style="padding:0">
+                                 <a class="nav-link active" data-toggle="pill" href="#payInfo" role="tab" aria-controls="pills-payInfo" aria-selected="true">Details</a>
+                              </li>
+                              <li class="nav-item col-6 mb-2" style="padding:0">
+                                 <a class="nav-link second" data-toggle="pill" href="#payAll" role="tab" aria-controls="pills-payAll" aria-selected="false">{{ lang['smmspot.addfunds.bank.accounts.title'] }}</a>
+                              </li>
+                           </ul>
+                           <div class="d-card-body" id="dc2-body" style="overflow-y: auto; max-height: 500px">
+                              <div class="tab-content mt-3">
+                                 <div class="tab-pane fade active show" id="payInfo" role="tabpanel" aria-labelledby="payInfo">
+								    <div>...</div>
+								 {% for payment in paymentsList %}
+									  {% if payment['content'] %}
+									  <div method_id= "{{payment['id']}}" style="display:none">
+									       {{ payment['content'] }}
+									  </div>
+									   
+									  {% endif %} 
+									{% endfor %}
+									
+								
+                                 </div>
+                                 <div class="tab-pane fade" id="payAll" role="tabpanel" aria-labelledby="payAll-tab">
+									  <div class="table-responsive">
+										<table class="table table-striped table-bordered table-checkable ">
+										  <thead>
+											<tr>
+											  <th>{{ lang['smmspot.addfunds.bank.accounts.bank.name'] }}</th>
+											  <th>{{ lang['smmspot.addfunds.bank.accounts.branch.code']}}</th>
+											  <th>{{ lang['smmspot.addfunds.bank.accounts.account.number'] }}</th>
+											  <th>{{ lang['smmspot.addfunds.bank.accounts.iban'] }}</th>
+											  <th>{{ lang['smmspot.addfunds.bank.accounts.recipient.name'] }}</th>
+
+											</tr>
+										  </thead>
+										  <tbody>
+										  {% for bank in bankList %}
+											<tr>
+											  <td>{{ bank['bank_name'] }}</td>
+											  <td>{{ bank['bank_sube'] }}</td>
+											  <td>{{ bank['bank_hesap'] }}</td>
+											  <td><b>{{ bank['bank_iban'] }}</b><br></td>
+											  <td>{{ bank["bank_alici"] }}</td>
+											</tr>
+										  {% endfor %}
+											</tbody>
+										  </table>
+										</div>
+
+									 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </section>
+            </div>
+            <!-- page-content end -->
+         </div>
+         <!-- app-content -->
+			</div>
+		</div>
+		{% endif %}
+		
+
+		
+      </div>
+
+
+
+{% if kashier_code %}
+
+ <style>
+        #el-kashier-button{
+            display: none;
+        }
+    </style>
+	
+	<script>
+	
+         var interval = setInterval(function () {
+            var link =$('#el-kashier-button');
+            if(link.length){
+                link.click();
+                clearInterval(interval);
+            }
+        }, 1000);
+  
+ 
+</script>
+
+{{ kashier_code  }}
+
+{{ unset_kashier_code  }}
+{% endif %}
+
+
+{% include 'footer.twig' %}
+
+
+<script>
+      
+   $("#payment_method").on('change', function() {
+       
+       
+       var method_id = $(this).val();
+       $("#payInfo div").hide();
+        $("#payInfo div[method_id='"+method_id+"']").show();
+        
+   });
+</script>
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->

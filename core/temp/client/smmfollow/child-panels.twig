@@ -1,0 +1,91 @@
+{% include 'header.twig' %}
+       
+       
+       
+    <div class="container">
+            <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well ">
+                    <p>You can now buy a child panel for $20 per month! ( Unlimited Order&nbsp; )</p><p>( Fund will be deducted from your balance).<br></p><p>Child panel is your own website to sell SMM services. You will simply connect it to us only and sell directly to your clients!<br></p><p></p>
+                </div>
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well">
+                    <form action="/child-panels" method="post">
+                        
+                        
+                         
+                         {% if errorText %}
+										<div class="alert alert-dismissible alert-danger">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ errorText }}
+										</div>
+									  {% endif %}
+									  {% if successText %}
+										<div class="alert alert-dismissible alert-success">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ successText }}
+										</div>
+									  {% endif %}
+                        
+                                                <div class="first">
+                            <div class="form-group">
+                                <label for="domain" class="control-label">Domain</label>
+                                <input type="text" class="form-control" id="domain" name="domain"
+                                       value="">
+                            </div>
+                            <div class="alert alert-info">
+                                <div><p style="margin-bottom: 5px">Please visit your registrar's dashboard to change nameservers to:</p>                              <ul style="padding-left: 20px">                                  <li>ns1.dnsco.in</li>                                  <li>ns2.dnsco.in</li>                              </ul></div>
+                                <ul style="padding-left: 20px">
+                                                                            <li>ns1.dnsco.in</li>
+                                                                            <li>ns2.dnsco.in</li>
+                                                                    </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-currency">Currency</label>
+                           <select class="form-control" name="panel_currency" aria-required="true">
+                                                {% for curr in site['currencies'] %}
+                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
+                                                {% endfor %}
+                                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-username">Admin username</label>
+                            <input
+                                    type="text" id="createorderform-username" class="form-control"
+                                    name="username" aria-required="true"
+                                    value="">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-password">Admin password</label>
+                            <input
+                                    type="password" id="createorderform-password" class="form-control"
+                                    name="password" aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-password_confirm">Confirm password</label>
+                            <input
+                                    type="password" id="createorderform-password_confirm" class="form-control"
+                                    name="password_confirm" aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="control-label">Price per month</label>
+                            <input type="text" class="form-control" id="price" value="{{ currency["symbol"]  }} {{ (settings["panel_price"]*currency["value"]) |round(2, 'floor') }}" readonly>
+                        </div>
+                      
+                        <button type="submit" class="btn btn-primary">Submit order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% include 'footer.twig' %}

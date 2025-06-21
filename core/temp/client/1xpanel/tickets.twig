@@ -1,0 +1,331 @@
+{% include 'header.twig' %}
+
+
+<!-- Main variables *content* -->
+		      <main>
+         <div class="container-fluid mt-4">
+			<div class="row">
+				<div class="col-lg-7">
+					<div class="card card-bg userCard h-100">
+						<div class="row">
+							<div class="ud-card" style="max-width: 550px">
+								<h5>
+                                                                        Welcome to the <span class="primary-color">support</span> section!
+                                                                    </h5> 
+								<p>
+Please be sure to check the <a href="/">Frequently asked questions</a> section before opening a support ticket. You will find many answers you are looking for in this section.
+                                </p>
+                              
+							</div>
+							<img src="https://cdn.mypanel.link/j71eqe/76k8qpym0rgfuhco.png" class="ud-img">
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-5 d-none d-md-block">
+					<div class="card card-bg rankCard h-100" style="overflow: hidden">
+						<div class="row">
+							<div class="rc-card">
+                              <h5 class="mb-4">
+<strong>Support Hours:</strong> 09.00 - 00.00
+                              </h5>
+                            
+                              <p class="pb-3">
+Support requests can take <strong>0-2 hours</strong> to respond.
+                              </p>
+                              
+                               {% if ticketCount %}  <span class="alert alert-success">You have <strong>{{ ticketCount }}</strong> support requests.</span>{% endif %}
+							</div>
+							<img src="https://cdn.mypanel.link/j71eqe/ooms5f3khptr43j9.png" class="rc-img-2">
+                          
+						</div>
+					</div>
+				</div>
+			</div>
+           
+			 <div class="row">
+				<div class="col-lg-7">
+					 <div class="page overflow-hidden ticketSide">
+						<div class="page-body pb-4 pb-xl-6 mt-4">
+						   <div class="card mb-2">
+							  <div class="card-head d-flex align-items-center justify-content-between">
+									<div class="card-head-title">
+										<div class="row align-items-center">
+											<div class="col-auto">
+											  <div class="card-head-icon">
+												<i class="ri-chat-1-line"></i>
+											  </div>
+											</div>
+											<div class="col">
+											  <h4>
+Create a ticket
+                                              </h4>
+											</div>
+										</div>
+									</div>
+							  </div>
+							  <div class="card-body pt-3 pb-3">
+                                 
+								  
+								        {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+							      
+			<form  method="post" action="" id="ticketsend">
+								       
+									<div class="form-group subject-panel">
+									  
+									  <label for="ordernumbers">Subjects</label>
+									 <select  type="text" class="form-control" id="subject" name="subject">
+                                  {% for subjects in orders %}
+                   <option value"{{ subjects['subject'] }}">{{ subjects['subject'] }}</option>
+                  {% endfor %}
+                              </select>
+                              </div>
+								
+									
+								
+									<div class="form-group mb-3">
+									  <label for="message">Message</label>
+									   <textarea rows="7" id="message" name="message" class="form-control">{{ data['message'] }}</textarea>
+									   </div>
+								
+									<button type="submit" class="btn btn-primary btn-block mt-4 mb-3">Submit ticket</button>
+									</form>
+							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+				
+				
+				
+				
+				<div class="col-lg-5">
+					 <div class="page overflow-hidden">
+						<div class="page-body pb-4 pb-xl-6 mt-4">
+						   <div class="card mb-2">
+							  <div class="card-head d-flex align-items-center justify-content-between">
+									<div class="card-head-title">
+										<div class="row align-items-center">
+											<div class="col-auto">
+											  <div class="card-head-icon">
+												<i class="ri-coupon-3-line"></i>
+											  </div>
+											</div>
+											<div class="col">
+											  <h4>
+Support requests
+                                              </h4>
+											</div>
+										</div>
+									</div>
+							  </div>
+							  <div class="card-body">
+                                   
+                            {% if ticketList %}
+                              <div class="pnd-tlist">
+								{% for ticket in ticketList %}
+                                  <a href="tickets/{{ ticket['ticket_id'] }}">
+                                  <div class="d-flex tickets align-items-center">
+                                         <div class="avatar me-3">
+                                             <div class="tickets-img">
+                                                <span>U</span>
+                                             </div>
+                                         </div>
+                                          <div class="user-name">
+                                              <h6 class="font-weight-bold">#{{ ticket['ticket_id'] }} -                                                  {{ ticket['subject'] }}
+                                               </h6>
+                                             <span class="d-block">
+												                                                   <span class="ticketstatus completed">
+														{{ ticket['status'] }}
+                                                   </span>
+												               
+																								                                             </span>
+                                             <span class="date">{{ ticket['lastupdate_time'] }}</span>
+                                           </div>
+                                     </div>
+                                  </a>
+								 {% endfor %}
+
+                              </div>
+                            {% else %}
+                           <div class="p-4 p-lg-5 text-center">
+                             <div style="font-size: 64px;">
+									<i class="ri-mail-send-fill"></i>
+							</div>
+                             <p>{% if user['lang'] == "ar" %}ليس لديك تذكرة دعم نشطة.{% else %}You do not have an active support ticket.{% endif %}</p>
+							{% endif %}  
+							
+							
+							
+							
+							
+							
+							
+						  							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			 </div>
+         </div>
+      </main>
+	  
+ <script>
+      function HideEverything(){
+        $('.payment').hide();
+        $('.ordernumbers').hide();
+        $('.therequest').hide();
+        $('.transactionid').hide();
+      }
+      $(document).ready(function(){
+      $('.subject').change(function(){
+            HideEverything();		
+            if($(this).val()=='Order'){
+                $('.therequest').show();
+      			$('.ordernumbers').show();
+      			$('#requestRefill').prop('checked',true);
+      			$('#paymentPaypal').prop('checked',false);
+            }  		
+            if($(this).val()=='Payment'){
+                $('.payment').show();
+                $('.transactionid').show();
+      			$('#paymentPaypal').prop('checked',true);
+      			$('#requestRefill').prop('checked',false);
+            }
+        });
+
+		
+		$("#requestCancellation").on("click", function(){
+			check = $(this).prop("checked");
+			$("#reason").removeClass("hidden");
+			$('#requestRefill').prop('checked',false);
+			$('#requestOther').prop('checked',false);
+			$('#requestSpeed').prop('checked',false);
+		});
+		
+		$("#requestRefill").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});
+		
+		$("#requestRefill").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});
+
+		$("#requestOther").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});
+
+		$("#requestSpeed").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});	
+	
+		$("#subjectPayment").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});	
+        
+		$("#subjectService").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});	
+        
+		$("#subjectFRP").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});	
+        
+		$("#subjectOther").on("click", function(){
+			check = $(this).prop('checked',true);
+			$('#requestCancellation').prop('checked',false);
+			$("#reason").addClass("hidden");
+		});	        
+        
+        $('#submit').click(function(e){
+            e.preventDefault();
+      		console.log('working');
+            $TheSubject = $('.subject:checked').val();
+            $TheRequest = $('.second-options:checked').val();
+            $FinalSubject = $('.subject:checked').val();
+            if ($TheSubject == 'Order'){
+                $final = 'Order Request: ' + $TheRequest + '\n\nOrder ID: ' + $('#ordernumbers').val() + '\n\n' + '\n\nReason: ' + $('#reasoncancel').val() + '\n\n' + $('#message').val();
+                $FinalSubject += ' - ' + $TheRequest;
+            }else if($TheSubject == 'Payment'){
+                $final = $TheSubject + ': ' + $TheRequest + '\n' + 'Transaction ID:' +  $('#transactionid').val() +'\n\n' + $('#message').val();
+                $FinalSubject += ' - ' + $TheRequest + ' - ' + $('#transactionid').val().substring(0,30);
+            }else{
+                $final = $('#message').val();
+            }
+            $('#alldata').val($final);
+            $('.subject:checked').val($FinalSubject);
+            //submit
+            $('#submit').submit();
+        });
+      });
+  	</script>		  
+
+		
+
+
+      
+      <div class="mobile-navbar">
+        <div class="mobile-navbar-content">
+            <a href="/" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="far fa-box-heart"></i>
+                </div>
+                <div class="mnc-item-text">New order</div>
+            </a>
+            <a href="/addfunds" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-exchange-dollar-line"></i>
+                </div>
+                <div class="mnc-item-text">Add funds</div>
+            </a>
+            <a href="/tickets" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-customer-service-2-line"></i>
+                </div>
+                <div class="mnc-item-text">Tickets</div>
+            </a>
+            <a href="/services" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-list-check-2"></i>
+                </div>
+                <div class="mnc-item-text">Services</div>
+            </a>
+        </div>
+    </div>
+  
+       <div class="bs-toast">
+         <div class="bs-toast-content">
+            <div class="toast-text">Copy to clipboard</div>
+         </div>
+      </div>
+
+      <div class="overlay"></div>
+     
+
+
+
+{% include 'footer.twig' %}

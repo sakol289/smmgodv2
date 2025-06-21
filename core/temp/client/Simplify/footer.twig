@@ -1,0 +1,303 @@
+
+{{ footerCode }}
+
+{% if user['auth'] %}
+
+
+
+
+
+
+
+
+
+<script type="text/javascript"  src="https://cdn.mypanel.link/libs/jquery/1.12.4/jquery.min.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/y36ux7zr5qki5pqw.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/sa2eqd3a988sw7ft.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/if2py58t8p08pawe.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/u9k2ywi4jyq0635a.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/sabd8c/h2dm97mmjxf1tngn.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/sabd8c/ezu1k8ly52n4sllx.js" >
+							</script>
+					<script type="text/javascript" >
+				window.modules.layouts = {"theme_id":1,"auth":1,"live":true,"csrftoken":"FB7WIS8ZZ6WczUTWLikkE5NXjoA_YbMyqxlBuELH2lNmR7R4aXIylfiIFrVLX0ckxBnczl0Yh2L4Uij_BeqvFg=="};
+			</script>
+	<script type="text/javascript" >
+				window.modules.select = [];
+			</script>
+					<script type="text/javascript" >
+							</script>
+		        <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+        <script type="text/javascript">
+			lazyload();
+			$( ".btn-view-service-description" ).click(function() {
+				var m_id = $(this).attr( "data-service-id" );
+				var m_name = $(this).attr( "data-service-name" );
+				var m_text = $("#service-description-id-73-"+m_id).html(); 
+				$( "#service-description-lable" ).html(m_name);
+				$( ".service-description-content" ).html(m_text);
+			});
+		</script>
+        		<script type="text/javascript">
+			$( window ).on( "load", function() {
+				function getCookie(cname) {
+				  let name = cname + "=";
+				  let ca = document.cookie.split(';');
+				  for(let i = 0; i < ca.length; i++) {
+					let c = ca[i];
+					while (c.charAt(0) == ' ') {
+					  c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+					  return c.substring(name.length, c.length);
+					}
+				  }
+				  return "";
+				}
+				function setCookie(cname, cvalue, exdays) {
+				  const d = new Date();
+				  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+				  let expires = "expires="+d.toUTCString();
+				  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+				}
+				let dark_mode = getCookie("dark_mode");
+				if (dark_mode != "") {
+					$("body").addClass("dark-mode");  
+				}
+				$("#dark_mode").click(function() {
+					let dark_mode = getCookie("dark_mode");
+					$("body").toggleClass("dark-mode");	
+					if ($("body").hasClass("dark-mode")) {
+						 setCookie("dark_mode", "yes", 30);
+					}
+					else {
+						setCookie("dark_mode", "", 30);
+					}
+				});
+				$("#btn_left_menu").click(function() {
+					$("body").toggleClass("left_side");	
+					var divElement = document.createElement("Div");
+					divElement.id = "bg_left_menu";
+					if ($("body").hasClass("left_side")) {
+						 document.getElementsByTagName("body")[0].appendChild(divElement);
+						 $("#bg_left_menu").click(function() {
+							 $("body").toggleClass("left_side");
+							 $( "#bg_left_menu" ).remove();
+						 });
+					}
+					else {
+						$( "#bg_left_menu" ).remove();
+					}
+					
+				});
+				$("#btn_side").click(function() {
+					$("body").toggleClass("left_side_dk");	
+				});
+			});
+		</script>
+		
+		
+		
+		
+		
+		<script>
+const newOrderCats = document.getElementById('new-order-cats');
+
+if (newOrderCats) {  
+    const orderFormCats = document.getElementById('neworder_category');
+    var realData = orderFormCats.innerHTML;
+
+    const dCatBtns = document.querySelectorAll('.nwo-cat-btn');
+    if (dCatBtns[0]) {
+        [...dCatBtns].forEach(btn => {
+            btn.addEventListener('click', e => {
+                const val = btn.getAttribute('data-change-cat');
+                const orderFormCats = document.getElementById('neworder_category');
+                const options = document.querySelectorAll('#neworder_category-copy option');
+
+                const dCatbtns = document.querySelectorAll('.nwo-cat-btn');
+                [...dCatbtns].forEach(bt => {
+                    bt.classList.remove('active');
+                });
+                btn.classList.add('active');
+
+                const newOptions = [];
+                [...options].forEach(el => {
+                    if (el.innerText.toLowerCase().includes(val.toLowerCase())) {
+                        newOptions.push(el);
+                    }
+                });
+                const newOptionsHtml = [];
+                [...newOptions].forEach(el => {
+                    newOptionsHtml.push(el.outerHTML);
+                });
+                orderFormCats.innerHTML = newOptionsHtml.join('');
+
+                $('#neworder_category').trigger('change');
+            });
+        })
+    }
+
+    /**
+     * copy order form data hidden
+     */
+    setTimeout(() => {
+        const orderFormCopy = document.createElement('select');
+        orderFormCopy.setAttribute('id', 'neworder_category-copy');
+        orderFormCopy.style.display = 'none';
+        orderFormCopy.innerHTML = realData;
+        orderFormCats.parentNode.insertBefore(orderFormCopy, orderFormCats);
+    }, 1000)
+
+    const nocWrapper = document.getElementById('noc-wrapper');
+    nocWrapper.style.display = 'none';
+    setTimeout(() => {
+        nocWrapper.style.display = 'block';
+    }, 1001);
+}    
+</script>
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+{% else %}
+
+<h4 style="font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; line-height: normal; margin-bottom: 0px;"><br></h4>
+        <footer class="bg_3 py-5 text-white">
+        	<div class="container">
+            	<div class="row">
+                	<div class="col-lg-4">
+                    	<div class="foot_widget">
+                            <p class="h3">
+                                                            About Us
+                                                        </p>
+                            <p>
+                                                            &nbsp;{{ site["site_name"] }} is not a only panel. An advanced and unique community. We are here to make you special on social media and to make you better than others
+                                                        </p>
+                            <ul class="social_foot">
+                            	<li><a href="https://t.me/"><svg width="30px" height="30px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M41.4193 7.30899C41.4193 7.30899 45.3046 5.79399 44.9808 9.47328C44.8729 10.9883 43.9016 16.2908 43.1461 22.0262L40.5559 39.0159C40.5559 39.0159 40.3401 41.5048 38.3974 41.9377C36.4547 42.3705 33.5408 40.4227 33.0011 39.9898C32.5694 39.6652 24.9068 34.7955 22.2086 32.4148C21.4531 31.7655 20.5897 30.4669 22.3165 28.9519L33.6487 18.1305C34.9438 16.8319 36.2389 13.8019 30.8426 17.4812L15.7331 27.7616C15.7331 27.7616 14.0063 28.8437 10.7686 27.8698L3.75342 25.7055C3.75342 25.7055 1.16321 24.0823 5.58815 22.459C16.3807 17.3729 29.6555 12.1786 41.4193 7.30899Z" fill="#ffffff"/>
+</svg></a></li>
+                                <li><a href="https://instagram.com/"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"  width="30px" height="30px"
+	 viewBox="0 0 239.04 239.04" style="enable-background:new 0 0 239.04 239.04;" xml:space="preserve">
+<g>
+	<path style="fill:#FFFFFF;" d="M167.809,36.555c-22.276-0.183-44.597-1.054-66.919-0.504c-25.851,0.642-46.018,2.2-61.281,22.872
+		c-3.988,9.854-6.004,21.359-6.967,33.368c-0.183,3.163-0.367,6.417-0.596,9.763c-0.825,20.396,0.55,41.435,0.092,58.118
+		c2.154,10.955,6.371,20.809,14.255,28.326c26.126,24.888,79.294,17.142,114.128,15.767c16.73-6.096,30.663-11.138,38.134-30.251
+		c5.913-15.034,4.95-34.193,5.363-50.326C204.797,90.502,206.264,44.714,167.809,36.555z"/>
+	<path d="M157.588,48.38c44.505,5.729,31.443,70.219,30.205,101.478c-0.688,17.188-3.758,30.48-21.496,36.438
+		c-23.33,7.838-57.706,5.225-81.494,1.742c-15.905-2.292-28.372-7.059-32.772-23.559c-6.967-26.08-4.996-61.373-1.971-87.957
+		c0.092-0.504,0.229-0.871,0.458-1.192C50.93,35.547,134.441,45.401,157.588,48.38z"/>
+	<path style="fill:#FFFFFF;" d="M176.059,72.627c0.092-10.955-13.567-14.438-20.901-7.7c-1.971,1.833-2.888,4.629-3.025,7.654
+		c0.733,3.896,3.071,7.746,6.096,9.946C165.334,87.523,175.967,80.877,176.059,72.627z"/>
+	<path style="fill:#FFFFFF;" d="M155.754,93.94c-15.675-23.742-51.06-26.08-70.081-5.042c-12.971,14.346-13.888,38.226-4.125,55.185
+		c0.55,0.183,1.054,0.504,1.513,1.054c15.859,17.692,43.176,24.109,62.794,8.067C163.363,138.858,168.496,113.236,155.754,93.94z"/>
+	<path d="M93.282,126.483c5.546,15.584,25.255,27.959,40.976,18.334c31.763-19.434-5.546-72.235-31.718-48.814
+		C93.282,101.457,89.661,116.261,93.282,126.483z"/>
+</g>
+</svg></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                    	<div class="foot_widget">
+                        	<p class="h3">
+                                                            Useful Links
+                                                        </p>
+                        	<ul class="links_foot">
+                                <li><a href="/addfunds">
+                                                                    Add Funds
+                                                                </a></li>
+                                <li><a href="/contact">
+                                                                    Contact Us
+                                                                </a></li>
+                                <li><a href="/">
+                                                                    How To Use &nbsp;{{ site["site_name"] }}
+                                                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                    	<div class="foot_widget">
+                        	<p class="h3">
+                                                            Last Blog Post
+                                                        </p>
+                        	<ul class="links_foot">
+                            	<li><a href="">
+                                                                    Telegram Member Panel
+                                                                </a></li>
+                                <li><a href="">
+                                                                    What is Social Media Marketing?
+                                                                </a></li>
+                                <li><a href="">
+                                                                    Best instagram Panel
+                                                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        
+        
+
+
+
+					<script type="text/javascript"  src="https://cdn.mypanel.link/libs/jquery/1.12.4/jquery.min.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/y36ux7zr5qki5pqw.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/sa2eqd3a988sw7ft.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/if2py58t8p08pawe.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/u9k2ywi4jyq0635a.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/sabd8c/h2dm97mmjxf1tngn.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/sabd8c/ezu1k8ly52n4sllx.js" >
+							</script>
+					<script type="text/javascript" >
+				window.modules.layouts = {"theme_id":1,"auth":0,"live":true,"csrftoken":"0xZsFQ9ZVpB2FQAECuKGnrN2MttXiEB10NFk-MiePCqhTw5MSTIDoBJQUmdvlOWp5DhglTXxdCWDmg2_j7NJbw=="};
+			</script>
+					<script type="text/javascript" >
+				window.modules.signin = [];
+			</script>
+					<script type="text/javascript" >
+							</script>
+		        <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
+        <script type="text/javascript">
+			lazyload();
+			$( ".btn-view-service-description" ).click(function() {
+				var m_id = $(this).attr( "data-service-id" );
+				var m_name = $(this).attr( "data-service-name" );
+				var m_text = $("#service-description-id-73-"+m_id).html(); 
+				$( "#service-description-lable" ).html(m_name);
+				$( ".service-description-content" ).html(m_text);
+			});
+		</script>
+        	</body>
+
+{% endif %}
+
+{% for script in scriptList %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+
+
+</body>
+</html>

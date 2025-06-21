@@ -1,0 +1,100 @@
+{% include 'header.twig' %}
+
+
+
+
+
+<!-- Main variables *content* -->
+
+        <section id="contentContainer">
+  	<div class="container-fluid">
+      <div class="container">
+<div class="container">
+            <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well ">
+                    <p><font color="#ff0000">HOW TO SET UP YOUR CHILD PANEL : FOLLOW THE STEPS BELOW&nbsp;</font></p><ul><li>Go to <a href="https://www.namecheap.com/" target="_blank">Namecheap</a>&nbsp;: Search for your preferred domain name</li><li>Purchase your preferred domain name.</li><li>Go to your domain list, select the purchased domain ; Click on " Manage "</li><li>Scroll down to nameservers : Click to change from Namecheap BasicDNS to " Custom DNS "</li><li>Fill the first line with ns1.perfectdns.com ; Fill the second line with ns2.perfectdns.com then save by clicking the mark ✅sign right above it.<img src="https://cdn.mypanel.link/6f7c88/e602u9wh2gpogdfw.png" class="img-responsive" style="display: inline-block; width: 696px;"></li><li>Go back to your <a href="Bugabuzz" target="_blank">childpanel</a> area on your Bugabuzz ; fill in the form by entering your domain name, preferred currency, Select your admin username and password then place your order { NB : This cost N5,000 }</li><li>Your website should be up and running within 1-48hrs</li><ul><li>Send a mail to <a href="childpanel@bugabuzz.com" target="_blank">childpanel@bugabuzz.com</a> to start a conversation with one of our admin If you have the following issues :&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ( a ) Enabling your payment gateway ( b ) Purchasing a domain { Our admins can help you get this done }.&nbsp; &nbsp;( c ) Accessing your admin area&nbsp;</li></ul></ul>
+                </div>
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="well">
+                    <form action="/child-panels" method="post">
+                        
+                        {% if errorText %}
+										<div class="alert alert-dismissible alert-danger">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ errorText }}
+										</div>
+									  {% endif %}
+									  {% if successText %}
+										<div class="alert alert-dismissible alert-success">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ successText }}
+										</div>
+									  {% endif %}
+                        
+                                                <div class="first">
+                            <div class="form-group">
+                                <label for="domain" class="control-label">Domain</label>
+                                <input type="text" class="form-control" id="domain" name="domain"
+                                       value="">
+                            </div>
+                            <div class="alert alert-info">
+                                <div>Please change nameservers to:</div>
+                                <ul style="padding-left: 20px">
+                                                                            <li>ns1.perfectdns.com</li>
+                                                                            <li>ns2.perfectdns.com</li>
+                                                                    </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-currency">Currency</label>
+                          	<select class="form-control" name="panel_currency" aria-required="true">
+                                                {% for curr in site['currencies'] %}
+                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
+                                                {% endfor %}
+                                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-username">Admin username</label>
+                            <input
+                                    type="text" id="createorderform-username" class="form-control"
+                                    name="username" aria-required="true"
+                                    value="">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-password">Admin password</label>
+                            <input
+                                    type="password" id="createorderform-password" class="form-control"
+                                    name="password" aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label"
+                                   for="createorderform-password_confirm">Confirm password</label>
+                            <input
+                                    type="password" id="createorderform-password_confirm" class="form-control"
+                                    name="password_confirm" aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="control-label">Price per month</label>
+                            <input type="text" class="form-control" id="price" value="{{ settings['panel_price'] }}{{ site['currency'] }}" readonly>
+                        </div>
+                       
+                        <button type="submit" class="btn btn-primary">Submit order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      </div>
+    </section>
+                                    
+
+
+{% include 'footer.twig' %}

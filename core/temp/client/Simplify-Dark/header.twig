@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+{% for lang in site['languages'] %}
+{% if lang['active'] %}
+<html lang="{{ lang['code'] }}">
+{% endif %}
+{% endfor %}
+<head>
+  <base href="{{ site['url'] }}/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="keywords" content="{{ keywords }}">
+  <meta name="description" content="{{ description }}">
+  {% if site['favicon'] %}
+    <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
+  {% endif %}
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  
+    
+    {{ headerCode }}
+
+{% if user['lang'] == "ar" %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-v4-rtl/4.6.0-1/css/bootstrap-rtl.min.css" integrity="sha512-+1C9xBCl0azgGjU6bIsATfB4XOQ0MSFduPs388NiyzwYt4nfelS72KSPSFZT338FjP7F3mMme2re8+gUJe2HZQ==" crossorigin="anonymous" />
+{% endif %}
+  
+    {% for style in styleList %}
+      <link rel="stylesheet" type="text/css" href="{{ style }}">
+    {% endfor %}
+   
+   
+   
+   
+   
+   
+   
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js"></script>
+ 
+ 
+ 
+   <link rel="stylesheet" type="text/css" href="../css/panel/Simplify-Dark/2s7j2z9jl1th8zpq.css">
+      <link rel="stylesheet" type="text/css" href="../css/panel/Simplify-Dark/h8m1u50dkfo7rt8e.css">
+      
+      
+     
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
+
+
+    
+      
+      
+  </head>
+  
+  	<!-- start desktop mode -->
+	
+		{%  if settings['demo_mode'] == 1 %}
+    	
+       <style>
+            .fixed-footer{
+                position: fixed;
+                background: #fff;
+                border:1px solid #000;
+                width:100%;
+                bottom:0;
+                z-index:99999;
+                padding:10px;
+            }
+        </style>
+        
+    <div class="fixed-footer">
+            <h4 style="color:#000">Choose Theme: 
+                
+                   {% for thm in site['themes'] %}
+<a href="/select-theme/{{thm['dirname']}}" style="color:blue;margin:0 10px;font-size:16px">[ {{thm['name']}} ]</a>
+{% endfor %}
+
+            </h4>
+    </div>
+  
+{% endif %}
+	
+	{% if user['auth'] %}
+<body class="body ">
+<div class="wrapper  wrapper-sidebar-navbar ">
+   <div id="block_56" class="component_private_navbar">
+    <span class="component_private_navbar ">
+      <div class="component-navbar-private__wrapper component_private_sidebar">
+         <div class="sidebar-block__top component-navbar component-navbar__navbar-private editor__component-wrapper">
+            <div>
+               <nav class="navbar navbar-expand-lg navbar-light">
+                  <div class="navbar-private__header">
+                    <div class="sidebar-block__top-brand">
+                                                                  <div class="component-navbar-logo">
+                                <a target="_self" href="/">{% if site["logo"] %}
+  													<img style="max-width:200px;" src="{{ site['logo'] }}" alt="" title="">
+  												{% else %}<span style="text-transform: "><span style="font-size: 24px"><span style="letter-spacing: 1.0px"><span style="line-height: 60px"><strong style="font-weight: bold">&nbsp;&nbsp;  {{ site["site_name"] }}</strong></span></span></span></span>{% endif %}</a>
+                    
+                        </div>
+                                        </div>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-56" aria-controls="navbar-collapse-56" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-burger">
+                        <span class="navbar-burger-line"></span>
+                    </span>
+                  </button>
+                  </div>
+                 <div class="collapse navbar-collapse" id="navbar-collapse-56">
+                     <div class="component-navbar-collapse-divider"></div>
+                     <div class="d-flex component-navbar-collapse">
+                         
+                         
+                         
+                      <ul class="navbar-nav navbar-nav-sidebar-menu">
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                                              
+                             <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "neworder" %} component-navbar-nav-link-active__navbar-private  {% endif %} "     href="/" >                                 
+                                                              
+                               <!--   <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private component-navbar-nav-link-active__navbar-private" href="/" > -->
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-cart-arrow-down"></span>
+                                           </span>
+                                                                             New order
+                                                                      </a>
+                               </li>
+                               
+                               
+                               
+                                <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                                              
+                             <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "massorder" %} component-navbar-nav-link-active__navbar-private  {% endif %} "     href="/" >                                 
+                                                              
+                               <!--   <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private component-navbar-nav-link-active__navbar-private" href="/" > -->
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                            <span class="far fa-analytics"></span>
+                                           </span>
+                                                                             Mass order
+                                                                      </a>
+                               </li>
+                               
+                               
+                               
+                               
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "services" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/services" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-bars"></span>
+                                           </span>
+                                                                             Services
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "orders" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/orders" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-briefcase"></span>
+                                           </span>
+                                                                             Orders
+                                                                      </a>
+                               </li>
+                               
+                               
+                               
+                                  <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "refill" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/refill" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                                <span class="fad fa-sync"></span>
+                                           </span>
+                                                                             Refill
+                                                                      </a>
+                               </li>
+                               
+                               
+                               
+                               
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "addfunds" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/addfunds" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-envelope-open-dollar"></span>
+                                           </span>
+                                                                             Add funds
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "tickets" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/tickets" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-user-headset"></span>
+                                           </span>
+                                                                             Tickets
+                                                                                                                                                </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "api" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/api" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                                   <span class="fas fa-cog"></span></span>
+                                                                             API
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "affiliates" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/affiliates" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                                 <span class="fas fa-people-carry"></span>
+                                       
+                                           </span>
+                                                                             Affiliates
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "child-panels" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/child-panels" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-child"></span>
+                                           </span>
+                                                                             Child panel
+                                                                      </a>
+                               </li>
+                                                          <!-- <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private " href="/massorder" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="far fa-layer-plus"></span>
+                                           </span>
+                                                                             Mass order
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private " href="/updates" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="far fa-calendar-edit"></span>
+                                           </span>
+                                                                             Updates
+                                                                      </a>
+                               </li>
+                                                          <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                  <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private " href="/terms" >
+                                                                                    <span class="component-navbar-nav-link-icon">
+                                             <span class="fas fa-handshake"></span>
+                                           </span>
+                                                                             Terms
+                                                                      </a>
+                               </li> -->
+                                                    </ul>
+                                                    
+                                                    
+                        
+                        
+
+<ul class="navbar-nav navbar-nav-currencies">
+
+<div class="balance-dropdown-container component_balance_dropdown">
+<div class="balance-dropdown ">
+    
+    
+<!-- <a href="#" class="dropdown-toggle header-btn currency-btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="cursor:pointer"> -->
+     
+     <div  class="balance-dropdown__name balance-dropdown__toggle currency-btn" data-toggle="dropdown" data-hover="dropdown"  aria-expanded="false" >
+     
+     
+     ≈&nbsp;{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</div>
+
+
+
+<ul class="balance-dropdown__container  dropdown-content currency-btn-content currency-btn" id="currencies-list">
+
+ {% for curr in site['currencies'] %} 
+<li class="balance-dropdown__item">
+<a href="/cur?cur={{curr['id']}}" class="currencies-item balance-dropdown__link" data-rate-key="{{curr['name']}}" data-rate-symbol="{{curr['symbol']}}">{{curr['name']}} {{curr['symbol']}}</a></li>
+{% endfor %}
+
+</ul></div>
+</div></ul>
+                                                  
+                                                  
+                        <ul class="navbar-nav">
+                                                                                                                                                    <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                        <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private
+{% if active_menu == "account" %} component-navbar-nav-link-active__navbar-private  {% endif %} " href="/account" >Account</a>
+                                    </li>
+                                                                                                                        <li class="nav-item component-navbar-nav-item component-navbar-private-nav-item">
+                                        <a class="component-navbar-nav-link  component-navbar-nav-link__navbar-private" href="/logout" >Logout</a>
+                                    </li>
+                                                                                  </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+         </div>
+      </div>
+   </span>
+    <span class="component_private_sidebar ">
+      <div class="component-sidebar_wrapper">
+         <div class="sidebar-block__left component-sidebar component-sidebar-with-navbar component_private_navbar editor__component-wrapper">
+           <div class="component-sidebar__menu">
+            <div class="component-sidebar__menu-logo">
+                
+                                  <a target="_self" href="/">{% if site["logo"] %}
+  													<img style="max-width:200px;" src="{{ site['logo'] }}" alt="" title="">
+  												{% else %}<span style="text-transform: "><span style="font-size: 24px"><span style="letter-spacing: 1.0px"><span style="line-height: 60px"><strong style="font-weight: bold">&nbsp;&nbsp;  {{ site["site_name"] }}</strong></span></span></span></span>{% endif %}</a>
+                       </div>
+            <ul class="sidebar-block__left-menu editor__component-wrapper">
+                                 
+                                  <li {% if active_menu == "neworder" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                                      
+                       <a class="component-sidebar__menu-item-link" href="/" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                 <span class="fas fa-cart-arrow-down"></span>
+                               </span>
+                                                    New order
+                                                </a>
+                   </li>
+                   
+                   
+                    <li {% if active_menu == "massorder" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                                      
+                       <a class="component-sidebar__menu-item-link" href="/massorder" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                  <span class="far fa-analytics"></span>
+                               </span>
+                                                    Mass order
+                                                </a>
+                   </li>
+                   
+                   
+                                  <li {% if active_menu == "services" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/services" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                  <span class="fas fa-bars"></span>
+                               </span>
+                                                    Services
+                                                </a>
+                   </li>
+                                  <li {% if active_menu == "orders" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/orders" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                 <span class="fas fa-briefcase"></span>
+                               </span>
+                                                    Orders
+                                                </a>
+                   </li>
+                                  <li {% if active_menu == "addfunds" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/addfunds" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                 <span class="fas fa-envelope-open-dollar"></span>
+                               </span>
+                                                    Add funds
+                                                </a>
+                   </li>
+                   
+                   
+                   
+                <li {% if active_menu == "refill" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/refill" >
+                           
+                             <span class="sidebar-block__menu-item-icon">
+                                  <span class="fad fa-sync"></span>
+                               </span>
+                                                                    Refill
+                                                                      </a>
+                               </li>
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                                  <li {% if active_menu == "tickets" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/tickets" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                  <span class="fas fa-user-headset"></span>
+                               </span>
+                                                    Tickets
+                                                                                                    </a>
+                   </li>
+                                  <li {% if active_menu == "api" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/api" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                 <span class="fas fa-cog"></span>
+                               </span>
+                                                    API
+                                                </a>
+                   </li>
+                                  <li {% if active_menu == "affiliates" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/affiliates" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                    <span class="fas fa-people-carry"></span>
+                                       
+                               </span>
+                                                    Affiliates
+                                                </a>
+                   </li>
+                                  <li {% if active_menu == "child-panels" %} class="component-sidebar__menu-item component-sidebar__menu-item-active" {% endif %}>
+                       <a class="component-sidebar__menu-item-link" href="/child-panels" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                <span class="fas fa-child"></span>
+                               </span>
+                                                    Child panel
+                                                </a>
+                   </li>
+                                 <!-- <li class="component-sidebar__menu-item ">
+                       <a class="component-sidebar__menu-item-link" href="/massorder" >
+                                                        <span class="sidebar-block__menu-item-icon">
+                                <span class="far fa-layer-plus"></span>
+                               </span>
+                                                    Mass order
+                                                </a>
+                   </li> -->
+                                
+                            </ul>
+           </div>
+         </div>
+      </div>
+   </span>
+</div>
+
+
+
+    
+{% else %}
+
+
+
+
+<body class="body ">
+<div class="wrapper  wrapper-navbar ">
+   <div id="block_49">
+    <div class="block-wrapper">
+        <div class="component_navbar ">
+          <div class="component-navbar__wrapper">
+             <div class="sidebar-block__top component-navbar component-navbar__navbar-public editor__component-wrapper">
+                <div>
+                   <nav class="navbar navbar-expand-lg navbar-light container-fluid">
+                      <div class="navbar-public__header">
+                        <div class="sidebar-block__top-brand">
+                                                                                <div class="component-navbar-logo">
+                                 <a target="_self" href="/">{% if site["logo"] %}
+  													<img style="max-width:200px;" src="{{ site['logo'] }}" alt="" title="">
+  												{% else %}<span style="text-transform: "><span style="font-size: 24px"><span style="letter-spacing: px"><span style="line-height: 60px"><strong style="font-weight: bold">&nbsp;&nbsp;  {{ site["site_name"] }}</strong></span></span></span></span>{% endif %}</a>
+                    
+                            </div>
+                                                  </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-49" aria-controls="navbar-collapse-49" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-burger">
+                            <span class="navbar-burger-line"></span>
+                        </span>
+                        </button>
+                      </div>
+                     <div class="collapse navbar-collapse" id="navbar-collapse-49">
+                        <div class="component-navbar-collapse-divider"></div>
+                                                  <div class="navbar-languages component_navbar_dropdown">
+                            <div class="navbar-dropdown ">
+                                                    
+                                                    
+                                                        <div class="navbar-dropdown__name navbar-dropdown__toggle langs-btn " data-toggle="dropdown" data-hover="dropdown" aria-expanded="false" >Languages</div>
+                                                                                                                                        <ul class="navbar-dropdown__container dropdown-content langs-btn langs-btn-content">
+                                                                                {% for lang in site['languages'] %}     <li class="navbar-dropdown__item">
+                                      <a href="#" class="navbar-dropdown__link" onclick="changeLang('{{lang['code']}}')">{{lang['name']}}</a>
+                                    </li>{% endfor %}
+                                                                                       
+                                                                                                </ul>
+                            </div>
+                          </div>
+                                                 <div class="d-flex component-navbar-collapse">
+                           <ul class="navbar-nav">
+                                                            <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public {% if active_menu == "auth" %} component-navbar-nav-link-active__navbar-public {% endif %}" href="/" > Sign in</a>
+                               </li>
+                               
+                               
+                               
+                                                            <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public {% if active_menu == "signup" %} component-navbar-nav-link-active__navbar-public {% endif %} " href="/signup" > Sign up</a>
+                               </li>
+                                                            <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public {% if active_menu == "services" %} component-navbar-nav-link-active__navbar-public {% endif %}" href="/services" > Services</a>
+                               </li>
+                                                            <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public {% if active_menu == "api" %} component-navbar-nav-link-active__navbar-public {% endif %}" href="/api" > API</a>
+                               </li>
+                                                         <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public {% if active_menu == "terms" %} component-navbar-nav-link-active__navbar-public {% endif %}" href="/terms" > Terms</a>
+                               </li>
+                                                          <!--  <li class="nav-item component-navbar-nav-item component_navbar component-navbar-public-nav-item">
+                                 <a class="component-navbar-nav-link component-navbar-nav-link__navbar-public " href="/blog" > Blog</a>
+                               </li> -->
+                                                        </ul>
+                         </div>
+                      </div>
+                   </nav>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  
+{% endif %}
+
+
+
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<script>
+
+
+ $('.langs-btn').hover(function(){
+    $('.langs-btn-content').toggle();
+  });
+  
+    $('.currency-btn').hover(function(){
+    $('.currency-btn-content').toggle();
+  });
+  
+  
+ function changeLang(newLang){
+        $.ajax
+        ({ 
+            url: '/account/change_lang/',
+            data: {lang: newLang},
+            type: 'post',
+            success: function(result)
+            {
+                
+               location.href  = "";
+            }
+        });
+    }
+    
+    var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'violet',
+    progressColor: 'purple',
+    mediaControls:true
+});
+wavesurfer.load('{{settings['music_url']}}');
+
+wavesurfer.on('ready', wavesurfer.play.bind(wavesurfer));
+
+
+</script>
+
+
+

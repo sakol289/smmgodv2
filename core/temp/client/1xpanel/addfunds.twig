@@ -1,0 +1,322 @@
+{% include 'header.twig' %}
+
+
+
+		<!-- Main variables *content* -->
+		<style>
+::placeholder {color: rgb(191, 213, 253, 0.5)!important}
+
+@media (min-width: 991.98px) {
+  .modal-box {
+      max-width: 750px;
+  }
+}
+</style>
+<main>
+   <div class="container-fluid mt-4">
+      <div class="row">
+         <div class="col-lg-7">
+            <div class="page overflow-hidden">
+               <div class="page-body pb-4 pb-xl-6 mt-4">
+                  <div class="card mb-2">
+                     <div class="card-head d-flex align-items-center justify-content-between">
+                        <div class="card-head-title">
+                           <div class="row align-items-center">
+                                 <div class="col-auto">
+                                    <div class="card-head-icon">
+                                       <i class="ri-wallet-3-line"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <h4>Add funds</h4>
+                                 </div>
+                           </div>
+                        </div>
+                        <div class="col-auto">
+                           <button class="btn btn-primary" onclick="modalOpen(`transaction`)"><i class="ri-history-line"></i> <span class="addF-text">Payments History</span></button>
+                        </div>
+                     </div>
+                     <div class="card-body pt-3 pb-3">
+                                                <form  method="post" action="">
+                                                                        <div class="form-group">
+                           <label for="method" class="control-label">Method</label>
+                           <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                      
+                   {% for payment in paymentsList %}
+                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+                    {% endfor %}
+                  </select>
+                        </div>
+                        
+                        
+                        
+                         <div class="fga mb-4 custom-payment-content"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 34  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                          <div class="fga mb-4 custom-payment-content-bkash"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 21  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                        
+                        		 <!-- Start -->
+                
+    <div id="qr">
+        
+            
+              <br> 1) Scan QR Code below and enter Amount. (Min 5 INR) </br>
+              <br> 2) Enter the 18 Digits Order ID below the QR Code. </br>
+           <br> Example of order id is "2018072606124600" and amount is "50" then click on pay. Without Space </br>
+
+                    <br>  Funds will be added automatically Instant </br>
+                    
+        <font color="#ff0000"><h3><b><i>Paytm and Phone Pe only</i></h3></b></font
+        
+  
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->
+                        
+                        
+                        
+                        
+                        <div class="form-group">
+                           <label for="amount" class="control-label">Amount</label>
+                           <input type="number" class="form-control"  name="payment_amount" id="amount" value="{{ data['payment_amount'] }}">
+                        </div>
+                                                  <button class="btn btn-primary btn-100">
+                        Pay
+                        </button>
+                        </form>
+                                             </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-5">
+            <div class="page overflow-hidden">
+               <div class="page-body pb-4 pb-xl-6 mt-4">
+                  <div class="card mb-2">
+                     <div class="card-head d-flex align-items-center justify-content-between">
+                        <div class="card-head-title">
+                           <div class="row align-items-center">
+                                 <div class="col-auto">
+                                    <div class="card-head-icon">
+                                       <i class="ri-folder-info-line"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <h4>
+																				Attention
+																			</h4>
+                                 </div>
+                           </div>
+                        </div>
+                     </div>
+						<div class="card-body">
+							<div class="pm-text-container">
+                  
+Although the payment methods available to customers cover most of the cards and payment methods that any customer needs to charge his account, we are now working adding a new payment method that accepts all Visa and MasterCard, thank you for your patience.
+
+							</div>
+						</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<div class="modal-wrapper order-modal" id="transaction">
+   <div class="mbo-wrapper">
+      <div class="modal-box">
+         <div class="m-header">
+            <button class="m-close"><i class="ri-close-line"></i></button>
+         </div>
+         <div class="m-body" style="max-height: 400px;overflow-y: scroll;">
+                     <div class="af-t-history">
+                         {% for payment in lastPaymentsList %}
+                              <a href="#" class="sc-sup-item">
+                  <div class="row">
+                     <div class="col-auto col-md-auto">
+                        <div class="title">ID</div>
+                        <div class="text">{{payment['id']}}</div>
+                     </div>
+                     <div class="col-12 col-md">
+                        <div class="title">Date</div>
+                        <div class="text">{{payment['created_at']}}</div>
+                     </div>
+                     <div class="col-12 col-md">
+                        <div class="title">Method</div>
+                        <div class="text">{{payment['payment_method']}}</div>
+                     </div>
+                     <div class="col-12 col-md-auto">
+                        <div class="title">Amount</div>
+                        <div class="text primary-color">
+                                                    {{ payment['amount']|number_format(2) }}
+                                                   </div>
+                     </div>
+                  </div>
+               </a>{% endfor %}
+                </div>
+                     </div>
+      </div>
+   </div>
+</div>
+
+
+		
+
+
+      
+      <div class="mobile-navbar">
+        <div class="mobile-navbar-content">
+            <a href="/" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="far fa-box-heart"></i>
+                </div>
+                <div class="mnc-item-text">New order</div>
+            </a>
+            <a href="/addfunds" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-exchange-dollar-line"></i>
+                </div>
+                <div class="mnc-item-text">Add funds</div>
+            </a>
+            <a href="/tickets" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-customer-service-2-line"></i>
+                </div>
+                <div class="mnc-item-text">Tickets</div>
+            </a>
+            <a href="/services" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-list-check-2"></i>
+                </div>
+                <div class="mnc-item-text">Services</div>
+            </a>
+        </div>
+    </div>
+  
+       <div class="bs-toast">
+         <div class="bs-toast-content">
+            <div class="toast-text">Copy to clipboard</div>
+         </div>
+      </div>
+
+      <div class="overlay"></div>
+     
+
+
+{% if kashier_code %}
+
+ <style>
+        #el-kashier-button{
+            display: none;
+        }
+    </style>
+	
+	<script>
+	
+         var interval = setInterval(function () {
+            var link =$('#el-kashier-button');
+            if(link.length){
+                link.click();
+                clearInterval(interval);
+            }
+        }, 1000);
+  
+ 
+</script>
+
+{{ kashier_code  }}
+
+{{ unset_kashier_code  }}
+{% endif %}
+	
+{% include 'footer.twig' %}
+
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->

@@ -1,0 +1,64 @@
+{% include 'header.twig' %}
+
+
+<!-- Main variables *content* -->
+
+        <section id="contentContainer">
+  	<div class="container-fluid">
+      <div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                            <div class="well well-float ">
+                    <p>Watch this video to learn how to use your referral link to earn more money</p><div class="embed-responsive embed-responsive-16by9"><iframe frameborder="0" src="//www.youtube.com/embed/" width="640" height="360" class="note-video-clip embed-responsive-item"></iframe></div><p><br></p>
+                </div>
+                        <div class="well well-float">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th>Referral link</th>
+                        <th>Commission rate</th>
+                        <th>Minimum payout</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ site['url'] }}/ref/{{ user["referral_code"] }}</td>
+                        <td>{{ settings["ref_bonus"] }}%</td>
+                        <td>{{ settings['ref_min'] }}{{ site['currency'] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="well well-float">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th>Visits</th>
+                        <th>Registrations</th>
+                        
+                        <th>Conversion rate</th>
+                        <th>Total earnings</th>
+                        <th>Available earnings</th>
+                                            </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ user['total_click'] }}</td>
+                        <td>{{ refCount }}</td>
+                        
+                        <td>{{ settings["ref_bonus"] }}%</td>
+                        <td>{{ user['reforder'] }}{{ site['currency'] }}</td>
+                        <td>{{ user['refchar'] }}{{ site['currency'] }}</td>
+                                            </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+                    </div>
+    </div>
+</div>
+      </div>
+    </section>
+
+{% include 'footer.twig' %}

@@ -1,0 +1,228 @@
+{% include 'header.twig' %}
+
+
+
+<!-- Main variables *content* -->
+		<main>
+                 <div class="container-fluid mt-3">
+        			<div class="row">
+				<div class="col-lg-7">
+					<div class="card card-bg userCard h-100">
+						<div class="row">
+							<div class="ud-card" style="max-width: 550px">
+								<h5>
+																		Affiliate Program <span class="primary-color">Share and Earn.</span>
+									
+								</h5> 
+								<p>
+									Just all you have to do is copy your referral link and start posting topics that talk about our services, for example, or a video on YouTube explaining how to use the site
+With placing your referral link, and at the time of any person registering a membership and using the site, you will receive a commission for that.
+									
+								</p>
+															</div>
+							<img src="https://cdn.mypanel.link/j71eqe/76k8qpym0rgfuhco.png" class="ud-img">
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-5 d-none d-md-block">
+					<div class="card card-bg rankCard h-100" style="overflow: hidden">
+						<div class="row">
+							<div class="rc-card">
+                              <h5 class="mb-4">
+																<strong>Do you need more information?</strong>
+															  </h5>
+                            
+                              <p class="pb-3">
+																Send us a support ticket and show us all the information you need, and we will respond to you<br>
+                              <strong>  Notes: </strong> <br>
+1. Deposits will be automatically added when you choose to withdraw after you get 10 USD or more.<br>
+2. You can only withdraw your money as an Account Funds as of now.
+								                              </p>
+                              
+                              <a href="/tickets" class="btn btn-primary btn-sm">Tickets</a>
+							</div>
+							<img src="https://cdn.mypanel.link/j71eqe/ooms5f3khptr43j9.png" class="rc-img-2">
+                          
+						</div>
+					</div>
+				</div>
+			</div>
+           
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="page overflow-hidden">
+                     <div class="page-body pb-4 pb-xl-6 mt-4">
+							
+      <div class="card card-border">
+        <div class="card-header card-header-ap">
+          <div class="row row-cols-md-2">
+            <div class="col-lg-auto">
+              <div class="aft-item">
+                <div class="icon">
+                  <div class="dh-icon icon-secondary">
+                    <i class="ri-user-4-line"></i>
+                  </div>
+                </div>
+                <div class="content">
+                  <h3 class="title">Referral link</h3>
+                  <div class="text">{{ site['url'] }}/ref/{{ user["referral_code"] }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="aft-item">
+                <div class="icon">
+                  <div class="dh-icon icon-primary">
+                    <i class="ri-user-4-line"></i>
+                  </div>
+                </div>
+                <div class="content">
+                  <h3 class="title">Commission rate</h3>
+                  <div class="text">{{ settings["ref_bonus"] }}%</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg">
+              <div class="aft-item">
+                <div class="icon">
+                  <div class="dh-icon icon-primary">
+                    <i class="ri-user-4-line"></i>
+                  </div>
+                </div>
+                <div class="content">
+                  <h3 class="title">Available earnings</h3>
+                  <div class="text">{{ settings['ref_min'] }}{{ site['currency'] }}</div>
+                </div>
+              </div>
+            </div>
+           <!-- <div class="col-lg">
+              <div class="aft-item">
+                <div class="icon">
+                  <div class="dh-icon icon-danger">
+                    <i class="ri-user-4-line"></i>
+                  </div>
+                </div>
+                <div class="content">
+                  <h3 class="title">Minimum payout</h3>
+                  <div class="text">$10.00</div>
+                </div>
+              </div>
+            </div>-->
+          </div>  <!-- ./row -->
+        </div><!-- ./card-header -->
+        <div class="card-body">
+          <div class="row row-cols-xxl-5 aft-box-row">
+            <div class="col-lg col-12">
+              <div class="aft-box">
+                <div class="cLeft">
+                  <div class="icon">
+                    <i class="ri-clockwise-2-line"></i>
+                  </div>
+                </div>
+                <div class="cRight">
+                  <h4 class="title">Visits</h4>
+                  <div class="text">{{ user['total_click'] }}</div>
+                </div>
+              </div>
+            </div><!-- ./col -->
+            <div class="col-lg col-12">
+              <div class="aft-box">
+                <div class="cLeft">
+                  <div class="icon">
+                    <i class="ri-user-add-line"></i>
+                  </div>
+                </div>
+                <div class="cRight">
+                  <h4 class="title">Registrations</h4>
+                  <div class="text">{{ refCount }}</div>
+                </div>
+              </div>
+            </div>
+            
+            
+             <div class="col-lg col-12">
+              <div class="aft-box">
+                <div class="cLeft">
+                  <div class="icon">
+                    <i class="ri-percent-line"></i>
+                  </div>
+                </div>
+                <div class="cRight">
+                  <h4 class="title">Total earnings</h4>
+                  <div class="text">	{{ user['refchar'] }}{{ site['currency'] }}</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- ./col -->
+            <div class="col-lg col-12">
+              <div class="aft-box">
+                <!--<div class="cLeft">
+                  <div class="icon">
+                    <i class="ri-user-shared-line"></i>
+                  </div>
+                </div>
+                <div class="cRight">
+                  <h4 class="title">Referrals</h4>
+                  <div class="text">0</div>
+                </div>-->
+              </div> 
+            </div><!-- ./col -->
+            <!-- ./col -->
+            <!-- ./col -->
+          </div>
+        </div><!-- ./card-body -->
+		      </div><!-- ./card -->
+			  
+				   
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </main>
+
+		
+
+
+      
+      <div class="mobile-navbar">
+        <div class="mobile-navbar-content">
+            <a href="/" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="far fa-box-heart"></i>
+                </div>
+                <div class="mnc-item-text">New order</div>
+            </a>
+            <a href="/addfunds" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-exchange-dollar-line"></i>
+                </div>
+                <div class="mnc-item-text">Add funds</div>
+            </a>
+            <a href="/tickets" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-customer-service-2-line"></i>
+                </div>
+                <div class="mnc-item-text">Tickets</div>
+            </a>
+            <a href="/services" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-list-check-2"></i>
+                </div>
+                <div class="mnc-item-text">Services</div>
+            </a>
+        </div>
+    </div>
+  
+       <div class="bs-toast">
+         <div class="bs-toast-content">
+            <div class="toast-text">Copy to clipboard</div>
+         </div>
+      </div>
+
+      <div class="overlay"></div>
+
+{% include 'footer.twig' %}

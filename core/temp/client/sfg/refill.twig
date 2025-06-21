@@ -1,0 +1,127 @@
+{% include 'header.twig' %}
+	
+
+          <div class="content-wrap">
+	    <form action="" method="get" id="history-search">
+        <div class="grey-search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+           <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Search">
+        </div>
+		</form>
+        <div class="row mb-3">
+          <div class="col-md-3 mb-3">
+            <a href="/refill" class="orange-border-btn he-40"> All </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/refill/Pending" class="orange-border-btn he-40"> Pending </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/refill/Refilling" class="orange-border-btn he-40"> Refilling </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/refill/Completed" class="orange-border-btn he-40"> Completed </a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/refill/Rejected" class="orange-border-btn he-40"> Rejected</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/refill/Error" class="orange-border-btn he-40"> Error </a>
+          </div>
+          
+        </div>
+		
+        <div class="p-table">
+		<div class="table-responsive">
+		
+    
+        <table>
+          <thead>
+            <tr>
+              <th>Refill ID</th>
+<th>Date </th>
+<th>Order ID</th>
+              <th>Link</th>
+<th>Service</th> 
+              <th>Status</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+{#reject - #702283#}
+{#completed-0e7f00#}
+{#inprogress-0721ed#}
+{#pending-42b7af#}
+{#error-f71111#}
+
+            {% for order in orders %}
+              <tr>
+<td>{{ order['refill_id'] }}</td> 
+<td>{{ order['date'] }}</td> 
+                <td><a href="orders/?search={{order['id']}}">{{ order['id'] }}</a></td>
+               
+                 <td><a   target="_blank" href="{{ order['link'] }}">{{ order['link'] }}</a></td>  
+<td>{{ order['service'] }}</td> 
+      
+          <td><div style=" line-height:{% if order['refill_status'] == "Pending" %}1 {% endif %}; cursor:pointer; padding:3px 5px;  text-align:center; border-radius:20px; color:white; background:#{% if order['refill_status'] == "Completed"  %}0e7f00 {% elseif order['refill_status'] == "Refilling" %}260bc1  {% elseif order['refill_status'] == "Pending" %}42b7af {% elseif order['refill_status'] == "Error" %}42b7af {% elseif order['refill_status'] == "Rejected" %}702283 {% else %}f25800 {% endif %} ;" >{{ order['refill_status'] }}</div></td>
+               
+
+              </tr>
+            {% endfor %}
+</td>
+          </tbody>
+        </table>
+      </div>
+    <br>
+      {% if pagination["count"] > 1 %}
+        <ul class="pagination">
+
+          {% if pagination["current"] == 1 %}
+            <li>
+              <a href="refill/{{ status }}/{{ pagination["previous"] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Previous">
+                <span aria-hidden="true"><</span>
+              </a>
+            </li>
+          {% endif %}
+
+          {% set r, l = 3, 3 %}
+
+          {% if pagination['current'] == 1 %}
+            {% set r = 7 %}
+          {% endif %}
+
+          {% if pagination['current'] == 2 %}
+            {% set r = 5 %}
+          {% endif %}
+
+          {% if pagination['current'] >= pagination['count'] %}
+            {% set l = 5 %}
+          {% endif %}
+
+          {% for page in 1..pagination["count"] %}
+            {% if page >= (pagination['current']-l) and page <= (pagination['current']+r) %}
+              <div style="border:1px solid rgb(128,128,128); padding:4px; margin-left:8px; min-width:21px; text-align:center;"><li{% if page == pagination['current'] %} class="active" {%endif%}><a href="refill/{{ status }}/{{ page }}{% if search %}?search={{ search }}{% endif %}">{{ page }}</a></li></div>
+            {%endif%}
+          {% endfor %}
+
+          {% if pagination['current'] < pagination['count'] %}
+            <li>
+              <a style="margin-left:8px;" href="refill/{{ status }}/{{ pagination['next'] }}{% if search %}?search={{ search }}{% endif %}" aria-label="Next">
+                <span aria-hidden="true">></span>
+              </a>
+            </li>
+          {% endif %}
+
+        </ul>
+      {% endif %}
+
+    </div>
+  </div>
+</div></div></div></div>
+</div></div></div></div></div></div>
+</div>
+
+
+
+
+<br><br><br><br><br>
+{% include 'footer.twig' %}

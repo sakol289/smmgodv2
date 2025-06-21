@@ -1,0 +1,312 @@
+{% include 'header.twig' %}
+
+
+
+
+     <section class="bg-gradient-started">
+          <div class="bg-noise"></div>
+        </section>
+		
+		<!-- Main variables *content* -->
+		<div class="container-fluid">
+  <div class="row">
+  	<div class="col-lg-12">
+    	<div class="row mb-4">
+        	<div class="col-lg-3 col-md-6">
+            	<div class="ord_box">
+                	<div class="ord_icon_box">
+                    	<i class="far fa-users"></i>
+                    </div>
+                    <div class="ord_con_box">
+                    	<h3 class="fw-bolder style-text-primary" id="total_ords">{{ordersCount}}</h3>
+                        <p>
+                                                	Panel orders
+                                                </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="ord_box">
+                	<div class="ord_icon_box">
+                    	<i class="far fa-clipboard-list"></i>
+                    </div>
+                    <div class="ord_con_box">
+                    	<h3 class="fw-bolder style-text-primary">{{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }}</h3>
+                        <p>
+                                                	Spent balance
+                                                </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="ord_box">
+                	<div class="ord_icon_box">
+                    	<i class="far fa-money-bill"></i>
+                    </div>
+                    <div class="ord_con_box">
+                    	<h3 class="fw-bolder style-text-primary">
+                                                {{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}
+                                                </h3>
+                        <p>
+                                                	Account balance
+                                               </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="ord_box a_s_m" data-bs-toggle="modal" data-bs-target="#spent_modal">
+                	<div class="ord_icon_box">
+                    	<i class="far fa-clipboard-list-check"></i>
+                    </div>
+                    <div class="ord_con_box">
+                    	<h3 class="fw-bolder style-text-primary">
+                                                     {{ user['username'] }}
+                                                                                                                                                          </h3>
+                        <p>
+                                                Welcome to panel!
+                                                </p>
+                    </div>
+                </div>
+             <!--   <div class="modal fade" id="spent_modal" tabindex="-1" aria-labelledby="spent_modal" aria-hidden="true">
+                  <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                     <!-- <div class="modal-header">
+                                                    smmstone.com
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div> -->
+                   <!--   <div class="modal-body">
+                        <div class="row mb-4">
+                          
+                         
+                         
+                        
+                        </div>
+                      </div>
+                
+                    </div>
+                  </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+        <div class="d-none d-md-block col-lg-12">
+    	<div class="p_card buttons-row mb-4">
+          <ul class="social-btn-wrap row" id="new-order-cats">
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="telegram" data-value="7"><i class="fab fa-telegram-plane"></i> Telegram</a>
+            </li>
+            
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="instagram" data-value="3"><i class="fab fa-instagram"></i> Instagram</a>
+            </li>
+            
+            
+            
+            
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="twitter" data-value="2"><i class="fab fa-twitter"></i> Twitter</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="tiktok" data-value="6"><i class="fab fa-tiktok"></i> Tiktok</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="youtube" data-value="4"><i class="fab fa-youtube"></i> Youtube</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="facebook" data-value="1"><i class="fab fa-facebook-f"></i> Facebook</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="linkedin" data-value="5"><i class="fab fa-linkedin"></i> Linkedin</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="yandex" data-value="11"><i class="fab fa-yandex"></i> Yandex</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="vk" data-value="12"><i class="fab fa-vk"></i> VK.com</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="traffic" data-value="14"><i class="fas fa-globe"></i> Website Traffic</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="seo" data-value="15"><i class="fas fa-globe"></i> Website SEO</a>
+            </li>
+            <li class="col-3">
+              <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="" data-value="16"><i class="fab fa-audible"></i> Everything</a>
+            </li>
+          </ul>
+        </div>
+    </div>
+    <div class="col-lg-7 mb-4">
+    	<div class="p_card">
+           <ul class="nav nav-pills mb-3" id="new_order_tab" role="tablist">
+              <li class="nav-item me-3" role="presentation">
+                <button class="nav-link active" id="new_odr_tab" data-bs-toggle="tab" data-bs-target="#new_order" type="button" role="tab" aria-controls="new_order" aria-selected="true"><i class="fas fa-shopping-cart me-2"></i> New Order</button>
+              </li>
+            <!--  <li class="nav-item" role="presentation">
+                <button class="nav-link" id="srch_by_id_tab" data-bs-toggle="tab" data-bs-target="#srch_by_id" type="button" role="tab" aria-controls="srch_by_id" aria-selected="false"><i class="fas fa-search me-2"></i> Search By ID <img src="https://cdn.mypanel.link/sabd8c/ms1u915123yflard.png" width="40" height="40" /></button>
+              </li> -->
+            </ul>
+            <div class="tab-content" id="new_order_Tab_Content">
+              <div class="tab-pane fade show active" id="new_order" role="tabpanel" aria-labelledby="new_odr_tab">
+                <form  action="/" method="post" id="order-form">
+                    
+                    
+                     {% if error %}
+                     <div class="alert alert-dismissible alert-danger">
+                        {{ errorText }}
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 1 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['price'] }} <br>
+                        <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 2 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+                        <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+                        <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+                     </div>
+                     {% endif %}
+									  
+									  
+			 {% if categories %}
+               <div class="form-group mb-3">
+                      <label for="orderform-category" class="control-label">Category</label>
+                       <select
+                          class="form-control"
+                          id="neworder_category"
+                          name="categories"
+                          data-select="true"
+                          data-select-search="true"
+                          data-select-search-placeholder="Search" style="display: none">
+
+               
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+
+                <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+            </div>
+          {% endif %}
+          
+          <!-- end -->
+                   
+                   
+                   
+           <!-- form-group end -->
+           <div class="form-group mb-3">
+                    <label for="orderform-service" class="control-label">Service</label>
+                  
+                   <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+
+											<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+                                       </div>
+                                       
+
+                                       <!-- form-group end -->
+                     
+                      <div id="neworder_fields"></div>
+        
+                  <div class="form-group mb-3">
+                    <label for="charge" class="control-label">Charge</label>
+                    <input type="text" class="form-control" id="charge" value="" readonly>
+                  </div>
+                  
+                  
+                    
+
+                        {% if neworderTerms %}
+                        <div class="checkbox">
+                           <label>
+                           <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+                           </label>
+                        </div>
+                        {% endif %}
+					
+                      
+                   <button type="submit" class="btn btn-big-primary sketch-button">Submit<div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div></button>
+        
+                </form>
+              </div>
+              
+              <div class="tab-pane fade" id="srch_by_id" role="tabpanel" aria-labelledby="srch_by_id_tab">
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+    			
+		 
+<div class="col-lg-5 announcements">
+
+<table class="table">
+<thead>
+<tr>
+
+<th>Title</th>
+<th class="width-service-name">Content</th>
+
+<th class="nowrap">Date</th>
+
+
+</tr>
+</thead>
+<tbody>
+{% for new in newsList %}
+
+<tr>
+
+<td> <img width="30" class="mr-1" src="/img/icons/{{ new['news_icon'] }}.png">{{ new['news_title'] }} </td>
+<td>
+{{ new['news_content'] }}
+</td>
+<td>{{ new['news_date'] }}</td>
+
+</tr>{% endfor %}
+</tbody>
+</table>
+  
+ 
+</div>
+
+
+
+
+  </div>
+</div>
+  </div>
+</div>
+        
+      
+             
+{% include 'footer.twig' %}
+
+
+
+
+

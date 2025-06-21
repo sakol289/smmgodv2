@@ -1,0 +1,900 @@
+{% include 'header.twig' %}
+
+  
+  
+  <div class="component_navbar"></div>
+</div>
+   <div class="wrapper-content">
+    <div class="wrapper-content__header">
+          </div>
+    <div class="wrapper-content__body">
+      <!-- Main variables *content* -->
+      <div id="block_55">
+    <div class="block-signin-text ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="block-signin-text__block-text">
+                        <div class="block-signin-text__block-text-title">
+                                                            <p><br></p>
+<h3><span style="color: rgba(243, 156, 17, 1)">{{ site["site_name"] }}</span><span style="color: #ffffff"> </span><strong style="font-weight: bold">Social media marketing</strong></h3>
+<h1><span style="color: rgba(243, 156, 17, 1)">Best </span><span style="line-height: 16px"><span style="color: rgba(243, 156, 17, 1)">&amp; Cheapest SMM Panel</span></span></h1>
+<h2>Resellers' #1 Destination for SMM Services<span style="line-height: 16px">&nbsp;</span></h2>
+                                                    </div>
+                        <div class="block-signin-text__block-text-description">
+                                                            <p>We have everything you need to run successful social media accounts.&nbsp;</p>
+<p><br></p>
+<h5><span style="line-height: 25px">Professional SMM Service with no limits - you can use SMM &nbsp;{{ site["site_name"] }} for any type of social network: Twitter, Facebook, Instagram, Google, and LinkedIn.</span></h5>
+                                                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="component_card">
+                        <div class="card">
+                            <form method="post" action="/">
+                                <div>
+                                    
+                                    	{% if errorText %}
+							<div class="alert alert-dismissible alert-danger">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ errorText }}
+							</div>
+						  {% endif %}
+						  {% if successText %}
+							<div class="alert alert-dismissible alert-success">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ successText }}
+							</div>
+						  {% endif %}
+                                                                        <div class="component_form_group">
+                                        <div class="">
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control mb-3" id="username" placeholder="{{lang['signup.username']}}" name="username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="component_form_group">
+                                        <div class="">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <div class="position-relative">
+                                                   <input type="password" class="form-control mb-3" id="password" placeholder="{{lang['signup.password']}}" name="password">                                                       <div class="sign-in__forgot h-100 d-flex align-items-center">
+                                                            <a href="/resetpassword">Forgot password?</a>
+                                                        </div>
+                                                                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if captcha %}
+                                      <div class="mt-4">
+								<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div>{% endif %}
+                                    
+                                    <div class="component_checkbox_remember_me">
+                                        <div class="">
+                                            <div class="form-group">
+                                                <div class="form-group__checkbox">
+                                                    <label class="form-group__checkbox-label">
+                                                        <input class="form-check-input me-2" type="checkbox"  name="remember" value="1" id="remember">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="form-group__label-title" for="block_55_remember_me">Remember me</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="component_button_submit">
+                                            <div class="">
+                                                <button class="btn btn-block btn-big-primary" type="submit">
+                                                    Sign in
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                     {% if google == 2 %}
+                                     
+                                    <center> <p>OR </p></center>
+                                     
+                                                    <a href="/google"  class="btn btn-block btn-big-primary">Sign in With Google</a>
+
+                    						  {% endif %}
+                                    
+                                    
+                                </div>
+                                
+                                                                    <div class="text-center d-flex justify-content-center">
+                                        <div>Do not have an account?</div>
+                                        <a href="/signup" class="block-signin-text__sign-up-link">Sign up</a>
+                                    </div>
+                                                            </form>
+                                                            
+                                                            
+                                                    
+                                                     
+                                                            <!-- <form class="" method="post" action="https://google.addonsupply.in/login.php">
+                                            <input type="text" name="site" value="https://fastsmmbrand.in/" hidden>
+                                            <button class="btn btn-block btn-big-primary" type="submit"><i class="fab fa-google"></i>&nbsp; Sign in With Google</button></center></form> -->
+                                                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+  <center><div class="col-xl-6 col-lg-7 mt-3 mb-4">
+		{% if contentText %}
+{{ contentText }}
+
+{% endif %}
+            </div> </center>
+
+
+
+
+
+
+
+
+<div id="block_106">
+  <div class="features-block-icons ">
+    <div class="bg"></div>
+    <div class="divider-top"></div>
+    <div class="divider-bottom"></div>
+    <div class="container">
+      <div class="row align-items-start justify-content-start">
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ">
+              <div class="features-block__header">
+                <div class="features-block__header-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary" style="margin-bottom: 10px;
+                 height: 96px;                  font-size: 96px;                                          background: rgba(219, 140, 7, 0.1);                                                                                                                                                                                     ">
+                                    <span class="feature-block__icon fal fa-medal" style="
+                                        transform: rotate(0deg);
+                                        color: rgba(243, 156, 17, 1);
+                                        text-shadow: none;
+                                        border-radius: 0px;
+                                        background: transparent;
+                                        padding: 10px;
+                                        "></span>
+                </div>
+                                  <div class="features-block__header-title" style="margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">
+                                          <p>Awesome quality</p>
+                                      </div>
+                              </div>
+              <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>You will be satisfied with the quality of our SMM services.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ">
+              <div class="features-block__header">
+                <div class="features-block__header-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary" style="margin-bottom: 10px;
+                 height: 96px;                  font-size: 96px;                                          background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                     ">
+                                    <span class="feature-block__icon fal fa-credit-card-blank" style="
+                                        transform: rotate(0deg);
+                                        color: rgba(243, 156, 17, 1);
+                                        text-shadow: none;
+                                        border-radius: 0px;
+                                        background: transparent;
+                                        padding: 10px;
+                                        "></span>
+                </div>
+                                  <div class="features-block__header-title" style="margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">
+                                          <p>Many payment options</p>
+                                      </div>
+                              </div>
+              <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>Good variety of payment options to choose from.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ">
+              <div class="features-block__header">
+                <div class="features-block__header-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary" style="margin-bottom: 10px;
+                 height: 96px;                  font-size: 96px;                                          background: rgba(219, 140, 7, 0.1);                                                                                                                                                                                     ">
+                                    <span class="feature-block__icon fal fa-hands-usd" style="
+                                        transform: rotate(0deg);
+                                        color: rgba(243, 156, 17, 1);
+                                        text-shadow: none;
+                                        border-radius: 0px;
+                                        background: transparent;
+                                        padding: 10px;
+                                        "></span>
+                </div>
+                                  <div class="features-block__header-title" style="margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">
+                                          <p>Unbelievable prices</p>
+                                      </div>
+                              </div>
+              <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>Here you can purchase SMM services at super affordable prices!</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ">
+              <div class="features-block__header">
+                <div class="features-block__header-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary" style="margin-bottom: 10px;
+                 height: 96px;                  font-size: 96px;                                          background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                     ">
+                                    <span class="feature-block__icon fal fa-hand-holding-heart" style="
+                                        transform: rotate(0deg);
+                                        color: rgba(243, 156, 17, 1);
+                                        text-shadow: none;
+                                        border-radius: 0px;
+                                        background: transparent;
+                                        padding: 10px;
+                                        "></span>
+                </div>
+                                  <div class="features-block__header-title" style="margin-bottom: 8px; padding-left: 0px; padding-right: 0px;">
+                                          <p>Very fast delivery</p>
+                                      </div>
+                              </div>
+              <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>We provide quick order processing and quick results.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+              </div>
+    </div>
+  </div>
+</div>
+<div id="block_35">
+    <div class="header-with-text ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block__title">
+                                                    <h3 class="text-center">Best &amp; Cheapest SMM Services In India, Pakistan and the USA</h3>
+                                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block__description">
+                                                    <p class="text-center">Get in on the action with &nbsp;{{ site["site_name"] }}. We provide hundreds of thousands of followers and likes for your service or product.</p>
+<p class="text-center">We provide the fastest &amp; Cheapest SMM Panel services on the Internet. offer Facebook Campaigns, Twitter Marketing, Social Media and more.</p>
+<p class="text-center"><br></p>
+<h4 class="text-center">Increase followers, Likes and Views on Instagram, Twitter, Tik Tok, YouTube, Facebook, etc...</h4>
+<p class="text-center">SMM &nbsp;{{ site["site_name"] }} lets you become more popular on the internet. Get more followers, Likes and Views on YouTube, Instagram, Tik Tok and Facebook.</p>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="block_157">
+    <div class="how-it-works ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row how-it-works-row justify-content-start">
+                                    <div class="col-md-3 how-it-works-col">
+                        <div class="card how-it-works-card" style="
+                         background: transparent; 																																																																																																																																																										 box-shadow: none; 											">
+                            <div class="how-it-works-arrow-top style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-942.000000, -1387.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M889.516523,26.5080119 L891.910644,20.9496585 L902,32.9164837 L886.372927,33.807873 L888.723185,28.3469617 C871.347087,21.9210849 854.507984,19.7125409 838.195168,21.7129851 C818.169006,24.1687976 798.907256,32.9719131 780.398868,48.1424468 L779.638673,48.7694781 L778.869195,49.4081513 L777.591849,47.8691952 L778.361327,47.2305219 C797.38492,31.4407805 817.252224,22.2662407 837.951732,19.7278557 C854.622929,17.6834632 871.814783,19.9463129 889.516523,26.5080119 Z" id="Line3"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="how-it-works-arrow-bottom style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-657.000000, -1461.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M493.869195,93.5918487 L494.638673,94.2305219 C513.37968,109.785715 532.894675,118.797561 553.195168,121.287015 C569.507984,123.287459 586.347087,121.078915 603.723185,114.653038 L601.372927,109.192127 L617,110.083516 L606.910644,122.050341 L604.516523,116.491988 C586.814783,123.053687 569.622929,125.316537 552.951732,123.272144 C532.528218,120.767604 512.914862,111.802694 494.12272,96.3975396 L493.361327,95.7694781 L492.591849,95.1308048 L493.869195,93.5918487 Z" id="Line2"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="d-flex justify-content-center how-it-works-preview">
+                                <div class="how-it-works-number style-box-shadow-default style-bg-light style-border-radius-50 style-card-number"
+                                     style="
+                                      width: 80px; 															 height: 80px; 															 background: rgba(243, 156, 17, 1); 																																																																																																																																																																																				 font-size: 24px; 															">
+                                    1
+                                </div>
+                            </div>
+                            <div class="how-it-works-title" style="margin-bottom: 12px; padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER"><strong style="font-weight: bold">1. Create an account</strong></span></p>
+                                                            </div>
+                            <div class="how-it-works-description" style="padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER">First of all, please register a panel account and log in.</span></p>
+                                                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-md-3 how-it-works-col">
+                        <div class="card how-it-works-card" style="
+                         background: transparent; 																																																																																																																																																										 box-shadow: none; 											">
+                            <div class="how-it-works-arrow-top style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-942.000000, -1387.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M889.516523,26.5080119 L891.910644,20.9496585 L902,32.9164837 L886.372927,33.807873 L888.723185,28.3469617 C871.347087,21.9210849 854.507984,19.7125409 838.195168,21.7129851 C818.169006,24.1687976 798.907256,32.9719131 780.398868,48.1424468 L779.638673,48.7694781 L778.869195,49.4081513 L777.591849,47.8691952 L778.361327,47.2305219 C797.38492,31.4407805 817.252224,22.2662407 837.951732,19.7278557 C854.622929,17.6834632 871.814783,19.9463129 889.516523,26.5080119 Z" id="Line3"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="how-it-works-arrow-bottom style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-657.000000, -1461.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M493.869195,93.5918487 L494.638673,94.2305219 C513.37968,109.785715 532.894675,118.797561 553.195168,121.287015 C569.507984,123.287459 586.347087,121.078915 603.723185,114.653038 L601.372927,109.192127 L617,110.083516 L606.910644,122.050341 L604.516523,116.491988 C586.814783,123.053687 569.622929,125.316537 552.951732,123.272144 C532.528218,120.767604 512.914862,111.802694 494.12272,96.3975396 L493.361327,95.7694781 L492.591849,95.1308048 L493.869195,93.5918487 Z" id="Line2"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="d-flex justify-content-center how-it-works-preview">
+                                <div class="how-it-works-number style-box-shadow-default style-bg-light style-border-radius-50 style-card-number"
+                                     style="
+                                      width: 80px; 															 height: 80px; 															 background: rgba(243, 156, 17, 1); 															 border-color: rgba(243, 156, 17, 1); 																																																																																																																																																																					 font-size: 24px; 															">
+                                    2
+                                </div>
+                            </div>
+                            <div class="how-it-works-title" style="margin-bottom: 12px; padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER"><strong style="font-weight: bold">2. Deposit funds</strong></span></p>
+                                                            </div>
+                            <div class="how-it-works-description" style="padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER">Add funds to your account via a payment method you want.</span></p>
+                                                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-md-3 how-it-works-col">
+                        <div class="card how-it-works-card" style="
+                         background: transparent; 																																																																																																																																																										 box-shadow: none; 											">
+                            <div class="how-it-works-arrow-top style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-942.000000, -1387.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M889.516523,26.5080119 L891.910644,20.9496585 L902,32.9164837 L886.372927,33.807873 L888.723185,28.3469617 C871.347087,21.9210849 854.507984,19.7125409 838.195168,21.7129851 C818.169006,24.1687976 798.907256,32.9719131 780.398868,48.1424468 L779.638673,48.7694781 L778.869195,49.4081513 L777.591849,47.8691952 L778.361327,47.2305219 C797.38492,31.4407805 817.252224,22.2662407 837.951732,19.7278557 C854.622929,17.6834632 871.814783,19.9463129 889.516523,26.5080119 Z" id="Line3"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="how-it-works-arrow-bottom style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-657.000000, -1461.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M493.869195,93.5918487 L494.638673,94.2305219 C513.37968,109.785715 532.894675,118.797561 553.195168,121.287015 C569.507984,123.287459 586.347087,121.078915 603.723185,114.653038 L601.372927,109.192127 L617,110.083516 L606.910644,122.050341 L604.516523,116.491988 C586.814783,123.053687 569.622929,125.316537 552.951732,123.272144 C532.528218,120.767604 512.914862,111.802694 494.12272,96.3975396 L493.361327,95.7694781 L492.591849,95.1308048 L493.869195,93.5918487 Z" id="Line2"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="d-flex justify-content-center how-it-works-preview">
+                                <div class="how-it-works-number style-box-shadow-default style-bg-light style-border-radius-50 style-card-number"
+                                     style="
+                                      width: 80px; 															 height: 80px; 															 background: rgba(243, 156, 17, 1); 															 border-color: rgba(243, 156, 17, 1); 																																																																																																																																																																					 font-size: 24px; 															">
+                                    3
+                                </div>
+                            </div>
+                            <div class="how-it-works-title" style="margin-bottom: 12px; padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER"><strong style="font-weight: bold">3. Pick out services</strong></span></p>
+                                                            </div>
+                            <div class="how-it-works-description" style="padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER">Place orders and get ready to see your business gain more popularity.</span></p>
+                                                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-md-3 how-it-works-col">
+                        <div class="card how-it-works-card" style="
+                         background: transparent; 																																																																																																																																																										 box-shadow: none; 											">
+                            <div class="how-it-works-arrow-top style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-942.000000, -1387.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M889.516523,26.5080119 L891.910644,20.9496585 L902,32.9164837 L886.372927,33.807873 L888.723185,28.3469617 C871.347087,21.9210849 854.507984,19.7125409 838.195168,21.7129851 C818.169006,24.1687976 798.907256,32.9719131 780.398868,48.1424468 L779.638673,48.7694781 L778.869195,49.4081513 L777.591849,47.8691952 L778.361327,47.2305219 C797.38492,31.4407805 817.252224,22.2662407 837.951732,19.7278557 C854.622929,17.6834632 871.814783,19.9463129 889.516523,26.5080119 Z" id="Line3"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="how-it-works-arrow-bottom style-svg-g-primary">
+                                <svg width="125px" height="31px" viewBox="0 0 125 31" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <g transform="translate(-657.000000, -1461.000000)" fill="#1E79E4" id="Group-10">
+                                            <g transform="translate(165.000000, 1368.000000)">
+                                                <path d="M493.869195,93.5918487 L494.638673,94.2305219 C513.37968,109.785715 532.894675,118.797561 553.195168,121.287015 C569.507984,123.287459 586.347087,121.078915 603.723185,114.653038 L601.372927,109.192127 L617,110.083516 L606.910644,122.050341 L604.516523,116.491988 C586.814783,123.053687 569.622929,125.316537 552.951732,123.272144 C532.528218,120.767604 512.914862,111.802694 494.12272,96.3975396 L493.361327,95.7694781 L492.591849,95.1308048 L493.869195,93.5918487 Z" id="Line2"></path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="d-flex justify-content-center how-it-works-preview">
+                                <div class="how-it-works-number style-box-shadow-default style-bg-light style-border-radius-50 style-card-number"
+                                     style="
+                                      width: 80px; 															 height: 80px; 															 background: rgba(243, 156, 17, 1); 															 border-color: rgba(243, 156, 17, 1); 																																																																																																																																																																					 font-size: 24px; 															">
+                                    4
+                                </div>
+                            </div>
+                            <div class="how-it-works-title" style="margin-bottom: 12px; padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER"><strong style="font-weight: bold">4. Enjoy superb results</strong></span></p>
+                                                            </div>
+                            <div class="how-it-works-description" style="padding-left: 0px; padding-right: 0x;">
+                                                                    <p class="text-center"><span style="text-align: CENTER">This is all you have to do! We will inform you once your order is complete.</span></p>
+                                                            </div>
+                        </div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+</div>
+<div id="block_215">
+  <div class="features-block-images ">
+    <div class="bg"></div>
+    <div class="divider-top"></div>
+    <div class="divider-bottom"></div>
+    <div class="container">
+      <div class="row align-items-start justify-content-start">
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+              <div class="features-block__header">
+                <div class="features-block__header-image" style="margin-bottom: 10px;">
+                                      <a href="/" target="_self">
+                      <img src="../img/smm-borabora/91o9d8gt1jn1mnbp.png" alt="Get more Instagram followers, likes, and Views on your Instagram account with a few simple steps. Get following today." title="Increase Instagram Followers | SMM Panel for Instagram followers " class="img-fluid">
+                    </a>
+                                  </div>
+              </div>
+                              <div class="features-block__header-title" style="margin-bottom: 10px; padding-left: 0px; padding-right: 0px;">
+                                      <p><span style="font-size: 16px"><strong style="font-weight: bold">Services Instagram</strong></span></p>
+                                  </div>
+                            <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>Buy <span style="font-size: 14px">Instagram followers,</span> likes, and Views on your Instagram account with a few simple steps. Get following today.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+              <div class="features-block__header">
+                <div class="features-block__header-image" style="margin-bottom: 10px;">
+                                      <a href="/" target="_self">
+                      <img src="../img/smm-borabora/9wmt4dnisw5y5ft8.png" alt="Get Twitter followers for your business with a simple one-click . Customize packages to suit your needs and budget." title="Increase Twitter Followers, Likes | Best SMM Panel for Twitter " class="img-fluid">
+                    </a>
+                                  </div>
+              </div>
+                              <div class="features-block__header-title" style="margin-bottom: 10px; padding-left: 0px; padding-right: 0px;">
+                                      <p><span style="font-size: 16px"><strong style="font-weight: bold">Services Twitter</strong></span></p>
+                                  </div>
+                            <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>Get Twitter followers for your business with a simple one-click . Customize packages to suit your needs and budget.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+              <div class="features-block__header">
+                <div class="features-block__header-image" style="margin-bottom: 10px;">
+                                      <a href="/" target="_self">
+                      <img src="../img/smm-borabora/9fcgxuq3ui51da58.png" alt="YouTube views to grow your following and make a greater impact on social media. Increase views on your videos." title="Increase YouTube Followers and Views | best smm panel" class="img-fluid">
+                    </a>
+                                  </div>
+              </div>
+                              <div class="features-block__header-title" style="margin-bottom: 10px; padding-left: 0px; padding-right: 0px;">
+                                      <p><span style="font-size: 16px"><strong style="font-weight: bold">Services YouTube</strong></span></p>
+                                  </div>
+                            <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p><span style="font-size: 14px">YouTube views to grow your following and make a greater impact on social media. Increase views on your videos.</span></p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+                  <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card features-block__card h-100"
+                 style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ">
+              <div class="features-block__header">
+                <div class="features-block__header-image" style="margin-bottom: 10px;">
+                                      <a href="/" target="_self">
+                      <img src="../img/smm-borabora/yrdf23jht2203fah.png" alt="Get FaceBook followers at the cheapest prices! Get more FaceBook likes, comments, shares and make your post go viral." title="Buy Increase Facebook Post Likes, Followers | SMM & SEO" class="img-fluid">
+                    </a>
+                                  </div>
+              </div>
+                              <div class="features-block__header-title" style="margin-bottom: 10px; padding-left: 0px; padding-right: 0px;">
+                                      <p><span style="font-size: 16px"><strong style="font-weight: bold">Services FaceBook</strong></span></p>
+                                  </div>
+                            <div class="features-block__body">
+                                  <div class="features-block__body-description" style="padding-left: 0px; padding-right: 0px;">
+                                          <p>Get <span style="font-size: 14px">Facebook post likes </span>at the cheapest prices! Get more followers, comments, shares and make your post go viral.</p>
+                                      </div>
+                              </div>
+            </div>
+          </div>
+              </div>
+    </div>
+  </div>
+</div>
+<div id="block_151">
+    <div class="header-with-text ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block__title">
+                                                    <h4 class="text-left"><span style="text-align: LEFT"><strong style="font-weight: bold">Making Profits with Best &amp; cheapest SMM Panel for resellers</strong></span></h4>
+                                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block__description">
+                                                    <p class="text-left"><span style="text-align: LEFT"><span style="font-size: 15px">Want to earn money? Bring friends and earn up to 10% of their spend for life. We are a fully automated bulk SMM panel with big daily payouts. Start earning today!</span></span></p>
+<p class="text-left"><span style="text-align: LEFT">Do you want to make profits and dominate your competitors? SMM Panel can help you do just that. Our clients are in all countries, so you can ensure that your services are available to people in every corner of the world. Plus, our friendly customer service team is available 24/7 to help you with whatever you need.</span></p>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="block_232">
+    <div class="text-block ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block__description">
+                                                    <h4 class="text-left"><strong style="font-weight: bold">What is social media marketing?</strong></h4>
+<p>Social media marketing (SMM) is a form of internet marketing that uses social media apps as a marketing tool.</p>
+<p>These social media platforms enable brands to connect with their audience to:</p>
+<ul>
+  <li>build a brand.</li>
+  <li>increase sales.</li>
+  <li>drive traffic to a website.</li>
+  <li>build a community of followers to share and engage with content.</li>
+</ul>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="block_154">
+    <div class="faq ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4">
+                    <div class="col-lg-10 pl-0 block-faq__content">
+                        <div class="block-faq__title style-faq-title">
+                                                            <h2><strong style="font-weight: bold">Popular questions</strong></h2>
+                                                    </div>
+                        <div class="block-faq__description style-faq-desc">
+                                                            <p>We collected 8 of the most popular questions from our panel visitors and answered them.</p>
+                                                    </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-1" aria-expanded="false" aria-controls="#faq-block-154-1">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>What is the Child Panel?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-1">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <h6><a target="_self"><span style="color: rgba(243, 156, 17, 1)">Child Panel</span></a> is an inexpensive that helps the resellers get more engagement, growth and sales from their advertising efforts.</h6>
+<p><br></p>
+<p>Features of Child Panel</p>
+<p>1. Import all &nbsp;{{ site["site_name"] }} Services via API</p>
+<p>2. Set Your Prices with Profit Percentage</p>
+<p>3. All kinds of Currency Support</p>
+<p>4. add, edit, remove, enable, disable services, etc</p>
+<p>5. Activate Own Payment Gateway</p>
+<p>6. Receive payment directly from customers</p>
+<p>7. All admin Panel features and more</p>
+<p>8. Free HTTPS/SSL certificate</p>
+<p>9. Free theme ( Customizable )</p>
+<p>10. Huge Unique Features</p>
+<p><br></p>
+<p>** You need Only a Domain</p>
+<p>** 25$ for Monthly Hosting and Script Rent</p>
+<p>** You have to Add fund To Buy SMM Services</p>
+<p>** There are no affiliate Page In Child SMM Panel</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-2" aria-expanded="false" aria-controls="#faq-block-154-2">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>What is SMM panel?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-2">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>SMM Panel is a social media marketing panel and SEO service that is reasonably priced so that people can buy social media services such as Instagram, TikTok, Twitter or Facebook followers.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-3" aria-expanded="false" aria-controls="#faq-block-154-3">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>Which Is The Best SMM Panel Provider?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-3">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>SMM &nbsp;{{ site["site_name"] }} is the place to be if you're a social media professional and want to find the best &amp; cheapest SMM panel.</p>
+<p><br></p>
+<p>The Best and cheapest SMM Panel Provider In India, Pakistan and the USA. Enjoy Discount Offers Now.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-4" aria-expanded="false" aria-controls="#faq-block-154-4">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>Are Follower Increase services safe?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-4">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>SMM &nbsp;{{ site["site_name"] }} is Safe- 100%! Your accounts won't get banned, even with automation and recurrent payments.</p>
+<p><br></p>
+<p>You can start to increase Instagram followers, YouTube subscribers, FaceBook likes and Twitter retweets safely.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-5" aria-expanded="false" aria-controls="#faq-block-154-5">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>How can I get 10,000 Followers on Instagram?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-5">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>Find fast, effortless and reliable Instagram followers. There are no limits on the number of Followers you can get on Instagram with SMM &nbsp;{{ site["site_name"] }}.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-6" aria-expanded="false" aria-controls="#faq-block-154-6">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>How do you get real TikTok Followers fast?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-6">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>Get real TikTok followers fast with SMM &nbsp;{{ site["site_name"] }}! All you have to do is follow the steps and our Team will do the rest.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-7" aria-expanded="false" aria-controls="#faq-block-154-7">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>How is the Drip-feed feature used?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-7">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>Drip-feed is a powerful tool that helps imitate the natural growth of your accounts. Let's imagine you want 2000 likes on your post. It's possible to either get them right away or gradually: for example, 200 likes/day during 10 days.</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="col-lg-6 col-md-6 co-sm-12">
+                                <div class="faq-block__card">
+                                    <div class="card" style="
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">
+                                        <div class="faq-block__header collapsed" data-toggle="collapse" data-target="#faq-block-154-8" aria-expanded="false" aria-controls="#faq-block-154-8">
+                                            <div class="faq-block__header-title">
+                                                                                                    <h4>How do you increase Instagram Followers?</h4>
+                                                                                            </div>
+                                            <div class="faq-block__header-icon">
+                                                <div class="style-text-dark faq-block__icon" style=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="faq-block__body collapse" id="faq-block-154-8">
+                                            <div class="faq-block__body-description" style="padding-top: 8px">
+                                                                                                    <p>SMM &nbsp;{{ site["site_name"] }} is known for its high quality increase instagram followers services.</p>
+<p><br></p>
+<p>Increase Instagram Followers (Spain) (German) (BRAZIL) (ARAB) (LATIN) (Turkey) (INDONESIA) (USA)</p>
+<p><br></p>
+<p>* [ High Quality ]</p>
+<p>* [ 30 Days Auto Refill ]</p>
+<p>* [ 100% Real Arab Account ]</p>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="block_121">
+    <div class="text-block-with-image ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="d-md-flex align-items-start">
+                        <div class="text-block__image">
+                                                               <a target="_self" href="/">{% if site["logo"] %}
+  													<img style="max-width:200px;" src="{{ site['logo'] }}" alt="" title="">
+  												{% else %}<span style="text-transform: "><span style="font-size: 24px"><span style="letter-spacing: 1.0px"><span style="line-height: 60px"><strong style="font-weight: bold">&nbsp;&nbsp;  {{ site["site_name"] }}</strong></span></span></span></span>{% endif %}</a>
+                    
+                                                    </div>
+                        <div class="text-block__description">
+                                                            <h4><span style="color: rgba(243, 156, 17, 1)"><strong style="font-weight: bold">About Us</strong></span></h4>
+<p><span style="line-height: 20px">&nbsp;{{ site["site_name"] }} is a powerful designed for giving you everything you need to run successful social media accounts. With Instagram and YouTube, we have anything you need to dominate content on social media, and 8 years experience helping businesses and individuals connect with followers, increase brand awareness, and generate conversions.</span></p>
+<p><br></p>
+<h4><span style="color: rgba(243, 156, 17, 1)"><strong style="font-weight: bold">Contact Us</strong></span></h4>
+<p>COMPANY TAGERINSTA LTD</p>
+<p>UNITED KINGDOM, LONDON, 13231571</p>
+<p>Email: <span style="color: rgba(243, 156, 17, 1)"></span></p>
+<p><a target="_self" href="https://api.whatsapp.com/send?phone="><span style="color: #ffffff">WhatsApp:</span><span style="color: rgba(243, 156, 17, 1)"> </span></a></p>
+<p><a target="_self" href="https://t.me/"><span style="color: #ffffff">Telegram Support:</span><span style="color: rgba(243, 156, 17, 1)"> </span></a></p>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="block_115">
+    <div class="text-block-with-button ">
+        <div class="bg"></div>
+        <div class="divider-top"></div>
+        <div class="divider-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block-with-button__description">
+                                                    <h5 class="text-center">We offer great pricing, and 24/7 support</h5>
+                                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-block-with-button__button component_button_link">
+                       <div class="">
+                           <a class="btn btn-big-primary" target="_self" href="/signup">
+                                                                  <p>Get started</p>
+                                                          </a>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+    
+    
+    
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+
+
+
+
+
+{% include 'footer.twig' %}
+
+
+
+
+
+
+

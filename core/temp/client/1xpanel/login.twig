@@ -1,0 +1,514 @@
+{% include 'header.twig' %}
+
+   
+   
+   <!-- Main variables *content* -->
+	<section class="homeHeader">
+        <div class="homeBg">
+            <img src="https://cdn.mypanel.link/j71eqe/ccoiba1e61yqzyc9.png">
+         </div>
+        <div class="container">
+            <div class="hhSide">
+                <div class="row">
+                    <div class="col-lg-6" style="padding-top: 55px">
+						<div class="homeRate py-3">
+						  <div class="homeRateItem">
+							<div class="icon"><i class="ri-shopping-basket-line"></i></div>
+							<div class="text"><strong>672058</strong> Orders Completed
+</div>
+						  </div>
+						  <div class="homeRateItem">
+							<div class="icon"><i class="far fa-smile"></i></div>
+							<div class="text"><strong>116434</strong> Active Customer
+</div>
+						  </div>
+						</div>
+                        <h1 class="hhTitle">
+Best and Cheapest <span class="rotate">Smm Panel</span> Services Provider 
+                        </h1>
+						<div class="row" style="margin-top: 25px;">
+
+
+                         <div class="col-lg-6">
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i>
+																Services are updated daily!
+															   </p>
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i>
+																+100 Secure payment methods!
+															   </p>
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i> 
+																24/7 Tech Support for Any help!
+															   </p>
+                         </div>
+                         <div class="col-lg-6">
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i> 
+																You can resell our services!
+															   </p>
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i>   
+																Real/High quality services!
+															   </p>
+                            <p class="f-14 d-flex align-items-center">
+                               <i class="navbar-icon fas fa-check-circle mr-1" style="color: #28cb69;"></i> 
+																Price Start from $0.001/k
+															   </p>
+                         </div>
+                      </div>						
+						<div class="row mt-5">
+						  <div class="col-lg-auto col-md-6 col-12 mb-4 mb-md-0">
+							<a href="/services" class="btn btn-primary btn-rounded btn-100">
+							  <span>Services</span>
+							  <i class="ri-arrow-right-up-line ms-3"></i>
+							</a>
+						  </div>
+						  <div class="col-lg-auto col-md-6 col-12">
+							<a href="/signup" class="btn btn-rounded btn-100">
+							  <span>Sign up</span>
+							  <i class="ri-arrow-right-up-line ms-3"></i>
+							</a>
+						  </div>
+						</div>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <div class="hhBanner">
+							<span class="hhLine"></span>
+                            <img src="https://cdn.mypanel.link/j71eqe/yozh2urg7i1726b0.png" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<section class="homeLogin">
+	  <div class="container">
+		<div class="card">
+		  <div class="card-body">
+			<h3 class="hlTitle mb-3">You can benefit from our services by logging into your account with us!
+</h3>
+
+                      {% if errorText %}
+									<div class="alert alert-dismissible alert-danger">
+									  <button type="button" class="close" data-dismiss="alert">×</button>
+									  {{ errorText }}
+									</div>
+								  {% endif %}
+								  {% if successText %}
+									<div class="alert alert-dismissible alert-success">
+									  <button type="button" class="close" data-dismiss="alert">×</button>
+									  {{ successText }}
+									</div>
+								  {% endif %}
+			  
+			  				<form  method="post" action="/">
+					<div class="row">
+						<div class="col-lg-9">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
+									<input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Username">
+								</div>
+								<div class="col-lg-6 col-md-6 col-12 mb-4 mb-lg-0">
+									<input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Password">
+								</div>
+							</div>
+						</div>            
+						 <div class="col-lg-3 col-12 mb-4">
+						
+						  <button type="submit" class="btn btn-primary btn-lg btn-100 text-center">
+							<span class="text">Sign in</span>
+						  </button>
+						</div>
+					</div>
+				  					 {% if captcha %}
+									<div class="form-group">
+									  <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+									</div>
+								  {% endif %}
+								  
+								  
+				  					<div class="row align-items-center">
+						<div class="col-lg-4 col-md-6 col-12 mb-2 mb-lg-0">
+						  <div class="form-check">
+							<input class="form-check-input" type="checkbox" name="remember" value="1" id="remember">
+							<label class="form-check-label mb-0" for="flexCheckChecked">
+								Remember me
+							</label>
+						  </div>
+						</div>
+						<div class="col-lg-4 col-md-6 col-12 mb-3 text-center text-md-start  mb-lg-0">
+						  <div class="hlText"><a href="/resetpassword" style="color: #fff!important">Forgot password?</a></div>
+						</div>
+						<div class="col-lg-4 col-12 text-center text-lg-end">
+						  <div class="hlText">Do not have an account?  <a href="/signup" style="color: #fff!important">Sign up!</a></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	  </div>
+	</section>
+	
+
+<section class="homeSection">
+	<div class="container">
+		<div class="text-center mb-5">
+			<h2 class="home-title"> 
+How does our SMM panel <span class="primary-color">works?</span>
+            </h2>
+		</div>
+
+		<div class="login-eause row row-cols-lg-4 row-cols-2">
+		  <div class="col">
+			<div class="login-eause-item">
+			  <div class="icon">
+				<i class="fal fa-user-plus"></i>
+			  </div>
+			  <h3 class="title">
+Create a Free Account
+              </h3>
+			  <p class="text">
+Join our system for free by clicking on the register button.
+              </p>
+			</div>
+		  </div>
+
+		  <div class="col">
+			<div class="login-eause-item">
+			  <div class="icon">
+				<i class="fal fa-credit-card"></i>
+			  </div>
+			  <h3 class="title">
+Fill Balance
+              </h3>
+			  <p class="text">
+Make your payment with the payment option that suits you.
+              </p>
+			</div>
+		  </div>
+
+		  <div class="col">
+			<div class="login-eause-item">
+			  <div class="icon">
+				<i class="fal fa-shopping-cart"></i>
+			  </div>
+			  <h3 class="title">
+Order the Service that you want
+              </h3>
+			  <p class="text">
+You are interested in and place your order easily.
+              </p>
+			</div>
+		  </div>
+
+		  <div class="col">
+			<div class="login-eause-item">
+			  <div class="icon">
+				<i class="fal fa-crown"></i>
+			  </div>
+			  <h3 class="title">
+Enjoy the Ascension
+              </h3>
+			  <p class="text">
+Enjoy your social media promotion with us!
+              </p>
+			</div>
+		  </div>
+
+		</div>
+	</div>
+</section>	
+
+    <section class="homeSection">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-5">
+            <h2 class="hsTitle">
+                            #1 CHEAPEST SMM PANEL IN THE WORLD FOR <span class="rotate">8 years!</span>
+                          </h2>
+            <p class="hsText mt-3">
+                                Amazing SMM Panel meaning is Cheapest SMM Panel and SEO Services Reseller Panel Script or website, Where People Buy Social Media Marketing Service Such as Facebook Likes, Twitter Followers,YouTube Views, Instagram Followers, YouTube watch time Views,Tiktok Followers, Snapchat Followers, Website Traffic,Snapchat likes, Tiktok likes, and more SMM Services.
+                            </p>
+			<div class="row mt-5">
+				 <div class="col-lg-auto col-md-6 col-12 mb-4 mb-md-0">
+					<a href="/services" class="btn btn-primary btn-rounded btn-100">
+						<span>Services</span>
+						<i class="ri-arrow-right-up-line ms-3"></i>
+					</a>
+				</div>
+				<div class="col-lg-auto col-md-6 col-12">
+					<a href="/signup" class="btn btn-rounded btn-100">
+						<span>Sign up</span>
+						<i class="ri-arrow-right-up-line ms-3"></i>
+					</a>
+				</div>
+			</div>
+          </div>
+          <div class="col-lg-6 offset-lg-1">
+			<div id="infinite" class="brandSlider">
+				<div class="container bShadow">
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-twitch pr-2"></i>Twitch</span>
+						<span>
+							<span class="pbRight">watch</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-instagram pr-2"></i>Instagram</span>
+						<span>
+							<span class="pbRight">follower</span>
+							<span class="pbRight">like</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-twitter pr-2"></i>Twitter</span>
+						<span>
+							<span class="pbRight">follower</span>
+							<span class="pbRight">retweet</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-youtube pr-2"></i>Youtube</span>
+						<span>
+							<span class="pbRight">subs</span>
+							<span class="pbRight">watch</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-facebook-square pr-2"></i>Facebook</span>
+						<span>
+							<span class="pbRight">like</span>
+							<span class="pbRight">comment</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-spotify pr-2"></i>Spotify</span>
+						<span>
+							<span class="pbRight">listen</span>
+							<span class="pbRight">follower</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-tiktok pr-2"></i>Tiktok</span>
+						<span class="pbRight">watch</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-telegram-plane pr-2"></i>Telegram</span>
+						<span>
+							<span class="pbRight">follower</span>
+							<span class="pbRight">reaction</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-discord pr-2"></i>Discord</span>
+						<span>
+							<span class="pbRight">group member</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-snapchat-ghost pr-2"></i>Snapchat</span>
+						<span>
+							<span class="pbRight">follower</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-soundcloud pr-2"></i>SoundCloud</span>
+						<span>
+							<span class="pbRight">like</span>
+							<span class="pbRight">follower</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-reddit pr-2"></i>Reddit</span>
+						<span>
+							<span class="pbRight">upvote</span>
+							<span class="pbRight">comment</span>
+						</span>
+					</div>
+					<div class="productBox d-flex align-items-center justify-content-between">
+						<span class="pbLeft"><i class="fab fa-linkedin pr-2"></i>LinkedIn</span>
+						<span>
+							<span class="pbRight">like</span>
+							<span class="pbRight">follower</span>
+						</span>
+					</div>				
+				</div>
+			</div>
+ 
+          </div>
+
+        </div>
+      </div>
+    </section>	
+
+
+      
+<section class="homeSection">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="text-center mb-5">
+                                <h2 class="home-title"> 
+Best and Cheapest SMM Panel Services Provider <span class="primary-color">For Social Media</span>
+                                </h2>
+                            </div>
+                            <div syle="white-space: nowrap">
+                            <ul class="nav nav-pills nav-home-social nav-fill mb-5" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-hs-ig-tab" data-toggle="pill" data-target="#pills-hs-ig" type="button" role="tab" aria-controls="pills-hs-ig" aria-selected="true">
+                                        <i class="fab fa-instagram me-2" aria-hidden="true"></i>
+                                        <span>Instagram</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-hs-tw-tab" data-toggle="pill" data-target="#pills-hs-tw" type="button" role="tab" aria-controls="pills-hs-tw" aria-selected="false">
+                                        <i class="fab fa-twitter me-2" aria-hidden="true"></i>
+                                        <span>Twitter</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-hs-fb-tab" data-toggle="pill" data-target="#pills-hs-fb" type="button" role="tab" aria-controls="pills-hs-fb" aria-selected="false">
+                                        <i class="fab fa-facebook-f me-2" aria-hidden="true"></i>
+                                        <span>Facebook</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-hs-yt-tab" data-toggle="pill" data-target="#pills-hs-yt" type="button" role="tab" aria-controls="pills-hs-yt" aria-selected="false">
+                                        <i class="fab fa-youtube me-2" aria-hidden="true"></i>
+                                        <span>Youtube</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="pills-hs-sp-tab" data-toggle="pill" data-target="#pills-hs-sp" type="button" role="tab" aria-controls="pills-hs-sp" aria-selected="false">
+                                        <i class="fab fa-tiktok" aria-hidden="true"></i>
+                                        <span>TikTok</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            </div>
+    
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade active show" id="pills-hs-ig" role="tabpanel" aria-labelledby="pills-hs-ig-tab">
+    
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-6 mb-4 mb-lg-0">
+                                            <h2 class="home-title">
+Buy Instagram Followers
+                                            </h2>
+                                            <p class="home-p">
+Instagram platform. When you delegate followers, you provide a suitable environment to attract real followers to your page, this is a privilege and an achievement for you. In the world of Instagram, the more followers you have on your business page, the more trust your real followers will have. This helps in achieving your commercial goal in a larger and wider way. When users of this platform see a large number of followers, they are encouraged to follow you greatly. This is a matter of light upon you, and, more importantly, a general matter. You assign followers to your page, which contains a large group of customers via Instagram.
+                                            </p>
+                                            <div class="row">
+                                                <div class="col-md-auto col-12">
+                                                    <a href="/en/signup" class="btn btn-primary btn-block btn-home mt-4">Sign up</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <img src="https://cdn.mypanel.link/j71eqe/hk821oqh584d2740.png" class="img-fluid">
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="tab-pane fade" id="pills-hs-tw" role="tabpanel" aria-labelledby="pills-hs-tw-tab">    
+                         <h2 class="home-title">
+Buy Twitter Followers
+   
+                         </h2>
+                                  <p class="home-p">
+Twitter platform. When you delegate followers, you provide a suitable environment to attract real followers to your page, this is a privilege and an achievement for you. In the world of Twitter, the more followers you have on your business page, the more trust your real followers will have. This helps in achieving your commercial goal in a larger and wider way. When users of this platform see a large number of followers, they are encouraged to follow you greatly. This is a matter of light upon you, and, more importantly, a general matter. You assign followers to your page, which contains a large group of customers via Twitter.
+                                  </p>
+</div>
+                                <div class="tab-pane fade" id="pills-hs-fb" role="tabpanel" aria-labelledby="pills-hs-fb-tab">     
+                                  <h2 class="home-title">
+Buy Facebook Likes , Views
+                                  </h2>
+
+                                  <p class="home-p">
+Increasing followers on your Facebook page and increasing interaction is an important matter these days, whether you are a content provider or manage your business page. At the beginning of your activity, you often find your lack of interest in what you have presented and optimism that is almost minimal or even non-existent, as Facebook has become one of the important social media platforms and not It is only important, but it has become one of the most important means that help you achieve many things, such as for example that you promote your website, promote your channel on any video platform, and the same is the case for promoting yourself or introducing content, your content may be strong, but what is the point of That is if you do not have followers or interaction on your personal account or page
+                                  </p>
+</div>
+                                <div class="tab-pane fade" id="pills-hs-yt" role="tabpanel" aria-labelledby="pills-hs-yt-tab">                                                                                                 <h2 class="home-title">
+Buy Youtube Views
+                            </h2>
+   
+                                  <p class="home-p">SMM reseller panel & SMM provider panel Amazing SMM is the first Arab server to sell and increase followers and cheapest smm panel, and it is a server that markets via social media and websites, and it is one of the cheapest services through (increasing followers and interactions, improving SEO, increasing subscriptions ... etc.).
+
+
+</p>
+</div>
+                                <div class="tab-pane fade" id="pills-hs-sp" role="tabpanel" aria-labelledby="pills-hs-sp-tab">    
+                                  <h2 class="home-title">
+                                                                        Buy Tiktok followers, Likes , Views
+                                                                      </h2>
+                                  <p class="home-p">Our website enjoys many benefits because cheapest smm panel , and the first Arab server to sell and increase followers, and also the increase of followers is very important for the emergence of your activity or your content, the implementation of services does not take a long time compared to if you increase your followers or visits to your website, it may take That is a long time, perhaps years, and our goal here is to make less effort to achieve the highest quality and benefit.
+
+</p>
+</div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </section>      
+
+	
+			<section class="homeSection">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="text-center mb-5">
+                                <h2 class="home-title"> 
+We accept most Payment <span class="primary-color">Methods</span>
+                                </h2>
+                            </div>
+                            <div class="row justify-content-between text-center">
+
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/uyjnj4ea730to2w0.png" alt="">
+								</div>
+							  </div>
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/dp8pd06dxxqty4lf.png" alt="">
+								</div>
+							  </div>
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/5loc9oa45wa6rm0e.png" alt="">
+								</div>
+							  </div>
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/myz2djhwyatrp0d4.png" alt="">
+								</div>
+							  </div>
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/7g9e11ga7m9naypr.png" alt="">
+								</div>
+							  </div>
+							  <div class="col-lg col-6 mb-lg-0 mb-3">
+								<div class="login-pm">
+								  <img src="https://cdn.mypanel.link/j71eqe/73rdmah7p3sdnoc2.png" alt="">
+								</div>
+							  </div>
+								
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>	
+
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

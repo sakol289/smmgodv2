@@ -1,0 +1,342 @@
+{% include 'header.twig' %}
+
+
+
+
+{% if user['auth'] %}
+
+
+
+        	<div class="content-wrap">
+      
+        
+        <div class="panel-welcome">
+          <div class="icon">
+            <svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M40.6368 16.2051L50.1244 5.28027C51.9947 3.33203 50.67 0 48.0244 0H2.9755C0.329869 0 -0.994822 3.33203 0.875495 5.28027L17.9999 25V40.2266C17.9999 41.4561 18.5558 42.6133 19.4999 43.3516L26.999 49.2109C28.9546 50.7383 31.5431 49.8916 32.5509 47.8857C29.1374 44.4707 26.9999 39.6826 26.9999 34.375C26.9999 25.6064 32.8171 18.2451 40.6368 16.2051ZM45 18.75C36.7153 18.75 29.9999 25.7451 29.9999 34.375C29.9999 43.0049 36.7153 50 45 50C53.2847 50 60 43.0049 60 34.375C60 25.7451 53.2847 18.75 45 18.75ZM46.5 42.1758V43.75C46.5 44.1816 46.1643 44.5312 45.75 44.5312H44.25C43.8356 44.5312 43.5 44.1816 43.5 43.75V42.1592C42.4415 42.1025 41.4121 41.7178 40.559 41.0508C40.1934 40.7646 40.1746 40.1943 40.5056 39.8652L41.6071 38.7705C41.8668 38.5127 42.2531 38.501 42.5568 38.6992C42.9197 38.9355 43.3312 39.0625 43.7587 39.0625H46.394C47.0034 39.0625 47.5003 38.4844 47.5003 37.7744C47.5003 37.1934 47.1618 36.6816 46.6781 36.5312L42.4593 35.2129C40.7165 34.668 39.4987 32.9258 39.4987 30.9756C39.4987 28.5811 41.2846 26.6357 43.499 26.5742V25C43.499 24.5684 43.8347 24.2188 44.249 24.2188H45.749C46.1634 24.2188 46.499 24.5684 46.499 25V26.5908C47.5575 26.6475 48.5868 27.0313 49.44 27.6992C49.8056 27.9854 49.8244 28.5557 49.4934 28.8848L48.3918 29.9795C48.1322 30.2373 47.7459 30.249 47.4422 30.0508C47.0793 29.8135 46.6678 29.6875 46.2403 29.6875H43.605C42.9956 29.6875 42.4987 30.2656 42.4987 30.9756C42.4987 31.5566 42.8372 32.0684 43.3209 32.2188L47.5397 33.5371C49.2825 34.082 50.5003 35.8242 50.5003 37.7744C50.5003 40.1699 48.7153 42.1143 46.5 42.1758Z"
+                fill="white" />
+            </svg>
+          </div>
+          <div class="text">
+            <strong>Hello, <span>{{ user["username"]  }}</span> !</strong>
+            <p>The displayed service charges are for 1000 Quantity. <br>
+              The minimum and maximum amount of each service is specified.
+<br>
+             As SmmFansGrow.com Team, We Wish You Pleasant Shopping.
+            </p>
+          </div>
+          <a href="/services">Services List</a>
+        </div>
+           <div class="panel-box">
+          <div class="panel-socials">
+            <p>You can easily find the service you are looking for by clicking on the Social Media icons.</p>
+            <div class="logos-list">
+              <a data-services-filter="instagram"><img src="https://cdn.mypanel.link/nahc96/p0uija7cdc624fth.png" alt=""></a>
+              <a data-services-filter="tiktok"><img src="https://cdn.mypanel.link/nahc96/giazohtwagmiwnbr.png" alt=""></a>
+              <a data-services-filter="twitter"><img src="https://cdn.mypanel.link/nahc96/926efxgq1muk0b46.png" alt=""></a>
+              <a data-services-filter="facebook"><img src="https://cdn.mypanel.link/nahc96/2sn1rerz9bmpjfoc.png" alt=""></a>
+              <a data-services-filter="youtube"><img src="https://cdn.mypanel.link/nahc96/8x2zp4mtotom3soo.png" alt=""></a>
+              <a data-services-filter="spotify"><img src="https://cdn.mypanel.link/nahc96/9roe3jcb09h3lxmy.png" alt=""></a>
+              <a data-services-filter="twitch"><img src="https://cdn.mypanel.link/nahc96/jbw5bfl74cwsy50p.png" alt=""></a>
+              <a data-services-filter="pinterest"><img src="https://cdn.mypanel.link/nahc96/3jf4dbx5g668ymr6.png" alt=""></a>
+              <a data-services-filter="telegram"><img src="https://cdn.mypanel.link/nahc96/spxdu9lmu5n0seob.png" alt=""></a>
+              <a data-services-filter="soundcloud"><img src="https://cdn.mypanel.link/nahc96/whektrw6xxux93ln.png" alt=""></a>
+            </div>
+          </div>
+          <div class="orange-search orange-dark my-5">
+            <button><i class="fa fa-search"></i></button>
+            <input type="text" id="serv-inp" placeholder="Search Here ...">
+          </div>
+          <div class="p-table p-0" style="border:0;">
+            <table class="app-mtable" id="serv-table">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+               <thead>
+                  <tr>
+                     <th>{{ lang['services.id'] }}</th>
+                     <th class="width-service-name">{{ lang['services.name'] }}</th>
+                     <th class="nowrap">{{ lang['services.price'] }}</th>
+                     <th class="nowrap">{{ lang['services.min'] }}</th>
+                     <th class="nowrap">{{ lang['services.max'] }}</th>
+                     
+                     <th class="nowrap"><div class="d-flex align-items-center">
+                                                    <span>Average time&nbsp;</span>
+                                                    <span class="ml-1 mr-1 fa fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="The average time is based on 10 latest completed orders per 1000 quantity."></span>
+                                                </div>
+                                            </th>
+                     
+                     <th class="hidden-xs hidden-sm service-description__th">{{ lang['neworder.description'] }}</th>
+                  </tr>
+               </thead>
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+               <tbody>
+                  {% for category in serviceCategory %}
+                  <tr class="orange-row">
+                     <td colspan="7"><strong>{{ category["category_name"] }}</strong></td>
+                  </tr>
+                  {% for service in category['services'] %}
+                  <tr>
+                     <td class="nowrap" data-label="ID" data-filter-table-service-id="{{ service["service_id"] }}"><span id="service-{{ service["service_id"] }}">{{ service["service_id"] }}</span>
+                                        <a>
+                                            <span
+                                                data-clip="true"
+                                                title="Service id copied"
+                                                data-clipboard-action="copy"
+                                                data-clipboard-target="#service-{{ service["service_id"] }}"
+                                                class="fas fa-clone"></span>
+                                        </a></td>
+                     <td data-label="Service" class="service-name" data-filter-table-service-name="true">{{ service["service_name"] }}</td>
+                    
+                    <td>
+                      
+{{ currency['symbol'] }}{{ (service["service_price"]*currency["value"]) }}   
+
+
+                      
+
+                    </td>
+                    <td>{{ service["service_min"] }}</td>
+                    <td>{{ service["service_max"] }}</td>
+                    
+                    <td>{{ service["time"] }}</td>
+                     
+                      <td> <!-- Modal -->
+                        <div class="modal fade" id="servis{{ service["service_id"] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ service["service_name"] }} </h5> 
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-left">
+                                <p class="detail-data details-split-959"> {{ service["service_description"] }}</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-actions" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+						  
+                        </div>
+						
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#servis{{ service["service_id"] }}"><svg width="25" height="17" viewBox="0 0 25 17" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M24.8489 7.69965C22.4952 3.1072 17.8355 0 12.5 0C7.16447 0 2.50345 3.10938 0.151018 7.70009C0.0517306 7.89649 0 8.11348 0 8.33355C0 8.55362 0.0517306 8.77061 0.151018 8.96701C2.50475 13.5595 7.16447 16.6667 12.5 16.6667C17.8355 16.6667 22.4965 13.5573 24.8489 8.96658C24.9482 8.77018 25 8.55319 25 8.33312C25 8.11304 24.9482 7.89605 24.8489 7.69965ZM12.5 14.5833C11.2638 14.5833 10.0555 14.2168 9.02766 13.53C7.99985 12.8433 7.19878 11.8671 6.72573 10.7251C6.25268 9.58307 6.12891 8.3264 6.37007 7.11402C6.61123 5.90164 7.20648 4.78799 8.08056 3.91392C8.95464 3.03984 10.0683 2.44458 11.2807 2.20343C12.493 1.96227 13.7497 2.08604 14.8917 2.55909C16.0338 3.03213 17.0099 3.83321 17.6967 4.86102C18.3834 5.88883 18.75 7.0972 18.75 8.33333C18.7504 9.15421 18.589 9.96711 18.275 10.7256C17.9611 11.484 17.5007 12.1732 16.9203 12.7536C16.3398 13.3341 15.6507 13.7944 14.8922 14.1084C14.1338 14.4223 13.3208 14.5837 12.5 14.5833ZM12.5 4.16667C12.1281 4.17186 11.7586 4.22719 11.4015 4.33116C11.6958 4.73119 11.8371 5.22347 11.7996 5.71873C11.7621 6.21398 11.5484 6.6794 11.1972 7.0306C10.846 7.38179 10.3806 7.5955 9.88537 7.63297C9.39012 7.67043 8.89784 7.52917 8.49781 7.23481C8.27001 8.07404 8.31113 8.96357 8.61538 9.77821C8.91962 10.5928 9.47167 11.2916 10.1938 11.776C10.916 12.2605 11.7719 12.5063 12.641 12.4788C13.5102 12.4514 14.3489 12.152 15.039 11.623C15.7291 11.0939 16.236 10.3617 16.4882 9.52951C16.7404 8.69729 16.7253 7.80693 16.445 6.98376C16.1647 6.16058 15.6333 5.44602 14.9256 4.94067C14.2179 4.43532 13.3696 4.16462 12.5 4.16667Z"
+                          fill="#F16845" />
+                      </svg>
+                    </a>
+						
+						
+						
+                  
+                   
+                        </td>
+						
+						
+						
+						
+						
+						
+						
+						
+                  </tr>
+                  
+                  {% endfor %}
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+
+
+    
+
+
+  {% else %}
+
+        <div class="container pt-5 mb-5">
+        <div class="panel-box">
+          <div class="panel-socials">
+            <p>You can easily find the service you are looking for by clicking on the Social Media icons.</p>
+            <div class="logos-list">
+              <a data-services-filter="instagram"><img src="https://cdn.mypanel.link/nahc96/p0uija7cdc624fth.png" alt=""></a>
+              <a data-services-filter="tiktok"><img src="https://cdn.mypanel.link/nahc96/giazohtwagmiwnbr.png" alt=""></a>
+              <a data-services-filter="twitter"><img src="https://cdn.mypanel.link/nahc96/926efxgq1muk0b46.png" alt=""></a>
+              <a data-services-filter="facebook"><img src="https://cdn.mypanel.link/nahc96/2sn1rerz9bmpjfoc.png" alt=""></a>
+              <a data-services-filter="youtube"><img src="https://cdn.mypanel.link/nahc96/8x2zp4mtotom3soo.png" alt=""></a>
+              <a data-services-filter="spotify"><img src="https://cdn.mypanel.link/nahc96/9roe3jcb09h3lxmy.png" alt=""></a>
+              <a data-services-filter="twitch"><img src="https://cdn.mypanel.link/nahc96/jbw5bfl74cwsy50p.png" alt=""></a>
+              <a data-services-filter="pinterest"><img src="https://cdn.mypanel.link/nahc96/3jf4dbx5g668ymr6.png" alt=""></a>
+              <a data-services-filter="telegram"><img src="https://cdn.mypanel.link/nahc96/spxdu9lmu5n0seob.png" alt=""></a>
+              <a data-services-filter="soundcloud"><img src="https://cdn.mypanel.link/nahc96/whektrw6xxux93ln.png" alt=""></a>
+            </div>
+          </div>
+          <div class="orange-search orange-dark my-5">
+            <button><i class="fa fa-search"></i></button>
+            <input type="text" id="serv-inp" placeholder="Search Here ...">
+          </div>
+          <div class="p-table p-0" style="border:0;">
+            <table class="app-mtable" id="serv-table">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+               <thead>
+                  <tr>
+                     <th>{{ lang['services.id'] }}</th>
+                     <th class="width-service-name">{{ lang['services.name'] }}</th>
+                     <th class="nowrap">{{ lang['services.price'] }}</th>
+                     <th class="nowrap">{{ lang['services.min'] }}</th>
+                     <th class="nowrap">{{ lang['services.max'] }}</th>
+                     
+                     <th class="nowrap"><div class="d-flex align-items-center">
+                                                    <span>Average time&nbsp;</span>
+                                                    <span class="ml-1 mr-1 fa fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="The average time is based on 10 latest completed orders per 1000 quantity."></span>
+                                                </div>
+                                            </th>
+                     
+                     <th class="hidden-xs hidden-sm service-description__th">{{ lang['neworder.description'] }}</th>
+                  </tr>
+               </thead>
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+			   
+               <tbody>
+                  {% for category in serviceCategory %}
+                  <tr class="orange-row">
+                     <td colspan="7"><strong>{{ category["category_name"] }}</strong></td>
+                  </tr>
+                  {% for service in category['services'] %}
+                  <tr>
+                     <td class="nowrap" data-label="ID" data-filter-table-service-id="{{ service["service_id"] }}"><span id="service-{{ service["service_id"] }}">{{ service["service_id"] }}</span>
+                                        <a>
+                                            <span
+                                                data-clip="true"
+                                                title="Service id copied"
+                                                data-clipboard-action="copy"
+                                                data-clipboard-target="#service-{{ service["service_id"] }}"
+                                                class="fas fa-clone"></span>
+                                        </a></td>
+                     <td data-label="Service" class="service-name" data-filter-table-service-name="true">{{ service["service_name"] }}</td>
+                    
+                    <td>
+                      
+{{ currency['symbol'] }}{{ (service["service_price"]*currency["value"]) }}   
+
+
+                      
+
+                    </td>
+                    <td>{{ service["service_min"] }}</td>
+                    <td>{{ service["service_max"] }}</td>
+                    
+                    <td>{{ service["time"] }}</td>
+                     
+                      <td> <!-- Modal -->
+                        <div class="modal fade" id="servis{{ service["service_id"] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ service["service_name"] }} </h5> 
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-left">
+                                <p class="detail-data details-split-959"> {{ service["service_description"] }}</p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-actions" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+						  
+                        </div>
+						
+						<a href="javascript:void(0)" data-toggle="modal" data-target="#servis{{ service["service_id"] }}"><svg width="25" height="17" viewBox="0 0 25 17" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M24.8489 7.69965C22.4952 3.1072 17.8355 0 12.5 0C7.16447 0 2.50345 3.10938 0.151018 7.70009C0.0517306 7.89649 0 8.11348 0 8.33355C0 8.55362 0.0517306 8.77061 0.151018 8.96701C2.50475 13.5595 7.16447 16.6667 12.5 16.6667C17.8355 16.6667 22.4965 13.5573 24.8489 8.96658C24.9482 8.77018 25 8.55319 25 8.33312C25 8.11304 24.9482 7.89605 24.8489 7.69965ZM12.5 14.5833C11.2638 14.5833 10.0555 14.2168 9.02766 13.53C7.99985 12.8433 7.19878 11.8671 6.72573 10.7251C6.25268 9.58307 6.12891 8.3264 6.37007 7.11402C6.61123 5.90164 7.20648 4.78799 8.08056 3.91392C8.95464 3.03984 10.0683 2.44458 11.2807 2.20343C12.493 1.96227 13.7497 2.08604 14.8917 2.55909C16.0338 3.03213 17.0099 3.83321 17.6967 4.86102C18.3834 5.88883 18.75 7.0972 18.75 8.33333C18.7504 9.15421 18.589 9.96711 18.275 10.7256C17.9611 11.484 17.5007 12.1732 16.9203 12.7536C16.3398 13.3341 15.6507 13.7944 14.8922 14.1084C14.1338 14.4223 13.3208 14.5837 12.5 14.5833ZM12.5 4.16667C12.1281 4.17186 11.7586 4.22719 11.4015 4.33116C11.6958 4.73119 11.8371 5.22347 11.7996 5.71873C11.7621 6.21398 11.5484 6.6794 11.1972 7.0306C10.846 7.38179 10.3806 7.5955 9.88537 7.63297C9.39012 7.67043 8.89784 7.52917 8.49781 7.23481C8.27001 8.07404 8.31113 8.96357 8.61538 9.77821C8.91962 10.5928 9.47167 11.2916 10.1938 11.776C10.916 12.2605 11.7719 12.5063 12.641 12.4788C13.5102 12.4514 14.3489 12.152 15.039 11.623C15.7291 11.0939 16.236 10.3617 16.4882 9.52951C16.7404 8.69729 16.7253 7.80693 16.445 6.98376C16.1647 6.16058 15.6333 5.44602 14.9256 4.94067C14.2179 4.43532 13.3696 4.16462 12.5 4.16667Z"
+                          fill="#F16845" />
+                      </svg>
+                    </a>
+						
+						
+						
+                  
+                   
+                        </td>
+						
+						
+						
+						
+						
+						
+						
+						
+                  </tr>
+                  
+                  {% endfor %}
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+
+
+
+{% endif %}
+
+
+
+{% include 'footer.twig' %}

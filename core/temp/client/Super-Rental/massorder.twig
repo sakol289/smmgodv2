@@ -1,0 +1,63 @@
+{% include 'header.twig' %}
+
+
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<style>
+   
+.nicEdit-main {
+    width: auto !important;
+    min-height: 100px !important;
+}
+</style>
+<div class="row justify-content-center payments-panel ticket-panel">
+<div class="col-lg-8">
+<div class="card">
+<div class="card-body pt-0">
+    
+      {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+
+      
+    
+   
+      
+          <form method="post" action="massorder">
+            <div class="form-group">
+                  <br>
+              <label for="quantity" class="control-label">One order per line in format</label>
+              <textarea type="text" class="form-control" id="mass" name="mass" value="{{ data['mass'] }}"  placeholder="service_id | quantity | link" style="min-height: 350px; resize: vertical"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+</div></div>
+    </div>
+    </div>
+    </div>
+    
+    </div></div></div>
+    
+    </div>
+    
+    </div>
+    
+    </div>
+ {% if contentText2 %}
+{{ contentText2 }}
+{% endif %}
+
+
+
+{% include 'footer.twig' %}

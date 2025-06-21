@@ -1,0 +1,48 @@
+{% include 'header.twig' %}
+<div class="content-wrap">
+        <div class="panel-welcome">
+          <div class="icon">
+<svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40.6368 16.2051L50.1244 5.28027C51.9947 3.33203 50.67 0 48.0244 0H2.9755C0.329869 0 -0.994822 3.33203 0.875495 5.28027L17.9999 25V40.2266C17.9999 41.4561 18.5558 42.6133 19.4999 43.3516L26.999 49.2109C28.9546 50.7383 31.5431 49.8916 32.5509 47.8857C29.1374 44.4707 26.9999 39.6826 26.9999 34.375C26.9999 25.6064 32.8171 18.2451 40.6368 16.2051ZM45 18.75C36.7153 18.75 29.9999 25.7451 29.9999 34.375C29.9999 43.0049 36.7153 50 45 50C53.2847 50 60 43.0049 60 34.375C60 25.7451 53.2847 18.75 45 18.75ZM46.5 42.1758V43.75C46.5 44.1816 46.1643 44.5312 45.75 44.5312H44.25C43.8356 44.5312 43.5 44.1816 43.5 43.75V42.1592C42.4415 42.1025 41.4121 41.7178 40.559 41.0508C40.1934 40.7646 40.1746 40.1943 40.5056 39.8652L41.6071 38.7705C41.8668 38.5127 42.2531 38.501 42.5568 38.6992C42.9197 38.9355 43.3312 39.0625 43.7587 39.0625H46.394C47.0034 39.0625 47.5003 38.4844 47.5003 37.7744C47.5003 37.1934 47.1618 36.6816 46.6781 36.5312L42.4593 35.2129C40.7165 34.668 39.4987 32.9258 39.4987 30.9756C39.4987 28.5811 41.2846 26.6357 43.499 26.5742V25C43.499 24.5684 43.8347 24.2188 44.249 24.2188H45.749C46.1634 24.2188 46.499 24.5684 46.499 25V26.5908C47.5575 26.6475 48.5868 27.0313 49.44 27.6992C49.8056 27.9854 49.8244 28.5557 49.4934 28.8848L48.3918 29.9795C48.1322 30.2373 47.7459 30.249 47.4422 30.0508C47.0793 29.8135 46.6678 29.6875 46.2403 29.6875H43.605C42.9956 29.6875 42.4987 30.2656 42.4987 30.9756C42.4987 31.5566 42.8372 32.0684 43.3209 32.2188L47.5397 33.5371C49.2825 34.082 50.5003 35.8242 50.5003 37.7744C50.5003 40.1699 48.7153 42.1143 46.5 42.1758Z" fill="white"></path>
+            </svg>
+          </div>
+          <div class="text">
+            <strong>Hello, <span>{{ user['username'] }}</span> !</strong>
+            <p>You can place multiple orders at once using the form below.</p>
+          </div>
+          <a href="#">Mass Order</a>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-form">
+ 
+
+      {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+
+      
+    
+          <form method="post" action="massorder">
+            <div class="form-group">
+              <label for="quantity" class="control-label">One order per line in format</label>
+              <textarea type="text" class="form-control" style="min-height: 350px" rows="15" id="mass" name="mass" value="{{ data['mass'] }}" placeholder="service_id | link | quantity"></textarea>
+            </div>
+            <button type="submit" class="orange-btn mb-3">Submit</button>
+          </form>
+</div></div>
+    </div>
+    </div>
+
+    
+
+
+{% include 'footer.twig' %}

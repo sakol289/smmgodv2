@@ -1,0 +1,574 @@
+{% include 'header.twig' %}
+
+  
+  
+  
+  <!-- Main variables *content* -->
+		<section class="hero py-5">
+	<div class="container">
+    	<div class="row py-5 justify-content-center">
+        	<div class="col-lg-12 mb-2 text-white text-center">
+            	<div class="d-flex align-items-center justify-content-center"><h1 class="fw-bold py-3">Smm Panel</h1><span class="ms-2 mb-0 mt-0 mt-md-2 h4">By &nbsp;{{ site["site_name"] }}</span></div>
+                <p class="h3">
+                                                                                                    #1 Trusted & Cheap Social Media Promoter Since 2017
+                                                                                                                                                                                                </p>
+            </div>
+            <div class="col-xl-6 col-lg-7 mt-3 mb-4">
+			<video height="350" poster="https://cdn.mypanel.link/" controls>
+              <source src="https://fars-smm.com/" type="video/mp4">
+            </video>
+            </div>
+            <div class="col-lg-12 text-white">
+                <form  method="post" action="">
+                <div class="row sing_row">
+                          
+                          	{% if errorText %}
+							<div class="alert alert-dismissible alert-danger">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ errorText }}
+							</div>
+						  {% endif %}
+						  {% if successText %}
+							<div class="alert alert-dismissible alert-success">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ successText }}
+							</div>
+						  {% endif %}
+                          
+                  <div class="col-lg-4">
+                    <input type="text" class="form-control mb-3" id="username" placeholder="Enter your username" name="username">
+                     <div class="checkbox text-white">
+                        <label>
+                          <input class="form-check-input me-2" type="checkbox"  name="remember" value="1" id="remember">Remember me
+                        </label>
+                     </div>
+                  </div>
+                  <div class="col-lg-4 form-group__password">
+                    <input type="password" class="form-control mb-3" id="password" placeholder="Enter your password" name="password">
+                    
+                    
+                                              <a href="/resetpassword" class="link-light text-decoration-none forgot-password">Forgot password?</a>
+                                        </div>
+        
+                          
+                 {% if captcha %}
+							<div class="form-group">
+							  <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div>
+						  {% endif %}
+                  
+                  <div class="col-lg-4">
+                  	<button type="submit" class="btn btn-new w-100 mb-3">Sign in</button>
+                                              <div class="text-center">Do not have an account? <a href="/signup" class="link-light text-decoration-none">Sign up</a></div>
+                                        </div>
+                                        
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="banner-info">
+              <div class="row justify-content-strat justify-content-md-center">
+                <div class="col-lg-3 col-sm-4 col-6 mb-4 px-3 d-flex justify-content-center">
+                  <div class="info-box">
+                    <div class="info-icon"> <i class="fa fa-cart-arrow-down"></i></div>
+                    <div class="info-text">
+                      <h5>14368946</h5>
+                      <p>Total Orders</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-4 col-6 mb-4 px-3 d-flex justify-content-center">
+                  <div class="info-box">
+                    <div class="info-icon"> <i class="fa fa-dollar-sign"></i></div>
+                    <div class="info-text">
+                      <h5>$0.0006/1K</h5>
+                      <p>Price Starting</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-4 col-6 mb-4 px-3 d-flex justify-content-center">
+                  <div class="info-box">
+                    <div class="info-icon"> <i class="fa fa-credit-card"></i> </div>
+                    <div class="info-text">
+                      <h5>+160,025</h5>
+                      <p>No. of Deposits</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-4 col-6 mb-4 px-3 d-flex justify-content-center">
+                  <div class="info-box">
+                    <div class="info-icon"> <i class="fa fa-user-circle"></i></div>
+                    <div class="info-text">
+                      <h5>34797</h5>
+                      <p>Active Users</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="fth_indx py-5">
+	<div class="container">
+    	<div class="row my-5">
+        	<div class="col-lg-3 col-md-6">
+            	<div class="bx_fth_indx">
+                	<img width="151" height="143" data-src="https://cdn.mypanel.link/sabd8c/0zh91xjx6dfhazd6.png" class="lazyload mb-3" alt="Very fast delivery">
+                    <h3 class="fw-bolder">
+                                                                                                        Very fast delivery
+                                                                                                                                                                                                    </h3>
+                    <p>
+                                                    
+
+                                                    We provide quick order processing and quick results
+                                                                                                                                                                                                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="bx_fth_indx">
+                	<img width="141" height="153" data-src="https://cdn.mypanel.link/sabd8c/47e3cpacuy30olw9.png" class="lazyload mb-3" alt="Very fast delivery">
+                    <h3 class="fw-bolder">
+                                                                                                        Unbelievable prices
+                                                                                                                                                                                                    </h3>
+                    <p>
+                                                                                                        Here you can purchase SMM services at super affordable prices!
+                                                                                                                                                                                                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="bx_fth_indx">
+                	<img width="170" height="148" data-src="https://cdn.mypanel.link/sabd8c/mj70jokhuolkkz4a.png" class="lazyload mb-3" alt="Very fast delivery">
+                    <h3 class="fw-bolder">
+                                                                                                        Many payment options
+                                                                                                                                                                                                    </h3>
+                    <p>
+                                                                                                        Good variety of payment options to choose from
+                                                                                                                                                                                                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+            	<div class="bx_fth_indx">
+                	<img width="160" height="145" data-src="https://cdn.mypanel.link/sabd8c/cdmphhip8mwnlw9r.png" class="lazyload mb-3" alt="Very fast delivery">
+                    <h3 class="fw-bolder">
+                                                                                                        Awesome quality
+                                                                                                                                                                                                    </h3>
+                    <p>
+                                                                                                        You will be satisfied with the quality of our SMM services
+                                                                                                                                                                                                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-lg-12">
+            	<p class="h4 mb-5 fw-bold">Do you want to know what SMM Panel is?</p>
+            	<audio class="pod_indx" controls="">
+                 <source src="https://fars-smm.com/smmstone.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5 bg_2">
+	<div class="container">
+    	<div class="row align-items-center justify-content-between">
+        	<div class="col-lg-5">
+            	<h2 class="fw-bold py-3">
+                                                                                                    Best SMM Panel
+                                                                                                                                                </h2>
+                                <p class="lh-lg">
+                                                                                                                                                                                    An professional panel should be able to meet all of their customers' demands. On the one hand, it is required to offer all of the surveys, and on the other hand, it is required to adjust the pricing in such a way that also allowes its users to be able to sell it to their own clients and make a significant profit. We make every effort to have the most comprehensive panel possible here.
+                                                                </p>
+                                <p class="lh-lg">
+                                                                    All of these factors are displayed in &nbsp;{{ site["site_name"] }}. The highest number of services, the most competitive pricing on the market, and the very finest customer support staff to assist us with any issues we may have at any moment.
+                                                                                                                                                </p>
+            </div>
+            <div class="col-lg-5">
+            	<img data-src="https://cdn.mypanel.link/sabd8c/f5d94oq55j273c8w.webp" class="lazyload mw-100" alt="Best SMM Panel" />
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-5">
+	<div class="container">
+    	<div class="row align-items-center justify-content-between">
+        	<div class="col-lg-5">
+            	<img data-src="https://cdn.mypanel.link/sabd8c/mxbus5aixq62m3ej.webp" class="lazyload mw-100" alt="Cheap Smm Panel" />
+            </div>
+        	<div class="col-lg-5">
+            	<h2 class="fw-bold py-3">
+                                                                                    Cheap Smm Panel
+                                                                                                                                                                </h2>
+                                <p class="lh-lg">
+                                                                                                                                                    It is important that you are aware that the cheap cost of our services is not a reflection of their poor quality. The low cost of our panel is made possible by the fact that you are purchasing it directly from the main provider, as opposed to purchasing it via a middle agent.
+                                                                                                </p>
+                <p class="lh-lg">
+                                                                                                                                                                The vast majority of SMM Panels are merely functioning as middlemen and are unable to really provide the service themselves. Because of this, they are forced to charge you an additional amount on top of the initial fee. On the other hand, there is no need for a middleman because you are working directly with the primary source here. The cost of our products and the quality of our services are both constant areas of concentration for our staff. In addition to providing discounts for loyal customers while making every effort to maintain competitive pricing across the market for everyone else. Our panel is notable for having this as one of its main characteristics.
+                                                                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="srvs_index bg_2 py-5">
+	<div class="container">
+    	<div class="tit_sec">
+          <p class="h2">
+                                                                                              Our services in all social networks
+                                                                                                                                                                                          </p>
+        </div>
+    	<div class="row row-cols-2 row-cols-lg-6 pt-5">
+        	<div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/t7mo5kcgn7akg65d.webp" alt="Buy Telegram Members" class="lazyload" />
+                    </div>
+                    <p>Telegram</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/gkbehzkct3u98pre.webp" alt="Buy instagram Followers" class="lazyload" />
+                    </div>
+                    <p>instagram</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/225im41n214hg3c7.webp" alt="Buy Twitter Followers" class="lazyload" />
+                    </div>
+                    <p>Twitter</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/8w9ur0mgmqdeeif6.webp" alt="Buy Youtube Subscribers" class="lazyload" />
+                    </div>
+                    <p>Youtube</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/1lgoq6j03n9p7op6.webp" alt="Tiktok" class="lazyload" />
+                    </div>
+                    <p>Tiktok</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/flen2n5uplm2fj8a.webp" alt="facebook" class="lazyload" />
+                    </div>
+                    <p>Facebook</p>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-2 row-cols-lg-6 pt-4">
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/aca1unuu9l566szl.webp" alt="Steam" class="lazyload" />
+                    </div>
+                    <p>Steam</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/pznrg6f5cpu1m49i.webp" alt="Buy Discord Subscribers" class="lazyload" />
+                    </div>
+                    <p>Discord</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/c5ax6e28c4u7sl3f.webp" alt="VK" class="lazyload" />
+                    </div>
+                    <p>VK</p>
+                </div>
+            </div>
+
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/o6jly2jjbbh9ghbn.webp" alt="Linkedin" class="lazyload" />
+                    </div>
+                    <p>Linkedin</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/973iuomddltngts2.webp" alt="Snapchat" class="lazyload" />
+                    </div>
+                    <p>Snapchat</p>
+                </div>
+            </div>
+            <div class="col">
+            	<div class="bx_srvs">
+                	<div class="srvs_img">
+                    	<img data-src="https://cdn.mypanel.link/sabd8c/wp676s0wu5ji2lj0.webp" alt="Spotify" class="lazyload" />
+                    </div>
+                    <p>Spotify</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="all_srvs py-5">
+	<div class="container">
+    	<div class="row">
+        	<div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                        	Best Telegram Services
+                                                                                                                                                                </h3>
+                    <p>
+                                                                                                                                                &nbsp;{{ site["site_name"] }} is first Provider for Telegram, we Are main Telegram Provider, You can Check all panels, noBody in the world can not provide Our Price. Check This Link : Telegram Smm Panel
+                                                                                                                                            </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                                                Cheapest Smm Panel 2023
+                                                                                                                                            </h3>
+                    <p>
+                                                                                                                                                                                                            One of the challenges between panels is price. We guarantee you the cheapest price in the world
+                                                                                </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                                                                    PayPal Smm Panel
+                                                                                                                        </h3>
+                    <p>
+                                                                                                                                                                                                        	It currently accepts the lowest PayPal smm panel. Due to having a high fee and refund option, We can offer PayPal to our customers
+                     
+                     
+                       
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                                                Smm Panel Instagram
+                                                                                                                                            </h3>
+                    <p>
+                                                                                                                                                                                        Instagram is currently the strongest social network and we as a provider can provide you with services at the lowest cost
+                                                            </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                        	Smm Panel Cheapest
+                                                                                                                                            </h3>
+                    <p>
+                                                                                                                                                                                        Best Services for smm users, highest quality and organic services who created for smm users
+                                                                                </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                                            	Smm Panel Pakistan
+                                                                                                                        </h3>
+                    <p>
+                                                                                                                                                                                        We are proud to be the first to create several special services for Pakistani customers
+                                                                                </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                                                                                    	Smm Panel For Resellers
+                                                                                </h3>
+                    <p>
+                                                                                                                                                                                        Our panel has one main feature and that is that the prices are very low and people can sell our service to others as a spinner
+                                                                                </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                            
+                                                                                                        Trusted Smm panel
+                                                                                                    </h3>
+                    <p>
+                                                                                                                        	&nbsp;{{ site["site_name"] }}  has received the highest credit and trust score from users
+                                                                                                                                            </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+            	<div class="bx_all_srvs">
+                    <h3 class="fw-bolder">
+                                                                                                                            Facebook SMM Panel
+                                                                                                                                            </h3>
+                    <p>
+                                                                                                                            created special products for Facebook as an old and popular social network and we offer it at the lowest price
+                                                                                                                                            </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg_2 py-5">
+  <div class="container py-5">
+    <div class="tit_sec">
+      <h2>
+                                                                                          Easy and Secure Payment Methods
+                                                                                                                                
+                                                      </h2>
+      <p>
+      			                                                                                    You can pay very quickly with various and reliable methods
+                                                                                                                                                                                      </p>
+    </div>
+    <div class="row row-cols-2 row-cols-lg-6 justify-content-center pt-5">
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/547ifbz8sd6m4zkk.webp" alt="Coinpayments" class="lazyload" >
+          <p>Coinpayments</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/tur6wx9w9aneh06g.png" class="lazyload" alt="Coinbase" >
+          <p >Coinbase</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/y5wlm7mq4lpmgnct.png" class="lazyload" alt="Payeer" >
+          <p >Payeer</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/cudwpajra7ara88z.png" class="lazyload" alt="Perfectmoney" >
+          <p >Perfectmoney</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/j878r8y6f1iowa7f.png" class="lazyload" alt="Webmoney" >
+          <p >Webmoney</p>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-2 row-cols-lg-6 justify-content-center pt-5">
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/fplnqrc6x3840m0e.webp" class="lazyload" alt="PayOp" >
+          <p >PayOp</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/k2t8ts4zo0z9jl74.webp" class="lazyload" alt="QiWi" >
+          <p >QiWi</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/b3y9jwe61l3dmaxw.webp" class="lazyload" alt="ZarinPal" >
+          <p >ZarinPal</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/awuwx2ge9sar0ggz.webp" class="lazyload" alt="Cashmaal" >
+          <p >Cashmaal</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="payment_bx" > <img data-src="https://cdn.mypanel.link/sabd8c/nxe3qk4d2l93wu5o.png" class="lazyload" alt="Zain Cash" >
+          <p >Zain Cash</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="faq py-5">
+	<div class="container">
+    	<div class="row align-items-center justify-content-between">
+            <div class="col-lg-5">
+            	<img data-src="https://cdn.mypanel.link/sabd8c/1r485fry2bjd9gtk.webp" class="lazyload mw-100 rounded" alt="About smmstone" />
+            </div>
+        	<div class="col-lg-7">
+            	<div class="accordion" id="faq_acr">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq_head_1">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq_1" aria-expanded="true" aria-controls="faq_1">
+                      	                                                                                                                            What does SMM Panel stand for?
+                                                                                                                                                                                                                                                                                              </button>
+                    </h2>
+                    <div id="faq_1" class="accordion-collapse collapse show" aria-labelledby="faq_head_1" data-bs-parent="#faq_acr">
+                      <div class="accordion-body">
+                      	                                                                                                                            social networks are crucial for starting a business in this day and age. Furthermore, the survival of many businesses in our ever-evolving world depends on social networks. Many business owners have taken advantage of the potential of these networks and have started or expanded their businesses.  One of the ways by which you can manage your social networks for your business is by using social network service panels. The majority of sellers and service providers act as middle agents, but what does that mean? An SMM Panel is the primary supplier that offer all the services you see in the world and some individuals make money by purchasing these services and reselling them to you. Therefore, by using &nbsp;{{ site["site_name"] }} you can serve as an agent and sell our services
+                                                                                                                                                                                                                                                                                              </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq_head_2">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq_2" aria-expanded="false" aria-controls="faq_2">
+                      	                                                                                                                            How can I find a reliable SMM Panel?
+                                                                                                                                                                                                                                                                                              </button>
+                    </h2>
+                    <div id="faq_2" class="accordion-collapse collapse" aria-labelledby="faq_head_2" data-bs-parent="#faq_acr">
+                      <div class="accordion-body">
+                      	                                                                                                                            Today, there are more than 10,000 active SMM panels; the issue is, which one is the best? The answer will always come from the consumers. I will tell you how to pick a better SMM panel by walking you through some of the most important criteria you must consider when choosing an SMM panel. First and foremost, the most significant criterion is the range of services it offers, which cannot be overstated enough. Users prefer to work with a panel that gives them access to all of the available services. Therefore, the range of services offered by a panel should be a primary concern at the initial stage. Providing effective services is now more essential than selecting the first available alternative. If we select a panel that offers a great deal of services but is unable to deliver services of sufficient quality, then we will not be able to make use of that panel in any way. In &nbsp;{{ site["site_name"] }}, there are only practical and quality services that you can use without any problems. In &nbsp;{{ site["site_name"] }}, services are continuously maintained and updated. Consequently, throughout social media platform update periods, you will always have access to a variety of reliable and functioning services. Even during times of turmoil, you'll always have access to a variety of options. At &nbsp;{{ site["site_name"] }}, users are constantly informed of the newest updates and improvements to the panel panel, allowing you to continue with your plans uninterrupted. Additionally, &nbsp;{{ site["site_name"] }} provides discounts and bonus offers in a variety of ways.
+                                                                                                                                                                                                                                                                                              </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq_head_3">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq_3" aria-expanded="false" aria-controls="faq_3">
+                      	                                                                                                                            How is the support in &nbsp;{{ site["site_name"] }}?
+                                                                                                                                                                                                                                                                                              </button>
+                    </h2>
+                    <div id="faq_3" class="accordion-collapse collapse" aria-labelledby="faq_head_3" data-bs-parent="#faq_acr">
+                      <div class="accordion-body">
+                      	                                                                                                                            &nbsp;{{ site["site_name"] }}'s approach to support is different. Payment support is done very quickly through Telegram and WhatsApp. In terms of order support, new users who have recently joined us can follow up on their order through the ticket section, but old users with higher payment volumes can have access to support through Telegram, Whatsapp, or even Skype for order support.
+                                                                                                                                                                                                                                                                                                
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq_head_4">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq_4" aria-expanded="false" aria-controls="faq_4">
+                      	                                                                                                                            Why should you use &nbsp;{{ site["site_name"] }}?
+                                                                                                                                                                                                                                                                                              </button>
+                    </h2>
+                    <div id="faq_4" class="accordion-collapse collapse" aria-labelledby="faq_head_4" data-bs-parent="#faq_acr">
+                      <div class="accordion-body">
+                      	                                                                                                                            The founders of the &nbsp;{{ site["site_name"] }} have over 10 years of expertise. The staff controlling the panel and services can undoubtedly supply you with the greatest services to expand your status on social networks. The speed of the provided services is the most critical element of SMM panels.  At &nbsp;{{ site["site_name"] }}, you will obtain the requested service immediately after placing an order. Your order will be processed without interruption, and the required procedures will be undertaken immediately. Consequently, submitted orders are processed and provided to the user as quickly as possible.
+                                                                                                                                                                                                                                                                                              </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="faq_head_5">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq_5" aria-expanded="false" aria-controls="faq_5">
+                      	                                                                                                                            Is &nbsp;{{ site["site_name"] }} easy to use?
+                                                                                                                                                                                                                                                                                              </button>
+                    </h2>
+                    <div id="faq_5" class="accordion-collapse collapse" aria-labelledby="faq_head_5" data-bs-parent="#faq_acr">
+                      <div class="accordion-body">
+                      	                                                                                                                            The panel has been designed in such a way that it is easy to access all of the different sections in the lowest amount of time possible. You may easily create a user account in a matter of seconds, add funds to your account, and make use of all available services. You can get in touch with our online customer support if you run into any issues when using any aspect of the panel.
+                                                                                                                                                                                                                                                                                              </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+
+
+
+{% include 'footer.twig' %}

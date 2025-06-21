@@ -1,0 +1,102 @@
+{% include 'header.twig' %}
+
+
+
+          <section class="bg-gradient-started">
+          <div class="bg-noise"></div>
+        </section>
+		
+		<!-- Main variables *content* -->
+		<div class="container-fluid">
+            <div class="row">
+            <div class="col-lg-12">
+                <div class="well ">
+                    <p class="p1" style="margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;"><b>What is Child Panel?</b></p><p class="p1" style="margin-bottom: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: &quot;Helvetica Neue&quot;;">You Can Resell Our SMM services by Your Child panel to Your Customers. Child panel is a panel that may connect only to smmstone.com. It cost $4.9 per month without a monthly orders limit. It is fully white-label so that you may sell it as a panel service for your customers. You just spent a Monthly $4.9, became a New SMM Panel Owner, and started Make Money Online.</p></p>
+                </div>
+            </div>
+        </div>
+                <div class="row">
+            <div class="col-lg-12">
+                <div class="p_card mb-4">
+                    
+                    
+                    
+                    
+									<form action="/child-panels" method="post">
+									  {% if errorText %}
+										<div class="alert alert-dismissible alert-danger">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ errorText }}
+										</div>
+									  {% endif %}
+									  {% if successText %}
+										<div class="alert alert-dismissible alert-success">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ successText }}
+										</div>
+									  {% endif %}
+                                       <div class="form-group mb-4">
+                                          <label>{{ lang["childpanels.panel.domain"] }}</label>
+                                          <div class="input-group">
+                                            <input type="text" class="form-control" id="domain" name="domain" value="">
+                                          </div>
+                                       </div>
+                                       <!-- form-group end -->
+                                       
+                                       
+                                       
+                                       
+                                        <div class="alert alert-info">
+                                <div>Please change nameservers to:</div>
+                                <ul style="padding-left: 20px">
+                                                                            <li>ns1.dnsco.in</li>
+                                                                            <li>ns2.dnsco.in</li>
+                                                                    </ul>
+                            </div>
+                        
+                                       
+                                       
+                                       
+                                       
+                                       <div class="form-group mb-4">
+                                          <label>{{ lang["childpanels.panel.currency"] }}</label>
+                                          <div class="input-group">
+											<select class="form-control" name="panel_currency" aria-required="true">
+                                                {% for curr in site['currencies'] %}
+                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
+                                                {% endfor %}
+                                            </select>
+                                          </div>
+                                       </div>
+                                       <!-- form-group end -->
+                                       <div class="form-group mb-4">
+                                          <label>{{ lang["childpanels.admin.username"] }}</label>
+                                          <div class="input-group">
+                                             <input type="text" class="form-control" value="admin" disabled>
+                                          </div>
+                                       </div>
+                                       <!-- form-group end -->
+                                       <div class="form-group mb-4">
+                                          <label>{{ lang["childpanels.admin.password"] }}</label>
+                                          <div class="input-group">
+                                             <input class="form-control" value="admin@123" disabled>
+                                          </div>
+                                       </div>
+                                       <!-- form-group end -->
+                                       <div class="form-group mb-4">
+                                          <label>{{ lang["childpanels.panel.amount"] }}</label>
+                                          <div class="input-group">
+                                             <input type="text" class="form-control" value="{{ settings['panel_price'] * currency['value']}}{{ currency['symbol'] }}" disabled>
+                                          </div>
+                                       </div>
+									   <!-- form-group end -->
+                                       <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">{{ lang["neworder.button"] }}</button>
+                                    </form>
+									</div>
+								</div>
+								</div>
+			</div>
+							
+
+
+{% include 'footer.twig' %}

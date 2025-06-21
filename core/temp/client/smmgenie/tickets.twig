@@ -1,0 +1,423 @@
+{% include 'header.twig' %}
+
+
+
+<div class="app-content">
+	<div class="container-fluid">
+		<div class="d-card dc-dash">
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-12">
+					<div class="py-3 px-5">
+						<div class="dch-title">
+							Support Tickets
+						</div>
+						<div class="dch-text">
+							We have listed Some Common Questions at
+							<a href="/faq">Frequently Asked Questions.
+							</a>Check it first and then create tickets.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section id="nav_tabs_for_ticket">
+			<div class="row">
+				<div class="col-lg-7 col-12 mb-5 mb-lg-0">
+					<div class="d-card mb-3">
+						<div class="d-card-body" id="dc-body">
+							<div class="ticket_navs">
+
+								<div>
+									<ul class="nav nav-pills mb-3 ticketTabs" id="pills-tab" role="tablist">
+										
+										<li class="nav-item">
+											<a class="nav-link active" id="pills-create-tab" data-toggle="pill" href="#pills-create" role="tab" aria-controls="pills-create" aria-selected="true">
+												<div class="d-flex align-items-center">
+													<i class="icon far fa-comment-alt-plus me-3"></i>
+													<span class="ml-sm-3 ml-sm-1">Create Tickets</span>
+												</div>
+											</a>
+										</li>
+										
+										<li class="nav-item">
+											<a class="nav-link" id="pills-history-tab" data-toggle="pill" href="#pills-history" role="tab" aria-controls="pills-history" aria-selected="false">
+												<div class="d-flex align-items-center">
+													<i class="icon far fa-ticket-alt me-3"></i>
+													<span class="ml-sm-3 ml-sm-1">Tickets History</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+
+                        								<div>
+									<form action="/tickets" method="get" id="history-search">
+										<div class="app-search">
+											<input type="text" name="search" value="" id="serv-inp" class="app-input" placeholder="Search">
+											<button type="submit" class="app-ord-submit">
+												<i class="fas fa-search"></i>
+											</button>
+										</div>
+									</form>
+								</div>
+                        
+							</div>
+
+							<div class="tab-content" id="pills-tabContent">
+								
+								<div class="tab-pane fade active show" id="pills-create" role="tabpanel" aria-labelledby="pills-create-tab">
+									<form method="post" action="" id="ticketsend"class="">
+										<div class="alert alert-dismissible alert-danger ticket-danger " style="display: none">
+											<button type="button" class="close">×</button>
+											<div></div>
+										</div>
+										
+										
+										{% if error %}
+                                <div class="alert alert-dismissible alert-danger ">
+                                  {{ errorText }}
+                                </div>
+                              {% elseif success %}
+                                <div class="alert alert-dismissible alert-success">
+                                  {{ successText }}
+                                </div>
+                              {% endif %}
+										
+										
+										<div class="form-group">
+											<label for="subject" class="control-label">{{ lang['tickets.subject'] }}</label>
+											<div id="subjectSeter" style="display:none;"></div>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-ballot"></i>
+													</div>
+													
+													
+												<select id="subject" name="subject" class="form-control fg-control" data-class="form-control fg-control">
+                                                                                             {% for subjects in orders %}
+                       <option value"{{ subjects['subject'] }}">{{ subjects['subject'] }}</option>
+                      {% endfor %}
+                                                                                          </select>
+                                                                                          
+                                                                                          
+                                                                                          
+												</div>
+											</div>
+										</div>
+									<!-- 	<div class="form-group" id="order-group" style="display: block;">
+											<label>Order Id</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-hashtag"></i>
+													</div>
+													<input type="text" class="form-control" id="orderid">
+												</div>
+											</div>
+											<label style="margin-top:15px">Request</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-book-reader"></i>
+													</div>
+													<select class="form-control" id="want">
+														<option value="Refill" selected="">Refill</option>
+														<option value="Cancel">Cancel</option>
+														<option value="Speed Up">Speed Up</option>
+														<option value="Other">Other</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="form-group" id="payment-group" style="display: none;">
+											<label>Payment Method</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-university"></i>
+													</div>
+													<select class="form-control" id="payment">
+														<option value="Credit Card" selected="">Credit Card</option>
+														<option value="Payoneer">Payoneer</option>
+														<option value="Perfect Money">Perfect Money</option>
+														<option value="Western Union">Western Union</option>
+														<option value="Bitcoin">Bitcoin</option>
+														<option value="Wise/Bank Transfer">Wise/Bank Transfer</option>
+														<option value="Other">Other</option>
+													</select>
+												</div>
+											</div>
+											<label style="margin-top:15px">Transaction Id</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-user-alt"></i>
+													</div>
+													<input type="text" class="form-control" name="Transaction[ID]" id="PaymentID">
+												</div>
+											</div>
+											<label style="margin-top:15px">Amount</label>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-icon">
+														<i class="far fa-database"></i>
+													</div>
+													<input type="number" class="form-control" name="addamount[ID]" id="addamount">
+												</div>
+											</div>
+										</div> -->
+										<div class="form-group message">
+											<label for="message" class="control-label">{{ lang['tickets.message'] }}</label>
+											
+											 <textarea class="form-control" rows="4" cols="50" id="message" name="message" style="min-height: 100px; display: block;">{{ data['message'] }}</textarea>
+											 
+										</div>
+                             
+									
+                                      <div class="alert alert-danger">Important: <ol><li>Please you can only make a ticket for a speed/cancel request after it passes 24 hrs and not getting enough as described in the service description. </li></ol>
+                                </div>
+										<button type="submit" class="btn btn-primary btn-lg btn-block">{{ lang['tickets.button'] }}</button>
+									</form>
+								</div>
+								 
+                                        <div class="tab-pane fade " id="pills-history" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            
+                                                        <div class="table-responsive table_scroller">
+                               <table class="table">
+                                  <thead class="white">
+                                     <tr>
+                                        <th>{{ lang['tickets.id'] }}</th>
+                                        <th>{{ lang['tickets.subject'] }}</th>
+                                        <th>{{ lang['tickets.status'] }}</th>
+                                        <th>{{ lang['tickets.updated'] }}</th>
+                                     </tr>
+                                  </thead>
+                                  <tbody>
+                                                                              {% for ticket in ticketList %}
+                <tr>
+                  <td>{{ ticket['ticket_id'] }}</td>
+                  {% if ticket["support_new"] == 2 %}
+                    <td><a href="tickets/{{ ticket['ticket_id'] }}"><strong>{{ ticket['subject'] }}</strong></a></td>
+                  {% else %}
+                    <td><a href="tickets/{{ ticket['ticket_id'] }}">{{ ticket['subject'] }}</a></td>
+                  {% endif %}
+                <td>  <span class="order-status">{{ ticket['status'] }}</span>
+                 </td>
+                  <td><span class="nowrap">{{ ticket['lastupdate_time'] }}</span></td>
+                </tr>
+              {% endfor %}
+                                                                           </tbody>
+                                 </table>
+                              </div>
+                                                      								</div>
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 col-12 mb-5 mb-lg-0">
+					<div class="d-card">
+						<div class="d-card-head">
+							<div class="dch-body">
+								<i class="icon fas fa-question me-3"></i>
+								<span class="ml-3">Frequently FAQ's</span>
+							</div>
+						</div>
+						<div class="d-card-body">
+							<div class="dash-sss">
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Why was my refill request rejected?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="display: none;">
+										<p>A refill can be rejected for a variety of reasons such as:<br>
+											1. The order has dropped below the start count of the original order, in this case the number must be brought up organically or through a new quick service order so that the system can refill the original order.<br>
+											2. The refill period outlined in the description of the order has now ended.
+											<br>
+											3. The service does not offer refill.<br>4.A new order has been made for the same link and there is overlap.<br>
+											If none of these reasons apply to you, please open a ticket with the support team for further assistance or clarification.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Why was my order canceled?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>Your orders will be canceled for one of the following reasons:<br>
+											1. Placing two or more orders for the same link at the same time without waiting for completion.
+											<br>
+											2. The link format is incorrect or does not follow the instructions provided in the service description.
+											<br>
+											3. The service is currently being updated or under service.<br>
+											4. In some cases, the quantity was not in increments of 100's or 1000's.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Is it possible for the quantity ordered to decrease?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											A drop is normal, that is why most services offer a refill guarantee. A drop can depend on many factors such as an update made by the social media platform, or on the quality of service chosen. Always make sure to read the service descriptions carefully to ensure you are making the correct order for your needs.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- Can I get a refund to my original method of payment?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											Unfortunately, there is no way to return the balance to the original payment method.Upon payment, you have agreed to the
+											<a href="/terms" class="link-faq">terms and conditions</a>
+											of the site, that there is no way to get the money back. These payments are for services and not refundable.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- How many tickets can I open?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											You must open only one ticket for all your orders so we can help you better. After the request has been submitted or the issue has been solved, the ticket will be closed. Only then should you open a new ticket for new orders. The maximum limit for pending tickets is 3. A response must be made by the support team to be able to open a new ticket.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Why is my order not completed yet?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											Check the status of your order from the orders tab in your user dashboard before opening a ticket.To know the speed of the orders please refer to the service description. In the rare event that the status of your order has become complete but the service was not delivered, please open a ticket and tell us so to check the order for you.
+										</p>
+										<p></p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- How often can I refill my order?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											You can request a refill once every 24 hours and only if there is a drop in the quantity delivered. Remember that your order must be still in the refill period.<br>Also, in the case of drip feed orders, you can request to refill only the last order.<br>Because in this case, the rest of the refill requests will be rejected.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- How can I send a screenshot to you?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											You can send us a screenshot using this website :
+											<a href="https://prnt.sc" class="link-faq">https://imgur.com/upload</a>
+											<br>
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Do you have any other questions?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content" style="">
+										<p>
+											Feel free to open a new ticket if you would like additional information.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+
+
+{% include 'footer.twig' %}

@@ -1,0 +1,88 @@
+{% include 'header.twig' %}
+
+
+
+
+<!-- Main variables *content* -->
+
+        <section id="contentContainer">
+  	<div class="container-fluid">
+      <div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      
+      
+       {% if error %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+      
+      <div class="well">
+        <div class="form-group">
+          <div class="profilePic"><img src="https://i.postimg.cc/L6GCK21j/profile-Pic.png" alt="profile pic" /></div>
+                      <h4>{{ user['username'] }}</h4> readonly>
+        </div>
+      </div>
+
+      <div class="well">
+        <form  method="post" action="account">
+                    <div class="form-group">
+            <label for="current" class="control-label">Current password</label>
+            <input type="password" class="form-control" id="current" name="current_password">
+          </div>
+          <div class="form-group">
+            <label for="new" class="control-label">New password</label>
+            <input type="password" class="form-control" id="new" name="password">
+          </div>
+          <div class="form-group">
+            <label for="confirm" class="control-label">Confirm new password</label>
+            <input type="password" class="form-control" id="confirm" name="confirm_password">
+          </div>
+
+       
+          <button type="submit" class="btn btn-primary">Change password</button>
+        </form>
+      </div>
+
+      
+      <div class="well">
+        <form  action="account/timezone" method="post">
+          <div class="form-group">
+            <label for="timezone" class="control-label">Timezone</label>
+            <select class="form-control" name="timezone">
+                 {% for timezone in timezones %}
+                 <option {% if timezone["timezone"] == user['timezone'] %} selected {% endif %} value="{{ timezone["timezone"] }}">{{ timezone["label"] }}</option>
+                 {% endfor %}
+             </select>
+          </div>
+
+         
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+      <div class="well">
+        <form  action="account/newapikey" method="post">
+          <div class="form-group">
+            <label for="key" class="control-label">API key</label>
+            <input type="text" class="form-control" id="api_key" value="********************************" readonly>
+          </div>
+
+       
+          <button type="submit" class="btn btn-primary">Generate new</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </section>
+
+{% include 'footer.twig' %}

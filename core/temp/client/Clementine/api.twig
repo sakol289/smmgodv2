@@ -1,0 +1,313 @@
+{% include 'header.twig' %}
+
+
+
+<div class="paddingbody"></div>
+	<div class="container-fluid container-fluid-spacious">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="main-page" class="well well-float table-responsive">
+					<div class="">
+						<h2 class="m-b-md">API Docs</h2>
+						<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td class="width-40">HTTP Method</td>
+										<td>POST</td>
+									</tr>
+									<tr>
+										<td>API URL</td>
+										<td>
+											<strong>{{ site["url"] }}/api/v2</strong>
+										</td>
+									</tr>
+							
+									<tr>
+										<td>API KEY</td>
+										<td><strong>{{ user["apikey"] }}</strong></td>
+									</tr>
+									
+									<tr>
+										<td>Response format</td>
+										<td>JSON</td>
+									</tr>
+								</tbody>
+						</table>
+						<h4 class="m-t-md"><strong>Add order</strong></h4>
+						<p>
+						</p>
+						<form class="form-inline">
+							<div class="form-group">
+								<select class="form-control input-sm" id="service_type">
+									<option value="0" selected="selected">Default</option>
+								</select>
+							</div>
+						</form>
+						<p></p>
+						
+						<div id="type_0" style="">
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>add</td>
+									</tr>
+									<tr>
+										<td>service</td>
+										<td>Service ID</td>
+									</tr>
+									<tr>
+										<td>url</td>
+										<td>Link to page</td>
+									</tr>
+									<tr>
+										<td>quantity</td>
+										<td>Needed quantity</td>
+									</tr>
+									<tr>
+										<td>comments (optional)</td>
+										<td>Comments list (encoded)</td>
+									</tr>
+									<tr>
+										<td>runs (optional)</td>
+										<td>Runs to deliver</td>
+									</tr>
+									<tr>
+										<td>interval (optional)</td>
+										<td>Interval in minutes</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+						<p><strong>Example success response</strong></p>
+						<pre>{
+    "order": 23501
+}</pre>
+						<p><strong>Example error response</strong></p>
+						<pre>{
+	"error": "incorrect service type"
+}
+</pre>
+						
+						<h4 class="m-t-md"><strong>Services List</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>services</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>[
+    {
+        "service": 1,
+        "name": "Followers",
+        "type": "Default",
+        "category": "First Category",
+        "rate": "0.90",
+        "min": "50",
+        "max": "10000"
+    },
+    {
+        "service": 2,
+        "name": "Comments",
+        "type": "Custom Comments",
+        "category": "Second Category",
+        "rate": "8",
+        "min": "10",
+        "max": "1500"
+    }
+]</pre>
+							
+							<h4 class="m-t-md"><strong>Order status</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>status</td>
+									</tr>
+									<tr>
+										<td>order</td>
+										<td>Order ID</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>{
+    "charge": "0.27819",
+    "start_count": "3572",
+    "status": "Partial",
+    "remains": "157",
+    "currency": "USD"
+}</pre>
+							
+							<h4 class="m-t-md"><strong>Multiple Order status</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>status</td>
+									</tr>
+									<tr>
+										<td>orders</td>
+										<td>Order IDs separated by comma(100 orders at once)</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>{
+    "1": {
+        "charge": "0.27819",
+        "start_count": "3572",
+        "status": "Partial",
+        "remains": "157",
+        "currency": "USD"
+    },
+    "10": {
+        "error": "Incorrect order ID"
+    },
+    "100": {
+        "charge": "1.44219",
+        "start_count": "234",
+        "status": "In progress",
+        "remains": "10",
+        "currency": "USD"
+    }
+}</pre>
+							
+							<h4 class="m-t-md"><strong>Balance</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>balance</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>{
+	"balance": 10000,
+	"currency": "USD",
+}
+</pre>				
+						
+						<h4 class="m-t-md"><strong>Refill</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>refill</td>
+									</tr>
+									<tr>
+										<td>order</td>
+										<td>Order ID</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>{
+	"status": Success,
+	"message": "Your order successfully added for refill. Thank you for patience."
+}
+</pre>
+							
+							<h4 class="m-t-md"><strong>Cancel</strong></h4>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th class="width-40">Parameters</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>key</td>
+										<td>Your API key</td>
+									</tr>
+									<tr>
+										<td>action</td>
+										<td>cancel</td>
+									</tr>
+									<tr>
+										<td>order</td>
+										<td>Order ID</td>
+									</tr>
+								</tbody>
+							</table>
+							<p><strong>Example response</strong></p>
+							<pre>{
+	"status": Success,
+	"message": "Your order was successfully marked for cancellation. Thank you for patience."
+}
+</pre>
+						
+						<a href="example.txt" class="btn btn-default m-t" target="_blank">Example of PHP code</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% include 'footer.twig' %}

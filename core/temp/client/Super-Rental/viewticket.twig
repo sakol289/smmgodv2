@@ -1,0 +1,206 @@
+{% include 'header.twig' %}
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<style type="text/css">
+  
+.chat {
+  border: solid 1px #EEE;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.messages {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  border-radius: 20px;
+  padding: 8px 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.yours {
+  align-items: flex-start;
+}
+
+.yours .message {
+  /*margin-right: 25%;*/
+  background-color: #cfcfcf;
+  position: relative;
+}
+.message{
+  font-size: 18px;
+}
+.yours .message.last:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: -7px;
+  height: 20px;
+  width: 20px;
+  background: #cfcfcf;
+  border-bottom-right-radius: 15px;
+}
+.yours .message.last:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  left: -10px;
+  width: 10px;
+  height: 20px;
+  background: white;
+  border-bottom-right-radius: 10px;
+}
+
+.mine {
+  align-items: flex-end;
+}
+
+.mine .message {
+  color: white;
+  /*margin-left: 25%;*/
+  background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.mine .message.last:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  right: -8px;
+  height: 20px;
+  width: 20px;
+  background: linear-gradient(to bottom, #00D0EA 0%, #0085D1 100%);
+  background-attachment: fixed;
+  border-bottom-left-radius: 15px;
+}
+
+.mine .message.last:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  right: -10px;
+  width: 10px;
+  height: 20px;
+  background: white;
+  border-bottom-left-radius: 10px;
+}
+.panel-border-top>div {
+    width: 100% !important;
+}
+
+.nicEdit-main {
+    width: auto !important;
+    min-height: 100px !important;
+}
+</style>
+<div class="row ticket-panel">
+<div class="col">
+<div class="card bg-white ">
+<div class="card-header">
+<div class="titcket-title card-title">
+{{ messageList['ticket']['subject'] }} {% if messageList["ticket"]["canmessage"] == 1 %}{% endif %} 
+</div>
+</div>
+
+
+
+								  {% if messageList %}
+									{% for message in messageList %}
+									  {% if message["support"] == 1 %}
+									<div class="card-body chat">
+<div class="mine messages">
+<div class="message">
+<span class="avatar">
+<i class="fa fa-user-circle"></i>
+</span>
+<div class="ticket-message">
+<div class="message">
+{{ message["message"] }}<br>
+</div>
+</div>
+<div class="info text-right">
+<strong>{{ user["username"] }}</strong>
+<small class="text-muted">{{ message["time"] }}</small>
+</div>
+</div>
+</div>
+										
+										
+										{% elseif message["subject"] %}
+										{% else %}
+										<div class="card-body chat">
+<div class="mine messages">
+<div class="message">
+<span class="avatar">
+<i class="fa fa-user-circle"></i>
+</span>
+<div class="ticket-message">
+<div class="message">
+{{ message["message"] }}<br>
+</div>
+</div>
+<div class="info text-right">
+<strong>Support</strong>
+<small class="text-muted">{{ message["time"] }}</small>
+</div>
+</div>
+</div>
+									
+										{% endif %}
+									  {% endfor %}
+									{% endif %}
+									
+																		
+									{% if messageList['ticket']['canmessage'] == 2 %}
+									<form method="post" action="tickets/{{ messageList['ticket']['ticket_id'] }}">
+									  {% if error %}
+										<div class="alert alert-dismissible alert-danger">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ errorText }}
+										</div>
+									  {% endif %}
+									  {% if success %}
+										<div class="alert alert-dismissible alert-success">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ successText }}
+										</div>
+									  {% endif %}
+                                       <div class="form-group message-2 mt-5">
+                                          <label for="message" class="control-label">Message</label>
+                                          <textarea class="form-control" rows="7" id="message" name="message" placeholder="message..." style="height:150px!important"></textarea>
+                                       </div>
+									   <input type="hidden" name="_csrf" value="{{csrftoken}}">
+                                       <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                                    </form>
+									{% endif %}
+                                 </div>
+                              </div>
+                              <!-- d-card end -->
+                           </div>
+
+                        </div>
+                     </section>
+                  </div>
+                  <!-- page-content end -->
+               </div>
+               <!-- app-content -->
+            </div>
+         </div>
+
+      </div>
+
+{% include 'footer.twig' %}

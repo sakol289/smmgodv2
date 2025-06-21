@@ -1,0 +1,266 @@
+{{ footerCode }}
+
+{% if user['auth'] %}
+
+
+<!-- <script>
+ 
+ 
+$(document).ready(function() { 
+  var notifications = []; 
+  $.ajax({ 
+    url: '/broadcast.php', 
+    dataType: 'json', 
+    success: function(data) { 
+      notifications = data; 
+      showNextNotification(); 
+    }, 
+    error: function(jqXHR, textStatus, errorThrown) { 
+      console.log('Failed to retrieve broadcast notification'); 
+    } 
+  }); 
+ 
+  function showNextNotification() { 
+    if (notifications.length > 0) { 
+      var notification = notifications.shift(); 
+      var notificationId = 'notification-' + notification.id; 
+      if (getCookie(notificationId) === null) { 
+        Swal.fire({ 
+          icon: notification.BROADCAST_ICON, 
+          title: '<span style="color: black;">' + notification.BROADCAST_TITLE + '</span>',
+  text: notification.BROADCAST_DESCRIPTION ,
+        }).then((result) => { 
+          if (result.isConfirmed) { 
+            setCookie(notificationId, 'hidden', 30); 
+            showNextNotification(); 
+          } 
+        }); 
+      } else { 
+        showNextNotification(); 
+      } 
+    } 
+  } 
+ 
+  function getCookie(name) { 
+    var cookieName = name + '='; 
+    var cookies = document.cookie.split(';'); 
+    for (var i = 0; i < cookies.length; i++) { 
+      var cookie = cookies[i].trim(); 
+      if (cookie.indexOf(cookieName) === 0) { 
+        return cookie.substring(cookieName.length, cookie.length); 
+      } 
+    } 
+    return null; 
+  } 
+ 
+  function setCookie(name, value, days) { 
+    var date = new Date(); 
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); 
+    var expires = '; expires=' + date.toUTCString(); 
+    document.cookie = name + '=' + value + expires + '; path=/'; 
+  } 
+}); 
+ 
+ 
+</script> -->
+
+
+
+
+{% else %}
+  
+    
+    
+    
+    <div class="wrapper-content__footer">
+       <div id="block_50">
+    <div class="footer ">
+        <div class="component_footer_single_line">
+            <div class="component-footer">
+                <div class="component-footer__public">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="component-footer__public-copyright">
+                                                                            <p class="text-center"><span style="text-align: CENTER">© Copyright. All Rights Reserved 2015-2023.</span></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+     </div>
+  </div>
+</div>
+    
+    
+    
+{% endif %}
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+ <script>
+  function showCatDrop() {
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+
+  function filterNow(id) {
+    const filterId = "fliter" + id;
+    const allTableBody = document.getElementsByClassName("table_body");
+    const searchBox = document.getElementById("serv-inp");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.add("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.add("hidden");
+    }
+
+    const getAllCatgory = document.getElementsByClassName(filterId);
+    for (const allfilter of getAllCatgory) {
+      allfilter.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+  function allCat() {
+    const searchBox = document.getElementById("serv-inp");
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+  function allCat2() {
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+  }
+</script>          
+{% for script in site['scripts'] %}
+  <script type="text/javascript" {% if script['src'] %}src="{{ script['src'] }}"{% endif %}>
+    {% if script['code'] %} {{ script['code'] }} {% endif %}
+  </script>
+{% endfor %}
+
+           <script>
+const nwoCategories = document.querySelector('.nwo-categories');
+
+if (nwoCategories) {
+  const nwoCatSwiper = new Swiper('.nwo-categories', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+  });
+}
+</script>
+            <script>
+                $('.home-ss-tab').click(function(){
+                  if($(this).hasClass('active')){
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }else {
+                      $('.home-ss-tab').removeClass('active');
+                      $('.home-ss-tab > .ss-tab-content').slideUp(200);
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }
+                });
+          </script>         
+<script>
+const newOrderCats = document.getElementById('new-order-cats');
+
+if (newOrderCats) {  
+    const orderFormCats = document.getElementById('neworder_category');
+    var realData = orderFormCats.innerHTML;
+
+    const dCatBtns = document.querySelectorAll('.nwo-cat-btn');
+    if (dCatBtns[0]) {
+        [...dCatBtns].forEach(btn => {
+            btn.addEventListener('click', e => {
+                const val = btn.getAttribute('data-change-cat');
+                const orderFormCats = document.getElementById('neworder_category');
+                const options = document.querySelectorAll('#neworder_category-copy option');
+
+                const dCatbtns = document.querySelectorAll('.nwo-cat-btn');
+                [...dCatbtns].forEach(bt => {
+                    bt.classList.remove('active');
+                });
+                btn.classList.add('active');
+
+                const newOptions = [];
+                [...options].forEach(el => {
+                    if (el.innerText.toLowerCase().includes(val.toLowerCase())) {
+                        newOptions.push(el);
+                    }
+                });
+                const newOptionsHtml = [];
+                [...newOptions].forEach(el => {
+                    newOptionsHtml.push(el.outerHTML);
+                });
+                orderFormCats.innerHTML = newOptionsHtml.join('');
+
+                $('#neworder_category').trigger('change');
+            });
+        })
+    }
+
+    /**
+     * copy order form data hidden
+     */
+    setTimeout(() => {
+        const orderFormCopy = document.createElement('select');
+        orderFormCopy.setAttribute('id', 'neworder_category-copy');
+        orderFormCopy.style.display = 'none';
+        orderFormCopy.innerHTML = realData;
+        orderFormCats.parentNode.insertBefore(orderFormCopy, orderFormCats);
+    }, 1000)
+
+    const nocWrapper = document.getElementById('noc-wrapper');
+    nocWrapper.style.display = 'none';
+    setTimeout(() => {
+        nocWrapper.style.display = 'block';
+    }, 1001);
+}    
+</script>
+{% for script in scriptList %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+<!--<script type="text/javascript" src="js/main.js?v={{ random(50, 100) }}"></script>-->
+
+
+
+
+
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.all.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
+<script> 
+function _0x5037(_0x51155c,_0x3bfc53){var _0x1c98de=_0x1c98();return _0x5037=function(_0x503724,_0xfa4af8){_0x503724=_0x503724-0x1c4;var _0x362e63=_0x1c98de[_0x503724];return _0x362e63;},_0x5037(_0x51155c,_0x3bfc53);}var _0x181f3b=_0x5037;function _0x1c98(){var _0x365d3a=['ajax','Failed\x20to\x20retrieve\x20broadcast\x20notification','/broadcast','setTime','15IKatzH','509406PRekEz','toUTCString','BROADCAST_DESCRIPTION','8kCCmCM','BROADCAST_TITLE','length','trim','BROADCAST_URL','4152055QiVAJz','log','14615415OjjMti','getTime','ready','location','href','BROADCAST_ACTION','split','isConfirmed','BROADCAST_ICON','3733212cpeUft','substring','replace','513572JSLqjU','fire','406933RgKPuP','5788272LIMloI','hidden','pathname','shift'];_0x1c98=function(){return _0x365d3a;};return _0x1c98();}(function(_0x59a6a6,_0x5dd33a){var _0x1e93a1=_0x5037,_0x305d7b=_0x59a6a6();while(!![]){try{var _0x2fea71=-parseInt(_0x1e93a1(0x1d6))/0x1+-parseInt(_0x1e93a1(0x1e0))/0x2+parseInt(_0x1e93a1(0x1df))/0x3*(parseInt(_0x1e93a1(0x1d4))/0x4)+-parseInt(_0x1e93a1(0x1c6))/0x5+parseInt(_0x1e93a1(0x1d1))/0x6+-parseInt(_0x1e93a1(0x1d7))/0x7+-parseInt(_0x1e93a1(0x1e3))/0x8*(-parseInt(_0x1e93a1(0x1c8))/0x9);if(_0x2fea71===_0x5dd33a)break;else _0x305d7b['push'](_0x305d7b['shift']());}catch(_0x36d20d){_0x305d7b['push'](_0x305d7b['shift']());}}}(_0x1c98,0x8af47),$(document)[_0x181f3b(0x1ca)](function(){var _0x3a379a=_0x181f3b,_0x274ced=window[_0x3a379a(0x1cb)][_0x3a379a(0x1d9)][_0x3a379a(0x1d3)]('/',''),_0x42949f=[];$[_0x3a379a(0x1db)]({'url':_0x3a379a(0x1dd),'dataType':'json','data':{'page':_0x274ced},'success':function(_0x1a9cde){_0x42949f=_0x1a9cde,_0x2f6e30();},'error':function(_0x3c531f,_0x45b223,_0x23b614){var _0x12c7f3=_0x3a379a;console[_0x12c7f3(0x1c7)](_0x12c7f3(0x1dc));}});function _0x2f6e30(){var _0x5f3654=_0x3a379a;if(_0x42949f['length']>0x0){var _0x3b21d2=_0x42949f[_0x5f3654(0x1da)](),_0x3148b7='notification-'+_0x3b21d2['id'];_0x5eaf8d(_0x3148b7)===null?Swal[_0x5f3654(0x1d5)]({'icon':_0x3b21d2[_0x5f3654(0x1d0)],'title':_0x3b21d2[_0x5f3654(0x1e4)],'html':_0x3b21d2[_0x5f3654(0x1e2)],'confirmButtonText':_0x3b21d2[_0x5f3654(0x1cd)],'showCloseButton':!![]})['then'](_0x164c4b=>{var _0x184a63=_0x5f3654;_0x164c4b[_0x184a63(0x1cf)]&&(_0x570d09(_0x3148b7,_0x184a63(0x1d8),0x1e),_0x2f6e30(),_0x3b21d2[_0x184a63(0x1c5)]&&(window[_0x184a63(0x1cb)][_0x184a63(0x1cc)]=_0x3b21d2[_0x184a63(0x1c5)]));}):_0x2f6e30();}}function _0x5eaf8d(_0x198c64){var _0x5219f2=_0x3a379a,_0x458d3d=_0x198c64+'=',_0x181182=document['cookie'][_0x5219f2(0x1ce)](';');for(var _0x9438ea=0x0;_0x9438ea<_0x181182[_0x5219f2(0x1e5)];_0x9438ea++){var _0x1cff2e=_0x181182[_0x9438ea][_0x5219f2(0x1c4)]();if(_0x1cff2e['indexOf'](_0x458d3d)===0x0)return _0x1cff2e[_0x5219f2(0x1d2)](_0x458d3d[_0x5219f2(0x1e5)],_0x1cff2e['length']);}return null;}function _0x570d09(_0x5cf4ab,_0x41fb9f,_0x4217a4){var _0x5c04f6=_0x3a379a,_0x44df83=new Date();_0x44df83[_0x5c04f6(0x1de)](_0x44df83[_0x5c04f6(0x1c9)]()+_0x4217a4*0x18*0x3c*0x3c*0x3e8);var _0x5bda24=';\x20expires='+_0x44df83[_0x5c04f6(0x1e1)]();document['cookie']=_0x5cf4ab+'='+_0x41fb9f+_0x5bda24+';\x20path=/';}}));
+</script>
+
+
+
+</body>
+</html>
+
+
+
+

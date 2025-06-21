@@ -1,0 +1,110 @@
+{% include 'header.twig' %}
+
+
+	<div class="paddingbody"></div>
+			<div class="container-fluid container-fluid-spacious">
+				<div class="col-md-12">
+					
+					<div class="well">
+						<div class="titcket-title">
+							<div class="row">
+							    
+							     {% if error %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+      
+<div class="col-md-8">
+									{{ messageList['ticket']['subject'] }}
+								</div>
+								<div class="col-md-4">	
+									<a class="pull-right close-button  " href="?close_ticket=2955">Close Ticket</a>
+								</div>
+							</div>
+						</div>
+
+
+
+								  {% if messageList %}
+									{% for message in messageList %}
+									  {% if message["support"] == 1 %}
+									<div class="card-body chat">
+<div class="mine messages">
+<div class="message">
+<span class="avatar">
+<i class="fa fa-user-circle"></i>
+</span>
+<div class="ticket-message">
+<div class="message">
+{{ message["message"] }}<br>
+</div>
+</div>
+<div class="info text-right">
+<strong>{{ user["username"] }}</strong>
+<small class="text-muted">{{ message["time"] }}</small>
+</div>
+</div>
+</div>
+										
+										
+										{% elseif message["subject"] %}
+										{% else %}
+										<div class="card-body chat">
+<div class="mine messages">
+<div class="message">
+<span class="avatar">
+<i class="fa fa-user-circle"></i>
+</span>
+<div class="ticket-message">
+<div class="message">
+{{ message["message"] }}<br>
+</div>
+</div>
+<div class="info text-right">
+<strong>Support</strong>
+<small class="text-muted">{{ message["time"] }}</small>
+</div>
+</div>
+</div>
+									
+										{% endif %}
+									  {% endfor %}
+									{% endif %}
+									
+																		
+									{% if messageList['ticket']['canmessage'] == 2 %}
+									<form method="post" action="tickets/{{ messageList['ticket']['ticket_id'] }}">
+									 
+                                       <div class="form-group message-2 mt-5">
+                                          <label for="message" class="control-label">Message</label>
+                                          <textarea class="form-control" rows="7" id="message" name="message" placeholder="message..." style="height:150px!important"></textarea>
+                                       </div>
+									   <input type="hidden" name="_csrf" value="{{csrftoken}}">
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </form>
+									{% endif %}
+                                 </div>
+                              </div>
+                              <!-- d-card end -->
+                           </div>
+
+                        </div>
+                     </section>
+                  </div>
+                  <!-- page-content end -->
+               </div>
+               <!-- app-content -->
+            </div>
+         </div>
+
+      </div>
+
+{% include 'footer.twig' %}

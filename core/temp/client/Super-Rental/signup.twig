@@ -1,0 +1,137 @@
+{% include 'header1.twig' %}
+
+
+
+
+
+
+
+
+ 
+<div class="not-authenticate">
+<section class="top-hero signupPage">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<h1> <b>Are You Ready?</b> Sign up below <br>Must use valid <b>BILLING </b>email! </h1>
+
+
+
+ <form method="post" action="" class="home-form form-inline">
+      {% if errorText %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if successText %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+                        
+    
+    
+    
+<div class="form-group inputDiv">
+     <input type="text" class="form-control" name="username" value="{{ data['username'] }}" required="" placeholder="Username">
+</div>
+<div class="form-group inputDiv mr-l">
+     <input type="email" class="form-control" name="email" value="{{ data['email'] }}" required="" placeholder="Email">
+</div>
+
+
+
+{% if settings['name_secret'] == 2 %}
+ <div class="form-group">
+                              <div class="form-group inputDiv">
+                                  	<input type="text" class="fg-control" name="first_name" value="{{ data['first_name'] }}" required="" placeholder="First Name">
+                                  	</div>
+<div class="form-group inputDiv mr-l">
+    	<input type="text" class="fg-control" name="last_name" value="{{ data['last_name'] }}"  required="" placeholder="Last Name" >
+    	</div>
+                           </div>
+                            {% endif %}
+                           
+                           
+                           
+                            <div class="form-group">
+                                 {% if settings['skype_area'] == 2 %}
+                              <div class="form-group inputDiv">
+        <input type="text" class="form-control"  name="telephone" value="{{ data['telephone'] }}" placeholder="WhatsApp" value="" required>
+</div>	{% endif %}		
+
+                </div>
+                           <!-- end -->
+                           
+                            <div class="form-group">
+                              <div class="form-group inputDiv">
+  <input type="password" class="fg-control" name="password" placeholder="Password" required></div>
+
+
+<div class="form-group inputDiv mr-l">
+ 	<input type="password" class="fg-control" name="password_again" placeholder="Confirm password" required></div>
+                           </div>
+
+
+<!-- <div class="form-group inputDiv noAfter">
+<input type="text" class="form-control" id="skype_id" value="" name="skype_id" placeholder="WhatsApp Optional" value="">
+</div> -->
+
+<!--	<div class="form-group inputDiv mr-l">
+								<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div> -->
+					
+					
+					
+						{% if settings['terms_checkbox'] == 2 %}
+<div class="form-group" style="margin-bottom: 15px;">
+<div class="checkbox">
+<label>
+<input type="checkbox" name="terms" value="1" class="terms-accept-checkbox"> Yes, I agree to Terms &amp; Conditions!
+</label>
+</div>
+</div> {% endif %}
+<div class="form-group" style="position: relative;clear: both;float: none;margin: 10px auto 0;display: flex;justify-content: center;">
+</div>
+
+					
+                         <!--  <button type="submit" class="btn btn-primary btn-xl btn-block mt-4">{{lang["signup.button"]}}</button>
+                           
+                           	 &nbsp;&nbsp;
+						{% if settings['terms_checkbox'] == 2 %}
+						<div class="mt-4 custom-control custom-checkbox text-left checkbox">
+							<input type="checkbox" name="terms" value="1">{{ lang['signup.accept_terms_text'] }}
+						</div>
+						{% endif %}	 -->				   
+
+
+
+<div class="row text-center">
+<button  type="submit" class="btn btn-primary mr-t">Sign up</button>
+</div>
+<span class="pull-right pull-right-middle">Already have an account? <a href="/">Sign in</a></span>
+
+                           
+                        </form>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   
+ 
+
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

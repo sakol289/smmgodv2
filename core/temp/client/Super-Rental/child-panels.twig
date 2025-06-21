@@ -1,0 +1,196 @@
+{% include 'header.twig' %}
+
+
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<style type="text/css">
+  .alert-info{
+    display: block;
+  }
+  td.details-control {
+    background: url('https://images.irscdn.icu/images/details_open.png') no-repeat center center;
+    cursor: pointer;
+    width: 18px;
+}
+
+tr.shown td.details-control {
+    background: url('https://images.irscdn.icu/images/details_close.png') no-repeat center center;
+}
+
+th.dt-center, td.dt-center { text-align: center; }
+
+th.dt-right, td.dt-right { text-align: right; }
+
+.mydatatable_details{
+    font-size: 12px;
+    border-radius: 1px;
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
+}
+
+table.mydatatable_details tbody td{
+    padding: 3px;
+}
+
+table.mydatatable_details thead th{
+    padding: 3px;
+}
+.dataTables_filter, .dataTables_paginate{
+    float: right
+}
+button#failBtn {
+    font-size: 12px;
+    line-height: 28px;
+    height: 28px;
+    margin-bottom: -2px;
+    text-transform: none
+}
+a#adBtn {
+    font-size: 12px;
+    line-height: 28px;
+    height: 28px;
+    margin-top: -2px;
+    text-transform: none;
+    color:burlywood
+}
+#domain_name{
+    z-index: 2;    
+    position: relative;
+}    
+</style>
+<br>
+<br>
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="card">
+<div class="card-body pt-0">
+    
+    
+	<form action="/child-panels" method="post">
+									  {% if errorText %}
+										<div class="alert alert-dismissible alert-danger">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ errorText }}
+										</div>
+									  {% endif %}
+									  {% if successText %}
+										<div class="alert alert-dismissible alert-success">
+										  <button type="button" class="close" data-dismiss="alert">×</button>
+										  {{ successText }}
+										</div>
+									  {% endif %}
+									  
+									  
+
+<div class="first">
+<div class="form-group">
+<label for="domain_name" class="control-label">Domain</label>
+<input type="text" class="form-control" id="domain" name="domain" value="" data-validation="required">
+<div style="text-align: center;z-index: 1;position: relative;"><a href="https://hostclouda.com" target="_blank" class="btn btn-info" id="adBtn">🖱️ If you don't have a domain you <br>can buy one by clicking here 🖱️</a></div>
+</div>
+<div class="alert alert-info no-auto-close " id="nsalertWait" style="display: none">
+<i class="fas fa-spinner fa-pulse"></i>
+</div>
+<div class="alert alert-info no-auto-close " id="nsalertSuccess" style="display: none">
+<p style="margin-bottom: 5px;color: red">Please visit your registrar&#039;s dashboard to change nameservers to:</p>
+<ul style="padding-left: 20px">
+<li id="ns1"></li>
+<li id="ns2"></li>
+</ul>
+</div>
+<div class="alert alert-danger no-auto-close " id="nsalertFail" style="display: none">
+<p style="margin-bottom: 5px;color: white" id="nsmsg"></p>
+</div>
+</div>
+<div class="form-group">
+<label class="control-label" for="currency">Currency</label>
+	<select class="form-control" name="panel_currency" aria-required="true">
+                                                {% for curr in site['currencies'] %}
+                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
+                                                {% endfor %}
+                                            </select>
+</div>
+<div class="form-group">
+<label class="control-label" for="admin_email">Admin Email <small>You will receive admin login details on this email.</small></label>
+<input type="text" class="form-control" value="admin" disabled>
+
+<!-- <p style="margin-top: 5px;color: red">Your password will be mailed to you at this email address, so make sure this is a valid email. After placing your order don&#039;t forget to check your mailbox for our email with your login details(once child panel is created) &amp; don&#039;t forget to check in your spam folder as well.</p> -->
+
+</div>
+<div class="form-group">
+<label for="price" class="control-label">Select Rental Plan</label>
+<div class="form-group">
+<input type="text" class="form-control" value="{{ settings['panel_price'] * currency['value']}}{{ currency['symbol'] }}" disabled>
+</div>
+</div>
+ <button type="submit" class="btn btn-primary btn-block mb-4 mt-4">{{ lang["neworder.button"] }}</button>
+</form>
+</div>
+</div>
+</div>
+<!--<div class="col-lg-4">
+<div class="card">
+<div class="card-header">
+Information
+</div>
+<div class="card-body" style="">
+</div>
+</div>
+</div>
+</div> -->
+<div class="row" style="margin-top: 15px">
+<div class="col-xs-12 col-lg-12">
+<div class="card">
+<div class="card-body">
+<div class="table-responsive">
+<table id="mydatatable" class="table mydatatable table-bordered table-hover " style="width: 99.9%">
+<thead>
+<tr>
+<th>ID</th>
+<th>Domain</th>
+<th>Price</th>
+<th>Due Date</th>
+<!-- <th>Email</th> -->
+<th>Status</th>
+<!-- <td></td> -->
+</tr>
+</thead>
+<tbody>
+    
+      {% for panel in ticketList %}
+														<tr>
+														  <td>{{ panel['panel_domain'] }}</td>
+														  <td>{{ panel['panel_currency'] }}</td>
+														  <td>{{ panel['panel_price'] }}</td>
+														  <td><span class="nowrap">{{ panel['panel_created'] }}</span></td>
+														   <td>{{ panel['panel_status'] }}</td>
+														</tr>
+													  {% endfor %}
+    
+</tbody>
+</table>
+ </div>
+  </div>
+</div></div></div></div>
+</div></div></div></div></div></div>
+</div>
+
+
+
+
+<br><br><br><br><br>
+
+
+
+{% include 'footer.twig' %}
+
+
+
+
+
+
+
+

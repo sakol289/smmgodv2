@@ -1,0 +1,250 @@
+ {% include 'header.twig' %}
+
+
+ <div>
+
+
+  <div class="content-wrap">
+      {% if contentText %}
+        <div class="c-alert">
+          {{ contentText }}
+        </div> {% endif %}
+
+
+
+ <a href="#" class="dark-btn notify-btn">
+         CLICK FOR INFORMATION&nbsp;&nbsp;<svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M21 10C21 15.5242 16.3004 20 10.5 20C4.6996 20 0 15.5242 0 10C0 4.47581 4.6996 0 10.5 0C16.3004 0 21 4.47581 21 10ZM11.2198 14.5927L16.9567 9.12903C17.3546 8.75 17.3546 8.1371 16.9567 7.7621L16.2369 7.07661C15.8389 6.69758 15.1954 6.69758 14.8016 7.07661L10.5 11.1734L6.19839 7.07661C5.8004 6.69758 5.15686 6.69758 4.7631 7.07661L4.04335 7.7621C3.64536 8.14113 3.64536 8.75403 4.04335 9.12903L9.78024 14.5927C10.1782 14.9718 10.8218 14.9718 11.2198 14.5927Z"
+              fill="white" />
+          </svg>
+        </a>
+	
+        <div class="notify" style="background: #ffd9c5;border: 1px solid #f16845;color: #f16845;padding: 25px 15px; border-radius: 10px; margin-top: 5px">
+<p><strong><center>INFORMATION! (Must Read)</center></strong></p>
+<br>
+<p><strong>If you enter another order on the same link while the order is in progress, the system will give an error and your balance will burn.</strong></p>
+<p>Please only submit your order problems from the support request.</p>
+<p>We are not responsible for the transactions you make, the buyer is responsible for account security and any problems that may occur.</p>
+<p>Please read the terms and conditions before ordering, the orderer is deemed to have read and approved them.</p>
+<p>Do not send a support request for orders that say partially completed, the missing transaction will be charged to your balance.</p>
+<p>We CANNOT CANCEL any order, please read the terms before ordering.</p>
+        </div>
+
+
+
+
+
+
+
+
+<div class="row">
+          <div class="col-lg-3">
+            <div class="panel-stat-box">
+              <div class="icon">
+               
+			  <i class="fa fa-user fa-2x" style="color:white"  aria-hidden="true"></i>
+
+              </div>
+              <div class="text">
+                <span>{{ user["username"] }}</span>
+                <span>Hello there!</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel-stat-box pink">
+              <div class="icon">
+<i class="fas fa-money-bill-alt fa-2x" style="color:white" ></i>
+              </div>
+              <div class="text">
+                <span>Balance</span>
+                <strong>  {{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }} </strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel-stat-box yellow">
+              <div class="icon">
+                <i class="fas fa-credit-card fa-2x" style="color:white"></i>
+              </div>
+              <div class="text">
+                <span>Spendings</span>
+                <strong>{{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }} </strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="panel-stat-box purple">
+              <div class="icon">
+                <i class="fas fa-file fa-2x" style="color:white"></i>
+              </div>
+              <div class="text">
+                <span>Total Order</span>
+                <strong>
+										{{ordersCount}}
+					 
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+   <div class="row">
+          <div class="col-lg-7">
+            <div class="panel-form">
+
+  
+
+
+    {% if error %}
+      <div class="alert alert-dismissible alert-danger">
+        {{ errorText }}
+      </div>
+    {% endif %}
+
+    {% if data["order"]["success"] == 1 %}
+      <div class="alert alert-dismissible alert-success">
+          <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+          <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+          <strong> {{ lang["neworder.success.link"] }}: </strong> <a href="{{ data['order']['link'] }}">{{ data['order']['link'] }}</a> <br>
+          <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+          <strong> {{ lang["neworder.success.charge"] }}: </strong> {{ data['order']['price'] }} <br>
+          <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+      </div>
+    {% endif %}
+    {% if data["order"]["success"] == 2 %}
+      <div class="alert alert-dismissible alert-success">
+         <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+         <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+         <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+         <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+         <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+         <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+       </div>
+    {% endif %}
+
+      <div class="well">
+
+         <form method="post" action="">
+<div class="component_button_forms">
+            <div class="form-group">
+              <label for="orderform-category" class="control-label">{{ lang["neworder.category"] }}</label>
+              <select class="form-control" id="neworder_category" name="categories">
+                {% for category in categories %}
+                    <option value="{{ category["category_id"] }}" {% if category["category_id"] == data['categories'] %} selected {% endif %}>{{ category["category_name"] }}</option>
+                {% endfor %}
+                </select>
+</div>
+
+             
+             
+            </div>
+            <div class="form-group">
+              <label for="orderform-service" class="control-label">{{ lang["neworder.service"] }}</label>
+              <select class="form-control" id="neworder_services" name="services">
+
+              </select>
+            </div>
+
+
+
+
+
+            <div id="neworder_fields"></div>
+
+
+<div class="form-group" id="charge_div">
+              <label for="charge" class="control-label">{{ lang["neworder.charge"] }}</label>
+              <input type="text" class="form-control" id="charge" readonly>
+            </div>
+
+
+             {% if neworderTerms %}
+										  <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+											</label>
+										  </div>
+										  <br>
+										{% endif %}
+
+          
+          <button type="submit" class="orange-btn"><svg width="18" height="14" viewBox="0 0 18 14" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M18 5.75005V6.25005C18 6.66427 17.6642 7.00004 17.25 7.00004H17L16.184 12.7121C16.0784 13.4511 15.4455 14 14.6991 14H3.30094C2.55447 14 1.92159 13.4511 1.816 12.7121L1 7.00004H0.75C0.335781 7.00004 0 6.66427 0 6.25005V5.75005C0 5.33584 0.335781 5.00006 0.75 5.00006H2.85441L6.19128 0.41193C6.51613 -0.0346925 7.1415 -0.133473 7.58819 0.191369C8.03484 0.51621 8.13359 1.14161 7.80875 1.58827L5.32741 5.00006H12.6726L10.1912 1.58823C9.86641 1.14161 9.96519 0.516179 10.4118 0.191337C10.8584 -0.133504 11.4839 -0.034755 11.8088 0.411898L15.1456 5.00006H17.25C17.6642 5.00006 18 5.33584 18 5.75005ZM9.75 11.25V7.75004C9.75 7.33582 9.41422 7.00004 9 7.00004C8.58578 7.00004 8.25 7.33582 8.25 7.75004V11.25C8.25 11.6642 8.58578 12 9 12C9.41422 12 9.75 11.6642 9.75 11.25ZM13.25 11.25V7.75004C13.25 7.33582 12.9142 7.00004 12.5 7.00004C12.0858 7.00004 11.75 7.33582 11.75 7.75004V11.25C11.75 11.6642 12.0858 12 12.5 12C12.9142 12 13.25 11.6642 13.25 11.25ZM6.25 11.25V7.75004C6.25 7.33582 5.91422 7.00004 5.5 7.00004C5.08578 7.00004 4.75 7.33582 4.75 7.75004V11.25C4.75 11.6642 5.08578 12 5.5 12C5.91422 12 6.25 11.6642 6.25 11.25Z"
+                    fill="white" />
+                </svg>{{ lang["neworder.button"] }}</button>
+</form>
+      </div>
+    </div>
+  </div>
+
+ <div class="col-lg-5">
+            <a href="/addfunds" class="orange-border-btn mb-3">Add Funds</a>
+            <a href="/terms" class="orange-border-btn mb-3">Terms & Conditions</a>
+            <div class="panel-box">
+              <div class="panel-tab-buttons">
+                <button class="active">Information</button>
+              </div>
+              <div class="c-line"></div>
+			<div class="dh-noti">
+                     
+			
+        <div class="dh-item dh-ig">
+                        <div class="row">
+                          <div class="col-md-auto col-12 mb-4 mb-md-0 align-self-center">
+                            <div class="dh-item--icon">
+                              <i class="fas fa-bullhorn"></i>
+                            </div>
+                          </div>
+                          <div class="col-md col-12 align-self-center">
+                            <div class="dh-item--title"> What you need to know before placing an order </div>
+                            <div class="dh-item--text"> Check the category, service, link and quantity with each order. It may not be possible to cancel an order once it has been placed. </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dh-item dh-yt">
+                        <div class="row">
+                          <div class="col-md-auto col-12 mb-4 mb-md-0 align-self-center">
+                            <div class="dh-item--icon">
+                              <i class="fab fa-squarespace"></i>
+                            </div>
+                          </div>
+                          <div class="col-md col-12 align-self-center">
+                            <div class="dh-item--title"> Service descriptions </div>
+                            <div class="dh-item--text"> Please read the service descriptions carefully when ordering.
+ </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dh-item dh-tw" style="margin-bottom:0">
+                        <div class="row">
+                          <div class="col-md-auto col-12 mb-4 mb-md-0 align-self-center">
+                            <div class="dh-item--icon">
+                              <i class="fas fa-envelope"></i>
+                            </div>
+                          </div>
+                          <div class="col-md col-12 align-self-center">
+                            <div class="dh-item--title"> You can send us your service requests. </div>
+                            <div class="dh-item--text">You can forward the services you want to be added from the support section.</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+{% include 'footer.twig' %}

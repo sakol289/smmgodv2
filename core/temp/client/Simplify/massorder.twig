@@ -1,0 +1,51 @@
+
+{% include 'header.twig' %}
+
+
+
+  <section class="bg-gradient-started">
+          <div class="bg-noise"></div>
+        </section>
+		
+		<!-- Main variables *content* -->
+		<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="p_card mb-4">
+                <form  method="post" action="/massorder"
+
+
+                         {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+
+
+                           
+                                                            
+                               <!-- form-group end -->
+                                  <div class="form-group">
+                                            <label for="links" class="control-label">One order per line in format</label>
+                                   <textarea type="text" class="form-control" id="mass" name="mass" value="{{ data['mass'] }}" placeholder="service_id | link | quantity" rows="15"></textarea>
+                               </div>
+                               <!-- form-group end -->
+
+                            
+                                <button type="submit" class="btn btn-big-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% include 'footer.twig' %}

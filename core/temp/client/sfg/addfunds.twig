@@ -1,0 +1,285 @@
+{% include 'header.twig' %}
+
+
+
+    <div class="content-wrap">
+        <div class="panel-welcome">
+          <div class="icon">
+            <svg width="43" height="33" viewBox="0 0 43 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 30.6429C0 31.9444 0.962797 33 2.15 33H40.85C42.0372 33 43 31.9444 43 30.6429V7.07143H0V30.6429ZM30.1 15.3214C30.1 14.6703 30.5811 14.1429 31.175 14.1429H37.625C38.2189 14.1429 38.7 14.6703 38.7 15.3214V17.6786C38.7 18.3297 38.2189 18.8571 37.625 18.8571H31.175C30.5811 18.8571 30.1 18.3297 30.1 17.6786V15.3214ZM30.1 24.1607C30.1 23.8351 30.3405 23.5714 30.6375 23.5714H38.1625C38.4595 23.5714 38.7 23.8351 38.7 24.1607V25.3393C38.7 25.6649 38.4595 25.9286 38.1625 25.9286H30.6375C30.3405 25.9286 30.1 25.6649 30.1 25.3393V24.1607ZM4.3 17.0893C4.3 16.7637 4.54053 16.5 4.8375 16.5H25.2625C25.5595 16.5 25.8 16.7637 25.8 17.0893V18.2679C25.8 18.5934 25.5595 18.8571 25.2625 18.8571H4.8375C4.54053 18.8571 4.3 18.5934 4.3 18.2679V17.0893ZM4.3 24.1607C4.3 23.8351 4.54053 23.5714 4.8375 23.5714H16.6625C16.9595 23.5714 17.2 23.8351 17.2 24.1607V25.3393C17.2 25.6649 16.9595 25.9286 16.6625 25.9286H4.8375C4.54053 25.9286 4.3 25.6649 4.3 25.3393V24.1607ZM41.925 0H1.075C0.481063 0 0 0.527411 0 1.17857V4.71429H43V1.17857C43 0.527411 42.5189 0 41.925 0Z"
+                fill="white" />
+            </svg>
+          </div>
+          <div class="text">
+            <strong>Hello, <span>{{ user["username"]  }}</span> !</strong>
+            <p>You can benefit from our services by Adding a minimum of 1$ from all our Payment Methods.
+<br>
+             As {{ site["site_name"] }} Team, We Wish You Pleasant Shopping.
+            </p>
+          </div>
+        
+        </div>
+
+
+<div class="row">
+          <div class="col-lg-6">
+		              <div class="panel-form">      
+  
+                 {% if error %}
+          <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ errorText }}
+          </div>
+        {% endif %}
+        {% if success %}
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ successText }}
+          </div>
+        {% endif %}
+     
+  
+              <form method="post" action="addfunds">
+
+                <div class="form-group">
+                  <label for="method" class="control-label">Method</label>
+                  <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                      
+                   {% for payment in paymentsList %}
+                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+                    {% endfor %}
+                  </select>
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  <!-- Start -->
+                
+    <div id="qr">
+        
+        
+        
+              <br> 1) Scan QR Code below and enter Amount. (Min 5 INR) </br>
+              <br> 2) Enter the 18 Digits Order ID below the QR Code. </br>
+           <br> Example of order id is "2018072606124600" and amount is "50" then click on pay. Without Space </br>
+
+                    <br>  Funds will be added automatically Instant </br>
+                    
+        <font color="red"><h3><b><i>Paytm and Phone Pe only</i></h3></b></font
+        
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->
+    
+                  
+
+                  <div class="form-group">
+                      <label for="method" class="control-label">Amount</label>
+                      <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+                  </div>
+
+                <button type="submit" class="orange-btn mb-3">Add Funds</button>
+              </form>
+      <button  style="border: none!important" href="#" data-bs-toggle="modal" data-bs-target="#oldPayments" class="yellow-btn">Payment History</button>      </div></div>
+	  
+	  
+											
+	  
+	  
+	  
+	   <div class="col-lg-6">
+            <div class="panel-box">
+              <h3><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 10C0 4.47715 4.47715 0 10 0H30V20C30 25.5228 25.5228 30 20 30H0V10Z" fill="#F16845" />
+                  <path
+                    d="M24 15.5C24 20.1944 19.9706 24 15 24C10.0294 24 6 20.1944 6 15.5C6 10.8056 10.0294 7 15 7C19.9706 7 24 10.8056 24 15.5ZM18.8594 14.2891C19.0386 13.1581 18.1267 12.5501 16.8798 12.1445L17.2843 10.6123L16.2967 10.3799L15.9029 11.8717C15.6433 11.8106 15.3767 11.7529 15.1117 11.6958L15.5083 10.1943L14.5213 9.96187L14.1165 11.4934C13.9016 11.4472 13.6907 11.4015 13.4859 11.3535L13.4871 11.3487L12.1251 11.0275L11.8624 12.0236C11.8624 12.0236 12.5951 12.1822 12.5797 12.192C12.9796 12.2863 13.0519 12.5362 13.0398 12.7344L12.5791 14.4798C12.6067 14.4864 12.6424 14.496 12.6817 14.5109C12.6488 14.5032 12.6137 14.4947 12.5774 14.4864L11.9315 16.9315C11.8826 17.0462 11.7585 17.2184 11.479 17.153C11.4888 17.1666 10.7611 16.9838 10.7611 16.9838L10.2709 18.0514L11.556 18.3539C11.7951 18.4105 12.0295 18.4697 12.2601 18.5255L11.8514 20.0751L12.8378 20.3075L13.2426 18.7744C13.5042 18.8413 13.7665 18.9056 14.0296 18.9672L13.6262 20.4932L14.6138 20.7256L15.0225 19.1789C16.7065 19.4799 17.9729 19.3585 18.5059 17.9201C18.9354 16.762 18.4845 16.0939 17.5985 15.6583C18.2437 15.5179 18.7298 15.1171 18.8594 14.2891ZM16.603 17.2771C16.2978 18.4352 14.233 17.8091 13.5635 17.6521L14.1058 15.5992C14.7753 15.7569 16.922 16.0693 16.603 17.2771ZM16.9085 14.2724C16.63 15.3258 14.9114 14.7906 14.3539 14.6594L14.8455 12.7974C15.4031 12.9286 17.1985 13.1735 16.9085 14.2724Z"
+                    fill="white" />
+                </svg>
+                Other Payment Methods</h3>
+             <div class="panel-tab-buttons bordery">
+                <button class="active">Paytm QR</button>
+                
+              </div>
+             
+            </div>              </div>
+			  
+			  
+			 
+			 
+            </div>
+			
+				</div></div>
+
+			
+		  <br>
+		   
+		   
+		   
+		   <div class="col-lg-12" >
+            <div class="panel-box">
+              <h3><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 10C0 4.47715 4.47715 0 10 0H30V20C30 25.5228 25.5228 30 20 30H0V10Z" fill="#F16845" />
+                  <path
+                    d="M24 15.5C24 20.1944 19.9706 24 15 24C10.0294 24 6 20.1944 6 15.5C6 10.8056 10.0294 7 15 7C19.9706 7 24 10.8056 24 15.5ZM18.8594 14.2891C19.0386 13.1581 18.1267 12.5501 16.8798 12.1445L17.2843 10.6123L16.2967 10.3799L15.9029 11.8717C15.6433 11.8106 15.3767 11.7529 15.1117 11.6958L15.5083 10.1943L14.5213 9.96187L14.1165 11.4934C13.9016 11.4472 13.6907 11.4015 13.4859 11.3535L13.4871 11.3487L12.1251 11.0275L11.8624 12.0236C11.8624 12.0236 12.5951 12.1822 12.5797 12.192C12.9796 12.2863 13.0519 12.5362 13.0398 12.7344L12.5791 14.4798C12.6067 14.4864 12.6424 14.496 12.6817 14.5109C12.6488 14.5032 12.6137 14.4947 12.5774 14.4864L11.9315 16.9315C11.8826 17.0462 11.7585 17.2184 11.479 17.153C11.4888 17.1666 10.7611 16.9838 10.7611 16.9838L10.2709 18.0514L11.556 18.3539C11.7951 18.4105 12.0295 18.4697 12.2601 18.5255L11.8514 20.0751L12.8378 20.3075L13.2426 18.7744C13.5042 18.8413 13.7665 18.9056 14.0296 18.9672L13.6262 20.4932L14.6138 20.7256L15.0225 19.1789C16.7065 19.4799 17.9729 19.3585 18.5059 17.9201C18.9354 16.762 18.4845 16.0939 17.5985 15.6583C18.2437 15.5179 18.7298 15.1171 18.8594 14.2891ZM16.603 17.2771C16.2978 18.4352 14.233 17.8091 13.5635 17.6521L14.1058 15.5992C14.7753 15.7569 16.922 16.0693 16.603 17.2771ZM16.9085 14.2724C16.63 15.3258 14.9114 14.7906 14.3539 14.6594L14.8455 12.7974C15.4031 12.9286 17.1985 13.1735 16.9085 14.2724Z"
+                    fill="white" />
+                </svg>
+                Other Information</h3>
+            
+              <div class="panel-tab"  >
+             {% if contentText %}
+
+{{ contentText }}
+
+{% endif %}
+
+              </div>
+			  
+			  </div>
+			 
+        </div>
+			  
+			  
+ 
+      
+
+
+
+    
+	
+		<div class="modal fade" id="oldPayments" tabindex="-1" aria-labelledby="servisDetayLabel" aria-hidden="true">
+												<div class="modal-dialog modal-lg">
+													<div class="modal-content">
+
+														<!-- Modal Header -->
+														<div class="modal-header">
+															<h4 class="modal-title">Payment History</h4>
+                                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+														</div>
+
+														<!-- Modal body -->
+														<div class="modal-body">
+
+ <div class="">
+              <div class="table-responsive custom-table">
+            <table class="table  ">
+              <thead>
+            <tr>
+              <th>ID</th>
+              <th>Amount</th>
+              <th class="width-40">Method</th>
+              <th>Date</th>
+              <th class="nowrap">Transaction ID</th>
+            </tr>
+          </thead>
+          <tbody>
+              
+               {% for payment in lastPaymentsList %}
+              <tr>
+                <td>{{payment['id']}}</td>
+                 <td>{{payment['created_at']}} </td>  
+                <td class="width-40">{{payment['payment_method']}}</td>
+                <td >{{ currency['symbol'] }}{{ (payment['amount']*currency['value']) |round(4, 'floor') }}
+                </td>
+                
+              </tr>
+            {% endfor %}   
+              
+              
+          </td>
+          </tbody>
+        </table>
+      </div>
+ 
+
+ </div>
+
+
+
+            </div>
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+{% include 'footer.twig' %}
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->
+
+
+
+

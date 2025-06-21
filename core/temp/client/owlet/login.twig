@@ -1,0 +1,470 @@
+{% include 'header.twig' %}
+
+
+<!-- Main variables *content* -->
+
+        <section class="formSec">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+            <img class="icon icon11" src="">
+            <img class="icon icon11" src="">
+            <img class="icon icon11" src="">
+            <img class="icon icon11" src="">
+            <img class="icon icon15" src="https://cdn.mypanel.link/6f7c88/mrd7b94giuc71hns.png">
+            <img class="icon icon11" src="https://cdn.mypanel.link/6f7c88/mrd7b94giuc71hns.png">
+            <h1 class="slogan">Boost Your</h1>
+            <h3>Social Media Marketing</h3>
+            <h4>From Unexpected Friendships to Lasting Relationships.</h4>
+            <p>&nbsp;{{ site["site_name"] }} is a Cheap SMM and SEO service Provider and Reseller Website. Fast,Reliable and Secure, offering World's Best Quality and Cheapest Automatic Social Media Services which are specially developed for Resellers with High Speed order completion!.</p>
+             <form  method="post" action="/">
+          
+           {% if errorText %}
+						<div class="alert alert-dismissible alert-danger">
+						  <button type="button" class="close" data-dismiss="alert">&times;</button>
+						  {{ errorText }}
+						</div>
+					  {% endif %}
+					  {% if successText %}
+						<div class="alert alert-dismissible alert-success">
+						  <button type="button" class="close" data-dismiss="alert">&times;</button>
+						  {{ successText }}
+						</div>
+					  {% endif %}
+          
+          <div class="form-group formIcon">
+           <span class="icon"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" id="username" name="username" placeholder="{{lang['signup.username']}}">
+          </div>
+          <div class="form-group form-group__password formIcon">
+            <span class="icon"><i class="fas fa-lock"></i></span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="{{lang['signup.password']}}">
+            
+            {% if resetPage %}
+                            <a href="/resetpassword" class="forgot-password">Forgot password?</a>{% endif %}
+                        </div>
+                        
+                      <!--  <div class="mt-4">
+						  {% if captcha %}
+							<div class="form-group">
+							  <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div>
+						  {% endif %}
+                        </div> -->
+                        
+          <button type="submit" class="btn btn-primary">Sign in</button>
+           
+                   <div class="row">
+                     <div class="col-sm-12">
+                       <ul class="signUp_remember">
+                         <li>
+                          <div class="checkbox">
+            <label>
+              <input type="checkbox"  name="remember" value="1" id="remember">Remember me
+            </label>
+          </div>
+                         </li>
+                         <li>
+                                      <span class="pull-right-middle">Do not have an account? <a href="/signup">Sign up</a></span>
+                                     
+                         </li>
+                       </ul>
+                     </div>
+                   </div>
+                  
+          
+        </form>
+        
+        
+        
+            <ul class="customBtns">
+              <li><a href="https://www.youtube.com/channel/">Watch video</a></li>
+              <li><a href="/services">Our Services</a></li>
+            </ul>
+    </div>
+          <div class="col-sm-6">
+      <div class="animationBox">
+        <img class="placeHolder" src="">
+                  <img class="shoutingGirl" src="https://cdn.mypanel.link/6f7c88/2oeyh67zswh8x1h7.JPG">
+
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="">
+  <div class="">
+    <div class="col-sm-12">
+      <div class="">
+        <img src="">
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<section class="secondSec">
+<div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+              <img class="icon icon11" src="https://cdn.mypanel.link/6f7c88/mfl6p9cb0dshe9hw.png">
+              <img class="icon icon12" src="https://cdn.mypanel.link/6f7c88/3qdd689argaez2k3.JPG">
+          </div>
+          <div class="col-sm-6">
+              <img class="icon icon12" src="">
+              <img class="icon icon13" src="">
+              <img class="icon icon14" src="">
+              <div class="secTitle">
+                  <p>&nbsp;{{ site["site_name"] }}</p>
+                  <h2>Features</h2>
+              </div>
+              <p>WANT TO INCREASE YOUR ONLINE SOCIAL PRESENCE?</p><p>
+              </p><p>We’re the online marketing veterans. We provide a comprehensive set of results-orientated online media services that help you grow and build your online presence.
+              </p><p>
+              </p><p>Tired of looking at Hundreds of Website with services that simply don't work? Check our Major Services for Social Media with the Best Quality and Quickest Delivery
+  </p>
+              <p>We do Prefer Support LIVE via email support for Instant Response getting any Information and re-solve any issue soon as possible. We provide the best customer support.</p>
+              <ul>
+                  <li>
+                      <div class="feaBox">
+                          <span class="icon green">
+                              <i class="fas fa-hourglass-start"></i>
+                          </span>
+                          <h4>0.12 sec</h4>
+                          <p>An Order Is Made every</p>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="feaBox">
+                          <span class="icon red">
+                              <i class="fas fa-signal"></i>
+                          </span>
+                          <h4>30,100,000+</h4>
+                          <p>Orders Completed</p>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="feaBox">
+                          <span class="icon yellow">
+                              <i class="fas fa-dollar-sign"></i>
+                          </span>
+                          <h4>N200/K</h4>
+                          <p>Prices Starting From</p>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </div>
+</div>
+</section>
+<section class="thirdSec">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+      <h6>Ready to Get Started?</h6>
+    </div>
+          <div class="col-sm-5">
+      <a href="/signup">Get Started Now</a>
+    </div>
+  </div>
+</div>
+</section>
+<section class="fourthSec">
+<div class="container">
+  <div class="row">
+          <div class="col-sm-6">
+              <img class="icon icon15" src="https://cdn.mypanel.link/6f7c88/mfl6p9cb0dshe9hw.png">
+              <img class="icon icon15" src="https://cdn.mypanel.link/6f7c88/mfl6p9cb0dshe9hw.png">
+              <div class="secTitle">
+                  <p>{{ site["site_name"] }}</p>
+                  <h2>Services</h2>
+              </div>
+              <ul>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon yellow">
+                              <i class="fab fa-youtube"></i>
+                          </span>
+                          <h4>Youtube</h4>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon green">
+                              <i class="fab fa-twitter"></i>
+                          </span>
+                          <h4>Twitter</h4>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon red">
+                              <i class="fab fa-facebook-f"></i>
+                          </span>
+                          <h4>Facebook</h4>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon green">
+                              <i class="fab fa-soundcloud"></i>
+                          </span>
+                          <h4>Soundcloud</h4>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon red">
+                              <i class="fab fa-vimeo-v"></i>
+                          </span>
+                          <h4>Vimeo</h4>
+                      </div>
+                  </li>
+                  <li>
+                      <div class="serBox">
+                          <span class="icon yellow">
+                              <i class="fab fa-instagram"></i>
+                          </span>
+                          <h4>Instagram</h4>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+    <div class="col-sm-6">
+              <img class="icon icon17" src="https://cdn.mypanel.link/6f7c88/esip7hytmtl4yumx.JPG">
+              <img class="icon icon18" src="">
+      <img class="serImg" src="">
+    </div>
+  </div>
+      <div class="row chatRow">
+    <div class="col-sm-7">
+      <h6>WhatsApp Support</h6>
+    </div>
+          <div class="col-sm-5">
+      <a href="https://api.whatsapp.com/send?phone=+2347025356704 &text="><img src="https://cdn.mypanel.link/6f7c88/gy4lwzqx07o1xqsp.png"></a>
+    </div>
+  </div>
+</div>
+</section>
+<section class="fifthSec">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+              <img class="icon icon19" src="https://cdn.mypanel.link/6f7c88/zihsl63cthmw95fw.JPG">
+              <img class="icon icon20" src="">
+      <img class="effImg" src="">
+    </div>
+          <div class="col-sm-6">
+              <img class="icon icon21" src="">
+              <img class="icon icon22" src="">
+      <div class="secTitle">
+                  <p>Why is Social <br>Media Marketing</p>
+                  <h2>So effective?</h2>
+              </div>
+              <p>It is very clear to see that social marketing has become a treasured tool in the scheme of things these days. Considering that more and more people are doing online work and are buying products on the internet, marketers cannot afford to neglect social networking sites to get in touch with customers.
+  </p>
+              <p>Here at &nbsp;{{ site["site_name"] }} can promote you to different social media entries to bring in a broader Audience to your customer base, when we sell a social media reseller panel, we guarantee that you will see and increase in your client base. It also means that you can have plenty of help to market your products or services using these media. </p>               
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="sixthSec">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+              <img class="icon icon23" src="">
+              <img class="icon icon24" src="">
+    </div>
+  </div>
+      <div class="row">
+    <div class="col-sm-12">
+      <div class="secTitle">
+                  <p>Why Use &nbsp;{{ site["site_name"] }}?</p>
+              </div>
+    </div>
+  </div>
+      <div class="row">
+    <div class="col-sm-4">
+      <div class="signleUse">
+        <span class="icon">
+          <img class="mainImg" src="https://cdn.mypanel.link/6f7c88/fj72lb34uahpi3tc.JPG">
+                      <img class="icon si1" src="">
+                      <img class="icon si2" src="">
+                      <img class="icon si3" src="">
+                      <img class="icon si4" src="">
+        </span>
+                  <h4>Full Control</h4>
+                  <p>We Providing many service on our own.So we have full option to support for your orders, make them complete or Refill or Cancel at any time. </p>
+      </div>
+    </div>
+          <div class="col-sm-4">
+      <div class="signleUse">
+        <span class="icon">
+          <img class="mainImg" src="https://cdn.mypanel.link/6f7c88/pdhaqys6ff70hsw2.JPG">
+                      <img class="icon si1" src="">.
+                      <img class="icon si2" src="">
+                      <img class="icon si3" src="">
+                      <img class="icon si4" src="">
+        </span>
+                  <h4>Easy &amp; Safe to Use</h4>
+                  <p>Designed with you, the client, in mind. Get insight into every single campaign from one easy to use central location. </p>
+                <p>Safety is our #1 priority. We have taken every step to ensure the safety of both your account as well as your transactions with triple verification methods.</p><p>                         </p></div>
+    </div>
+          <div class="col-sm-4">
+      <div class="signleUse">
+        <span class="icon">
+          <img class="mainImg" src="https://cdn.mypanel.link/6f7c88/dbfn90kwncg8xngc.JPG">
+                      <img class="icon si1" src="">.
+                      <img class="icon si2" src="">
+                      <img class="icon si3" src="">
+                      <img class="icon si4" src="">
+        </span>
+                  <h4>365/24/7 Support</h4>
+                  <p>The client panel is ridiculously efficient. But our support maintains its accessibility through our Whatsapp LIVE chat and also through E-mails. Never feel left out. </p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="seventhSec">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="secTitle">
+                    <p>More Than 30,500,000 Successful Cases</p>
+                    <h2>Customer Results</h2>
+                </div>
+      </div>
+    </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="testimonialSlider">
+                    <div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="compare before">
+                            <span class="icon yellow">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Subscribers</h4>
+                                    <span class="time">before</span>
+                                    <p class="quantity">40k<small>Subcribers</small></p>
+                                    <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="central blankSpace">
+                            
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="compare after">
+                            <span class="icon yellow">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Subscribers</h4>
+                                    <span class="time">after</span>
+                                    <p class="quantity">295k<small>Subcribers</small></p>
+                                  <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="compare before">
+                            <span class="icon red">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Likes</h4>
+                                    <span class="time">before</span>
+                                    <p class="quantity">150k<small>Likes</small></p>
+                                    <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="central blankSpace">
+                            
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="compare after">
+                            <span class="icon red">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Likes</h4>
+                                    <span class="time">after</span>
+                                    <p class="quantity">900K<small>Likes</small></p>
+                                  <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="compare before">
+                            <span class="icon green">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Comments</h4>
+                                    <span class="time">before</span>
+                                    <p class="quantity">9k<small>Comments</small></p>
+                                    <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="central blankSpace">
+                            
+                          </div>
+                        </div>
+                            <div class="col-sm-4">
+                          <div class="compare after">
+                            <span class="icon green">
+                                        <i class="fab fa-youtube"></i>
+                                    </span>
+                                    <h4>Youtube Comments</h4>
+                                    <span class="time">after</span>
+                                    <p class="quantity">30k<small>Comments</small></p>
+                                  <p class="months">@1<small>Orders/Months</small></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <img class="resultsGirl" src=""/>  
+          </div>
+        </div>
+  </div>
+</section>
+
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="well ">
+          <p><font color="#ff0000"><b>HOW TO SOLVE CAPTCHA ISSUE</b></font></p><p><font color="#ff0000"><br></font></p><div class="embed-responsive embed-responsive-16by9"><iframe frameborder="0" src="//www.youtube.com/embed/" width="640" height="360" class="note-video-clip embed-responsive-item"></iframe></div><p><font color="#ff0000"><br></font></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<?php include 'footer.php' ?>
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

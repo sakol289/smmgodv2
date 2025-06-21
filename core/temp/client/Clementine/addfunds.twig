@@ -1,0 +1,236 @@
+{% include 'header.twig' %}
+
+
+<div class="paddingbody"></div>
+		<div class="container-fluid container-fluid-spacious">
+			<div class="row">
+				<div class="col-md-12">
+				   
+						<div  class=" well-float table-responsive">
+		<div class="well"><p>	{% if contentText %}
+					
+					
+ 
+{{ contentText }}
+{% endif %}</p>
+</div>      
+            
+            
+                                  </div>
+						<div class="row">
+							<div class="col-md-12">
+								<nav>
+									<ul class="nav nav-pills " id="pills-tab" role="tablist">
+										<li class="nav-item active">
+											<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#new-order" role="tab" aria-controls="pills-home" aria-selected="true">Add Funds</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#check-updates" role="tab" aria-controls="pills-home" aria-selected="true">Check Updates</a>
+										</li>
+										
+									</ul>
+									<select name="page_Category" id="page_Category" class="custom-select w-full">
+										<option value="0">Add Funds</option>
+										<option value="1">Payment History</option>
+									</select>
+								</nav>
+							</div>	
+							<div class="col-md-12">
+								<!-- Tab Conetent Starts here -->
+								<div class="tab-content" id="pills-tabContent">
+									<!-- New Order Tab -->
+									<div class="tab-pane fade active in" id="new-order" role="tabpanel" aria-labelledby="pills-home-tab">
+										<div id="main-page" class="well well-float table-responsive">
+											
+											
+										 <form  method="post" action="addfunds">
+              
+              
+              	{% if error %}
+			  <div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ errorText }}
+			  </div>
+			{% endif %}
+			{% if success %}
+			  <div class="alert alert-dismissible alert-success">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ successText }}
+			  </div>
+			{% endif %}
+			
+			
+			
+												<div class="form-group">
+													<label class="control-label" for="payment_type"> Method </label>
+												  <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                      
+                   {% for payment in paymentsList %}
+                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+                    {% endfor %}
+                  </select>
+                  		</div>
+												
+												
+												
+												
+											 <div class="fga mb-4 custom-payment-content"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 34  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                          <div class="fga mb-4 custom-payment-content-bkash"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 21  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>				
+												
+												
+											 <!-- Start -->
+                
+    <div id="qr">
+        
+        
+
+        
+        
+  
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->		
+													
+												   <div class="form-group">
+                                        <label for="amount" class="control-label">Amount</label>
+														<input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+														<p class="help-block help-block-error"></p>
+													</div>
+													
+													<div class="form-group">
+														<label><input type="checkbox" name="checkbox" > I understand after the funds added i will not ask fraudulent dispute or charge-back. </label>
+													</div>
+													
+													<button type="submit" class="btn btn-primary ticketbtn center"> Pay </button>
+											</form>
+										</div>
+									</div>
+									
+									
+									
+									
+							
+     <br>
+									
+									
+									
+									
+									
+									
+									
+										<!-- check-updates Tab -->
+									<div class="tab-pane fade" id="check-updates" role="tabpanel" aria-labelledby="pills-contact-tab">
+										<div id="main-page" class="well well-float table-responsive">
+											
+											
+												{% if PageText %} 
+		
+                                    	<div class="card">
+	                              	{{ contentText2 }}
+	                                    {% endif %}
+											
+										</div>
+									</div>
+									
+									<div id="main-page" class="well well-float table-responsive">
+										<a class="btn btn-primary ticketbtn center" href="tickets">Create a ticket for <b>Quick</b> support</a>
+									</div>
+								</div>
+							</div>	
+						</div>
+					</div>
+						<!-- End Tab Content -->
+						
+    
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->
+
+
+{% include 'footer.twig' %}

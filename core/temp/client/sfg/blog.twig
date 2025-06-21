@@ -1,0 +1,48 @@
+{% include 'header.twig' %}
+{% if contentText %}
+
+{{ contentText }}
+
+{% endif %}
+
+
+
+<div class="container pt-5 mb-5">
+   
+	        <div class="row">
+          <div class="col-lg-12">
+
+			  <div class="blog-wrapper">
+				<div class="container">
+				  <div class="row">
+				   {% for blog in blogs %}
+				  					<div class="col-lg-4 mb-3">
+					  <a href="{{ site['url'] }}/blog/{{ blog["blog_get"] }}" class="blog-item">
+					   {% if blog["image_file"] %} 
+						<div class="img">
+						  <img src="{{blog["image_file"]}}" alt="{{blog["title"]}}" class="img-responsive">						</div>
+						  
+						  {% endif %}
+						<h3>{{blog["title"]}}</h3>
+						<div class="btm">
+						  <span>SFG</span>
+						  SmmFansGrow.com
+						</div>
+					  </a>
+					</div>
+
+      
+
+               
+          {% endfor %}    
+        </div>
+    </div>
+</div>
+</div>
+
+{% if contentText2 %}
+
+{{ contentText2 }}
+
+{% endif %}
+{% include 'footer.twig' %}

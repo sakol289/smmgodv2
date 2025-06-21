@@ -1,0 +1,171 @@
+{% include 'header.twig' %}
+
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<div class="row justify-content-center payments-panel">
+<div class="col-md-10 col-md-offset-1 card">
+    
+    
+    
+    
+  
+    
+<div class="login-form well">
+
+
+   
+          <div class="g-card mb-3">
+         <div class="g-card-body">
+              <form method="post" action="addfunds">
+			{% if error %}
+			  <div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ errorText }}
+			  </div>
+			{% endif %}
+			{% if success %}
+			  <div class="alert alert-dismissible alert-success">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ successText }}
+			  </div>
+			{% endif %}
+                <div class="form-group">
+                  <label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
+                  
+                                     
+                                        
+                  
+        
+            <form method="post" action="addfunds">
+                    <center><img width="85%" src="{{ PaytmQRimage }}"></center>
+                    <div class="form-group col-md-12">
+                        <label for="method" class="control-label">Amount</label>
+                        <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="method" class="control-label">Order ID</label>
+                       <!-- <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p> -->
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    <input type="hidden" class="form-control" name="payment_type" value="14">
+                    <div class="col-md-12">
+                      <button type="submit" class="w-100 btn btn-primary">Submit</button>
+                    </div>
+            </div>
+      </div>
+        </div></div></div>
+            </div>
+      </div>
+        
+        <br>
+        
+        
+        
+         <div class="row justify-content-center payments-panel">
+<div class="col-md-10 col-md-offset-1 card">
+<div class="text-center">
+            
+          	{% if contentText %}
+{{ contentText }}
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+            
+
+
+
+
+{% if kashier_code %}
+
+ <style>
+        #el-kashier-button{
+            display: none;
+        }
+    </style>
+	
+	<script>
+	
+         var interval = setInterval(function () {
+            var link =$('#el-kashier-button');
+            if(link.length){
+                link.click();
+                clearInterval(interval);
+            }
+        }, 1000);
+  
+ 
+</script>
+
+{{ kashier_code  }}
+
+{{ unset_kashier_code  }}
+{% endif %}
+
+
+{% include 'footer.twig' %}
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->
+
+
+
+
+
+

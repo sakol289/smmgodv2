@@ -1,0 +1,374 @@
+{% include 'header.twig' %}
+
+ <!-- Main variables *content* -->
+    <div class="main-top">
+        <div class="main-top-bg"></div>
+        <div class="main-top-content">
+            <div class="container" style="position: relative;">
+
+                <div class="main-top-real-content">
+                    <div class="row align-items-center">
+						<div class="col-lg-6 align-self-center">
+							<div class="head-text">
+							      <div class="word"></div>
+								<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ site["site_name"] }}   </font></font><br> <span class="main-color"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+								  All social networking services in one place  
+								    </font></font></span></h1>
+								<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+								    
+								    We have the best and fastest services, and we provide the service with an appropriate price policy
+								    </font></font></p>
+							</div>
+							<div class="head-links row mt-5">
+                                <div class="col-auto mb-4 mb-md-0">
+                                    <a href="/services" class="btn btn-primary btn-lg"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">List of services       </font></font></a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="/signup" class="btn btn-outline btn-lg"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">register </font></font></a>
+                                </div>
+                            </div>
+						<div class="main-stats">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 mb-4 col-12">
+									<div class="home-stat br">
+										<div class="row">
+											<div class="col-auto align-self-center">
+												<i class="far fa-box"></i>
+											</div>
+											<div class="col align-self-center">
+												<div class="hstat-text">541812+</div>
+												<div class="hstat-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Completed requests</font></font></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6 col-md-6 mb-4 col-12">
+									<div class="home-stat">
+										<div class="row">
+											<div class="col-auto align-self-center">
+                                              <i class="far fa-user-crown"></i>
+											</div>
+											<div class="col align-self-center">
+												<div class="hstat-text">8672+</div>
+												<div class="hstat-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Clients trust us</font></font></div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						</div>
+						
+						<div class="col-lg-5 offset-lg-1">
+ 
+							<div class="login-card">
+									<div class="lc-body">
+										<div class="lc-title">
+											<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> sign in   </font></font></h1>
+											<small><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Please do not share this password  </font></font></small>					
+											<form class="rtl-form" method="post" action="">
+													  
+													  {% if errorText %}
+							<div class="alert alert-dismissible alert-danger">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ errorText }}
+							</div>
+						  {% endif %}
+						  {% if successText %}
+							<div class="alert alert-dismissible alert-success">
+							  <button type="button" class="close" data-dismiss="alert">×</button>
+							  {{ successText }}
+							</div>
+						  {% endif %}
+													  																										  
+											<div class="login-form mt-5 py-3">
+
+												<div class="fg fg-light mb-4">
+													<div class="fg-icon"><i class="far fa-user"></i></div>
+													<input type="text" class="fg-control" id="username" name="username" placeholder=" Username ">
+												</div>
+
+												<div class="fg fg-light mb-4">
+													<div class="fg-icon"><i class="far fa-unlock-alt"></i></div>
+													<input type="password" class="fg-control" id="password" name="password" placeholder="Password ">
+												</div>
+
+												<div class="form-row mt-2">
+													<div class="col-6 py-2 mb-2">
+																<div class="fcheck ms-1 mb-3">
+																	<input type="checkbox" name="remember" value="1" id="remember">
+																	<label for="remember"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Remember me   </font></font></label>
+																</div>       
+																
+													</div>
+													<div class="col-6 text-right">
+														<a href="/resetpassword" class="frgpass"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">  Password forget </font></font></a>
+													</div>
+												</div>	
+												
+												
+												{% if captcha %}
+							<div class="form-group">
+							  <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div>
+						  {% endif %}
+												
+												
+												<div class="row mt-4">
+													<div class="col-md-12 mb-5 mb-md-0">
+													
+														<button type="submit" class="btn btn-primary btn-lg btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> sign in</font></font></button>
+													</div>
+												</div>
+												<div class="btn btn-dark btn-block mt-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Don't have an account?   </font></font><a href="/signup"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Create an account      </font></font></a>
+												</div>
+
+											</div>
+
+										</form>
+									</div>
+								</div>
+							</div>
+ 
+ 
+						</div>
+					</div>
+
+					<div class="col-lg-12 align-self-center">
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+	<section class="home-bottom">
+      <div class="container">
+ <div class="col-md-12 mb-5">
+  <div class="hstat-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">How to use</font></font></div>	
+             <div class="hstat-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Four steps to rise on social networking sites</font></font></div>
+										 </div>
+       </div>
+        <div class="container">
+
+			<div class="row justify-content-start futures-version-2">
+					<div class="col-md-3">
+                        <div class="hb-box">
+                            <div class="hb-box-text">
+                                <div class="hb-box-icon">
+                                    <i class="fas fa-user-alt"></i>
+                                </div>
+                                <div class="wpo-features-text">
+                                    <h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Create an account</font></font></h2>
+                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Start by registering and then login to your account</font></font></p>
+                                </div>
+                            </div>
+                            <div class="hb-box-img">
+                                <img src="https://smmzon.com/image/17ftm4no029jewi9.png">
+                            </div>
+                        </div>
+					</div>
+
+					<div class="col-md-3">
+                        <div class="hb-box">
+                            <div class="hb-box-text">
+                                <div class="hb-box-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="wpo-features-text">
+                                    <h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Add funds</font></font></h2>
+                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The next step is to choose a payment method and add funds</font></font></p>
+                                </div>
+                            </div>
+                            <div class="hb-box-img">
+                                <img src="https://smmzon.com/image/17ftm4no029jewi9.png">
+                            </div>
+                        </div>
+					</div>
+					
+					<div class="col-md-3">
+                        <div class="hb-box">
+                            <div class="hb-box-text">
+                                <div class="hb-box-icon">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                                <div class="wpo-features-text">
+                                    <h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Choose a service</font></font></h2>
+                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Choose the services you want and easily place your orders</font></font></p>
+                                </div>
+                            </div>
+                            <div class="hb-box-img">
+                                <img src="https://smmzon.com/image/17ftm4no029jewi9.png">
+                            </div>
+                        </div>
+					</div>
+
+					<div class="col-md-3">
+                        <div class="hb-box">
+                            <div class="hb-box-text">
+                                <div class="hb-box-icon">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div class="wpo-features-text">
+                                    <h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Enjoy great results</font></font></h2>
+                                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">You will be notified once your application is complete, it won't take long</font></font></p>
+                                </div>
+                            </div>
+                            <div class="hb-box-img">
+                                <img src="https://smmzon.com/image/17ftm4no029jewi9.png">
+                            </div>
+                        </div>
+					</div>					
+
+				</div>
+			</div>
+		</section>
+  
+           												
+	<section class="home-box-2">
+       <div class="container">
+         <div class="row">
+   <div class="col-md-12 mb-5">
+  <div class="hstat-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Why choose our site</font></font></div>	
+       <div class="hstat-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">There are many reasons why our site is always on top</font></font></div>
+										 </div>
+       </div>
+          </div>
+      
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="home-phone">
+						<img src="/img/SMMZONi/aizfeii1py98zc88.png" class="img-fluid">
+						<img src="/img/SMMZONi/hnh7jq47k3t7as5h.png" class="img-fluid iphone floating">
+					</div>
+				</div>
+				
+				<div class="col-lg-6">
+				  
+						<div class="row detail-box">
+                            <div class="col-auto">
+                                <div class="dt-icon">
+                                    <i class="fas fa-mobile"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h2 class="dt-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Compatible with mobile devices</font></font></h2>
+                                <p class="dt-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">You will enjoy a unique experience with the interface that is compatible with all devices</font></font></p>
+                            </div>
+                        </div>
+						
+						<div class="row detail-box">
+                            <div class="col-auto">
+                                <div class="dt-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h2 class="dt-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">International services</font></font></h2>
+                                <p class="dt-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We have carefully selected services from all over the world for you.</font></font></p>
+                            </div>
+                        </div>
+						
+						<div class="row detail-box">
+                            <div class="col-auto">
+                                <div class="dt-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h2 class="dt-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Send immediately</font></font></h2>
+                                <p class="dt-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Our services are sent instantly without any problems</font></font></p>
+                            </div>
+                        </div>
+						
+						<div class="row detail-box">
+                            <div class="col-auto">
+                                <div class="dt-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h2 class="dt-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">High quality</font></font></h2>
+                                <p class="dt-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We provide the best service by constantly testing and updating the services on our website</font></font></p>
+                            </div>
+                        </div>
+
+						<div class="row detail-box">
+                            <div class="col-auto">
+                                <div class="dt-icon">
+                                    <i class="fas fa-user-headset"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h2 class="dt-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Professional support</font></font></h2>
+                                <p class="dt-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Our professional team working 24/7 is waiting for you to answer all your questions and problems</font></font></p>
+                            </div>
+                        </div>						
+				 </div>
+					</div>
+				</div>
+		</section>
+           
+  <div class="container">
+		
+	<section id="paymentSec">
+       <div class="container">
+         <div class="row">
+                    <div class="col-md-12 mb-5">
+          <div class="hstat-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Safe payment methods</font></font></div>
+												<div class="hstat-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">We have all the popular payment methods. </font><font style="vertical-align: inherit;">More can be included upon request</font></font></div>
+										 </div>
+   
+           </div>
+                        </div>
+      <div class="showMob">
+         <img src="/img/SMMZONi/klk2redi62iq6nba.png" class="img-fluid" alt="">
+       </div>
+       <div class="payment_item mb-5">
+         <img src="/img/SMMZONi/66t0kd05rq9ito3e.png" class="img-fluid" alt="">
+       </div>
+       <div class="payment_item_2 mt-5">
+         <img src="/img/SMMZONi/4ffe4mm233giiwkm.png" class="img-fluid" alt="">
+       </div>
+        </section></div>
+ 
+ 
+ 
+	
+     
+ 
+
+	<section class="home-box-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="footer-top">
+						<div class="row align-items-center">
+							<div class="col-lg-7">
+								<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Your spread on social media has become easy</font></font></h1>
+							</div>
+							<div class="col-lg-3 offset-lg-1">
+								<a href="/signup" class="btn btn-outline btn-lg"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Go global now</font></font></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

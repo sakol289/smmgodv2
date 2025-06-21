@@ -1,0 +1,382 @@
+{% include 'header.twig' %}
+
+
+
+
+<!-- Main variables *content* -->
+
+        <section id="contentContainer">
+  	<div class="container-fluid">
+        <div class="container">
+    <div class="well">
+    <div class="row">
+      <div class="col-sm-12">
+        
+          {% if error %}
+          <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ errorText }}
+          </div>
+        {% endif %}
+        {% if success %}
+          <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ successText }}
+          </div>
+        {% endif %}
+        
+          <form  method="post" action="addfunds">
+                                    <div class="form-group">
+              <label for="method" class="control-label">Method</label>
+                <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                      
+                   {% for payment in paymentsList %}
+                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+            
+            
+ <div class="fga mb-4 custom-payment-content"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 34  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                          <div class="fga mb-4 custom-payment-content-bkash"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 21  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        						 <!-- Start -->
+                
+    <div id="qr">
+        
+            
+  
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->
+            
+            
+            
+            <div class="form-group">
+              <label for="amount" class="control-label">Amount</label>
+              <input type="number" class="form-control"  name="payment_amount" id="amount" value="{{ data['payment_amount'] }}">
+            </div>
+           
+            <button type="submit" class="btn btn-primary">Pay</button>
+          </form>
+        </div>
+     
+     
+      </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane fade" id="paypal">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>PayPal :<br></b></h3>
+                        <h5><b>PayPal Auto Add Fund option Active for adding fund from $100+<br></b></h5>
+                        <h5>If you want to add Fund Below $100 via PayPal <br></h5>
+                        <p style="" align="">
+                        <font color="#333333">Please Contact Us Skype or In Ticket to get Manual PayPal Payment Instruction. Please Inform us Your PayPal Email ID and Amount needed to Add Fund from $20+<br></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                          </font>
+                          <font color="#333333"><b>The Payment Exactly Received will be Added!<br></b></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                          </font>
+                        </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive" src="//i.imgur.com/4lP2zF8.png">
+                        </div>
+                      </div>                                             
+                    </div>
+                    <div class="tab-pane fade" id="payoneer">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Payoneer :<br></b></h3>
+                        <h4><b>panelname@live.co.uk<br></b></h4>
+                        <p style="" align="">
+                        <font color="#333333">You can send the payment directly to the above Payoneer Email ID and contact us via Skype or in Ticket with your Payment Details(5% Bonus from $100+ payments)<br></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                        </font>
+                        </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive" src="//i.imgur.com/x123wz5.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="perfmon">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Perfect Money :<br></b></h3>
+                        <h4><b>U11119341<br></b></h4>
+                        <h5><b>Perfect Money Auto Add Fund option Active for adding fund from $1+<br></b></h5>                        
+                        <p style="" align=""><font color="#333333">You can send the payment directly to the above Perfect Money ID above and contact us via Skype or in Ticket with your Payment Details(5% Bonus from $100+ payments)</font><br><br></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/84O8byD.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="skrill">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Skrill :<br></b></h3>
+                        <h4><b>panelname@gmail.com<br></b></h4>
+                        <p style="" align="">
+                        <font color="#333333">You can send the payment directly to the Email above and contact us via Skype or in Ticket with your Payment Details<br></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                        </font>
+                        </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive" src="//i.imgur.com/rOvTMG0.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="payeer">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Payeer :<br></b></h3>
+                        <h4><b>P51572745<br></b></h4>                        
+                        <h5><b>Payeer Auto Add Fund option Active for adding fund from $5<br></b></h5>
+                        <p style="" align="">
+                        <font color="#333333">You can send the payment directly to the above Payeer ID and contact us via Skype or in Ticket with your Payment Details<br></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                          </font>
+                          <font color="#333333"><b>The Payment Exactly Received will be Added!<br></b></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                          </font>
+                        </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive" src="//i.imgur.com/qH5NVKi.png?1">
+                        </div>
+                      </div>                                             
+                    </div>
+                    <div class="tab-pane fade" id="coinbase">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Coinbase Commerce :<br></b></h3>
+                        <h5><b>Bitcoin / Bitcoin Cash / Ethereum / Litecoin / USD Coin<br></b></h5>
+                        <p style="" align="">
+                        <font color="#333333">Auto Add Fund option Active for adding fund from $5+<br></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                          </font>                          
+                        </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive" src="//i.imgur.com/4WlCr79.png">
+                        </div>
+                      </div>                                             
+                    </div>
+                    <div class="tab-pane fade" id="webmon">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>WebMoney :<br></b></h3>
+                        <p style="" align=""><font color="#333333">Auto Add Fund option Active for adding fund from $10+</font><br><br></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/pHk97sf.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="bitcoin">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Bitcoin(BTC) :<br></b></h3>
+                        <p style="" align=""><font color="#333333">Auto Add Fund option Active for adding fund from $5+</font></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/X5Jyrgi.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="westUnion">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Westron Union :<br></b></h3>
+                        <p style="" align=""><font color="#333333">Please Contact us Skype or in Ticket to get Payment Instruction</font><br><br></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/sc3BeeL.png">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="debCreCard">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <h3><b>Debit/Credit Card :<br></b></h3>
+                          <p style="" align="">
+                        <font color="#333333"><b>Please Contact us Skype or in Ticket with the Following Details<br></b></font><span style="color: rgb(51, 51, 51);"></span><font color="#333333"><b><br></b>
+                        </font>                        
+                            <span style="color: rgb(51, 51, 51);">1-First Name:</span><br>
+                            <span style="color: rgb(51, 51, 51);">2-Last Name:</span><br>
+                            <span style="color: rgb(51, 51, 51);">3-Email ID:</span><br>
+                            <span style="color: rgb(51, 51, 51);">4-Country:</span><br>
+                            <span style="color: rgb(51, 51, 51);">5-Amount:</span><br>
+                           </p>
+                        </div>
+                        <div class="col-sm-6">
+                        <!-- <img class="img-responsive skrillImg" src="//i.imgur.com/X5Jyrgi.png"> -->
+                        </div>
+                      </div>                                             
+                    </div>
+                    <!-- <div class="tab-pane fade" id="visa">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Visa:<br></b></h3>
+                        <p style="" align=""><font color="#333333"><b>payment enabled for everyone</b></font></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/p00lHXw.png">
+                        </div>
+                      </div>                                             
+                    </div> -->
+                    <div class="tab-pane fade" id="Skrill">
+                      <div class="row">
+                        <div class="col-sm-6">
+                        <h3><b>Skrill:<br></b></h3>
+                        <p style="" align=""><font color="#333333"><b> For skrill send to this email and send us transaction id panelname@gmail.com </b></font></p>
+                        </div>
+                        <div class="col-sm-6">
+                        <img class="img-responsive skrillImg" src="//i.imgur.com/k0FjJSg.png">
+                        </div>
+                      </div>                                             
+                    </div>
+                  </div>
+                </div>
+            </div>
+       </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well ">
+          <p></p><p><img src="https://cdn.mypanel.link/6f7c88/ge3k3e1oggw9dxnl.png" style="display: inline-block; width: 525.998px; max-width: 100%;" class="img-responsive"><br></p> <font color="#9c0000" style="">&nbsp;</font></p><p><span style="color: rgb(255, 156, 0);"></font></p><p><font color="#ff0000">We strive to ensure that all payments are updated instantly. However, in rare cases where there is a delay in updating, please be patient and allow 1-3 hours for the update to reflect. If the update has not been completed after 5 hours, please reach out to our support team via email for assistance. 
+Payment@bugabuzz.com <b><a href="" target="_blank"></a>&nbsp;</b></font>⤻<font color="#ff0000">&nbsp;</font><br></p><div class="embed-responsive embed-responsive-16by9"><iframe frameborder="0" src="//www.youtube.com/embed/" width="640" height="360" class="note-video-clip embed-responsive-item"></iframe></div><p><br></p><p><br></p><p><img src="" style="display: inline-block; width: 357px; max-width: 100%;" class="img-responsive"><br></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+     
+
+
+{% if kashier_code %}
+
+ <style>
+        #el-kashier-button{
+            display: none;
+        }
+    </style>
+	
+	<script>
+	
+         var interval = setInterval(function () {
+            var link =$('#el-kashier-button');
+            if(link.length){
+                link.click();
+                clearInterval(interval);
+            }
+        }, 1000);
+  
+ 
+</script>
+
+{{ kashier_code  }}
+
+{{ unset_kashier_code  }}
+{% endif %}
+
+{% include 'footer.twig' %}
+
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->
+
+
+
+

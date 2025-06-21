@@ -1,0 +1,153 @@
+{% include 'header.twig' %}
+
+
+
+ <div class="paddingbody"></div>
+		<div class="container-fluid container-fluid-spacious">
+			<div class="row">
+				
+				<div class="col-md-12">
+					
+					
+					
+					<form action="/child-panels" method="post" class="component_form_group"  style="[childpanel-form_css]" >
+						
+						
+						{% if error %}
+      <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+        {{ errorText }}
+      </div>
+    {% endif %}  
+
+    {% if data["childpanel"]["success"] == 1 %}
+      <div class="alert alert-dismissible alert-success">
+          <strong> Order Id: </strong> {{ data['childpanel']['id'] }} <br>
+          <strong> Service: </strong> {{ data['childpanel']['service'] }} <br>
+          <strong> Domain: </strong> {{ data['childpanel']['link'] }} <br>
+          <strong> Quantity: </strong> {{ data['childpanel']['quantity'] }} <br>
+          <strong> Charge: </strong> {{ data['childpanel']['price'] }} <br>
+      </div>
+    {% endif %}
+						
+						<div class="">
+							<div class="form-group">
+								<label for="domain" class="control-label">Domain</label>
+								<input type="text" class="form-control" name="domain" placeholder="Domain" required>
+							</div>
+							<div class="component_alert_dns">
+								<div class="">
+									<div class="alert alert-info">
+										<div>Please change nameservers to:</div>
+										<ul style="padding-left: 20px">
+											<li>ns1.dnsco.in</li>
+											<li>ns2.dnsco.in</li>
+											<br>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="createorderform-currency">Currency</label>
+								<select class="form-control" name="panel_currency" aria-required="true">
+                                                {% for curr in site['currencies'] %}
+                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
+                                                {% endfor %}
+                                            </select>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="createorderform-username">Admin Username</label>
+								<input type="text" class="form-control" name="username" placeholder="Username" required>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="createorderform-password">Admin Password</label>
+								<input type="password" class="form-control" name="password" placeholder="Password" required>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="createorderform-password_confirm">Confirm Password</label>
+								<input type="password" class="form-control" name="password_confirm" placeholder="Password" required>
+							</div>
+							<div class="form-group">
+								<label for="price" class="control-label">Price per month</label>
+								<input type="text" class="form-control" value="{{ settings['panel_price'] * currency['value']}}{{ currency['symbol'] }}" readonly>
+							</div>
+						</div>
+						
+						<div class="component_button_submit">
+							<div class="">
+								<button class="btn btn-block btn-default" type="submit">
+								Submit order
+								</button>
+							</div>
+						</div>
+					</form>
+					
+					
+				</div>
+			</div>
+			
+			<br>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-bg component_table " style="display:none;">
+						<div class="table-wr table-responsive ">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Domain</th>
+										<th>Status</th>
+										<th>Created</th>
+										<th>Expiry</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   </div>
+    <br><br>
+    
+    
+    <script>
+    function detail(){
+        document.getElementById('tab-add').style.display = 'none';
+        document.getElementById('tab-add-btn').className = 'btn btn-secondary tab-head';
+        document.getElementById('tab-history').style.display = 'block';
+        document.getElementById('tab-history-btn').className = 'btn btn-primary tab-head ml-2';
+    }
+    
+    function payment(){
+        document.getElementById('tab-history').style.display = 'none';
+        document.getElementById('tab-history-btn').className = 'btn btn-secondary tab-head ml-2';
+        document.getElementById('tab-add').style.display = 'block';
+        document.getElementById('tab-add-btn').className = 'btn btn-primary tab-head';
+    }
+</script>
+
+
+
+{% include 'footer.twig' %}
+
+
+
+
+
+
+
+

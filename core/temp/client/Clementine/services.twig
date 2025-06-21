@@ -1,0 +1,135 @@
+{% include 'header.twig' %}
+
+
+<div class="paddingbody"></div>
+	<div class="container-fluid container-fluid-spacious">
+		<div class="row">
+			<div class="col-md-12">
+				<div  class="well well-float table-responsive" style="display:none;">
+					
+				</div>
+				
+				<div class="well well-float">
+					<div class="row">
+						<div class="col-md-12">
+								<input type="text" id="searchService" placeholder="Search Services" class="form-control col-md-12" />
+							
+						</div>
+					</div>
+				</div>
+				
+				<div id="order-page" class="well well-float table-responsive">
+					<!--You can customise it from theme editing-->
+					
+					
+					<table class="table ">
+						<thead>
+									<tr>
+										<th>ID</th>
+										<th class="width-service-name">Service</th>
+										<th>Rate <br> per 1000</th>
+										<th class="hide-on-mobile" >Min</th>
+										<th class="hide-on-mobile" >Max</th>
+										<th class="hide-on-mobile average_time-section" ><div data-toggle="tooltip" data-placement="bottom" title="" data-original-title="The average time is based on 10 latest completed orders per 1000 quantity.">Average Time &lt;span class=</div></th>
+										<th class="hidden-xs hidden-sm service-description__th">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+                
+                 {% for category in serviceCategory %}
+                 
+                 
+                 
+                 <tr class="service_cat_header" data-category="{{ category["category_name"] }}">
+									<td colspan="7"><strong>{{ category["category_name"] }}</strong></td>
+								</tr>
+                                                                                                       
+
+
+                                                
+
+                {% for service in category['services'] %}
+                  <tr data-filter-table-category-id="{{ category["category_id"] }}">
+                    <td data-label="ID" data-filter-table-service-id="{{ service["service_id"] }}"><span id="service-{{ service["service_id"] }}">{{ service["service_id"] }}</span>
+                                     </td>
+                    <td data-label="Service" class="table-service" data-filter-table-service-name="true">{{ service["service_name"] }}</td>
+                    
+                    <td>
+                      
+{{ currency['symbol'] }}{{ (service["service_price"]*currency["value"]) }}   
+
+
+                      
+
+                    </td>
+                    <td>{{ service["service_min"] }}</td>
+                    <td>{{ service["service_max"] }}</td>
+                    
+                    {% if avarageTime %}
+                        <td data-title="Ortalama Süre">{{ service["service_speed"] }}</td>
+                        {% endif %}
+                     
+                     <td>
+                     <!-- Modal -->
+                        <div class="modal fade" id="servis{{ service["service_id"] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                                <h5 class="modal-title" id="exampleModalLabel"><b>{{ service["service_name"] }} </h5> </b>
+                               
+                              </div>
+                              <div class="modal-body text-left">
+                                <p class="detail-data details-split-959"> {{ service["service_description"] }}</p>
+                              </div>
+                              <div class="modal-footer">
+                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> 
+                              </div>
+                            </div>
+                          </div>
+						 
+                        </div><a href="javascript:void(0)" class="btn btn-actions " data-toggle="modal" data-target="#servis{{ service["service_id"] }}"> <button class="btn-primary">View Details</button>
+                      </a>
+                   
+                        </td>
+
+                  </tr>
+                {% endfor %}
+              {% endfor %}
+                
+               </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div></div>
+</div>
+</div></div></div>
+  
+
+<script>
+      function filterService(category) {
+        if (category == 'All')
+          $('tbody tr.hidden').removeClass('hidden');
+        else {
+          $('tbody tr').addClass('hidden');
+          $('tbody tr[data-category="' + category + '"]').removeClass('hidden');
+        }
+        removeEmptyCategory();
+      }
+
+      function removeEmptyCategory() {
+        $('.services-header').each(function () {
+            var next = $(this).next();
+            var services = $(this).nextUntil('.services-header');
+            var empty = true;
+            services.each(function() {
+              if (!$(this).hasClass('hidden')) empty = false;
+            });
+            if (empty) $(this).addClass('hidden');
+        })
+      }
+</script>
+{% include 'footer.twig' %}

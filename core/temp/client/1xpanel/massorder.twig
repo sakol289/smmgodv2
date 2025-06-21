@@ -1,0 +1,104 @@
+
+{% include 'header.twig' %}
+
+
+
+	<!-- Main variables *content* -->
+		      <main>
+         <div class="container-fluid mt-4">
+			 <div class="row">
+				<div class="col-lg-12">
+					 <div class="page overflow-hidden">
+						<div class="page-body pb-4 pb-xl-6 mt-4">
+						   <div class="card mb-2">
+							  <div class="card-head d-flex align-items-center justify-content-between">
+									<div class="card-head-title">
+										<div class="row align-items-center">
+											<div class="col-auto">
+											  <div class="card-head-icon">
+												<i class="ri-shopping-basket-2-line"></i>
+											  </div>
+											</div>
+											<div class="col">
+											  <h4>Mass order</h4>
+											</div>
+										</div>
+									</div>
+							  </div>
+							  <div class="card-body">
+
+
+                         {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+
+
+                            <form  method="post" action="/massorder">
+                                                            
+                              <div class="form-group">
+									<label for="links" class="control-label">One order per line in format</label>
+                                   <textarea type="text" class="form-control" id="mass" name="mass" value="{{ data['mass'] }}" placeholder="service_id | link | quantity" rows="15"></textarea>
+                               </div>
+                               <!-- form-group end -->
+
+                             <button type="submit" class="btn btn-primary btn-100">Submit</button>
+								</form>
+			
+							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			 </div>
+         </div>
+      </main>
+
+<div class="mobile-navbar">
+        <div class="mobile-navbar-content">
+            <a href="/" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="far fa-box-heart"></i>
+                </div>
+                <div class="mnc-item-text">New order</div>
+            </a>
+            <a href="/addfunds" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-exchange-dollar-line"></i>
+                </div>
+                <div class="mnc-item-text">Add funds</div>
+            </a>
+            <a href="/tickets" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-customer-service-2-line"></i>
+                </div>
+                <div class="mnc-item-text">Tickets</div>
+            </a>
+            <a href="/services" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-list-check-2"></i>
+                </div>
+                <div class="mnc-item-text">Services</div>
+            </a>
+        </div>
+    </div>
+  
+       <div class="bs-toast">
+         <div class="bs-toast-content">
+            <div class="toast-text">Copy to clipboard</div>
+         </div>
+      </div>
+
+      <div class="overlay"></div>
+     
+
+
+
+{% include 'footer.twig' %}

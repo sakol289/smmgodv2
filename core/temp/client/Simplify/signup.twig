@@ -1,0 +1,106 @@
+{% include 'header.twig' %}
+
+
+  <!-- Main variables *content* -->
+		<section class="hero py-5">
+<div class="container">
+  <div class="row py-5">
+    <div class="col-lg-12">
+    	<h2 class="text-white text-center fw-bold mb-3">
+                	Sing up in &nbsp;{{ site["site_name"] }}
+                </h2>
+        <form  action="" method="post">
+          <div class="row sing_row">
+              
+              
+      {% if errorText %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if successText %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+                           <div class="form-group col-lg-6">
+                               
+                               <input type="text" class="form-control mb-3" placeholder="Username" id="login" value="{{ data['username'] }}" name="username">
+            </div>
+                               
+                               
+						    {% if settings['name_secret'] == 2 %}
+						      <div class="form-group col-lg-6">
+              <input type="email" class="form-control mb-3" placeholder="First Name" id="email" value="{{ data['first_name'] }}" name="first_name">
+            </div>
+            
+            
+						  
+							   <div class="form-group col-lg-6">
+              <input type="text" class="form-control mb-3" placeholder="Last Name" id="whatsapp" value="{{ data['last_name'] }}" name="last_name">
+            </div>
+            
+           
+						   {% endif %}
+						   
+                          <div class="form-group col-lg-6">
+              <input type="email" class="form-control mb-3" placeholder="Email" id="email" value="{{ data['email'] }}" name="email">
+            </div>
+            
+            
+           
+						   
+						   {% if settings['skype_area'] == 2 %}
+						    <div class="form-group col-lg-6">
+              <input type="text" class="form-control mb-3" placeholder="WhatsApp" id="whatsapp" value="{{ data['telephone'] }}" name="telephone">
+            </div>
+            	
+							{% endif %}			
+
+
+ <div class="form-group col-lg-6">
+              <input type="password" class="form-control mb-3" placeholder="Password" id="password" value="" name="password">
+            </div>
+            
+						  
+						  <div class="form-group col-lg-6">
+              <input type="password" class="form-control mb-3" placeholder="Confirm password" id="password_again" value="" name="password_again">
+            </div>
+            
+            
+							  
+						   
+							<div class="mt-4">
+								<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+							</div>
+						  
+						{% if settings['terms_checkbox'] == 2 %}
+						<div class="mt-4 custom-control custom-checkbox text-left checkbox">
+							<input type="checkbox" name="terms" value="1">{{ lang['signup.accept_terms_text'] }}
+						</div>
+						{% endif %}					   
+
+                           <button type="submit" class="btn btn-new w-100 mb-3">Sign up</button>
+              <p class="lh-lg mb-0 text-white">Already have an account? <a href="/">Sign in</a></p>
+          </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+   
+  
+
+{% for lang in site['languages'] %}
+  {% if lang['active'] %}
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+  {% endif %}
+{% endfor %}
+
+{% include 'footer.twig' %}

@@ -1,0 +1,350 @@
+{% include 'header.twig' %}
+
+<main class="app-main">
+{% if khalti_code %}
+
+{{khalti_code}}
+
+{% endif %}
+    
+    
+    <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="well">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item active">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#neworder" role="tab" aria-controls="home" aria-selected="true">Add Fund</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade in active" id="neworder" role="tabpanel" aria-labelledby="home-tab">
+            <form  method="post" action="">
+                
+                 {% if paymentsList %}
+                 
+                 <form method="post" action="addfunds">
+			{% if error %}
+			  <div class="alert alert-dismissible alert-danger">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ errorText }}
+			  </div>
+			{% endif %}
+			{% if success %}
+			  <div class="alert alert-dismissible alert-success">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				{{ successText }}
+			  </div>
+			{% endif %}
+                
+                
+                
+                                          <div class="form-group">
+                <label for="method" class="control-label">Method</label>
+                  <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                      
+                   {% for payment in paymentsList %}
+                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                
+                    <div class="fga mb-4 custom-payment-content"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 34  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                          <div class="fga mb-4 custom-payment-content-bkash"  style="display:none">
+                                       <label class="fla" for="amount">Instructions:</label>
+                                       <br>
+                                       <p>
+                                           
+                                            {% for payment in paymentsList %}
+													  {% if payment['id'] == 21  %} 
+													    {{ payment['content'] }}
+													  {% endif %}
+													{% endfor %}
+                                           
+                                       </p>
+                                        </div>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        						 <!-- Start -->
+                
+    <div id="qr">
+        
+            
+           
+              <form method="post" action="addfunds">
+                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
+                    
+                    <div class="form-group">
+                        <label for="method" class="control-label">Order ID</label>
+                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+                    </div>
+                    
+    
+          </div>
+    
+    
+    <!--end--->
+                                        
+                                        
+                                        
+                  <div class="form-group">
+                      <label for="method" class="control-label">{{ lang['addfunds.amount'] }}     {{currency['symbol']}}</label>
+                      <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+                  </div>
+                  
+             
+              
+              <button type="submit" class="btn btn-primary">Pay</button>
+            </form>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="col-sm-6">
+      <div class="well">
+        <h2 class="dash-title2">Fund History</h2>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Method</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+                 {% for payment in lastPaymentsList %}
+              <tr>
+                <td>{{payment['id']}}</td>
+                 <td>{{payment['created_at']}} </td>  
+                <td>{{payment['payment_method']}}</td>
+                <td >{{ currency['symbol'] }}{{ (payment['amount']*currency['value']) |round(4, 'floor') }}</td>
+                
+              </tr>
+            {% endfor %}   
+                
+                          </tbody>
+          </table>
+        </div>
+          </div>
+</div>
+</div>
+</div>
+<div class="row">
+  <div class="col-sm-12" style="z-index: 0;">
+    <div class="well">
+      <ul class="nav nav-tabs fund-tabs" id="myTab" role="tablist">
+        <li class="nav-item active">
+          <a class="nav-link credit-card" id="creaditcard-tab" data-toggle="tab" href="#creditcard" role="tab" aria-controls="creditcard" aria-selected="true">
+            <span>
+              <i class="fas fa-credit-card"></i> Credit card
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link webmoney" id="webmoney-tab" data-toggle="tab" href="#webmoney" role="tab" aria-controls="webmoney" aria-selected="false">
+            <span>
+              <i class="far fa-money-bill"></i> Webmoney 
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link perfect-money" id="perfectmoney-tab" data-toggle="tab" href="#perfectmoney" role="tab" aria-controls="perfectmoney" aria-selected="false">
+            <span>
+              <i class="fas fa-money-bill-alt"></i> Perfect Money
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link crypto" id="crypto-tab" data-toggle="tab" href="#crypto" role="tab" aria-controls="crypto" aria-selected="false">
+            <span>
+              <i class="fas fa-money-bill-wave-alt"></i> Crypto Currency
+            </span>
+          </a>
+        </li>	
+        <li class="nav-item">
+          <a class="nav-link free" id="free-tab" data-toggle="tab" href="#free" role="tab" aria-controls="free" aria-selected="false">
+            <span>
+              <i class="far fa-star"></i> Free review copy
+            </span>
+          </a>
+        </li>	
+        <li class="nav-item">
+          <a class="nav-link other" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">
+            <span>
+              <i class="fas fa-columns"></i> Other
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade in active" id="creditcard" role="tabpanel" aria-labelledby="creditcard-tab">
+          <div class="fund-content">
+            <p class="fund-txt">Credit Card payment is enabled for Everyone.</p>
+            <p class="fund-txt"><b>10$ Minimum Payment!</b></p><p>
+
+          </div>
+        </div>
+        <div class="tab-pane fade" id="webmoney" role="tabpanel" aria-labelledby="webmoney-tab">
+          <div class="fund-content">
+            <p class="fund-txt">WebMoney payment auto enabled in the dropdown above for everyone!</p>
+            <p class="fund-txt"><b>5$ Minimum Payment!</b></p><p>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="perfectmoney" role="tabpanel" aria-labelledby="perfectmoney-tab">
+          <div class="fund-content">
+            <p class="fund-txt">Perfect Money payment auto enabled in the dropdown above for everyone!</p>
+            <p class="fund-txt"><b>1$ Minimum Payment!</b></p><p>
+            </p><p class="fund-txt"><b>5% Bonus on Perfect Money Payments!</b></p>
+
+          </div>
+        </div>
+        <div class="tab-pane fade" id="crypto" role="tabpanel" aria-labelledby="crypto-tab">
+          <div class="fund-content">
+            <p class="fund-txt">Crypto Currency payment auto enabled in the dropdown above for everyone!<br>
+              We are now Accepting Litecoin - BitcoinCash - Etherium - Dash and Ripples as a payment!
+            </p>
+            <p class="fund-txt"><b>1$ Minimum Payment!</b></p><p>
+            </p><p class="fund-txt"><b>5% Bonus on Crypto Currency Payments!</b></p>
+
+          </div>
+        </div>
+        <div class="tab-pane fade" id="free" role="tabpanel" aria-labelledby="free-tab">
+          <div class="fund-content">
+            <p class="fund-txt">
+              If you have a BlackHatWorld account and would like to get a Free Review copy of 1$ to your account, ask for a review copy on this thread and mention your username on the panel. Not all users can get a review copy, we have requirement that we are following strictly. We will reply on the thread, please do not open a ticket for that matter.
+            </p>
+          </div>  
+        </div>
+        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+          <div class="fund-content">
+            <p class="fund-txt"><a href="/tickets" style="color: #f26623;" target="_blank">Please open a ticket</a>  for other Payment Methods!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+					
+					
+
+<!-- end -->
+
+{% if kashier_code %}
+
+ <style>
+        #el-kashier-button{
+            display: none;
+        }
+    </style>
+	
+	<script>
+	
+         var interval = setInterval(function () {
+            var link =$('#el-kashier-button');
+            if(link.length){
+                link.click();
+                clearInterval(interval);
+            }
+        }, 1000);
+  
+ 
+</script>
+
+{{ kashier_code  }}
+
+{{ unset_kashier_code  }}
+{% endif %}
+
+
+{% include 'footer.twig' %}
+
+
+<script>
+    
+   $("#payment_method").on('change', function() {
+       
+        
+       if($(this).val() == 21){
+              $(".normal-payment").hide();
+               $(".custom-payment-content").hide();
+               $(".custom-payment-content-bkash").show();
+       }
+       else if($(this).val() == 34){
+              $(".normal-payment").hide();
+            $(".custom-payment-content-bkash").hide();
+               $(".custom-payment-content").show();
+       }
+       else{
+            $(".custom-payment-content").hide();
+            $(".custom-payment-content-bkash").hide();
+           $(".normal-payment").show();
+       }
+       
+   });
+</script>
+
+
+
+
+
+<!-- start -->
+
+<script>document.getElementById("qr").style.display = "none";
+
+
+function handleOrderType(selectObject) {
+var element = document.getElementById("qr");
+var element2 = document.getElementById("ppqr");
+
+if (selectObject.value == "14") {
+element.style.display = "block";
+element2.style.display = "none";
+} else if (selectObject.value == "114") {
+element.style.display = "none";
+element2.style.display = "block";
+} else {
+element.style.display = "none";
+element2.style.display = "none";
+}
+}
+</script>
+
+<!-- end -->
+
+
+
+

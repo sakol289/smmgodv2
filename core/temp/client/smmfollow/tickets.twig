@@ -1,0 +1,97 @@
+{% include 'header.twig' %}
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="well">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item active">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#ticket" role="tab" aria-controls="home" aria-selected="true">New Ticket</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#ticket-h" role="tab" aria-controls="home" aria-selected="true">Ticket History</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade in active" id="ticket" role="tabpanel" aria-labelledby="home-tab">
+            <form method="post" action="" id="ticketsend"class="">  
+              <div class="alert alert-dismissible alert-danger ticket-danger " style="display: none">
+                <button type="button" class="close">&times;</button>
+                <div></div>
+              </div>
+              
+              	{% if error %}
+                                <div class="alert alert-dismissible alert-danger ">
+                                  {{ errorText }}
+                                </div>
+                              {% elseif success %}
+                                <div class="alert alert-dismissible alert-success">
+                                  {{ successText }}
+                                </div>
+                              {% endif %}
+              
+              
+              <div class="siginInRow form-group">
+                <label class="control-label">Subject</label>
+                	<select id="subject" name="subject" class="form-control fg-control" data-class="form-control fg-control">
+                                                                                             {% for subjects in orders %}
+                       <option value"{{ subjects['subject'] }}">{{ subjects['subject'] }}</option>
+                      {% endfor %}
+                                                                                          </select>
+                                                               
+             </div>
+										
+                
+                <div class="siginInRow form-group">
+                <label class="control-label">Message</label>
+                
+                 <textarea class="form-control" rows="4" cols="50" id="message" name="message" style="min-height: 100px; display: block;">{{ data['message'] }}</textarea>
+                </div>    
+               
+               
+                <button type="submit" class="btn btn-primary btn-block">Submit ticket</button>
+              </span>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="ticket-h" role="tabpanel" aria-labelledby="home-tab">
+              
+               <table class="table">
+                                  <thead class="white">
+                                     <tr>
+                                        <th>ID</th>
+                                        <th>Subject</th>
+                                        <th>Status</th>
+                                        <th>Last Updates</th>
+                                     </tr>
+                                  </thead>
+                                  <tbody>
+                                                                              {% for ticket in ticketList %}
+                <tr>
+                  <td>{{ ticket['ticket_id'] }}</td>
+                  {% if ticket["support_new"] == 2 %}
+                    <td><a href="tickets/{{ ticket['ticket_id'] }}"><strong>{{ ticket['subject'] }}</strong></a></td>
+                  {% else %}
+                    <td><a href="tickets/{{ ticket['ticket_id'] }}">{{ ticket['subject'] }}</a></td>
+                  {% endif %}
+                <td>  <span class="order-status">{{ ticket['status'] }}</span>
+                 </td>
+                  <td><span class="nowrap">{{ ticket['lastupdate_time'] }}</span></td>
+                </tr>
+              {% endfor %}
+                                                                           </tbody>
+                                 </table>
+              
+                                          </div>
+    </div>
+
+  </div>
+  
+</div>
+</div>
+</div>
+
+
+
+{% include 'footer.twig' %}

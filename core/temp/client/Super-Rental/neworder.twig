@@ -1,0 +1,569 @@
+{% include 'header.twig' %}
+
+
+
+
+
+
+
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.17/dist/css/bootstrap-select.min.css">
+<style type="text/css">
+  .bootbox-body {
+      word-break: break-all;
+  }
+  .alert-blue {
+      color: #3B653C;
+      background-color: #DDECD8;
+      border-color: #e9ebee;
+  }
+  .tile {
+      position: relative;
+      padding: 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      background-color: #e9ebee;
+      border-radius: 6px;
+  }
+  .tile {
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+      border: 0;
+  }
+  .tile-title{
+    font-size: 20px;
+  }
+
+  .notifyjs-corner { left: 50%; -moz-transform: translateX(-50%); -webkit-transform: translateX(-50%); -o-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%); }
+
+  .card .form-group .form-control button{
+    font-weight: 400;
+    color:#000000;
+    background-color: #fafafa;
+    box-shadow: 0 4px 6px #32325d1c, 0 1px 3px #00000014;
+  }
+  .dropdown i.fab, .dropdown i.fas, .dropdown i.far, .dropdown i.fad {
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+      dropdown-rendering: optimizeLegibility;
+  }
+  .dropdown i.fab.fa-instagram {
+
+      background: #f09433;
+      background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+      background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+      font-size: 14px;
+      padding: 2.4px;
+      border-radius: 5px;
+      color: #FFF;
+      font-weight: lighter;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-facebook-square {
+      color: #207eff;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-right: 5px;
+  }
+  .dropdown i.fas.fa-star {
+      color: #ffb120;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-facebook {
+      color: #207eff;
+      font-size: 17px;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-twitter {
+      color: #1da1f2;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-spotify {
+      color: #62ffa2;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-soundcloud {
+      color: #ff5836;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-pinterest-square {
+      color: #ff5858;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+  .dropdown i.fab.fa-google-play {
+      color: #FFD400;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-periscope {
+      color: #3aa4c6;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-twitch {
+      color: #e600ff;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-youtube {
+      color: #ff0042;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-heart {
+      color: #ff0000;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-clock {
+      color: green;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-comment {
+      color: #666;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-thumbs-up {
+      color: blue;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-telegram-plane {
+      color: #29F200;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-camera-home {
+      color: #6515dd;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-tiktok {
+      color: #000000;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.far.fa-lock-alt {
+      color: #00b8ff;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fas.fa-user-ninja {
+      color: #ffc107;
+      font-size: 17px;
+      font-weight: bold;
+      margin-right: 5px;
+  }
+
+  .dropdown i.fab.fa-linkedin {
+      color: #0a66c2;
+      font-size: 17px;
+      margin-right: 10px;
+  }
+
+  .dropdown i.fab.fa-discord {
+      color: #1090F3;
+      font-size: 17px;
+      margin-right: 10px;
+  }
+
+  .dropdown i.fab.fa-google {
+      color: #DA3810;
+      font-size: 17px;
+      margin-right: 10px;
+  }
+
+  .dropdown i.fab.fa-apple {
+      color: #5910DA;
+      font-size: 17px;
+      margin-right: 10px;
+  }
+  .dropdown i.fab.fa-internet-explorer {
+      color: #1DB5E7;
+      font-size: 17px;
+      margin-right: 10px;
+  }
+</style>
+
+
+
+
+
+<div class="" role="alert" style="margin-bottom: 2px;">
+    
+    {% if contentText %}
+{{ contentText }}
+{% endif %}
+</div>
+
+
+
+
+<div class="row" style="margin-top: 10px;">
+<div class="col-lg">
+<div class="card order-dashboard">
+<div class="card-body">
+<div class="icon rounded-circle">
+<i class="fa fa-clone"></i>
+</div>
+<div class="content-box">
+<div class="title">Total Orders at &nbsp;{{ site["site_name"] }}</div>
+<div class="numbers">{{ordersCount}}</div>
+</div>
+<div class="des-sec">3+ years experience providing SMM services!</div>
+</div>
+</div>
+</div>
+<div class="col-lg">
+<div class="card order-dashboard">
+<div class="card-body">
+<div class="icon rounded-circle">
+<i class="fa fa-wallet"></i>
+</div>
+<div class="right-side">
+<label>looking to Deposit? </label>
+<a href="/addfunds" class="btn btn-green">Deposit now </a>
+</div>
+<div class="content-box">
+<div class="title">Current Balance </div>
+<div class="numbers userBalance">{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</div>
+<div class="des-sec">Your total spendings : <span class="userSpends"> {{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }}</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row" style="margin-top: 20px;">
+<div class="col-lg-6">
+<div class="card">
+<div class="card-body pt-0">
+<ul class="nav nav-tabs">
+
+<li class="nav-item">
+<a class="nav-link active show" href="#neworder" aria-controls="new-order" data-toggle="tab" onclick="toggleTab('Normal',false)">
+<i class="fa fa-clone"></i> New Order
+</a>
+</li>
+<!-- <li class="nav-item">
+<a class="nav-link " href="#massorder" aria-controls="mass-order" data-toggle="tab" onclick="toggleTab('Mass',false)">
+<i class="fa fa-sitemap"></i> Mass Order
+</a>
+</li> -->
+</ul>
+
+<div class="tab-content">
+<div id="neworder" class="tab-pane fade in active show ">
+<div class="alert alert-success" role="alert" id="order-alert" style="margin: 5px;display:none">
+<button type="button" class="close" id="order-alert-close" aria-hidden="true">â¨‰</button>
+<legend id="al-title">Your</legend>
+<h6 id="al-id-row"><strong>ID: </strong> <span id="al-id"></span></h6>
+<h6 id="al-service-row"><strong>Package: </strong> <span id="al-service"></span></h6>
+<h6 id="al-link-row"><strong>Link: </strong> <span id="al-link"></span></h6>
+<h6 id="al-qty-row"><strong>Quantity: </strong> <span id="al-qty"></span></h6>
+<h6 id="al-runs-row"><strong>Runs: </strong> <span id="al-runs"></span></h6>
+<h6 id="al-price-row"><strong>You have paid </strong> <span id="al-price"></span></h6>
+<h6 id="al-disc-row"><strong>Cashback Earned </strong> <span id="al-disc"></span></h6>
+<h6 id="al-bal-row"><strong>Balance: </strong> <span id="al-bal"></span></h6>
+</div>
+
+<!-- start -->
+<br>
+ {% if error %}
+                     <div class="alert alert-dismissible alert-danger">
+                        {{ errorText }}
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 1 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+                        <strong> Spent: </strong> 
+                        
+                        
+                        {{ currency["symbol"]  }} {{ (data['order']['price']*currency["value"]) |round(2, 'floor') }}
+                        
+                        <br>
+                        <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }} <br>
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 2 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+                        <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+                        <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+                     </div>
+                     {% endif %}
+
+
+
+
+
+ <form method="post" action="/">
+     
+                        {% if categories %}
+                        <div class="form-group">
+                           <label for="orderform-category" class="control-label">{{ lang["neworder.category"] }}</label>
+                           
+                           <select class="form-control selectpicker" id="neworder_category" name="categories" style="display: none">
+                           {% for category in categories %}
+                           <option {% if 1 == loop.index %} selected {% endif %} value="{{ category['category_id'] }}" >{{ category["category_name"] }}</option>
+                           {% endfor %}
+                           </select>
+                           <div class="dropdown">
+                              <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                              <span id="categoryTitle"></span>
+                              <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                        
+                        
+
+<div class="form-group mb-4">
+                           <label id="orderform-service" for="orderform-service" class="control-label" data-label="{{ lang["neworder.service"] }}">{{ lang["neworder.service"] }}</label>
+                           <select class="form-control selectpicker" id="neworder_services" name="services" style="display: none;"> </select>
+                           <div class="dropdown">
+                              <button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                              <span id="serviceTitle"></span>
+                              <i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+                              </div>
+                           </div>
+                        </div>
+                        
+                        
+ <div id="neworder_fields"></div>
+                        <div class="form-group mb-4">
+                           <label>
+                           {{ lang["neworder.charge"] }}
+                           </label>
+                           <div class="form-group">
+                              <input type="text" class="form-control" id="charge" value="" placeholder="0.00 ₺" readonly="" />
+                           </div>
+                        </div>
+
+ <div id="neworder_fields"></div>
+ 
+ 
+ 
+ 
+<!--<div class="form-group" id="link-div">
+<label for="link" class="control-label">Link<span style="color:red"> (Must be Public)</span></label>
+<input name="link" id="link" value="" type="text" data-validation="required" class="form-control" placeholder="Account Must be Public">
+</div>
+<div class="form-group" id="quantity-div">
+<label for="quantity" class="control-label">Quantity</label>
+<input name="quantity" id="quantity" type="number" value="" class="form-control" data-validation="number" data-validation-allowing="range[1;100]" placeholder="">
+<span class="help-block">
+<small class="help-block min-max">Min: <span id="min-q">0</span> - Max: <span id="max-q">0</span></small>
+</span>
+</div>
+<div class="form-group" id="custom-comments-div" style="display: none">
+<label for="custom_comments" class="control-label">Custom Data</label>
+<textarea class="form-control" id="custom_comments" onkeyup="auto_grow(this)" style="resize: none;overflow: hidden;min-height: 50px;" placeholder="1 on each line" name="custom_comments"></textarea>
+</div>
+<div class="form-group" id="dripfeeddiv" style="display: none">
+<label class="control-label" for="dripfeedselect">Drip Feed</label>
+<input class="magic-checkbox" type="checkbox" name="dripfeedselect" id="dripfeedselect" value="1">
+</div>
+<div class="form-group" id="runsdiv" style="display: none">
+<label for="runs" class="control-label">Runs</label>
+<input name="runs" id="runs" type="text" value="" class="form-control" data-validation="number" placeholder="">
+</div>
+<div class="form-group" id="intervaldiv" style="display: none">
+<label for="interval" class="control-label">Interval (in minutes)</label>
+<input name="interval" id="interval" type="text" value="" class="form-control" data-validation="number" placeholder="">
+</div>
+<div class="form-group" id="totqdiv" style="display: none">
+<label for="totq" class="control-label">Total Quantity</label>
+<input id="totq" type="text" value="" class="form-control" data-validation="number" readonly>
+</div>
+<div class="form-group">
+<label for="charge" class="control-label"><i class="mdi mdi-currency-inr"></i> You will pay</label>
+<input type="text" class="form-control" id="order_total" value="" readonly="">
+<p id="not-enough-funds" style="display:none;color:red">ðŸ‘½ Houston we have problem! And its... Not enough funds on balance</p>
+</div> -->
+
+
+ {% if neworderTerms %}
+ 
+ <div class="checker">
+
+<span><input type="checkbox" name="neworder_check" id="check" required='true'> 📍Yes, i have confirmed the <a href="/terms">Terms &amp; Conditions</a></span>
+
+</div>
+ 
+                      
+                        {% endif %}
+                        
+                    &nbsp;
+                        
+
+<div class="form-group">
+<button type="submit" id="btn-proceed" onclick="sendOrder()" class="btn btn-blue">Place Order</button>
+</div>
+</fieldset>
+</form>
+</div>
+
+
+
+<!--- end -->
+
+
+<div id="massorder" class="tab-pane fade ">
+
+<form role="form" method="POST" action="/mass-order" onsubmit="return prechecked()">
+<input type="hidden" name="_token" value="y4sAV8SBiIMMz8M7A2beaepwLqrQLCumux1LPbrr">
+<input type="hidden" name="utok" id="utok" value="007f12f13f5ff83ced3bc3c02e711e20">
+<fieldset class="scheduler-border">
+<div class="form-group">
+<label for="links" class="control-label">One order per line in format</label>
+</div>
+<div class="form-group">
+<textarea name="content" id="content" data-validation="required" placeholder="package_id|quantity|link" style="min-height: 350px; resize: vertical;" class="form-control"></textarea>
+</div>
+
+
+<div class="form-group">
+<button type="submit" class="btn btn-blue">Place Order</button>
+</div>
+</fieldset>
+</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-6">
+<div class="card bg-white latest-news-panel">
+<div class="card-header">
+<div class="card-title">
+<i class="fa fa-newspaper"></i> Latest News
+</div>
+</div>
+
+
+
+
+<div class="card-body" id="newOrderContent" style="max-height: 400px;">
+<div class="news-list-panel">
+<div class="news-list-item">{% for new in newsList %}
+
+
+<span class="badge badge-green date">{{ new['news_date'] }}</span>
+<div class="news-type-list">
+<div class="news-type-list-item">
+<div class="title blue">{{ new['news_title'] }}</div>
+<ul class="list">
+<li class="list-item"><p>{{ new['news_content'] }}</p></li>
+</ul>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+ <div class="row justify-content-center payments-panel" style="margin-top: 50px;">
+<div class="col-md-10 col-md-offset-1 card">
+<div class="text-center">
+<pre style="box-sizing: border-box; font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 12.25px; margin-top: 0px; margin-bottom: 1rem; overflow: auto; color: #212529; text-align: center; background-color: #ffffff;"><span style="box-sizing: border-box; background-color: #f1c40f;"><em style="box-sizing: border-box;"><span style="box-sizing: border-box; font-weight: bolder;"><span style="box-sizing: border-box; font-family: georgia, palatino, serif;">Do not order without read</span></span></em></span></pre>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">1. If You Want To Increase Your Instagram Followers So You Have To Put Profile Url Of Instagram Accounts Like https://www.instagram.com/username</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">*&nbsp; Do Not Put Profile Username If You Want To Increase Instagram Followers&nbsp;</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">*&nbsp; If You Want To Likes Of Post , Then Put Post Link Only&nbsp;</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">Don't change username if u ordered refill service otherwise refill will never work and this can not be solved&nbsp;</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">2. Always Check the order delivery by visiting the link you give.&nbsp;</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">3. Once an order is entered, it is IMPOSSIBLE to stop it 95% of the time, so please try not to contact us requesting this. If the post or profile is deleted or changed to private a refund cannot not be given.</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">4. Read Description Before adding order</span></p>
+<p><span style="font-family: georgia, palatino, serif; font-size: 14px; background-color: #ffffff;">5. Dont place multiple orders on one link at once. Wait for first order to complete</span></p>
+<p><span style="box-sizing: border-box; font-size: 14px; background-color: #ffffff; font-family: georgia, palatino, serif;"><span style="box-sizing: border-box; font-size: 15px;">6. If you face any issues click a below whatsapp button to chat 12</span>&nbsp;hours of ordering</span><span style="box-sizing: border-box; font-family: 'Open Sans', sans-serif; font-size: 14px; background-color: #ffffff;">&nbsp;</span></p>
+<div style="box-sizing: border-box; color: #1f2324; font-family: 'Open Sans', sans-serif; font-size: 14px; text-align: center;"><span style="box-sizing: border-box;"><span style="box-sizing: border-box; color: #ff6633; font-size: large;">Must read</span></span></div>
+<div style="box-sizing: border-box; color: #1f2324; font-family: 'Open Sans', sans-serif; font-size: 14px; text-align: center;">&nbsp;</div>
+<div style="box-sizing: border-box; color: #1f2324; font-family: 'Open Sans', sans-serif; font-size: 14px; text-align: center;"><span style="font-family: georgia, palatino, serif; box-sizing: border-box;">Service may take&nbsp;</span><span style="font-family: georgia, palatino, serif; box-sizing: border-box; color: #ff0000;">0-12</span><span style="color: inherit; font-family: georgia, palatino, serif; box-sizing: border-box;">&nbsp;hours&nbsp; time because of many other and overload&nbsp;</span><span style="color: inherit; font-family: georgia, palatino, serif; box-sizing: border-box;">We try our best to complete your order in 0-12 hours </span>&nbsp;</div>
+<div style="box-sizing: border-box; color: #1f2324; font-family: 'Open Sans', sans-serif; font-size: 14px; text-align: center;">
+<p style="box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem;">&nbsp;</p>
+</div>
+<p>&nbsp;</p>
+
+</div>
+</div>
+</div> 
+</div>
+</section>
+</div>
+
+
+
+
+					   
+{% include 'footer.twig' %}
+
+
+
+
+
+

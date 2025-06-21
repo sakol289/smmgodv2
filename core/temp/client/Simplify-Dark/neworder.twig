@@ -1,0 +1,335 @@
+{% include 'header.twig' %}
+
+
+
+     <div class="wrapper-content">
+    <div class="wrapper-content__header">
+          </div>
+    <div class="wrapper-content__body">
+      <!-- Main variables *content* -->
+      <div id="block_213">
+  <div class="totals ">
+    <div class="bg"></div>
+    <div class="divider-top"></div>
+    <div class="divider-bottom"></div>
+    <div class="container-fluid">
+      <div class="row align-items-start justify-content-start">
+                              <div class="col-lg-3 col-md-6 col-sm-12 mb-2 mt-2">
+              <div class="card h-100"
+                   style="
+                                                                                    padding-top: 24px;                                  padding-bottom: 24px;                                                                                                                                                                                                                                  border-left-width: 0px;                                  border-right-width: 0px;                                  border-bottom-width: 0px;                                  border-top-width: 0px;                                                                  border-style: solid; ">
+                <div class="totals-block__card">
+                                      <div class="totals-block__card-left">
+                      <div
+                          class="totals-block__icon-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary"
+                          style="
+                           background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                               ">
+                        <span class="totals-block__icon style-text-primary far fa-user" style="
+                            font-size: 38px;
+                            transform: rotate(0deg);
+                            color: rgba(243, 156, 17, 1);
+                            text-shadow: none;
+                            border-radius: 0px;
+                            "></span>
+                      </div>
+                    </div>
+                                    <div class="totals-block__card-right">
+                    <div class="totals-block__count">
+                      <h2 class="totals-block__count-value style-text-primary"
+                           style=" color: rgba(243, 156, 17, 1);  font-size: 29px; line-height: 29px; ">
+                                                                              {{ user['username'] }}
+                                                                                                </h2>
+                    </div>
+                    <div class="totals-block__card-name">
+                                              <p>Welcome to panel!</p>
+                                          </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-2 mt-2">
+              <div class="card h-100"
+                   style="
+                                                                                    padding-top: 24px;                                  padding-bottom: 24px;                                                                                                                                                                                                                                  border-left-width: 0px;                                  border-right-width: 0px;                                  border-bottom-width: 0px;                                  border-top-width: 0px;                                                                  border-style: solid; ">
+                <div class="totals-block__card">
+                                      <div class="totals-block__card-left">
+                      <div
+                          class="totals-block__icon-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary"
+                          style="
+                           background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                               ">
+                        <span class="totals-block__icon style-text-primary far fa-clipboard-list" style="
+                            font-size: 38px;
+                            transform: rotate(0deg);
+                            color: rgba(243, 156, 17, 1);
+                            text-shadow: none;
+                            border-radius: 0px;
+                            "></span>
+                      </div>
+                    </div>
+                                    <div class="totals-block__card-right">
+                    <div class="totals-block__count">
+                      <h2 class="totals-block__count-value style-text-primary"
+                           style=" color: rgba(243, 156, 17, 1);  font-size: 29px; line-height: 29px; ">
+                                                                               {{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }}
+                                                                                                </h2>
+                    </div>
+                    <div class="totals-block__card-name">
+                                              <p>Spent balance</p>
+                                          </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                                                          <div class="col-lg-3 col-md-6 col-sm-12 mb-2 mt-2">
+              <div class="card h-100"
+                   style="
+                                                                                    padding-top: 24px;                                  padding-bottom: 24px;                                                                                                                                                                                                                                  border-left-width: 0px;                                  border-right-width: 0px;                                  border-bottom-width: 0px;                                  border-top-width: 0px;                                                                  border-style: solid; ">
+                <div class="totals-block__card">
+                                      <div class="totals-block__card-left">
+                      <div
+                          class="totals-block__icon-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary"
+                          style="
+                           background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                               ">
+                        <span class="totals-block__icon style-text-primary far fa-money-bill" style="
+                            font-size: 38px;
+                            transform: rotate(0deg);
+                            color: rgba(243, 156, 17, 1);
+                            text-shadow: none;
+                            border-radius: 0px;
+                            "></span>
+                      </div>
+                    </div>
+                                    <div class="totals-block__card-right">
+                    <div class="totals-block__count">
+                      <h2 class="totals-block__count-value style-text-primary"
+                           style=" color: rgba(243, 156, 17, 1);  font-size: 29px; line-height: 29px; ">
+                                                                               {{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}
+                                                                                                </h2>
+                    </div>
+                    <div class="totals-block__card-name">
+                                              <p>Account balance</p>
+                                          </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                                        <div class="col-lg-3 col-md-6 col-sm-12 mb-2 mt-2">
+              <div class="card h-100"
+                   style="
+                                                                                    padding-top: 24px;                                  padding-bottom: 24px;                                                                                                                                                                                                                                  border-left-width: 0px;                                  border-right-width: 0px;                                  border-bottom-width: 0px;                                  border-top-width: 0px;                                                                  border-style: solid; ">
+                <div class="totals-block__card">
+                                      <div class="totals-block__card-left">
+                      <div
+                          class="totals-block__icon-preview style-bg-primary-alpha-10 style-border-radius-default style-text-primary"
+                          style="
+                           background: rgba(243, 156, 17, 0.1);                                                                                                                                                                                               ">
+                          
+                          
+                          
+                           <span class="totals-block__icon style-text-primary far fa-users" style="
+                            font-size: 38px;
+                            transform: rotate(0deg);
+                            color:rgba(243, 156, 17, 1) ;
+                            text-shadow: none;
+                            border-radius: 0px;
+                            "></span>
+                          
+                     
+                      </div>
+                    </div>
+                                    <div class="totals-block__card-right">
+                    <div class="totals-block__count">
+                      <h2 class="totals-block__count-value style-text-primary"
+                           style=" color: rgba(243, 156, 17, 1);  font-size: 29px; line-height: 29px; ">
+                                                                          {{ordersCount}}
+                                              </h2>
+                    </div>
+                    <div class="totals-block__card-name">
+                                              <p>Total Order</p>
+                                          </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+                                          </div>
+    </div>
+  </div>
+</div>
+
+<div id="block_206">
+  <div class="new_order-block ">
+    <div class="bg"></div>
+    <div class="divider-top"></div>
+    <div class="divider-bottom"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-7 mb-3 mb-lg-0">
+          <div class="component_form_group component_card component_radio_button">
+            <div class="card ">
+              <form action="/" method="post" id="order-form">
+                <div class="component_button_forms">
+                    
+                    
+                    {% if error %}
+                     <div class="alert alert-dismissible alert-danger">
+                        {{ errorText }}
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 1 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['price'] }} <br>
+                        <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 2 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+                        <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+                        <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+                     </div>
+                     {% endif %}
+									  
+			 {% if categories %}
+               <div class="form-group mb-3">
+                      <label for="orderform-category" class="control-label">Category</label>
+                       <select
+                          class="form-control"
+                          id="neworder_category"
+                          name="categories"
+                          data-select="true"
+                          data-select-search="true"
+                          data-select-search-placeholder="Search" style="display: none">
+
+               
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+
+                <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+            </div>
+          {% endif %}
+          
+          <!-- end -->
+                   
+                   
+                   
+           <!-- form-group end -->
+           <div class="form-group mb-3">
+                    <label for="orderform-service" class="control-label">Service</label>
+                  
+                   <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+
+											<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+                                       </div>
+                                       
+
+                                       <!-- form-group end -->
+                     
+                      <div id="neworder_fields"></div>
+        
+                  <div class="form-group mb-3">
+                    <label for="charge" class="control-label">Charge</label>
+                    <input type="text" class="form-control" id="charge" value="" readonly>
+                  </div>
+                  
+                  
+                    
+
+                        {% if neworderTerms %}
+                        <div class="checkbox">
+                           <label>
+                           <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+                           </label>
+                        </div>
+                        {% endif %}
+					
+                      
+                  <div class="new-order-button-submit component_button_submit ">
+                  <button style="background-color:#ffa807 ;color: white;" type="submit" class="btn btn-block btn-big-primary">Submit</button>
+                </div>
+                </form>
+              </div>
+              
+             
+            </div>
+        </div>
+    </div>
+    
+     <br>
+			
+		 
+<div class="col-lg-5 announcements">
+
+<table class="table">
+<thead>
+<tr>
+
+<th>Title</th>
+<th class="width-service-name">Content</th>
+
+<th class="nowrap">Date</th>
+
+
+</tr>
+</thead>
+<tbody>
+{% for new in newsList %}
+
+<tr>
+
+<td> <img width="30" class="mr-1" src="/img/icons/{{ new['news_icon'] }}.png">{{ new['news_title'] }} </td>
+<td>
+{{ new['news_content'] }}
+</td>
+<td>{{ new['news_date'] }}</td>
+
+</tr>{% endfor %}
+</tbody>
+</table>
+  
+ 
+</div>
+
+
+
+
+  </div>
+</div>
+  </div>
+</div>
+
+
+  
+        
+        
+      
+             
+{% include 'footer.twig' %}
+
+
+
+
+

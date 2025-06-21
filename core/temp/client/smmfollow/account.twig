@@ -1,0 +1,167 @@
+{% include 'header.twig' %}
+       
+       
+       
+       <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+            
+             {% if error %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+      
+      <div class="well">
+                       <div class="form-group">
+          <label for="username" class="control-label">Username</label>
+          <input type="text" class="form-control" id="username" value="{{ user['username'] }}" readonly>
+        </div>
+        <div class="form-group">
+          <label for="email" class="control-label">Email</label>
+          <input type="text" class="form-control" id="email" value="{{ user['email'] }}" readonly>
+        </div>
+       <!--  <button class="btn btn-primary" id="changeEmailLink">
+          Change email
+        </button> -->
+      </div>
+
+      <div class="well">
+        <form  method="post" action="">
+                    <div class="form-group">
+            <label for="current" class="control-label">Current password</label>
+            <input type="password" class="form-control" id="current" name="current_password">
+          </div>
+          <div class="form-group">
+            <label for="new" class="control-label">New password</label>
+            <input type="password" class="form-control" id="new" name="password">
+          </div>
+          <div class="form-group">
+            <label for="confirm" class="control-label">Confirm new password</label>
+            <input type="password" class="form-control" id="confirm" name="confirm_password">
+          </div>
+
+         
+          <button type="submit" class="btn btn-primary">Change password</button>
+        </form>
+      </div>
+      
+      
+      
+    <!--  <div class="well">
+        <div id="2fa-approve-error-block"
+             style=" display: none; "
+             class="alert alert-dismissible alert-danger ">
+          <button type="button" class="close">&times;</button>
+          <span id="2fa-error-text"></span>
+        </div>
+
+        <label class="control-label">
+          Two-factor authentication
+                  </label>
+
+        <!-- 2FA Form generate code -->
+     <!--   <form id="2fa-generate-form"
+              method="post"               action="/account/2fa/generate"
+              style=" display: block; ">
+          <p>Email-based option to add an extra layer of protection to your account. When signing in you’ll need to enter a code that will be sent to your email address.</p>
+          <input type="hidden" name="enabled" value="1">
+          <input type="hidden" name="_csrf" value="rjdUrFXW0XLUWLz2xNUKcq2_lNNIkrDjPKC54u0XfondWmP9IK_lJKEO44ep528W1erNlDD596Rbx9SqiWMWzg==">
+          <button id="2fa-generate" type="submit" class="btn btn-primary">
+                          Enable
+                      </button>
+        </form>
+
+        <!-- 2FA Form approve code -->
+      <!--  <form id="2fa-approve-form" method="post"               action="/account/2fa/approve"
+              style=" display: none; ">
+          <p>Please check your email and enter the code below.</p>
+          <div class="form-group">
+            <label for="code" class="control-label">Code</label>
+            <input type="text" id="code" name="code" class="form-control">
+          </div>
+          <input type="hidden" name="enabled" value="1">
+          <input type="hidden" name="_csrf" value="rjdUrFXW0XLUWLz2xNUKcq2_lNNIkrDjPKC54u0XfondWmP9IK_lJKEO44ep528W1erNlDD596Rbx9SqiWMWzg==">
+          <button id="2fa-approve" type="submit" class="btn btn-primary">
+                          Enable
+                      </button>
+        </form>
+      </div> -->
+
+
+      
+      <div class="well">
+        <form  action="account/timezone" method="post">
+          <div class="form-group">
+            <label for="timezone" class="control-label">Timezone</label>
+         <select class="form-control" name="timezone">
+											 {% for timezone in timezones %}
+											 <option {% if timezone["timezone"] == user['timezone'] %} selected {% endif %} value="{{ timezone["timezone"] }}">{{ timezone["label"] }}</option>
+											 {% endfor %}
+										 </select>
+          </div>
+
+         
+          <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+      </div>
+      <div class="well">
+        <form  action="/account/newapikey" method="post">
+          <div class="form-group">
+            <label for="key" class="control-label">API key</label>
+                      </div>
+
+          
+          <button type="submit" class="btn btn-primary">Generate new</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change email -->
+<div class="modal fade" tabindex="-1" role="dialog" id="changeEmailModal" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <form id="changeEmailForm" class="modal-content" method="post" action="">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Change email</h4>
+      </div>
+      <div class="modal-body">
+        <div id="changeEmailError"
+             class="error-summary alert alert-dismissible alert-danger hidden"></div>
+        <div class="form-group">
+          <label for="current-email">Current email</label>
+          <span class="form-control" id="current-email" disabled>codado6484@ceoshub.com</span>
+        </div>
+        <div class="form-group">
+          <label for="new-email">New email</label>
+          <input type="email" class="form-control" id="new-email" name="ChangeEmailForm[email]">
+        </div>
+        <div class="form-group">
+          <label for="current-password">Current password</label>
+          <input type="password" class="form-control" id="current-password" name="ChangeEmailForm[password]">
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary"
+                id="changeEmailSubmitBtn">Change email</button>
+      </div>
+    </form>
+  </div>
+</div>
+       
+       
+ 
+{% include 'footer.twig' %}

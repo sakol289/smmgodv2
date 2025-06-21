@@ -1,0 +1,65 @@
+{% include 'header.twig' %}
+
+
+
+
+
+<div class="app-content">
+	<div class="container-fluid">
+	 <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                            <div class="well well-float ">
+                    <p>Wanna get money ? Refer SmmFollows and use our Affiliated system to get your commission! Refer your friends and lets make money!</p><h3><b>We pay only for new customers. Any re-registration and&nbsp;</b></h3><h3><b> abuse will be rejected and your referral account will be </b></h3><h3><b>terminated.</b><br></h3>
+                </div>
+                        <div class="well well-float">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                        <th>Referral link</th>
+                        <th>Commission rate</th>
+                        <th>Minimum payout</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ site['url'] }}/ref/{{ user["referral_code"] }}</td>
+                        <td>{{ settings["ref_bonus"] }}%</td>
+                        <td>{{ settings['ref_min'] }}{{ site['currency'] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="well well-float">
+                <table class="table ">
+                    <thead>
+                    <tr>
+                         <th>Visits</th>
+                        <!-- <th>Registrations</th> -->
+                        <th>Referrals</th> 
+                         <!--<th>Conversion rate</th> -->
+                        <th>Total earnings</th>
+                       <!-- <th>Available earnings</th> -->
+                                            </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      
+                      
+                        <td>{{ user['total_click'] }}</td>
+                       <!-- <td>0</td> -->
+                        <td>{{ refCount }}</td>
+                      <!--  <td>0.00%</td>-->
+                        <td>	{{ user['refchar'] }}{{ site['currency'] }}</td> 
+                     <!--   <td>	{{ user['refchar'] }}{{ site['currency'] }}</td> -->
+                                            </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            
+                    </div>
+    </div>
+</div>
+    </div>
+    </div>
+{% include 'footer.twig' %}

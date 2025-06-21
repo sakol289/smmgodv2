@@ -1,0 +1,560 @@
+{{ footerCode }}
+
+{% if user['auth'] %}
+
+  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/libs/jquery/1.12.4/jquery.min.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/global/aknio8ec1fpphc0p.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/global/nfos6j9mo1on7ksz.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/global/2bzgc6nlig1twew7.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/global/a2wrrjwy29x3cr2s.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/7o9f2j/2w61hmhfjy0skn2b.js">
+                  </script>
+                  
+                  <script type="text/javascript" src="/css/panel/SMMZONI/cdn.mypanel.link/7o9f2j/uk61wee6rlsamd3t.js">
+                  </script>
+                  
+					<script type="text/javascript" >
+									window.modules.layouts = {"theme_id":2,"auth":0,"live":true,"csrftoken":"E5pcx1mrU4LwqY8cc3bWofmlcuO_tNK972CLqhsTNdJC2xuyD8QG14Xn3TEhF-fGkeE5rfDdnvygEMnQIyNRqw=="};
+							</script>
+								<script type="text/javascript" >
+							</script>
+		
+		
+	
+  {% for script in scriptList %} 
+     <script type="text/javascript" src="{{ script }}"></script> 
+  {% endfor %} 
+		
+		
+		
+		
+		
+			<!-- This theme creadit by leakstation.in visit:- https://www.youtube.com/@UnlockHacker -->
+		
+		
+		
+		
+		
+								<script>
+			function searchServices() {
+				var searchTerm = $("#serv-inp").val();
+				var listItem = $('#service-table tbody').children('tr');
+				var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+				$.extend($.expr[':'], {
+					'containsi': function (elem, i, match, array) {
+						return(elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+					}
+				});
+
+				$("#service-table tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+					$(this).addClass('hidden');
+				});
+
+				$("#service-table thead").not(":containsi('" + searchSplit + "')").each(function (e) {
+					$(this).addClass('hidden');
+				});
+
+				$("#service-table tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+				$("#service-table thead:containsi('" + searchSplit + "')").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+
+				$("tr.separator:first-child, tr.separator:last-child").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+			}
+		</script>
+		<script>
+			$("#serv-inp").keyup(function () {
+				searchServices();
+			});
+		</script>
+			<script src="/css/panel/SMMZONI/cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script>
+			$('#testimonials_wrap').slick(
+				{
+					dots: false,
+					autoplay: true,
+					infinite: true,
+					speed: 300,
+					slidesToShow: 3,
+					slidesToScroll: 1,
+					responsive: [
+						{
+							breakpoint: 1024,
+							settings: {
+									slidesToShow: 3,
+									slidesToScroll: 2
+								}
+						}, {
+							breakpoint: 600,
+							settings: {
+									slidesToShow: 2,
+									slidesToScroll: 2
+								}
+						}, {
+							breakpoint: 480,
+							settings: {
+									slidesToShow: 1,
+									slidesToScroll: 1
+								}
+						}
+					]
+			});
+			</script>
+			<script>
+				function dashMenuToggle() {
+					$('.app-container').toggleClass('sidebar-action');
+				}
+
+				function homeMenuToggle() {
+					$('.head-menu').slideToggle(200);
+				}
+
+				function mainDropdown() {
+					$('.main-dd').toggleClass('hidden');
+				}
+
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					if($("#dc-body").length) {
+						$("#dc2-body").height($("#dc-body").height());
+					}
+				});
+				function showLang() {
+					const lang = document.getElementById('drop_lang');
+					lang.classList.toggle('active');
+				}
+				function change_mode() {
+					var app = document.getElementsByTagName("BODY")[0];
+					if (localStorage.lightMode == "dark") {
+						localStorage.lightMode = "light";
+						app.setAttribute("class", "light");
+					} else {
+						localStorage.lightMode = "dark";
+						app.setAttribute("class", "dark");
+					}
+					console.log("lightMode = " + localStorage.lightMode);
+				}
+			</script>
+			<script>
+			$('.sss-tab').click(function() {
+				if ($(this).hasClass('active')) {
+					$(this).find('.ss-tab-content').slideToggle(200);
+					$(this).toggleClass('active');
+				} else {
+					$('.sss-tab').removeClass('active');
+					$('.sss-tab > .ss-tab-content').slideUp(200);
+					$(this).find('.ss-tab-content').slideToggle(200);
+					$(this).toggleClass('active');
+				}
+			});
+			</script>
+	
+    
+    
+    
+    
+{% else %}
+
+
+ <div class="footer">
+         <div class="container">
+            <div class="ft-content">
+               <div class="ftc-top">
+                  <div class="row">
+                   <div class="col-md-auto col-12 text-center text-md-left">
+                        <div class="ftc-name">
+                           <div class="row">
+                              <div class="col align-self-center">
+                                 <div class="fct-name">					<img style="height: 75px"  src="{{ site["logo"] }}" class="logo-lg" alt="{{ site["site_name"] }} " title="{{ site["site_name"] }} ">                                                                  </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-md col-12 mt-4 mt-lg-0 align-self-center">
+                         <div class="footer-links text-md-left text-center">
+                           <ul>
+                              <li>
+                                 <a href="/services"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                  List of services
+                                     </font></font></a>
+                              </li>
+                              <li>
+                                 <a href="/api"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">API</font></font></a>
+                              </li>
+                              <li>
+                            <a href="/terms"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                                
+                             terms of use
+                                
+                                </font></font></a>
+                                  </li>
+                             </ul>      
+                          </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+        
+         <div class="container">
+            <div class="ft-content-bot">
+               <div class="ft-content-bot-text"><br>
+                  <p><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ site["site_name"] }} </font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">   is the cheapest and fastest server in the Middle East</font></font></p>
+                  <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">All rights reserved © 2023</font></font></p>
+               </div>
+            </div>
+         </div>
+             </div>
+      </div>
+
+
+    <div class="copyright">
+        <div class="container text-center text-white-50 py-3">
+           ❤️  Copyright 2023! <b>  {{ site["site_name"] }} </b> | <b>Design By | <a href="  {{ site["url"] }} ">  {{ site["site_name"] }} ©️️️️️️️️️️️️️</a></b>
+        </div>
+    </div>
+</div>  
+
+
+
+
+		
+					<script type="text/javascript"  src="https://cdn.mypanel.link/libs/jquery/1.12.4/jquery.min.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/aknio8ec1fpphc0p.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/nfos6j9mo1on7ksz.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/3jtkcyaua2jt3092.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/global/6cpemo5rgp75dw40.js" >
+							</script>
+					<script type="text/javascript"  src="https://cdn.mypanel.link/90uzg2/4d062e6x6871ssk6.js" >
+							</script>
+				<!--	<script type="text/javascript"  src="https://cdn.mypanel.link/90uzg2/3hltpnwxfw0stxw4.js" >
+							</script> -->
+					<script type="text/javascript" >
+									window.modules.layouts = {"theme_id":2,"auth":0,"live":true,"csrftoken":"E5pcx1mrU4LwqY8cc3bWofmlcuO_tNK972CLqhsTNdJC2xuyD8QG14Xn3TEhF-fGkeE5rfDdnvygEMnQIyNRqw=="};
+							</script>
+							
+							
+							
+							<script type="text/javascript" >
+							</script>
+		
+								<script>
+			function searchServices() {
+				var searchTerm = $("#serv-inp").val();
+				var listItem = $('#service-table tbody').children('tr');
+				var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+				$.extend($.expr[':'], {
+					'containsi': function (elem, i, match, array) {
+						return(elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+					}
+				});
+
+				$("#service-table tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+					$(this).addClass('hidden');
+				});
+
+				$("#service-table thead").not(":containsi('" + searchSplit + "')").each(function (e) {
+					$(this).addClass('hidden');
+				});
+
+				$("#service-table tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+				$("#service-table thead:containsi('" + searchSplit + "')").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+
+				$("tr.separator:first-child, tr.separator:last-child").each(function (e) {
+					$(this).removeClass('hidden');
+				});
+			}
+		</script>
+		<script>
+			$("#serv-inp").keyup(function () {
+				searchServices();
+			});
+		</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<script>
+			$('#testimonials_wrap').slick(
+				{
+					dots: false,
+					autoplay: true,
+					infinite: true,
+					speed: 300,
+					slidesToShow: 3,
+					slidesToScroll: 1,
+					responsive: [
+						{
+							breakpoint: 1024,
+							settings: {
+									slidesToShow: 3,
+									slidesToScroll: 2
+								}
+						}, {
+							breakpoint: 600,
+							settings: {
+									slidesToShow: 2,
+									slidesToScroll: 2
+								}
+						}, {
+							breakpoint: 480,
+							settings: {
+									slidesToShow: 1,
+									slidesToScroll: 1
+								}
+						}
+					]
+			});
+			</script>
+			<script>
+				function dashMenuToggle() {
+					$('.app-container').toggleClass('sidebar-action');
+				}
+
+				function homeMenuToggle() {
+					$('.head-menu').slideToggle(200);
+				}
+
+				function mainDropdown() {
+					$('.main-dd').toggleClass('hidden');
+				}
+
+				$(function () {
+					$('[data-toggle="tooltip"]').tooltip();
+					if($("#dc-body").length) {
+						$("#dc2-body").height($("#dc-body").height());
+					}
+				});
+				function showLang() {
+					const lang = document.getElementById('drop_lang');
+					lang.classList.toggle('active');
+				}
+				function change_mode() {
+					var app = document.getElementsByTagName("BODY")[0];
+					if (localStorage.lightMode == "dark") {
+						localStorage.lightMode = "light";
+						app.setAttribute("class", "light");
+					} else {
+						localStorage.lightMode = "dark";
+						app.setAttribute("class", "dark");
+					}
+					console.log("lightMode = " + localStorage.lightMode);
+				}
+			</script>
+			<script>
+			$('.sss-tab').click(function() {
+				if ($(this).hasClass('active')) {
+					$(this).find('.ss-tab-content').slideToggle(200);
+					$(this).toggleClass('active');
+				} else {
+					$('.sss-tab').removeClass('active');
+					$('.sss-tab > .ss-tab-content').slideUp(200);
+					$(this).find('.ss-tab-content').slideToggle(200);
+					$(this).toggleClass('active');
+				}
+			});
+			</script>
+
+   
+   
+   
+   
+   
+{% endif %}
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+ <script>
+  function showCatDrop() {
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+
+  function filterNow(id) {
+    const filterId = "fliter" + id;
+    const allTableBody = document.getElementsByClassName("table_body");
+    const searchBox = document.getElementById("serv-inp");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.add("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.add("hidden");
+    }
+
+    const getAllCatgory = document.getElementsByClassName(filterId);
+    for (const allfilter of getAllCatgory) {
+      allfilter.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+  function allCat() {
+    const searchBox = document.getElementById("serv-inp");
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+  function allCat2() {
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+  }
+</script>          
+{% for script in site['scripts'] %}
+  <script type="text/javascript" {% if script['src'] %}src="{{ script['src'] }}"{% endif %}>
+    {% if script['code'] %} {{ script['code'] }} {% endif %}
+  </script>
+{% endfor %}
+
+           <script>
+const nwoCategories = document.querySelector('.nwo-categories');
+
+if (nwoCategories) {
+  const nwoCatSwiper = new Swiper('.nwo-categories', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+  });
+}
+</script>
+            <script>
+                $('.home-ss-tab').click(function(){
+                  if($(this).hasClass('active')){
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }else {
+                      $('.home-ss-tab').removeClass('active');
+                      $('.home-ss-tab > .ss-tab-content').slideUp(200);
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }
+                });
+          </script>         
+<script>
+const newOrderCats = document.getElementById('new-order-cats');
+
+if (newOrderCats) {  
+    const orderFormCats = document.getElementById('neworder_category');
+    var realData = orderFormCats.innerHTML;
+
+    const dCatBtns = document.querySelectorAll('.nwo-cat-btn');
+    if (dCatBtns[0]) {
+        [...dCatBtns].forEach(btn => {
+            btn.addEventListener('click', e => {
+                const val = btn.getAttribute('data-change-cat');
+                const orderFormCats = document.getElementById('neworder_category');
+                const options = document.querySelectorAll('#neworder_category-copy option');
+
+                const dCatbtns = document.querySelectorAll('.nwo-cat-btn');
+                [...dCatbtns].forEach(bt => {
+                    bt.classList.remove('active');
+                });
+                btn.classList.add('active');
+
+                const newOptions = [];
+                [...options].forEach(el => {
+                    if (el.innerText.toLowerCase().includes(val.toLowerCase())) {
+                        newOptions.push(el);
+                    }
+                });
+                const newOptionsHtml = [];
+                [...newOptions].forEach(el => {
+                    newOptionsHtml.push(el.outerHTML);
+                });
+                orderFormCats.innerHTML = newOptionsHtml.join('');
+
+                $('#neworder_category').trigger('change');
+            });
+        })
+    }
+
+    /**
+     * copy order form data hidden
+     */
+    setTimeout(() => {
+        const orderFormCopy = document.createElement('select');
+        orderFormCopy.setAttribute('id', 'neworder_category-copy');
+        orderFormCopy.style.display = 'none';
+        orderFormCopy.innerHTML = realData;
+        orderFormCats.parentNode.insertBefore(orderFormCopy, orderFormCats);
+    }, 1000)
+
+    const nocWrapper = document.getElementById('noc-wrapper');
+    nocWrapper.style.display = 'none';
+    setTimeout(() => {
+        nocWrapper.style.display = 'block';
+    }, 1001);
+}    
+</script>
+{% for script in scriptList %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+<!--<script type="text/javascript" src="js/main.js?v={{ random(50, 100) }}"></script>-->
+
+
+
+
+
+
+
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.24/sweetalert2.all.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+
+<script> 
+function _0x5037(_0x51155c,_0x3bfc53){var _0x1c98de=_0x1c98();return _0x5037=function(_0x503724,_0xfa4af8){_0x503724=_0x503724-0x1c4;var _0x362e63=_0x1c98de[_0x503724];return _0x362e63;},_0x5037(_0x51155c,_0x3bfc53);}var _0x181f3b=_0x5037;function _0x1c98(){var _0x365d3a=['ajax','Failed\x20to\x20retrieve\x20broadcast\x20notification','/broadcast','setTime','15IKatzH','509406PRekEz','toUTCString','BROADCAST_DESCRIPTION','8kCCmCM','BROADCAST_TITLE','length','trim','BROADCAST_URL','4152055QiVAJz','log','14615415OjjMti','getTime','ready','location','href','BROADCAST_ACTION','split','isConfirmed','BROADCAST_ICON','3733212cpeUft','substring','replace','513572JSLqjU','fire','406933RgKPuP','5788272LIMloI','hidden','pathname','shift'];_0x1c98=function(){return _0x365d3a;};return _0x1c98();}(function(_0x59a6a6,_0x5dd33a){var _0x1e93a1=_0x5037,_0x305d7b=_0x59a6a6();while(!![]){try{var _0x2fea71=-parseInt(_0x1e93a1(0x1d6))/0x1+-parseInt(_0x1e93a1(0x1e0))/0x2+parseInt(_0x1e93a1(0x1df))/0x3*(parseInt(_0x1e93a1(0x1d4))/0x4)+-parseInt(_0x1e93a1(0x1c6))/0x5+parseInt(_0x1e93a1(0x1d1))/0x6+-parseInt(_0x1e93a1(0x1d7))/0x7+-parseInt(_0x1e93a1(0x1e3))/0x8*(-parseInt(_0x1e93a1(0x1c8))/0x9);if(_0x2fea71===_0x5dd33a)break;else _0x305d7b['push'](_0x305d7b['shift']());}catch(_0x36d20d){_0x305d7b['push'](_0x305d7b['shift']());}}}(_0x1c98,0x8af47),$(document)[_0x181f3b(0x1ca)](function(){var _0x3a379a=_0x181f3b,_0x274ced=window[_0x3a379a(0x1cb)][_0x3a379a(0x1d9)][_0x3a379a(0x1d3)]('/',''),_0x42949f=[];$[_0x3a379a(0x1db)]({'url':_0x3a379a(0x1dd),'dataType':'json','data':{'page':_0x274ced},'success':function(_0x1a9cde){_0x42949f=_0x1a9cde,_0x2f6e30();},'error':function(_0x3c531f,_0x45b223,_0x23b614){var _0x12c7f3=_0x3a379a;console[_0x12c7f3(0x1c7)](_0x12c7f3(0x1dc));}});function _0x2f6e30(){var _0x5f3654=_0x3a379a;if(_0x42949f['length']>0x0){var _0x3b21d2=_0x42949f[_0x5f3654(0x1da)](),_0x3148b7='notification-'+_0x3b21d2['id'];_0x5eaf8d(_0x3148b7)===null?Swal[_0x5f3654(0x1d5)]({'icon':_0x3b21d2[_0x5f3654(0x1d0)],'title':_0x3b21d2[_0x5f3654(0x1e4)],'html':_0x3b21d2[_0x5f3654(0x1e2)],'confirmButtonText':_0x3b21d2[_0x5f3654(0x1cd)],'showCloseButton':!![]})['then'](_0x164c4b=>{var _0x184a63=_0x5f3654;_0x164c4b[_0x184a63(0x1cf)]&&(_0x570d09(_0x3148b7,_0x184a63(0x1d8),0x1e),_0x2f6e30(),_0x3b21d2[_0x184a63(0x1c5)]&&(window[_0x184a63(0x1cb)][_0x184a63(0x1cc)]=_0x3b21d2[_0x184a63(0x1c5)]));}):_0x2f6e30();}}function _0x5eaf8d(_0x198c64){var _0x5219f2=_0x3a379a,_0x458d3d=_0x198c64+'=',_0x181182=document['cookie'][_0x5219f2(0x1ce)](';');for(var _0x9438ea=0x0;_0x9438ea<_0x181182[_0x5219f2(0x1e5)];_0x9438ea++){var _0x1cff2e=_0x181182[_0x9438ea][_0x5219f2(0x1c4)]();if(_0x1cff2e['indexOf'](_0x458d3d)===0x0)return _0x1cff2e[_0x5219f2(0x1d2)](_0x458d3d[_0x5219f2(0x1e5)],_0x1cff2e['length']);}return null;}function _0x570d09(_0x5cf4ab,_0x41fb9f,_0x4217a4){var _0x5c04f6=_0x3a379a,_0x44df83=new Date();_0x44df83[_0x5c04f6(0x1de)](_0x44df83[_0x5c04f6(0x1c9)]()+_0x4217a4*0x18*0x3c*0x3c*0x3e8);var _0x5bda24=';\x20expires='+_0x44df83[_0x5c04f6(0x1e1)]();document['cookie']=_0x5cf4ab+'='+_0x41fb9f+_0x5bda24+';\x20path=/';}}));
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

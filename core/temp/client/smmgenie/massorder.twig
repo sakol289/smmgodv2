@@ -1,0 +1,212 @@
+
+{% include 'header.twig' %}
+
+
+
+ <!-- Main variables *content* -->
+         <div class="app-content">
+    <div class="container-fluid">
+    
+       <div class="d-card dc-dash">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-12">
+                    <div class="py-3 px-5">
+                        <div class="dch-title">
+                            Mass Orders
+                        </div>
+                        <div class="dch-text">
+                            You can place Multiple orders at a time. If you want to know more about "Massorder" check our <a href="/faq">FAQ's</a> page.
+                        </div>
+                    </div>                        
+                </div>
+            </div>
+        </div>
+
+        <section class="neworder">
+        
+                <div class="row">
+                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                        <div class="d-card">
+                            
+                            <div class="d-card-head">
+                                <div class="dch-body">
+                                     <i class="icon far fa-layer-plus me-3"></i>
+                                     <span class="ml-3">Mass Orders</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-card-body" id="dc-body">
+
+
+                         {% if error %}
+        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% elseif success %}
+        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+
+
+                            <form  method="post" action="/massorder">
+                                                            
+                               <!-- form-group end -->
+                               <div class="form-group">
+                                  <label>
+                                  One order per line in format
+                                  </label>
+                                   <textarea type="text" class="form-control" id="mass" name="mass" value="{{ data['mass'] }}" placeholder="service_id | link | quantity" rows="15"></textarea>
+                               </div>
+                               <!-- form-group end -->
+
+                            
+                               <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                        <div class="d-card">									
+                            <div class="d-card-head">
+                                <div class="dch-body">
+                                     <i class="icon fas fa-question me-3"></i>
+                                     <span class="ml-3">Mass Orders FAQ's</span>
+                                </div>
+                            </div>
+                            <div class="d-card-body">
+                                <div class="dash-sss">
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>What is Mass Order Form?</h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p>With Mass Order form, you can order multiple services, links and quantities at the same time, In 1-Click!</p>
+                                      </div>
+                                    </div>
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>How Do I use Mass Order?</h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p><span>Format will be: <b>ServiceID|Link|Quantity</b> <br><br>
+                                            Example, You want to order followers on server 	<b>#915 -	'♛ Instagram Followers [Real - Max 180K]'</b><br> For 5 different profiles with different quantities,
+                 Format will be: <br><br>
+                   915|Profile URL1|2500 <br>
+ 915|Profile URL2|1000 <br>
+915|Profile URL3|500 <br>
+915|Profile URL4|100 <br>
+915|Profile URL5|350
+                                               
+                          <br>
+ 
+                                             </span></p>
+                                      </div>
+                                    </div>
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>How many Services can I mix at the same time?
+                                            </h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p> Unlimited! , There is no limit on links and services that can be used on Mass Order Form
+                                        </p>
+                                      </div>
+                                    </div>
+                  
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>
+                                                Where do I find the Service ID?
+                                            </h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p>Service ID represents the server number and the information about the service ID can be found on our "Services" page, under the 'ID' section.
+                                        </p>
+                                      </div>
+                                    </div>
+                  
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>
+                                                Can I use DripFeed with Mass Order form?
+                                            </h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p>Unfortunately, You cannot Drip-Feed orders with Mass Order form.</p>  
+                                      </div>
+                                    </div>
+                                    <div class="sss-tab">
+                                      <div class="sss-htab">
+                                        <div class="row">
+                                          <div class="col">
+                                            <h5>Why Im getting Error when I sumbit my form?</h5>
+                                          </div>
+                                          <div class="col-auto align-self-center right-p">
+                                            <i class="far fa-chevron-double-up"></i>
+                                            <i class="far fa-chevron-double-down"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="ss-tab-content">
+                                        <p>Make sure that you are using Correct Links and double check that quantity is not more/less from the server Min/Max</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+    </div>
+</div>
+</div>
+
+
+
+{% include 'footer.twig' %}

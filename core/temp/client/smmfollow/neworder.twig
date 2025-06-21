@@ -1,0 +1,351 @@
+{% include 'header.twig' %}
+
+
+
+
+
+
+
+<!-- Event snippet for Sign-up conversion page -->
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-753545913/z7--CN6rgvgCELnlqOcC'});
+</script>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-12">
+			<h2 class="dash-title">Welcome To &nbsp;{{ site["site_name"] }} !</h2>
+		</div>
+	</div>
+
+	<div class="row statics-row">
+	<!--	<div class="col-sm-3 modal-ptr" data-toggle="modal" data-target="#accountStatusModal">-->
+		<div class="col-sm-3 modal-ptr" >
+			<div class="statics-wrap">
+				<div class="statics-left">
+					<span class="statics-icon-wrap">
+						<img class="statics-icon" src="https://cdn.mypanel.link/9b5331/m9110u857ketxyxq.png" alt="SMMFOLLOWS">
+					</span>
+				</div>
+				<div class="statics-right">
+					<h3 class="statics-title">Welcome to panel!</h3>
+					<p class="statics-txt">
+												{{ user['username'] }}
+											</p>
+				</div>
+			</div>
+		</div>
+	<!--	<div class="col-sm-3 modal-ptr" data-toggle="modal" data-target="#redeemModal"> -->
+		<div class="col-sm-3 modal-ptr" > 
+			<div class="statics-wrap">
+				<div class="statics-left">
+					<span class="statics-icon-wrap">
+						<img class="statics-icon" src="https://cdn.mypanel.link/9b5331/0673o2ax793sz83n.png" alt="Account Points">
+					</span>
+				</div>
+				<div class="statics-right">
+					<h3 class="statics-title">{{lang["smmspot.neworder.total.order.title"]}}</h3>
+					<p class="statics-txt">
+					{{ordersCount}}
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="statics-wrap">
+				<div class="statics-left">
+					<span class="statics-icon-wrap">
+						<img class="statics-icon" src="https://cdn.mypanel.link/9b5331/2kpzlu59ljxf8r1g.png" alt="Account Spending">
+					</span>
+				</div>
+				<div class="statics-right">
+					<h3 class="statics-title">Account Spending</h3>
+					<p class="statics-txt">{{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="statics-wrap">
+				<div class="statics-left">
+					<span class="statics-icon-wrap">
+						<img class="statics-icon" src="https://cdn.mypanel.link/9b5331/uxulwye7eq5ls3ct.png" alt="Account Balance">
+					</span>
+				</div>
+				<div class="statics-right">
+					<h3 class="statics-title">Account Balance</h3>
+					<p class="statics-txt">{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<div class="row buttons-row">
+      <ul class="social-btn-wrap" id="new-order-cats">
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="facebook" data-value="1"><i class="fab fa-facebook-f"></i> Facebook</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="twitter" data-value="2"><i class="fab fa-twitter"></i> Twitter</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="instagram" data-value="3"><i class="fab fa-instagram"></i> Instagram</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="youtube" data-value="4"><i class="fab fa-youtube"></i> Youtube</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="linkedin" data-value="5"><i class="fab fa-linkedin"></i> Linkedin</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="tiktok" data-value="6"><i class="fab fa-tiktok"></i> Tiktok</a>
+        </li>
+        <li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="telegram" data-value="7"><i class="fab fa-telegram-plane"></i> Telegram</a>
+        </li>
+		<li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-id="spotify" data-value="8"><i class="fab fa-spotify"></i> Spotify</a>
+        </li>
+		<li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="soundcloud" data-value="9"><i class="fab fa-soundcloud"></i> Soundcloud</a>
+        </li>
+		<li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="traffic" data-value="10"><i class="fas fa-globe"></i> Website Traffic</a>
+        </li>
+		<li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="other" data-value="11"><i class="fas fa-asterisk"></i> Others</a>
+        </li>
+		<li>
+          <a class="nwo-cat-btn social-button brand-category" href="javascript:void(0);" data-change-cat="" data-value="12"><i class="fab fa-audible"></i> Everything</a>
+        </li>
+      </ul>
+    </div>
+
+	<div class="row mt-15" id="myDiv">
+		<div class="col-sm-8">
+			<div class="well">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item active">
+						<a class="nav-link" id="home-tab" data-toggle="tab" href="#neworder" role="tab" aria-controls="home" aria-selected="true">New Order</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="favorite-tab" data-toggle="tab" href="#favorite" role="tab" aria-controls="favorite" aria-selected="false">My Favorite</a>
+					</li>
+				</ul>
+
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade in active" id="neworder" role="tabpanel" aria-labelledby="home-tab">
+						<form  action="/" method="post" id="order-form">
+						    
+						    
+						    
+						    
+                     {% if error %}
+                     <div class="alert alert-dismissible alert-danger">
+                        {{ errorText }}
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 1 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['price'] }} <br>
+                        <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 2 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+                        <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+                        <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+                     </div>
+                     {% endif %}
+									  
+									  
+				{% if categories %}
+               <div class="form-group">
+									<label for="orderform-category" class="control-label">Category</label>
+									
+									
+									
+									
+									
+                           <select class="form-control" id="neworder_category" name="categories" style="display: none">
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+                        <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+                        </div>
+				 {% endif %}
+                   
+                   
+                   
+                   
+           <div class="form-group">
+								<label for="orderform-service" class="control-label">Service</label>
+                                <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+               	<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+            </div>
+            
+            
+                     
+                     <div id="neworder_fields"></div>
+					  
+                     
+						
+
+							<div class="form-group">
+								<label for="favcharge" class="control-label">Charge</label>
+								<input type="text" class="form-control" id="charge" value="" readonly>
+							</div>
+
+                             {% if neworderTerms %}
+                        <div class="checkbox">
+                           <label>
+                           <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+                           </label>
+                        </div>
+                        {% endif %}
+
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="well" id="desc">
+				<label for="service_description" class="control-label">Description</label>
+				<div class="panel-body border-solid border-rounded" id="description_new">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+              
+              
+              
+            
+<!-- MODAL REDEEM -->
+<div class="modal fade" id="redeemModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+	<div class="modal-dialog vertical-align-center" role="document">
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<button type="button" class="close font-weight-bold" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h2 class="modal-title font-weight-bold" id="gridSystemModalLabel">
+					Points
+				</h2>
+			</div>
+			<div class="modal-body">
+				<div class="row container">
+					<p class="text-justify">
+						You earn points by ordering. Each 1$ spent by you = 1 point.<br>
+						Each 100 points = 1$ up to 2$ depending on your Account status.
+						<br>
+					
+					</p>
+				</div>
+				<div class="row mt-50">
+					<div class="col-md-4">
+						<div class="card card-redeem">
+							
+						
+						</div>
+					</div>
+				
+					
+				
+				
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- MODAL Account Status -->
+<div class="modal fade" id="accountStatusModal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+	<div class="modal-dialog vertical-align-center" role="document">
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<button type="button" class="close font-weight-bold" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h2 class="modal-title font-weight-bold" id="gridSystemModalLabel">
+					Account statuses
+				</h2>
+			</div>
+		
+			</div>
+		</div>
+	</div>
+
+
+	
+	
+	
+	
+<script>
+    /*
+    $(document).on('change','#neworder_category',function(){
+
+           $('#neworder_fields').hide();
+
+           while (1){
+               if($('#description')){
+                   $('#description').attr('style','display:none');
+                   $('#neworder_fields').show();
+                   $('#description_new').html($('#service_description').html());
+                   console.log('x');
+                   break;
+               }else{
+                   console.log('y');
+                   continue;
+               }
+           }
+
+            document.getElementById('description').addEventListener()
+
+        })
+        */
+
+    $(document).on('DOMSubtreeModified','#neworder_fields',function(){
+        $('#description').hide();
+        $('#description_new').html($('#service_description').html());
+    })
+  
+</script>
+	
+						   
+{% include 'footer.twig' %}
+
+
+
+
+

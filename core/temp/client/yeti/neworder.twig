@@ -1,0 +1,266 @@
+{% include 'header.twig' %}
+
+
+
+
+         <div class="app-content">
+            <!-- page-content -->
+            <div class="container-fluid">
+               <div class="row mt-4">
+                  <div class="col-lg-12">
+                     <section class="dash-home-status">
+                        <div class="row">
+                           <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
+                              <div class="dhs-item dhs-item--1" style="background-image: url(/img/yeti/stars.jpg);background-size: cover;">
+                                 <div class="row">
+                                    <div class="col-auto align-self-center d-none d-md-block">
+                                       <div class="dhs-item--icon">
+                                          <img src="/img/yeti/badge1.png" class="dhs-item--icon-img" alt="">
+                                       </div>
+                                    </div>
+                                    <div class="col align-self-center">
+                                       <div class="dhs-item--title">
+                                             {{ lang['smmspot.neworder.total.balance.title'] }}
+                                       </div>
+                                       <div class="dhs-item--text">
+                                       {{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- row end -->
+                              </div>
+                              <!-- dhs-item end -->
+                           </div>
+                           <!-- dhs-item col end -->
+                           <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
+                              <div class="dhs-item dhs-item--2" style="background-image: url(/img/yeti/stars2.jpg);background-size: cover;">
+                                 <div class="row">
+                                    <div class="col-auto align-self-center d-none d-md-block">
+                                       <div class="dhs-item--icon">
+                                          <img src="/img/yeti/badge2.png" class="dhs-item--icon-img" alt="">
+                                       </div>
+                                    </div>
+                                    <div class="col align-self-center">
+                                       <div class="dhs-item--title">
+                                             {{lang["smmspot.neworder.balance.spent.title"]}}
+                                       </div>
+                                       <div class="dhs-item--text">
+                                           {{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }}
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- row end -->
+                              </div>
+                              <!-- dhs-item end -->
+                           </div>
+                           <!-- dhs-item col end -->
+                           <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
+                              <div class="dhs-item dhs-item--3" style="background-image: url(/img/yeti/stars2.jpg);background-size: cover;">
+                                 <div class="row">
+                                    <div class="col-auto align-self-center d-none d-md-block">
+                                       <div class="dhs-item--icon">
+                                          <img src="/img/yeti/badge3.png" class="dhs-item--icon-img" alt="">
+                                       </div>
+                                    </div>
+                                    <div class="col align-self-center">
+                                       <div class="dhs-item--title">
+                                          {{lang["smmspot.neworder.balance.status"]}}
+                                       </div>
+											{% if user['balance'] > 10 %}
+												<div class="dhs-item--text">
+												  {{lang["cerulean.normal"]}}
+												</div>
+											{% else %}
+												<div class="dhs-item--text">
+												 {{lang["cerulean.low"]}}
+												</div>
+											{% endif %}
+                                    </div>
+                                 </div>
+                                 <!-- row end -->
+                              </div>
+                              <!-- dhs-item end -->
+                           </div>
+                           <!-- dhs-item col end -->
+                           <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
+                              <div class="dhs-item dhs-item--4" style="background-image: url(/img/yeti/stars.jpg);background-size: cover;">
+                                 <div class="row">
+                                    <div class="col-auto align-self-center d-none d-md-block">
+                                       <div class="dhs-item--icon">
+                                          <img src="/img/yeti/badge4.png" class="dhs-item--icon-img" alt="">
+                                       </div>
+                                    </div>
+                                    <div class="col align-self-center">
+                                       <div class="dhs-item--title">
+                                         {{ lang['smmspot.neworder.status.title'] }}
+                                       </div>
+                                       <div class="dhs-item--text">
+                                          <span id="accStats">  {% if user['spent'] >= 100000 %}
+                                                <h3>{{ lang['smmspot.neworder.status.1'] }}</h3>
+                                                {% elseif user['spent'] >= 8000 %}
+                                                <h3>{{ lang['smmspot.neworder.status.2'] }}</h3>
+                                                {% elseif user['spent'] >= 4000 %}
+                                                <h3>{{ lang['smmspot.neworder.status.3'] }} </h3>
+                                                {% else %}
+                                                <h3>{{ lang['smmspot.neworder.status.4'] }}   </h3>
+                                                {% endif %}</span>
+										 
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- row end -->
+                              </div>
+                              <!-- dhs-item end -->
+                           </div>
+                           <!-- dhs-item col end -->
+                        </div>
+                        <!-- dhs items row end -->
+                     </section>
+                     <section class="order-side">
+                        <div class="row">
+                           <div class="col-lg-7 col-12 mb-5 mb-lg-0">
+                              <div class="d-card dc-dblue">
+                                 <div class="d-card-body" id="dc-body">
+									{% if error %}
+									  <div class="alert alert-dismissible alert-danger">
+										{{ errorText }}
+									  </div>
+									{% endif %}
+
+									{% if data["order"]["success"] == 1 %}
+									  <div class="alert alert-dismissible alert-success">
+										  <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+										  <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+										  <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+										  <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+										  <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['price'] }} <br>
+										  <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+									  </div>
+									{% endif %}
+									{% if data["order"]["success"] == 2 %}
+									  <div class="alert alert-dismissible alert-success">
+										 <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+										 <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+										 <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+										 <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+										 <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+										 <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+									   </div>
+									{% endif %}						 
+                                     <form method="post" action="/">
+          {% if categories %}
+            <div class="form-group">
+                <label for="orderform-category" class="control-label">{{ lang["neworder.category"] }}</label>
+
+                <select class="form-control" id="neworder_category" name="categories" style="display: none">
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+
+                <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+            </div>
+          {% endif %}
+                                       
+                                       
+                                       <!-- form-group end -->
+                                       <div class="form-group mb-4">
+                                          <label id="orderform-service" for="orderform-service" class="control-label" data-label="{{ lang["neworder.service"] }}">{{ lang["neworder.service"] }}</label>
+                                          <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+
+											<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+                                       </div>
+
+                                       <!-- form-group end -->
+									   
+									   <div id="neworder_fields"></div>
+									   
+ 
+                                       <div class="form-group mb-4">
+                                          <label>
+                                          Charge
+                                          </label>
+                                          <div class="input-group">
+                                             <div class="input-group-prepend">
+                                                <div class="input-group-text text-center">
+                                                   <i class="fas fa-database"></i>
+                                                </div>
+                                             </div>
+                                             <input type="text" class="form-control" id="charge" value="" placeholder="0.00 {{ currency["symbol"]  }}" readonly="" />
+                                          </div>
+                                       </div>
+                                       <!-- form-group end -->
+		   
+										{% if neworderTerms %}
+										  <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+											</label>
+										  </div>
+										{% endif %}
+									  
+                                       <button type="submit" class="btn btn-primary btn-lg btn-block mb-4">{{lang["neworder.button"]}}</button>
+                                    </form>
+                                 </div>
+                              </div>
+                              <!-- d-card end -->
+                           </div>
+                           <!-- col item end-->
+                           <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+                              <div class="d-card dc-dblue">
+                                 <ul class="nav nav-pills fastside">
+                                    <li class="nav-item col-12 mb-2" style="padding:0">
+                                       <a class="nav-link active" data-toggle="pill" href="#timeline" role="tab" aria-controls="pills-timeline" aria-selected="true"><i class="fas fa-random mr-1"></i>Announcement</a>
+                                    </li>
+                                   
+                                 </ul>
+                                 <div class="d-card-body" id="dc2-body" style="overflow-y: auto;"> 
+                                    <div class="tab-content mt-3">
+                                       <div class="tab-pane fade active show" id="timeline" role="tabpanel" aria-labelledby="timeline">
+                                          <ul class="notification">
+											 {% for new in newsList %}
+                                             <li>
+                                                <div class="icons">
+                                                   <img width="30" class="mr-1" src="/img/icons/{{ new['news_icon'] }}.png">
+                                                </div>
+                                                <div class="text">
+                                                   <div class="title"><a href="">{{ new['news_title'] }}</a></div>
+                                                   <div class="text"> {{ new['news_content'] }}</div>
+                                                   <div class="date mt-1"><i class="fas fa-clock"></i> {{ new['news_date'] }} </div>
+                                                </div>
+                                             </li>
+											 {% endfor %} 
+                                          </ul>
+                                       </div>
+                                       </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </section>
+                  </div>
+                  <!-- page-content end -->
+               </div>
+               <!-- app-content -->
+            </div>
+         </div>
+
+      </div>
+
+
+{% include 'footer.twig' %}

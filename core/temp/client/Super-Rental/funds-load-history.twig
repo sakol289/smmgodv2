@@ -1,0 +1,76 @@
+{% include 'header.twig' %}
+
+
+
+
+
+<div class="inner-page" style="display: inline-block;">
+<section>
+<div class="container">
+<style type="text/css">
+.pagination>li>span {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #fff;
+  background-color: #337ab7;
+  border: 1px solid #dee2e6;
+}
+</style>
+<div class="page-header">
+<h1 class="page-title">
+<i class="fe fe-calendar" aria-hidden="true"> </i>
+Transaction logs
+</h1>
+</div>
+<div class="row" id="">
+<div class="col-md-12 col-xl-12">
+<div class="card">
+<div class="table-responsive">
+<table class="table table-hover table-bordered table-outline table-vcenter card-table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Date</th>
+<th>Payment Method</th>
+<th>Amount</th>
+<!-- <th>Details</th>  -->
+</tr>
+</thead>
+<tbody>
+    
+     {% for payment in lastPaymentsList %}
+<tr class="tr_36">
+<td>{{payment['id']}}</td>
+<td>{{payment['created_at']}}</td>
+<td>
+{{payment['payment_method']}}<br>
+</td>
+<td>{{ payment['amount']|number_format(2) }}</td>
+<!-- <td>{{ payment['payment_extra'] }}</td> -->
+</tr>
+ {% endfor %}  
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="col-md-12">
+<div class="float-right">
+</div>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+
+
+
+
+{% include 'footer.twig' %}
+
+<!-- This theme creadit by leakstation.in visit:- https://www.youtube.com/@UnlockHacker -->
+

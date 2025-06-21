@@ -1,0 +1,459 @@
+{{ footerCode }}
+
+{% if user['auth'] %}
+
+
+		
+		
+			<footer>
+					<div class="container-fluid">
+						<div class="row">
+							<center>	<div class="col-sm-6">
+							<p class="copyright">© Copyright 2023. All Rights Reserved by &nbsp;{{ site["site_name"] }}</p>
+							</div></center>
+						<!--	<div class="col-sm-6">
+								<p class="ftr-email"><b>contact us</b>: contact@{{ site["site_name"] }} OR <a href="/tickets" class="btn btn-sm btn-secondary">Open a ticket</a></p>
+							</div> -->
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+    
+    
+    
+{% else %}
+
+
+<footer>
+			<div class="top-ftr">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12">
+							<h4 class="title">Get the latest smm panel updates</h4>
+							<p class="txt">Get updates on the latest social media marketing, popular services and all the tips & tricks to keep your business powerful.</p>
+							<div class="news-letter-wrap">
+								<form class="new-letter-frm">
+									<div class="form-group">
+										<input type="email" class="form-control" placeholder="Enter your email address">
+										<button class="btn btn-primary news-letter-btn">Subscribe</button>
+									</div>
+								</form>
+							</div>
+							<div class="payment-img-wrap">
+								<img class="img-responsive" src="https://cdn.mypanel.link/9b5331/y338uldfb83yfcmu.png" alt="{{ site["site_name"] }}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="btm-ftr">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6">
+							<p class="copyright">© Copyright 2022. All Rights Reserved by &nbsp;{{ site["site_name"] }}                   </p>
+						</div>
+						<div class="col-sm-6">
+							<p class="ftr-email"><b>contact us</b>: contact@{{ site["site_name"] }} OR <a href="/#top-sec" class="btn btn-sm btn-secondary">Open a ticket</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		
+		
+<script type="text/javascript"  src="/css/panel/smmfollows/x41kzoxhgpx36ldl.js" >
+					</script>
+   
+   
+{% endif %}
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+ <script>
+  function showCatDrop() {
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+
+  function filterNow(id) {
+    const filterId = "fliter" + id;
+    const allTableBody = document.getElementsByClassName("table_body");
+    const searchBox = document.getElementById("serv-inp");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.add("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.add("hidden");
+    }
+
+    const getAllCatgory = document.getElementsByClassName(filterId);
+    for (const allfilter of getAllCatgory) {
+      allfilter.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+
+  function allCat() {
+    const searchBox = document.getElementById("serv-inp");
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+    const catList = document.getElementById("catList");
+    catList.classList.toggle("show_catgory");
+  }
+  function allCat2() {
+    const allTableBody = document.getElementsByClassName("table_body");
+    for (const tableBody of allTableBody) {
+      tableBody.classList.remove("hidden");
+    }
+    const allTableHead = document.getElementsByClassName("table_head");
+    for (const tableHead of allTableHead) {
+      tableHead.classList.remove("hidden");
+    }
+  }
+</script>          
+{% for script in site['scripts'] %}
+  <script type="text/javascript" {% if script['src'] %}src="{{ script['src'] }}"{% endif %}>
+    {% if script['code'] %} {{ script['code'] }} {% endif %}
+  </script>
+{% endfor %}
+
+           <script>
+const nwoCategories = document.querySelector('.nwo-categories');
+
+if (nwoCategories) {
+  const nwoCatSwiper = new Swiper('.nwo-categories', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+  });
+}
+</script>
+            <script>
+                $('.home-ss-tab').click(function(){
+                  if($(this).hasClass('active')){
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }else {
+                      $('.home-ss-tab').removeClass('active');
+                      $('.home-ss-tab > .ss-tab-content').slideUp(200);
+                      $(this).find('.ss-tab-content').slideToggle(200);
+                      $(this).toggleClass('active');
+                  }
+                });
+          </script>         
+<script>
+const newOrderCats = document.getElementById('new-order-cats');
+
+if (newOrderCats) {  
+    const orderFormCats = document.getElementById('neworder_category');
+    var realData = orderFormCats.innerHTML;
+
+    const dCatBtns = document.querySelectorAll('.nwo-cat-btn');
+    if (dCatBtns[0]) {
+        [...dCatBtns].forEach(btn => {
+            btn.addEventListener('click', e => {
+                const val = btn.getAttribute('data-change-cat');
+                const orderFormCats = document.getElementById('neworder_category');
+                const options = document.querySelectorAll('#neworder_category-copy option');
+
+                const dCatbtns = document.querySelectorAll('.nwo-cat-btn');
+                [...dCatbtns].forEach(bt => {
+                    bt.classList.remove('active');
+                });
+                btn.classList.add('active');
+
+                const newOptions = [];
+                [...options].forEach(el => {
+                    if (el.innerText.toLowerCase().includes(val.toLowerCase())) {
+                        newOptions.push(el);
+                    }
+                });
+                const newOptionsHtml = [];
+                [...newOptions].forEach(el => {
+                    newOptionsHtml.push(el.outerHTML);
+                });
+                orderFormCats.innerHTML = newOptionsHtml.join('');
+
+                $('#neworder_category').trigger('change');
+            });
+        })
+    }
+
+    /**
+     * copy order form data hidden
+     */
+    setTimeout(() => {
+        const orderFormCopy = document.createElement('select');
+        orderFormCopy.setAttribute('id', 'neworder_category-copy');
+        orderFormCopy.style.display = 'none';
+        orderFormCopy.innerHTML = realData;
+        orderFormCats.parentNode.insertBefore(orderFormCopy, orderFormCats);
+    }, 1000)
+
+    const nocWrapper = document.getElementById('noc-wrapper');
+    nocWrapper.style.display = 'none';
+    setTimeout(() => {
+        nocWrapper.style.display = 'block';
+    }, 1001);
+}    
+</script>
+{% for script in scriptList %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+<!--<script type="text/javascript" src="js/main.js?v={{ random(50, 100) }}"></script>-->
+
+
+
+
+
+
+
+
+
+
+		<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/libs/jquery/1.12.4/jquery.min.js" >
+					</script>
+			<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/global/k7hhfitn1yxs7f6a.js" >
+					</script>
+			<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/global/7clr2blpgy52m6sz.js" >
+					</script>
+			<script type="text/javascript"  src="https://cdn.mypanel.link/global/5ej184olqg0gu3hm.js" >
+					</script>
+			<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/global/yizl40iafmrg7g8l.js" >
+					</script>
+					
+			<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/9b5331/x41kzoxhgpx36ldl.js" >
+					</script>
+					
+			<script type="text/javascript"  src="../css/panel/smmfollows/cdn.mypanel.link/9b5331/8hjg93yiekznnco4.js" >
+			
+						</script>
+					<script type="text/javascript" >
+						window.modules.layouts = {"theme_id":2,"auth":1,"live":true,"csrftoken":"ANhRYdzMo1EeCngtKtHmh75vjsjrBOo4747WdN5PMRZztWYwqbWXB2tcJ1xH44PjxjrXj5NvrX-I6bs8ujtZUQ=="};
+					</script>
+					<script type="text/javascript" >
+						window.modules.select = [];
+					</script>
+			<script type="text/javascript" >
+					</script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+      
+					
+					
+					<!--<script type="text/javascript" src="js/main.js?v=42"></script>-->
+
+<!--<script type="text/javascript" src="js/main.js?v={{ random(50, 100) }}"></script>-->
+
+
+
+
+<script>
+		$('.client-slider').slick({
+			dots: false,
+			infinite: true,
+			arrows: true,
+			speed: 300,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			appendArrows: $(".client-slider-nav"),
+			nextArrow: '<button class="right-arrow"><i class="fas fa-long-arrow-alt-right"></i></button>',
+			prevArrow: '<button class="left-arrow"><i class="fas fa-long-arrow-alt-left"></i></button>'
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			$('.pinner').click(function () {
+				$('.wrapper').toggleClass('toggle');
+			});
+			if ($(window).width() < 551) {
+				$('.wrapper').addClass('toggle')
+			}
+		});
+	</script>
+	<script>
+		function createCookie(name, value, h) {
+			var expires;
+			if (h) {
+				var date = new Date();
+				date.setTime(date.getTime() + (h * 60 * 60 * 1000));
+				expires = "; expires=" + date.toGMTString();
+			} else {
+				expires = "";
+			}
+			document.cookie = encodeURIComponent(name) + "=" + encodeURIComponent(value) + expires + "; path=/";
+		}
+		function readCookie(name) {
+			var nameEQ = encodeURIComponent(name) + "=";
+			var ca = document.cookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) === ' ') 
+					c = c.substring(1, c.length);
+				if (c.indexOf(nameEQ) === 0) 
+					return decodeURIComponent(c.substring(nameEQ.length, c.length));
+			}
+			return "";
+		}
+		function eraseCookie(name) {
+			createCookie(name, "", -1);
+		}
+		function toggleMode() {
+			let cls = $("body").hasClass("daymode");
+			if (cls) {
+				$("body").removeClass("daymode");
+				$("body").addClass("nightmode");
+				$(".daynight i").removeClass("fa-moon");
+				$(".daynight i").addClass("fa-sun");
+				createCookie("dkmode", "dark", 1);
+			} else {
+				$("body").removeClass("nightmode");
+				$("body").addClass("daymode");
+				$(".daynight i").addClass("fa-moon");
+				$(".daynight i").removeClass("fa-sun");
+				eraseCookie("dkmode");
+			}
+		}
+		function showNews() {
+			var news = readCookie("news");
+			if (news !=null && news != "") {
+				console.log('value: '+news);
+			} else {
+				$("#bonusModal").modal();
+			}
+			createCookie("news", 1 , 1);
+		}
+		$(document).ready(function($) {
+			$('head noscript').html(`<img height="1" width="1" class="hidden"
+  src="https://www.facebook.com/tr?id=911446472243186&ev=PageView&noscript=1" alt="Facebook Pixel Code"/>`);
+			//showNews();
+		});
+
+		if (readCookie("dkmode") != "") {
+			$("body").addClass("darkmode");
+			$("body").addClass("nightmode");
+			$("body").removeClass("daymode");
+			$(".daynight i").addClass("fa-sun");
+			$(".daynight i").removeClass("fa-moon");
+		}
+		$(".onOff").click(function () {
+			let cls = $("body").hasClass("darkmode");
+			let t = $(this).find("span");
+			if (cls) {
+				$("body").removeClass("darkmode");
+				t.removeClass("fa-sun");
+				t.addClass("fa-moon");
+				eraseCookie("dkmode");
+			} else {
+				$("body").addClass("darkmode");
+				t.addClass("fa-sun");
+				t.removeClass("fa-moon");
+				createCookie("dkmode", "dark", 1);
+			}
+		});
+	</script>
+    <script>
+	$(document).ready(function() {
+		$('.spr-slider').slick({
+			dots: false,
+			autoplay: true,
+			slidesToShow: 2,
+			slidesToScroll: 2,
+			responsive: [
+				{
+				breakpoint: 768,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				},
+				{
+				breakpoint: 480,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				}
+			],
+			appendArrows: $(".spr-slider-nav"),
+				nextArrow: '<button class="right-arrow"><i class="fas fa-chevron-right"></i></button>',
+				prevArrow: '<button class="left-arrow"><i class="fas fa-chevron-left"></i></button>'
+		});
+	  	$('.spp-slider').slick({
+			dots: false,
+			autoplay: true,
+			slidesToShow: 2,
+			slidesToScroll: 2,
+			responsive: [
+				{
+				breakpoint: 768,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				},
+				{
+				breakpoint: 480,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				}
+			],
+			appendArrows: $(".spp-slider-nav"),
+				nextArrow: '<button class="right-arrow"><i class="fas fa-chevron-right"></i></button>',
+				prevArrow: '<button class="left-arrow"><i class="fas fa-chevron-left"></i></button>'
+		});
+		$('.csp-slider').slick({
+			dots: false,
+			autoplay: true,
+			slidesToShow: 2,
+			slidesToScroll: 2,
+			responsive: [
+				{
+				breakpoint: 768,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				},
+				{
+				breakpoint: 480,
+				settings: {
+					arrows: false,
+					slidesToShow: 1
+				}
+				}
+			],
+			appendArrows: $(".csp-slider-nav"),
+				nextArrow: '<button class="right-arrow"><i class="fas fa-chevron-right"></i></button>',
+				prevArrow: '<button class="left-arrow"><i class="fas fa-chevron-left"></i></button>'
+		});
+	});
+	</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,547 @@
+{% include 'header.twig' %}
+<main class="app-main">
+    {% include 'banner.twig' %}
+    <div class="page-content">
+        <div class="container-fluid">
+
+            {% if user['unread_ticket'] == 1 %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-notify fade show" role="alert">
+                        <div class="t-notify th-3">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto">
+                                    <div class="t-icon">
+                                        <i class="fal fa-bullhorn"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md col-12">
+                                    <p><strong>{{ lang['smmspot.neworder.info.support.request.unread'] }} {{ user['unread_ticket'] }} {{ lang['smmspot.neworder.info.support.request.text'] }}</strong></p>
+                                </div>
+                                <div class="col-md-auto">
+                                    <a href="/tickets" type="button" class="btn btn-dark">Şimdi Oku</a>
+                                </div>
+                                <div class="col-md-auto" style="text-align:right">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+
+            {% endif %}
+            
+            
+            <div class="hp-bbosx mt-5 mb-5">
+<div class="row">
+<div class="col-lg-6">
+<div class="hpbb-body">
+<h2 class="title">
+<div class="dph--title phsmx-4">
+ {{lang['smmspot.login.welcome.text']}} <h style="color: #fcd703;font-weight: 900;">{{ site['site_name'] }} </h>
+<div style="font-size: 15px;letter-spacing: 6px;font-weight: 200;" class="dph--title phsmx-4">
+{{lang['create_your_world']}}
+</div>
+</div>
+</h2>
+</div>  
+</div>
+</div>  
+</div>
+
+
+
+<div class="row mt-2">
+<div class="col-lg-6">
+<div class="card mb-5">
+<div class="py-4 px-lg-3 px-4" style="border-radius: 5px;background-image: url(/assets/smmspot/assets/images/nwo-1-Recovered_zxnvpp_rw3btc.png);background-size: cover;">
+<div class="card-body">
+<div class="row">
+<div class="col-md-auto">
+<div class="row align-items-center dh-fi" style="padding: 10px;">
+<div class="col-auto">
+<div class="dh-icon dh-icon-1 ms-lg-1">
+<i class="fas fa-dollar-sign"></i>
+</div>
+</div>
+<div class="col">
+<div class="dh-fi-title"> {{ lang['smmspot.neworder.balance.spent.title'] }} </div>
+<div class="dh-fi-text">{{ currency["symbol"]  }} {{ (user["spent"]*currency["value"]) |round(2, 'floor') }} </div>
+</div>
+</div>
+</div>  
+<div class="col-md-auto">
+<div class="row align-items-center dh-fi" style="padding: 10px;">
+<div class="col-auto">
+<div class="dh-icon dh-icon-2 ms-lg-1">
+<i class="fas fa-credit-card"></i>
+</div>
+</div>
+<div class="col">
+<div class="dh-fi-title">{{ lang['smmspot.neworder.total.balance.title'] }}</div>
+<div class="dh-fi-text">{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-6">
+<div class="card mb-5">
+<div class="py-4 px-lg-3 px-4" style="border-radius: 5px;background-image: url(/assets/smmspot/assets/images/nwo-1-Recovered2_s0ry1x_h9btuw.png);background-size: cover;">
+<div class="card-body">
+<div class="row">
+<div class="col-md-auto">
+<div class="row align-items-center dh-fi" style="padding: 10px;">
+<div class="col-auto">
+<div class="dh-icon dh-icon-3">
+<i class="far fa-shield-check"></i>
+</div>
+</div>
+<div class="col">
+<div class="dh-fi-title"> {{ lang['smmspot.neworder.status.title'] }} </div>
+<div class="dh-fi-text">
+<h>
+                                                {% if user['spent'] >= 100000 %}
+                                                {{ lang['smmspot.neworder.status.1'] }}
+                                                {% elseif user['spent'] >= 8000 %}
+                                                {{ lang['smmspot.neworder.status.2'] }}
+                                                {% elseif user['spent'] >= 4000 %}
+                                                {{ lang['smmspot.neworder.status.3'] }}
+                                                {% else %}
+                                                {{ lang['smmspot.neworder.status.4'] }}
+                                                {% endif %}</h>
+  
+</div>
+</div>
+</div>
+</div>
+
+
+<!--<div class="col-md-auto">
+<div class="row align-items-center dh-fi" style="padding: 10px;">
+<div class="col-auto">
+<div class="dh-icon dh-icon-4 ms-lg-1">
+<i class="fas fa-star"></i>
+</div>
+</div>
+<div class="col">
+<div class="dh-fi-title"> POINTS </div>
+<div class="dh-fi-text">
+<span style="display: none;" id="data_points">0</span>
+<span id="data_balance">N/A</span>$</div>
+</div>
+</div>
+</div>  -->
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+      
+            <div class="row mt-2">
+                <div class="col-lg-6">
+                    <div class="card mb-5">
+                        <div class="py-4 px-lg-3 px-4">
+
+                            <div class="s-head th-3">
+                                <div class="row align-items-center">
+                                    <div class="col-md-auto">
+                                        <div class="s-icon">
+                                            <i class="fal fa-hand-holding-box"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md col-12">
+                                        <h2>{{ lang['smmspot.neworder.place.a.new.order.title'] }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="filter_btn_wrap" id="category_filter_wrap">
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="youtube">
+<div class="icon Youtube" style="color: #f00;"><i class="fab fa-youtube"></i></div>
+<span class="ico-content">  {{lang['YOUTUBE']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="instagram">
+<div class="icon Instagram" style="color: #ff0076;"><i class="fab fa-instagram"></i></div>
+<span class="ico-content"> {{lang['INSTAGRAM']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="facebook">
+<div class="icon facebook" style="color: #0072ff;"><i class="fab fa-facebook-square"></i></div>
+<span class="ico-content">   {{lang['FACEBOOK']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="tiktok">
+<div class="icon Tiktok" style="color: #fff;"><i class="fab fa-tiktok"></i></div>
+<span class="ico-content">  {{lang['TIKTOK']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="twitter">
+<div class="icon Twitter" style="color: #4bbcff;"><i class="fab fa-twitter"></i></div>
+<span class="ico-content">  {{lang['TWITTER']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="telegram">
+<div class="icon Telegram" style="color: #5ca3b9;"><i class="fab fa-telegram"></i></div>
+<span class="ico-content">  {{lang['TELEGRAM']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="other">
+<div class="icon SEO Website" style="color: #0dcaf0;"><i class="fas fa-asterisk"></i></div>
+<span class="ico-content">  {{lang['OTHERS']}}</span></a>
+<a class="btn_cat_filter" href="#" onclick="return false;" class="brand-category" data-id="everything">
+<div class="icon SEO Website" style="color: #fcd703;"><i class="fas fa-list"></i></div>
+<span class="ico-content"> {{lang['EVERYTHING']}} </span></a>
+<br>
+</div>
+	
+	
+
+                            <form action="/" method="post">
+                            {% if error %}
+                            <div class="alert alert-dismissible alert-danger">
+                                {{ errorText }}
+                            </div>
+                            {% endif %}
+
+                            {% if data["order"]["success"] == 1 %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <h4>{{lang['neworder.message.success']}}</h4>
+                                {{lang['neworder.success.id']}}: {{ data['order']['id'] }}<br>
+                                {{lang['neworder.success.service']}}: {{ data['order']['service'] }}
+                                <br>
+                                {{lang['neworder.success.link']}}: {{ data['order']['link'] }}<br>
+                                {{lang['neworder.success.quantity']}}: {{ data['order']['quantity'] }}<br>
+                                {{lang['neworder.success.link']}}: {{ data['order']['price'] }}<br>
+                                {{lang['neworder.success.balance']}}: {{ data['order']['balance'] }}<br>
+                            </div>
+                            {%endif%}
+
+                            {% if data["order"]["success"] == 2 %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <h4>{{lang['neworder.message.success']}}</h4>
+                                {{lang['neworder.success.id']}}: {{ data['order']['id'] }}<br>
+                                {{lang['neworder.success.service']}}: {{ data['order']['service'] }}
+                                <br>
+                                {{lang['neworder.success.username']}}: {{ data['order']['link'] }}<br>
+                                {{lang['neworder.success.quantity']}}:
+                                {% if data['order']['min'] == data['order']['max'] %}
+                                {{ data['order']['max'] }}
+                                {% else %}
+                                {{ data['order']['min'] }} - {{ data['order']['max'] }}
+                                {% endif %}
+                                <br>
+                                {{lang['neworder.success.posts']}}:
+                                {% if 0 == data['order']['posts'] %}
+                                ∞
+                                {% else %}
+                                {{ data['order']['posts'] }}
+                                {% endif %}
+                                <br>
+                                {{lang['neworder.success.delay']}}:
+                                {{ data['order']['delay'] }}
+                                <br>
+                            </div>
+                            {% endif %}
+
+                            {% if categories %}
+                            <div class="fga mb-4">
+                                <label class="fla" for="orderCategory">{{ lang["neworder.category"] }}</label>
+                                <div class="fg">
+                                    <div class="fg-icon"><i class="far fa-list"></i></div>
+                                    <select id="neworder_category" name="categories" class="fg-control" data-toggle="ssp-selectbox" data-class="fg-control">
+                                        {% for category in categories %}
+                                        <option {% if category["category_id"] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" >{{ category["category_name"] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="fga mb-4">
+                                <label class="fla" for="orderService">{{ lang["neworder.service"] }}</label>
+                                <div class="fg">
+                                    <div class="fg-icon"><i class="fa fa-bookmark"></i></div>
+                                    <select name="services" id="neworder_services" class="fg-control" data-toggle="ssp-selectbox" data-class="fg-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="neworder_fields"></div>
+
+<div class="card-top-blk" style="margin-top:15px">
+<img src="/assets/smmspot/assets/images/logo_lnnhtv_kdrh63_tnsxle_l4o7ka.png" alt="">
+<h4>
+<value id="serviceName">  
+<value id="serviceName">  {{lang['new_order_rules_head']}}   </value></value> <value style="font-size: 15px;font-weight: 100;" id="serviceName"></value>
+</h4>
+</div>
+
+<div class="" style="padding: 15px; margin-bottom: 20px;border: 1px solid transparent;border-radius: 4px;color: #ffffff;background-color: #2f353a;border-color: #2f353a;">
+<span style="font-size:18px;color:#fcd703;">1-</span><span>   {{lang['new_order_rule_1']}}  </span>
+<br>
+<span style="font-size:18px;color:#fcd703;">2-</span><span>   {{lang['new_order_rule_1']}}  </span>
+<br>
+<span style="font-size:18px;color:#fcd703;">3-</span><span>   {{lang['new_order_rule_1']}}  </span>
+</div>
+
+                            {% if neworderTerms %}
+										  <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+											</label>
+										  </div>
+										  <br>
+										{% endif %}
+
+                            <div class="row">
+                                <div class="col-md-6 col-12 mb-4 mb-mb-0">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        {{ lang['smmspot.neworder.submit.button'] }}
+                                    </button>
+                                </div>
+                                <div class="col-md-6 col-12 mb-4 mb-mb-0 form-group">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="charge" value="" readonly style="padding: 19px 50px;border-radius:10px" placeholder="{{ lang['smmspot.neworder.price.text'] }}">
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div><!-- card -->
+                </div><!-- col -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="py-4 px-lg-3 px-4">
+                            <div class="s-head s-3">
+                                <div class="row align-items-center">
+                                    <div class="col-md-auto">
+                                        <div class="s-icon">
+                                            <i class="fa fa-bookmark"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md col-12">
+                                        <h2 id="s_name">...</h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dp-service-text">
+                                <span id="description_new">...</span>
+                            </div>
+                          
+                          <!--
+                          <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+<div class="elfsight-app-8222ae6c-7095-41de-9a01-22d278f3334c"></div> 
+-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% include 'footer.twig' %}
+
+<script>
+    /*
+    $(document).on('change','#neworder_category',function(){
+
+           $('#neworder_fields').hide();
+
+           while (1){
+               if($('#description')){
+                   $('#description').attr('style','display:none');
+                   $('#neworder_fields').show();
+                   $('#description_new').html($('#service_description').html());
+                   console.log('x');
+                   break;
+               }else{
+                   console.log('y');
+                   continue;
+               }
+           }
+
+            document.getElementById('description').addEventListener()
+
+        })
+        */
+
+    $(document).on('DOMSubtreeModified','#neworder_fields',function(){
+        $('#description').hide();
+        $('#description_new').html($('#service_description').html());
+    })
+  /*  $(document).on('DOMSubtreeModified','#order_link',function(){
+        console.log('x');
+       // $('#order_link').hide();
+        //$('#order_link').html('<div class="fg"><div class="fg-icon"><i class="far fa-link"></i></div><input class="fg-control" name="OrderForm[link]" value="" type="text" id="field-orderform-fields-link"></div></div></div>');
+    }) */
+    
+
+    $(document).on('DOMSubtreeModified','#neworder_services',function(){
+        $('#s_name').html($('#neworder_services').find(":selected").html());
+    })
+
+
+
+
+function ikon(opt) {
+var ikon = "";
+if (opt.indexOf("Instagram") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/akj2dlg0893li2ic.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+  
+} else if (opt.indexOf("Facebook") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/ni21xuu3n4a6r0if.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+  
+} else if (opt.indexOf("YouTube") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/3hxfpcmr6odceun7.png" alt="" [ Refill Guarantee ]" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+  
+} else if (opt.indexOf("Twitter") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/u658e5mcklnydog5.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+    
+} else if (opt.indexOf("Telegram") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/rhacs5djntmcr17b.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+  
+} else if (opt.indexOf("Tik") >= 0) {
+ikon = '<img src="https://cdn.mypanel.link/si46tw/04u3rorjptffqax9.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+  
+} else {
+ikon = '<img src="/assets/smmspot/assets/images/icons8-circled-z-24.png" alt="" class="img-responsive btn-group-vertical" style="max-width: calc(1em + 10px); max-height: calc(1em + 10px); margin-right: 10px;">';
+}
+return ikon;
+}
+
+  
+  
+  var categories = {{categories|json_encode()}};
+  
+  
+  
+  
+setTimeout(function () {
+                $('#neworder_services').trigger('change');
+                $('.btn_cat_filter').on('click', function() {
+                  
+                    category = $(this).data('id');
+                    
+                     var category_2 = null;
+                    if(category == 'instagram'){
+                            category_2 = "انستغرام";
+                    }
+                    if(category == 'facebook'){
+                            category_2 = "فايسبوك";
+                    }
+                    if(category == 'youtube'){
+                            category_2 = "يوتيوب";
+                    }
+                    if(category == 'twitter'){
+                            category_2 = "تويتر";
+                    }
+                    if(category == 'tiktok'){
+                            category_2 = "تيك توك";
+                    }
+                    if(category == 'telegram'){
+                            category_2 = "تلغرام";
+                    }
+                    
+                    
+                    $('#neworder_category').html("");
+                    categories.forEach(element => {
+                        if (category == "everything") {
+                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+                        } else if (category == "other") {
+                            if (!element.category_name.toLowerCase().includes("instagram") &&
+                                !element.category_name.toLowerCase().includes("facebook") &&
+                                !element.category_name.toLowerCase().includes("youtube") &&
+                                !element.category_name.toLowerCase().includes("twitter") &&
+                                !element.category_name.toLowerCase().includes("tiktok") &&
+                                !element.category_name.toLowerCase().includes("telegram")) {
+                                $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+                            }
+                        } else if (element.category_name.toLowerCase().includes(category) || element.category_name.toLowerCase().includes(category_2)) {
+                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+                        }
+                    });
+                    $('#neworder_category').trigger('change');
+                    setTimeout(function(){
+                        $(".smmspot-sb-dd-item").each(function() {
+                            var ico = ikon($(this).text());
+                            $(this).html(ico + $(this).text() );
+                            console.log($(this).text());
+                        });
+                    }, 500);
+                    setTimeout(function(){
+                        $(".smmspot-sb-selected").each(function() {
+                            var ico = ikon($(this).text());
+                            $(this).html(ico + $(this).text() );
+                            console.log($(this).text());
+                        });
+                    }, 500);
+                });
+            
+        }, 400);
+        
+</script>
+<script>
+    function updateDetail(e) {
+        var r = $("#neworder_services").find(":selected").attr("data-array"),
+            n = serviceArray.services[r].type,
+            a = serviceArray.services[r].max,
+            i = serviceArray.services[r].min,
+            t = serviceArray.services[r].link_type,
+            l = serviceArray.services[r].dripfeed;
+        t = 1 == t ? "link_url" : "link_username";
+        updateDescription(e);
+        updateDescription2(e),
+            1 == n
+                ? ($("#order_link > label").text(generalList.label_list[t]),
+                    $("#order_link").removeClass("hidden"),
+                    $("#order_quantity").removeClass("hidden"),
+                    $(".min-max")
+                        .removeClass("hidden")
+                        .text("Min: " + i + " Max:" + a),
+                    $("#neworder_quantity").attr("disabled", !1))
+                : 2 == n
+                ? ($("#order_link > label").text(generalList.label_list[t]), $("#order_link").removeClass("hidden"))
+                : 3 == n
+                    ? ($("#order_link > label").text(generalList.label_list[t]),
+                        $("#order_link").removeClass("hidden"),
+                        $("#order_quantity").removeClass("hidden"),
+                        $("#order_comment").removeClass("hidden"),
+                        $("#neworder_quantity").attr("disabled", !0))
+                    : 4 == n
+                        ? ($("#order_link > label").text(generalList.label_list[t]), $("#order_link").removeClass("hidden"), $("#order_comment").removeClass("hidden"))
+                        : 5 == n
+                            ? ($("#order_link > label").text(generalList.label_list[t]),
+                                $("#order_link").removeClass("hidden"),
+                                $("#order_username").removeClass("hidden"),
+                                $("#order_quantity").removeClass("hidden"),
+                                $("#neworder_quantity").attr("disabled", !1))
+                            : 11 == n || 12 == n
+                                ? ($("#order_username").removeClass("hidden"),
+                                    $("#order_auto").removeClass("hidden"),
+                                    $("#order_min > .min-max")
+                                        .removeClass("hidden")
+                                        .text("Min: " + i + " Max:" + a))
+                                : (14 != n && 15 != n) || $("#order_username").removeClass("hidden"),
+        l && $("#dripfeed").removeClass("hidden"),
+            $(".datetime")
+                .datepicker({ format: "dd/mm/yyyy", language: "tr", startDate: new Date() })
+                .on("change", function (e) {
+                    $(".datetime").datepicker("hide");
+                }),
+            $("#clearExpiry").click(function () {
+                $("#expiryDate").val("");
+            }),
+        getSession("link") && $("#field-orderform-fields-link").val(getSession("link")),
+        getSession("quantity") && $("#neworder_quantity").val(getSession("quantity")),
+        getSession("username") && $('[name="username"]').val(getSession("username")),
+        getSession("posts") && $("#field-orderform-fields-posts").val(getSession("posts")),
+        getSession("expiry") && $("#expiryDate").val(getSession("expiry")),
+        getSession("min") && $('[name="min"]').val(getSession("min")),
+        getSession("max") && $('[name="max"]').val(getSession("max")),
+        getSession("delay") && $('[name="delay"]').val(getSession("delay")),
+        getSession("comments") && $("#neworder_comment").val(getSession("comments").replace(new RegExp("<br>", "g"), "\r\n")),
+            updateRate(e);
+    }
+</script>

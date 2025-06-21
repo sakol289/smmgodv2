@@ -1,0 +1,226 @@
+{% include 'header.twig' %}
+   <div class="content-wrap">
+        <div class="panel-welcome">
+          <div class="icon">
+            <svg width="53" height="53" viewBox="0 0 53 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19.875 21.5312C19.875 19.7021 18.3916 18.2188 16.5625 18.2188H14.9062C11.247 18.2188 8.28125 21.1845 8.28125 24.8438V29.8125C8.28125 33.4718 11.247 36.4375 14.9062 36.4375H16.5625C18.3916 36.4375 19.875 34.9541 19.875 33.125V21.5312ZM38.0938 36.4375C41.753 36.4375 44.7188 33.4718 44.7188 29.8125V24.8438C44.7188 21.1845 41.753 18.2188 38.0938 18.2188H36.4375C34.6084 18.2188 33.125 19.7021 33.125 21.5312V33.125C33.125 34.9541 34.6084 36.4375 36.4375 36.4375H38.0938ZM26.5 0C11.7159 0 0.474102 12.3008 0 26.5V28.1562C0 29.0713 0.741172 29.8125 1.65625 29.8125H3.3125C4.22758 29.8125 4.96875 29.0713 4.96875 28.1562V26.5C4.96875 14.6278 14.6278 4.96875 26.5 4.96875C38.3722 4.96875 48.0312 14.6278 48.0312 26.5H48.0188C48.0271 26.7515 48.0312 43.6546 48.0312 43.6546C48.0312 46.0717 46.0717 48.0312 43.6546 48.0312H33.125C33.125 45.2871 30.9004 43.0625 28.1562 43.0625H24.8438C22.0996 43.0625 19.875 45.2871 19.875 48.0312C19.875 50.7754 22.0996 53 24.8438 53H43.6546C48.8159 53 53 48.8159 53 43.6546V26.5C52.5259 12.3008 41.2841 0 26.5 0Z"
+                fill="white" />
+            </svg>
+          </div>
+          <div class="text">
+            <strong>Hello, <span>{{ user["username"]  }}</span> !</strong>
+            <p>You can follow the updates in our data on our website <br>
+             instantly from here.
+
+
+            </p>
+          </div>
+        </div>
+	<div class="row">
+			<div class="col-lg-12">
+				  
+				  <div class="well">
+													</div>
+		</div>
+		  {% if error %}
+        <div class="alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ errorText }}
+        </div>
+      {% endif %}
+      {% if success %}
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          {{ successText }}
+        </div>
+      {% endif %}
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="panel-box v2 pt-5 mb-3">
+			
+              <div class="input-wrap">
+                <strong>Username
+                </strong>
+                <div class="input-item">
+                  <span>
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12.5 14.0625C16.3818 14.0625 19.5312 10.9131 19.5312 7.03125C19.5312 3.14941 16.3818 0 12.5 0C8.61816 0 5.46875 3.14941 5.46875 7.03125C5.46875 10.9131 8.61816 14.0625 12.5 14.0625ZM18.75 15.625H16.0596C14.9756 16.123 13.7695 16.4062 12.5 16.4062C11.2305 16.4062 10.0293 16.123 8.94043 15.625H6.25C2.79785 15.625 0 18.4229 0 21.875V22.6562C0 23.9502 1.0498 25 2.34375 25H22.6562C23.9502 25 25 23.9502 25 22.6562V21.875C25 18.4229 22.2021 15.625 18.75 15.625Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+                  <input type="text" placeholder="{{ user['username'] }}" disabled>
+                </div>
+              </div>
+    
+
+           <div class="input-wrap">
+                <strong>Spendings
+                </strong>
+                <div class="input-item">
+                  <span>
+                   <span>
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M0 19.79V21.875C0 23.5986 4.19922 25 9.375 25C14.5508 25 18.75 23.5986 18.75 21.875V19.79C16.7334 21.2109 13.0469 21.875 9.375 21.875C5.70312 21.875 2.0166 21.2109 0 19.79ZM15.625 6.25C20.8008 6.25 25 4.84863 25 3.125C25 1.40137 20.8008 0 15.625 0C10.4492 0 6.25 1.40137 6.25 3.125C6.25 4.84863 10.4492 6.25 15.625 6.25ZM0 14.668V17.1875C0 18.9111 4.19922 20.3125 9.375 20.3125C14.5508 20.3125 18.75 18.9111 18.75 17.1875V14.668C16.7334 16.3281 13.042 17.1875 9.375 17.1875C5.70801 17.1875 2.0166 16.3281 0 14.668ZM20.3125 15.2051C23.1104 14.6631 25 13.6572 25 12.5V10.415C23.8672 11.2158 22.2021 11.7627 20.3125 12.0996V15.2051ZM9.375 7.8125C4.19922 7.8125 0 9.56055 0 11.7188C0 13.877 4.19922 15.625 9.375 15.625C14.5508 15.625 18.75 13.877 18.75 11.7188C18.75 9.56055 14.5508 7.8125 9.375 7.8125ZM20.083 10.5615C23.0127 10.0342 25 8.99902 25 7.8125V5.72754C23.2666 6.95312 20.2881 7.61231 17.1533 7.76856C18.5938 8.4668 19.6533 9.4043 20.083 10.5615Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+                  </span>
+                  <input type="text" placeholder="{{ user['spent'] }}{{ site['currency'] }}" disabled>
+                </div>
+              </div>
+       
+      </div>
+	  
+	  
+	  <div class="panel-box v2 pt-5">
+			<form  method="post" action="account">
+			                <div class="input-wrap">
+                <strong>Current Password
+                </strong>
+                <div class="input-item">
+                  <span>
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M25 8.5938C25 13.34 21.1524 17.1875 16.4062 17.1875C15.8584 17.1875 15.3228 17.1356 14.8034 17.0376L13.6309 18.3567C13.521 18.4804 13.3861 18.5794 13.2351 18.6472C13.0841 18.715 12.9205 18.75 12.755 18.75H10.9375V20.7031C10.9375 21.3503 10.4128 21.875 9.76562 21.875H7.8125V23.8281C7.8125 24.4753 7.28784 25 6.64062 25H1.17188C0.524658 25 0 24.4753 0 23.8281V20.0167C0 19.7059 0.123486 19.4078 0.343213 19.188L8.2437 11.2875C7.96426 10.4401 7.8125 9.53472 7.8125 8.59375C7.8125 3.84756 11.66 4.88286e-05 16.4062 4.66434e-10C21.1664 -4.88277e-05 25 3.83355 25 8.5938ZM16.4062 6.25C16.4062 7.54443 17.4556 8.59375 18.75 8.59375C20.0444 8.59375 21.0938 7.54443 21.0938 6.25C21.0938 4.95557 20.0444 3.90625 18.75 3.90625C17.4556 3.90625 16.4062 4.95557 16.4062 6.25Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+                  <input type="password" id="current" name="current_password">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <strong>New Password
+                </strong>
+                <div class="input-item">
+                  <span>
+                    <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19.5312 10.9375H18.3594V7.42188C18.3594 3.33008 15.0293 0 10.9375 0C6.8457 0 3.51562 3.33008 3.51562 7.42188V10.9375H2.34375C1.0498 10.9375 0 11.9873 0 13.2812V22.6562C0 23.9502 1.0498 25 2.34375 25H19.5312C20.8252 25 21.875 23.9502 21.875 22.6562V13.2812C21.875 11.9873 20.8252 10.9375 19.5312 10.9375ZM14.4531 10.9375H7.42188V7.42188C7.42188 5.4834 8.99902 3.90625 10.9375 3.90625C12.876 3.90625 14.4531 5.4834 14.4531 7.42188V10.9375Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+                  <input type="password" id="new" name="password">
+                </div>
+              </div>
+              <div class="input-wrap">
+                <strong>New Password (Confirm)
+                </strong>
+                <div class="input-item">
+                  <span>
+                    <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M19.5312 10.9375H18.3594V7.42188C18.3594 3.33008 15.0293 0 10.9375 0C6.8457 0 3.51562 3.33008 3.51562 7.42188V10.9375H2.34375C1.0498 10.9375 0 11.9873 0 13.2812V22.6562C0 23.9502 1.0498 25 2.34375 25H19.5312C20.8252 25 21.875 23.9502 21.875 22.6562V13.2812C21.875 11.9873 20.8252 10.9375 19.5312 10.9375ZM14.4531 10.9375H7.42188V7.42188C7.42188 5.4834 8.99902 3.90625 10.9375 3.90625C12.876 3.90625 14.4531 5.4834 14.4531 7.42188V10.9375Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+                  <input type="password" id="confirm" name="confirm_password">
+                </div>
+              </div>
+			  <input type="hidden" name="_csrf" value="chL1fLZ1-KGfO0EFpWbhhOEkOgBeIu5aIxF176nc4yEdZpkd-TO9y-tZNTTJK6v-slN_RxVLljERRDuLm-_XUA==">
+              <button type="submit" class="orange-btn">Change Password</button>
+			  </form>
+            </div>
+          </div>
+	  
+	  
+	  
+	  
+	  
+	 
+        
+
+    
+
+     <div class="col-lg-6">
+            <div class="panel-box v2 pt-5 mb-3">
+              <div class="input-wrap">
+                <strong>Timezone Change
+                </strong>
+				<form  action="account/timezone" method="post">
+                <div class="input-item">
+                  <span>
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M12.1094 0C5.41992 0 0 5.41992 0 12.1094C0 18.7988 5.41992 24.2188 12.1094 24.2188C18.7988 24.2188 24.2188 18.7988 24.2188 12.1094C24.2188 5.41992 18.7988 0 12.1094 0ZM14.8975 17.0947L10.5908 13.9648C10.4395 13.8525 10.3516 13.6768 10.3516 13.4912V5.27344C10.3516 4.95117 10.6152 4.6875 10.9375 4.6875H13.2812C13.6035 4.6875 13.8672 4.95117 13.8672 5.27344V11.9971L16.9678 14.2529C17.2314 14.4434 17.2852 14.8096 17.0947 15.0732L15.7178 16.9678C15.5273 17.2266 15.1611 17.2852 14.8975 17.0947Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+				  <select style="background: transparent;
+    border: none;width: 100%" name="timezone" id="timezone">
+        
+
+                 {% for timezone in timezones %}
+                 <option {% if timezone["timezone"] == user['timezone'] %} selected {% endif %} value="{{ timezone["timezone"] }}">{{ timezone["label"] }}</option>
+                 {% endfor %}
+             </select>
+           </div>
+              </div>
+			
+              <button type="submit" class="orange-btn">Change</button>
+			  </form>
+       </div>
+{% if site['languages']|length > 1 %}
+     <div class="panel-box v2 pt-5 mb-3">
+              <div class="input-wrap">
+                <strong>Language Change
+                </strong>
+				<form  action="/account/change_lang" method="post">
+                <div class="input-item">
+                  <span>
+                    <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10.8955 19.979L8.5127 19.2876C8.26269 19.2173 8.12207 18.9556 8.19238 18.7056L13.5244 0.338392C13.5947 0.0883916 13.8564 -0.0522334 14.1064 0.0180791L16.4893 0.709485C16.7393 0.779798 16.8799 1.04152 16.8096 1.29152L11.4775 19.6587C11.4033 19.9087 11.1455 20.0532 10.8955 19.979ZM6.44238 15.5962L8.1416 13.7837C8.32129 13.5923 8.30957 13.2876 8.11035 13.1118L4.57129 9.99855L8.11035 6.88527C8.30957 6.70949 8.32519 6.4048 8.1416 6.21339L6.44238 4.40089C6.2666 4.21339 5.96973 4.20167 5.77832 4.38136L0.149414 9.6548C-0.0498047 9.83839 -0.0498047 10.1548 0.149414 10.3384L5.77832 15.6157C5.96973 15.7954 6.2666 15.7876 6.44238 15.5962ZM19.2236 15.6196L24.8525 10.3423C25.0518 10.1587 25.0518 9.8423 24.8525 9.6587L19.2236 4.37745C19.0361 4.20167 18.7393 4.20949 18.5596 4.39699L16.8604 6.20949C16.6807 6.40089 16.6924 6.70558 16.8916 6.88136L20.4307 9.99855L16.8916 13.1118C16.6924 13.2876 16.6768 13.5923 16.8604 13.7837L18.5596 15.5962C18.7354 15.7876 19.0322 15.7954 19.2236 15.6196Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+				   <select style="background: transparent;
+    border: none;width: 100%" name="lang" >
+	  {% for language in site['languages'] %}
+                  <option {% if language["code"] == user["lang"] %} selected {% endif %} value="{{ language["code"] }}">{{ language["name"] }}</option>
+                  {% endfor %}
+             </select>
+				                </div>
+              </div>
+			  
+              <button type="submit" class="orange-btn">Change</button>
+			  </form>
+            </div>
+         
+       
+     
+{% endif %}
+
+
+
+
+ <div class="panel-box v2 pt-5 mb-3">
+              <div class="input-wrap">
+                <strong>API KEY
+                </strong>
+				<form  action="/account/newapikey" method="post">
+                <div class="input-item">
+                  <span>
+                    <svg width="26" height="20" viewBox="0 0 26 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10.8955 19.979L8.5127 19.2876C8.26269 19.2173 8.12207 18.9556 8.19238 18.7056L13.5244 0.338392C13.5947 0.0883916 13.8564 -0.0522334 14.1064 0.0180791L16.4893 0.709485C16.7393 0.779798 16.8799 1.04152 16.8096 1.29152L11.4775 19.6587C11.4033 19.9087 11.1455 20.0532 10.8955 19.979ZM6.44238 15.5962L8.1416 13.7837C8.32129 13.5923 8.30957 13.2876 8.11035 13.1118L4.57129 9.99855L8.11035 6.88527C8.30957 6.70949 8.32519 6.4048 8.1416 6.21339L6.44238 4.40089C6.2666 4.21339 5.96973 4.20167 5.77832 4.38136L0.149414 9.6548C-0.0498047 9.83839 -0.0498047 10.1548 0.149414 10.3384L5.77832 15.6157C5.96973 15.7954 6.2666 15.7876 6.44238 15.5962ZM19.2236 15.6196L24.8525 10.3423C25.0518 10.1587 25.0518 9.8423 24.8525 9.6587L19.2236 4.37745C19.0361 4.20167 18.7393 4.20949 18.5596 4.39699L16.8604 6.20949C16.6807 6.40089 16.6924 6.70558 16.8916 6.88136L20.4307 9.99855L16.8916 13.1118C16.6924 13.2876 16.6768 13.5923 16.8604 13.7837L18.5596 15.5962C18.7354 15.7876 19.0322 15.7954 19.2236 15.6196Z"
+                        fill="white" />
+                    </svg>
+                  </span>
+				   <input type="text" value="{{ user['apikey'] }}" readonly>
+				                </div>
+              </div>
+			 
+              <button type="submit" class="orange-btn">Generate New Key</button>
+			  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+{% include 'footer.twig' %}

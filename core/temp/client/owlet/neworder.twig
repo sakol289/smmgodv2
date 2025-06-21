@@ -1,0 +1,247 @@
+{% include 'header.twig' %}
+
+
+    
+    <link rel="stylesheet" type="text/css" href="../css/panel/owlet/style1.css">
+   
+     
+<!-- Main variables *content* -->
+
+        <section id="contentContainer">
+  	<div class="container-fluid">
+      <div class="container">
+  <div class="row userInfo">
+   
+    <div class="col-sm-4">
+      <div class="singlebox">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" src="https://cdn.mypanel.link/6f7c88/i0jfmuttne810i08.png">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</h4>
+            <p>Account Balance</p>
+          </div>
+        </div>
+        <!-- <p>Account Balance</p>
+        <h4>$0.00</h4>
+        <span>
+          <img src="https://res.cloudinary.com/myhostedfiles/image/upload/v1552547542/smmglobe/i2.png"/>
+        </span> -->
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="singlebox">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" src="https://cdn.mypanel.link/6f7c88/jqo01l591jru3fb0.png">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">33265058</h4>
+            <p>Total Orders</p>
+          </div>
+        </div>
+        <!-- <p>Total Orders</p>
+        <h4>3599516</h4>
+        <span>
+          <img src="https://res.cloudinary.com/myhostedfiles/image/upload/v1552547542/smmglobe/i3.png"/>
+        </span> -->
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="singlebox">
+        <div class="media">
+          <div class="media-left media-middle">
+            <a href="#">
+              <img class="media-object" src="https://cdn.mypanel.link/6f7c88/bmu33igq4wce9ck1.png">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading">
+                            NEW 
+                                          </h4>
+            <p>Account Status</p>
+          </div>
+        </div>
+        <!-- <p>Account Status</p>
+                <h4>NEW</h4>
+                <span>
+          <img src="https://res.cloudinary.com/myhostedfiles/image/upload/v1552547542/smmglobe/i4.png"/>
+        </span> -->
+      </div>
+    </div>
+</div>
+  <div class="row newOrderTitleRow">
+	<div class="col-sm-6">
+		<h1 class="pageTitle">New order</h1>
+	</div>
+  	<div class="col-sm-6">
+		<ul class="nav nav-tabs newOrderTabs">
+            <li class="active"><a data-toggle="tab" href="#newOrder">New Order</a></li>
+            <!-- <li><a data-toggle="tab" href="#newsAndUpdate">News &amp; Update</a></li> -->
+        </ul>
+	</div>
+</div>
+  <div class="row nowOrderRow">
+	<div class="col-sm-12">
+		<div class="well newOrderWell">          
+        
+
+          <div class="tab-content">
+            <div id="newOrder" class="tab-pane fade active in">
+              <div class="shouldScroll">
+              	 <form  action="/" method="post" id="order-form">
+              	     
+              	     
+                     {% if error %}
+                     <div class="alert alert-dismissible alert-danger">
+                        {{ errorText }}
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 1 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['quantity'] }} <br>
+                        <strong> {{ lang["neworder.success.link"] }}: </strong> {{ data['order']['price'] }} <br>
+                        <strong> {{ lang["neworder.success.balance"] }}: </strong>{{ data['order']['balance'] }} <br>
+                     </div>
+                     {% endif %}
+                     {% if data["order"]["success"] == 2 %}
+                     <div class="alert alert-dismissible alert-success">
+                        <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+                        <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+                        <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+                        <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+                        <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+                        <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+                     </div>
+                     {% endif %}
+									  
+									  
+			 {% if categories %}
+             <div class="form-group">
+              <label for="orderform-category" class="control-label">Category</label>
+              
+              
+                                    
+              <select class="form-control" id="neworder_category" name="categories" style="display: none">
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+                
+                 <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+
+              
+            </div>
+          {% endif %}
+          
+          <!-- end -->
+                   
+                   
+                   
+           <!-- form-group end -->
+                                      <div class="form-group">
+            <label for="service" class="control-label">Service</label>
+            
+                                         <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+               	<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+
+										
+                                       </div>
+                                       
+
+                                       <!-- form-group end -->
+                     
+                     <div id="neworder_fields"></div>
+					  
+                       <div class="form-group">
+            <label for="charge" class="control-label">Charge</label>
+            <input type="text" class="form-control" id="charge" value="" readonly>
+          </div>
+
+                        {% if neworderTerms %}
+                        <div class="checkbox">
+                           <label>
+                           <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+                           </label>
+                        </div>
+                        {% endif %}
+					
+                      <button type="submit" class="btn btn-primary btn-block">{{lang["neworder.button"]}}</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              
+             <!--   <div id="newsAndUpdate" class="tab-pane fade">
+              <div class="shouldScrollTwo ps">
+              	                  <div class="generalNews">
+<ul class="newsUpdates">
+    <span style="font-weight: 700; text-align: -webkit-center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Copyright © 2020&nbsp;<a href="/">the-owlet.com</a>&nbsp;; All Rights Reserved.</span><p></p><p></p>
+</div><style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; min-height: 15.0px}
+</style><style type="text/css">
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+</style>
+                              <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+            </div>
+          </div>
+        </div>
+	</div>
+  	
+</div>
+  
+  
+  
+  
+  
+  
+ 
+</div> -->
+ 
+ <!-- <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well ">
+          <h4><font color="#ff0000">HOW TO BUY FOLLOWERS ON YOUR INSTAGRAM ACCOUNT CORRECTLY</font></h4><h4><font color="#ff0000">Click <a href="https://www.youtube.com/channel/UCWimeDcakI6eHAxR3lLwuuA/videos" target="_blank">HERE</a>&nbsp;</font><font color="#00ff00">&nbsp;</font><font color="#ff0000">to learn how to correctly buy likes, comments, followers, views, reels e.t.c</font></h4><h4><font color="#ff0000">Click <a href="https://the-owlet.com/faqs" target="_blank">HERE&nbsp;</a></font>&nbsp;<span style="color: rgb(255, 0, 0); font-family: inherit;">to learn why your followers is dropping, why your orders keep getting canceled, e.t.c.</span></h4><div class="embed-responsive embed-responsive-16by9"><iframe frameborder="0" src="//www.youtube.com/embed/" width="640" height="360" class="note-video-clip embed-responsive-item"></iframe></div><p><span style="background-color: rgb(255, 0, 0);"><br></span></p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+      </div>
+    </section>
+    
+
+{% include 'footer.twig' %}
+
+
+
+
+

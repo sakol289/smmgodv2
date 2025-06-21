@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+{% for lang in site['languages'] %}
+{% if lang['active'] %}
+<html lang="{{ lang['code'] }}">
+{% endif %}
+{% endfor %}
+<head>
+  <base href="{{ site['url'] }}/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="keywords" content="{{ keywords }}">
+  <meta name="description" content="{{ description }}">
+  {% if site['favicon'] %}
+    <link rel="shortcut icon" type="image/ico" href="{{ site['favicon'] }}" />
+  {% endif %}
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  
+    {{ headerCode }}
+     
+    {% for style in styleList %}
+      <link rel="stylesheet" type="text/css" href="{{ style }}">
+    {% endfor %}
+    
+   
+    
+   
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js"></script>
+ 
+ 
+ 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Cairo" />
+        					<link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/sabd8c/91k97c9uz4wc4820.css">
+					<link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/sabd8c/5xhwr9j47rjs4ej9.css">
+					<link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/libs/bootstrap-datetimepicker/4.17.47/bootstrap-datetimepicker.min.css">
+					<link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/css/font-awesome/css/all.min.css">
+					<link rel="stylesheet" type="text/css" href="https://cdn.mypanel.link/global/29sz1jwqs2y1tscl.css">
+		        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+ 
+ 
+ 
+  </head>
+
+	{% if user['auth'] %}
+		
+		
+	
+<body  class="side_menu" >
+		        <div class="header_site">
+            <div class="container-fluid">
+                <header class="d-flex flex-wrap justify-content-between py-2 position-relative">
+                  <div class="col-md-4">
+                  <ul class="nav nav-pills mb-md-0 fw-bolder head_list_menu">
+                   <li class="nav-item">
+                        <a  id="btn_left_menu" class="nav-link link-dark me-3 d-block d-lg-none"><i class="fas fa-bars"></i></a>
+                   </li>
+                   </ul>
+                   </div>
+                  <div class="col-md-8 text-end">
+                  <ul class="nav nav-pills mb-md-0 fw-bolder justify-content-end head_list_menu">
+                                     <li class="usr_balance">
+                        <p class="dropdown-toggle d-flex align-items-center justify-content-center" id="currencies_multi" data-bs-toggle="dropdown" aria-expanded="false">{{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }}</p>
+                        <ul class="dropdown-menu dropdown-menu-dark" id="currencies-list" aria-labelledby="currencies_multi">
+                                                         
+                                                         
+                                                          {% for curr in site['currencies'] %} 
+<li>
+<a href="/cur?cur={{curr['id']}}" class="dropdown-item">{{curr['name']}} {{curr['symbol']}}</a></li>
+{% endfor %}
+                                                         
+                                
+                                
+                                                        <li class="w-100 text-center mt-2">
+                                <a class="dropdown-item add_fund_head" href="/addfunds">Add Funds &nbsp; {{currency['symbol']}}</a>
+                            </li>
+                        </ul>
+                   </li>
+                                      <li class="nav-item ms-2">
+                        <a href="#" class="nav-link link-dark" id="dark_mode"><i class="fas fa-moon"></i></a>
+                   </li>
+                   
+                                     <li class="nav-item">
+                    <div class="dropdown h-100">
+                                                                        <button class="btn btn_lang dropdown-toggle h-100 ms-1" type="button" id="lang_drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-globe"></i>
+                          </button>
+                                           
+                                                                           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="lang_drop">
+                                                    {% for lang in site['languages'] %} <li><a class="  dropdown-item" href="#" onclick="changeLang('{{lang['code']}}')" >{{lang['name']}}</a></li>
+                                                   {% endfor %}
+                                                    
+                                              </ul>
+                    </div>
+                  </li>
+                                     <li class="nav-item">
+                        <div class="dropdown h-100">
+                              <button class="btn dropdown-toggle h-100 mx-1" type="button" id="user_drop_m" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                              </button>
+                          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="user_drop_m">
+                                <li><a href="/account" class="dropdown-item"><i class="fas fa-cog me-2"></i> Account</a></li>
+                                <li><a href="/logout" class="dropdown-item"><i class="fas fa-power-off me-2"></i> Logout</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                   </ul>
+                   </div>
+                </header>
+                </div>
+            </div>
+            <button type="button" class="collapse-btn d-none d-lg-block" id="btn_side"><span class="sr-only">Collapse</span></button>
+            <div class="l-navbar" id="nav-bar">
+              <nav class="nev_side">
+                <div> 
+                                  
+                                      
+          <a target="_self" href="/" class="logo_side col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">{% if site["logo"] %}
+  		<img style="max-width:200px;" src="{{ site['logo'] }}" alt="" title="">
+  		{% else %}<span style="text-transform: "><span style="font-size: 24px"><span style="letter-spacing: 1.0px"><span style="line-height: 60px"><strong style="font-weight: bold">&nbsp;&nbsp;  {{ site["site_name"] }}</strong></span></span></span></span>{% endif %}</a>
+                      
+                                      
+                                      
+                                      
+                  <ul class="list_menu mt-4">
+                                         
+                                           <li>
+                            <a  class="nav-link px-3 sketch-button{% if active_menu == "neworder" %}  active {% endif %}" href="/" >
+                                                                    <i class="navbar-icon far fa-newspaper"></i>
+                                                                New Order
+                                                                 <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                         
+                            </a>
+                        </li>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                           <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "massorder" %}  active {% endif %} " href="/massorder" >
+                                                                    <i class="navbar-icon fas fa-angel"></i>
+                                                                Mass order
+                             <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                                                               
+                            </a>
+                        </li> 
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "services" %}  active {% endif %} " href="/services" >
+                                                                    <i class="navbar-icon fab fa-servicestack"></i>
+                                                                Services
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                                                             
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "orders" %}  active {% endif %} " href="/orders" >
+                                                                    <i class="navbar-icon fas fa-conveyor-belt"></i>
+                                                                Orders
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                                                             
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "addfunds" %}  active {% endif %} " href="/addfunds" >
+                                                                    <i class="navbar-icon fal fa-file-invoice-dollar"></i>
+                                                                Add Funds  &nbsp; {{currency['symbol']}}
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                                                             
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "tickets" %}  active {% endif %} " href="/tickets" >
+                                                                    <i class="navbar-icon fas fa-user-headset"></i>
+                                                                Ticket [Support]
+                            {% if ticketCount %} <span class="badge">{{ ticketCount }}</span> {% endif %}
+                            
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                         
+                            
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "child-panels" %}  active {% endif %}" href="/child-panels" >
+                                                                    <i class="navbar-icon fas fa-child"></i>
+                                                                Child Panel
+                              <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                          </a>
+                        </li>
+                        
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "affiliates" %}  active {% endif %}" href="/affiliates" >
+                                                                    <i class="navbar-icon fas fa-badge-percent"></i>
+                                                                Make Money
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                         </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 sketch-button{% if active_menu == "api" %}  active {% endif %} " href="/api" >
+                                                                    <i class="navbar-icon fas fa-code"></i>
+                                                                API
+                              <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                          </a>
+                        </li>
+                                           <!-- <li>
+                            <a class="nav-link px-3 " href="/updates" >
+                                                                    <i class="navbar-icon fas fa-arrow-circle-up"></i>
+                                                                Updates
+                            </a>
+                        </li> -->
+                                            <li>
+                            <a class="nav-link px-3 sketch-button " href="https://t.me/"  target="_blank" >
+                                                                    <i class="navbar-icon fab fa-telegram"></i>
+                                                                Our TG Channel
+                               <div class="lines"><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div><div><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg><svg viewBox="0 0 100% 42"><rect x="0" y="0" width="100%" height="100%" rx="5" ry="5" pathLength="10"></rect></svg></div></div>
+                         </a>
+                        </li>
+                                      </ul>
+                </div>
+            </nav>
+        </div>
+
+   
+{% else %}
+
+
+	<body  class="no_log" >
+		        <div class="header_site" id="header_site">
+            <div class="container">
+                <header class="d-flex flex-wrap justify-content-center justify-content-md-between py-3">
+                  <a href="/" class="d-none d-lg-flex d-lg-flex col-md-auto mb-2 mb-md-0 text-dark text-decoration-none logo_txt">
+                                        	<img class="logo_img_s" src="{{ site["logo"] }}" width="134" height="30" alt="{{ site["site_name"] }}">
+                                      </a>
+                                      
+                                      
+                                      
+                                      
+                  <div class="dropdown d-block d-md-none">
+                      <button class="btn btn-secondary btn-lg dropdown-toggle me-3" type="button" id="menu_site_c" data-bs-toggle="dropdown" aria-expanded="false">
+                        Menu
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="menu_site_c">
+                                                    <li>
+                                <a class="dropdown-item {% if active_menu == "auth" %} active{% endif %} " href="/" >
+                                                                            <i class="navbar-icon fas fa-sign-in"></i>
+                                                                        Login
+                                </a>
+                            </li>
+                                                    <li>
+                                <a class="dropdown-item {% if active_menu == "signup" %} active{% endif %}" href="/signup" >
+                                                                            <i class="navbar-icon fas fa-registered"></i>
+                                                                        Register
+                                </a>
+                            </li>
+                                                    <li>
+                                <a class="dropdown-item {% if active_menu == "services" %} active{% endif %}" href="/services" >
+                                                                            <i class="navbar-icon fab fa-servicestack"></i>
+                                                                        Services
+                                </a>
+                            </li>
+                                                 <!--   <li>
+                                <a class="dropdown-item {% if active_menu == "blog" %} active{% endif %}" href="/blog" >
+                                                                            <i class="navbar-icon far fa-rss-square"></i>
+                                                                        Blog
+                                </a>
+                            </li> -->
+                                                   <!-- <li>
+                                <a class="dropdown-item " href="/how-to-use-smmstone" >
+                                                                            <i class="navbar-icon fas fa-video"></i>
+                                                                        How To use?
+                                </a>
+                            </li> -->
+                                                   <!-- <li>
+                                <a class="dropdown-item " href="/contact" >
+                                                                            <i class="navbar-icon fas fa-address-book"></i>
+                                                                        Contact
+                                </a>
+                            </li> -->
+                                              </ul>
+                  </div>
+                  <ul class="nav d-none d-md-flex col-12 col-md-auto mb-2 justify-content-center mb-md-0 fw-bolder">
+                                            <li>
+                            <a class="nav-link px-3  {% if active_menu == "auth" %} active{% endif %}  link-dark" href="/" >
+                                                                    <i class="navbar-icon fas fa-sign-in"></i>
+                                                                Login
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 {% if active_menu == "signup" %} active{% endif %} link-dark" href="/signup" >
+                                                                    <i class="navbar-icon fas fa-registered"></i>
+                                                                Register 
+                            </a>
+                        </li>
+                                            <li>
+                            <a class="nav-link px-3 {% if active_menu == "services" %} active{% endif %} link-dark" href="/services" >
+                                                                    <i class="navbar-icon fab fa-servicestack"></i>
+                                                                Services
+                            </a>
+                        </li>
+                                         <!--   <li>
+                            <a class="nav-link px-3 {% if active_menu == "blog" %} active{% endif %} link-dark" href="/blog" >
+                                                                    <i class="navbar-icon far fa-rss-square"></i>
+                                                                Blog
+                            </a>
+                        </li> -->
+                                           
+                                          <!--  <li>
+                            <a class="nav-link px-3  link-dark" href="/contact" >
+                                                                    <i class="navbar-icon fas fa-address-book"></i>
+                                                                Contact
+                            </a>
+                        </li> -->
+                                      </ul>
+                
+                                    <div class="d-flex d-md-none d-lg-flex col-md-auto text-end">
+                    <div class="dropdown">
+                                            	                          <button class="btn btn-secondary dropdown-toggle" type="button" id="lang_drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            Languages
+                          </button>
+                      	                                            	                                                  	                                            	                                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="lang_drop">
+                      	                          {% for lang in site['languages'] %}   <li><a class="   dropdown-item" href="#" onclick="changeLang('{{lang['code']}}')" >{{lang['name']}}</a></li>{% endfor %}
+                                              </ul>
+                    </div>
+                  </div>
+                                  </header>
+                </div>
+            </div>
+            
+            
+
+
+  
+{% endif %}
+
+
+ 
+  
+
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<script>
+
+
+ $('.langs-btn').hover(function(){
+    $('.langs-btn-content').toggle();
+  });
+  
+    $('.currency-btn').hover(function(){
+    $('.currency-btn-content').toggle();
+  });
+  
+  
+ function changeLang(newLang){
+        $.ajax
+        ({ 
+            url: '/account/change_lang/',
+            data: {lang: newLang},
+            type: 'post',
+            success: function(result)
+            {
+                
+               location.href  = "";
+            }
+        });
+    }
+    
+    var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'violet',
+    progressColor: 'purple',
+    mediaControls:true
+});
+wavesurfer.load('{{settings['music_url']}}');
+
+wavesurfer.on('ready', wavesurfer.play.bind(wavesurfer));
+
+
+</script>

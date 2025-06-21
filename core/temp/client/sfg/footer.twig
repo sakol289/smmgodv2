@@ -1,0 +1,141 @@
+
+
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script></script>
+
+<script src="/css/panel/SmmFansGrow/script2.js"></script>
+
+
+
+
+{{ footerCode }}
+
+
+
+{% for script in scriptList %}
+    <script type="text/javascript" src="{{ script }}"></script>
+{% endfor %}
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?hl=en"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/aknio8ec1fpphc0p.js" >
+							</script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/nfos6j9mo1on7ksz.js" >
+							</script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/jk7xq2koxnyppleg.js" >
+							</script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/ue02c4te6iicermt.js" >
+							</script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/y0wpxmu6hfq7f95k.js" >
+							</script>
+					<script type="text/javascript"  src="/css/panel/SmmFansGrow/pnl24maick8i2jzj.js" >
+							</script>
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+					
+				
+				
+		
+
+  <script src="https://cdn.slingopanel.com/SmmFansGrow/js/slick/slick.min.js"></script>
+  <script>
+
+    $('.input-wrap > button').on('click', function () {
+      if ($(this).parent().find('.input-item > input').attr("type") !== "password") {
+        $(this).parent().find('.input-item > input').attr("type", "password")
+      } else {
+        $(this).parent().find('.input-item > input').attr("type", "text")
+      }
+    })
+
+
+    $('.slider-wrap').slick({
+      infinite: true,
+      slidesToShow: 2,
+      slidesToScroll: 1,
+      arrows: true,
+      prevArrow: $('.prev-btn'),
+      nextArrow: $('.next-btn'),
+      autoplay: true,
+      autoplaySpeed: 2000,
+      dots: false,
+      variableWidth: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        },
+      ]
+    });
+
+
+    $('.testi-slider').slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: true,
+      prevArrow: $('.testi-prev'),
+      nextArrow: $('.testi-next'),
+      autoplay: true,
+      autoplaySpeed: 2000,
+      dots: false,
+      variableWidth: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        },
+      ]
+    });
+
+  </script>
+	  <!-- Start Trigger Notification  modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js">
+</script>
+
+
+
+
+{% if user['auth'] %}
+
+
+
+
+{% else %}
+
+ <footer>
+    <div class="container">
+      <div class="logo">
+        <a href="/">
+          {% if site["logo"] %}
+          <img src="{{ site['logo'] }}" alt="{{ site["site_name"] }}" title="{{ site["site_name"] }}" height="55">
+        {% else %}
+          {{ site["site_name"] }}
+        {% endif %}
+        </a>
+      </div>
+      <div class="footer-links">
+        {% for menu in menus %}
+	  
+<a href="{{menu["slug"]}}">
+                            <span class="component-navbar-nav-link-icon">
+                                             <span class="{{menu["icon"]}}"></span>
+                                           </span>
+                                                                               {{menu["name"]}}
+                                                                        </a>
+                           {% endfor %} 
+      </div>
+    </div>
+  </footer>
+
+
+{% endif %} 
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+{% include 'header.twig' %}
+
+	
+<!-- Main variables *content* -->
+		<style>
+@media only screen and (min-width: 992px) {
+    .services-wrapper .s-col:last-child {
+      display: none
+    }
+}
+</style>
+	<main>
+                 <div class="container-fluid mt-3">
+                    <div class="row">
+               <div class="col-lg-12">
+                  <div class="card p-4">
+                     <div class="row align-items-center">
+                        <div class="col-md-auto col-12 d-flex align-items-center">
+<div class="scrollt">
+                                      
+                                      
+                                      
+                                        <ul class="platforms">
+                                                  
+                                        <li><button data-platform="all" data-filter-category-id="All" class="all active"><i class="ri-list-ordered"></i></button></li>
+                                            <li><button data-platform="Instagram" data-filter-category-id="Instagram" class="instagram"><i class="fab fa-instagram"></i></button></li>
+                                            <li><button data-platform="TikTok" class="tiktok"><i class="fab fa-tiktok"></i></button></li>
+                                            <li><button data-platform="Twitter" class="twitter"><i class="fab fa-twitter"></i></button></li>
+                                            <li><button data-platform="YouTube" class="youtube"><i class="fab fa-youtube"></i></button></li>
+                                            <li><button data-platform="Telegram" class="telegram"><i class="fab fa-telegram"></i></button></li>
+                                            <li><button data-platform="Facebook" class="facebook"><i class="fab fa-facebook"></i></button></li>
+                                            <li><button data-platform="Spotify" class="spotify"><i class="fab fa-spotify"></i></button></li>
+                                            <li><button data-platform="Discord" class="discord"><i class="fab fa-discord"></i></button></li>
+                                            <li><button data-platform="Twitch" class="twitch"><i class="fab fa-twitch"></i></button></li>
+                                            <li><button data-platform="Reddit" class="reddit"><i class="fab fa-reddit"></i></button></li>
+                                            <li><button data-platform="Snapchat" class="snapchat"><i class="fab fa-snapchat"></i></button></li>
+                                            <li><button data-platform="LinkedIn" class="linkedin"><i class="fab fa-linkedin"></i></button></li>
+                                            <li><button data-platform="SoundCloud" class="soundcloud"><i class="fab fa-soundcloud"></i></button></li>
+                                            <li><button data-platform="Pinterest" class="pinterest"><i class="fab fa-pinterest"></i></button></li>
+                                            <li><button data-platform="Tumblr" class="tumblr"><i class="fab fa-tumblr"></i></button></li>
+                                            <li><button data-platform="fav" class="all"><i class="fab fa-gratipay"></i></button></li>
+                                        </ul>
+                                    </div>
+                        </div>
+
+                       <div class="col-lg">
+                           <div class="search-services">
+                              <div class="icon">
+                                 <i class="ri-search-line"></i>
+                              </div>
+                              <input type="text" class="textbox" name="query" id="filterServicesInput" placeholder="Search services" data-search-service="#service-table">
+                           </div>
+                        </div>
+						                        <div class="col-md-auto col-12">
+                           <button class="btn btn-primary dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="fal fa-filter"></span>
+          <span data-filter-active-category="true">Select Catogery</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+                    <li>
+            <a class="dropdown-item" href="#" data-filter-category-id="All">All</a>
+          	{% for category in serviceCategory %}
+                                                                                                            <a class="dropdown-item" href="services#" data-filter-category-id="{{ category["category_id"] }}" data-filter-category-name="{{ category["category_name"] }}">{{ category["category_name"] }}</a>{% endfor %}
+      </ul>
+                           
+                        </div>
+                                             </div>
+                  </div>
+               </div>
+            </div>
+            
+            
+            
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="page overflow-hidden">
+                     <div class="page-body pb-4 pb-xl-6 mt-4">
+							<div class="services-head-row">
+							  <div class="si-wrapper">
+								<div class="service-item mb-4">
+								  <div class="s-row s-title">
+                                    									<div class="s-col s-col-sm">
+									   Fav
+									</div>
+                                    									<div class="s-col s-col-sm">
+									  ID
+									</div>
+									<div class="s-col s-title">
+									  Service
+									</div>
+									<div class="s-col s-col-md">
+									  Rate per 1
+									</div>
+									<div class="s-col s-col-md">
+									  Min order
+									</div>
+									<div class="s-col s-col-md">
+									  Max order
+									</div>
+									
+												<div class="s-col s-col-lg">
+									  Average time
+									</div>
+		
+																		<div class="s-col s-col-md">
+									  
+									</div>
+								  </div>
+								</div>
+							  </div>
+							</div>
+							
+							<div class="nothing-found" style="display: none;">
+							  <div class="card card-bg">
+								<div class="card-body p-4 p-lg-5 text-center">
+								  <div style="font-size: 64px;">
+									<i class="ri-search-eye-line w-color"></i>
+								  </div>
+								  <h3>There were no results!</h3>
+								  <p>We searched everywhere but found nothing. Try with different keywords.</p>
+								</div>
+							  </div>
+							</div>
+							
+							
+							<!-- start -->
+						
+                    {% for category in serviceCategory %}
+                    
+                  
+                                               	<div class="category-card" data-category="{{ category["category_id"] }}" >
+							  <div class="si-header" data-filter-table-category-id="{{ category["category_id"] }}">
+								<h2 class="si-title">
+							  {{ category["category_name"] }}  
+								</h2>
+							  </div>
+							  
+							  <!-- end -->
+                                            
+                                            
+                                             {% for service in category['services'] %}
+                                            
+
+                    <div class="">
+							   								<div class="services-wrapper">
+                                 
+								  <div class="si-wrapper" data-filter-table-category-id="{{ category["category_id"] }}">
+									<div class="service-item" data-service-id="{{ service["service_id"] }}" data-platform="Instagram">
+									  <div class="s-row">
+                                        										<div class="s-col s-col-sm s-col-fav">
+<button data-service-id="{{ service["service_id"] }}" class="btn btn-dark btn-rounded btn-sm favorite d-flex align-items-center justify-content-center">
+     <i class="ri-heart-line"></i>
+</button>
+										</div>
+                                        										<div class="s-col s-col-sm s-col-id">
+										  <span class="sp-serv-sm" data-filter-table-service-id="{{ service["service_id"] }}">{{ service["service_id"] }}</span>
+										</div>
+										<div class="s-col s-title">
+										  <span class="sp-serv-title" data-filter-table-service-name="true">{{ service["service_name"] }}
+                                            <div class="align-items-center gap-1 mt-3 badgearea"></div></span>
+										</div>
+										<div class="s-col s-col-md s-col-c" data-title="Price Per">
+										  <span class="sp-serv-sm">
+																						 {{ currency['symbol'] }}{{ (service["service_price"]*currency["value"] / 1000) }}   
+																					  </span>
+										</div>
+										<div class="s-col s-col-md s-col-c" data-title="Min order">
+										  <span class="orlc min text-success">{{ service["service_min"] }}</span>
+										</div>
+										<div class="s-col s-col-md s-col-c" data-title="Max order">
+										  <span class="orlc max text-danger">{{ service["service_max"] }}</span>
+										</div>
+										
+										<div class="s-col s-col-lg s-col-avtime" data-title="Average time">
+										  <span class="sp-serv-sm">{{ service["service_speed"] }}</span>
+										</div>
+										
+																			
+																<!-- start -->			
+																			
+																			
+																			 <td class="service-description">
+                     <!-- Modal -->
+                        <div class="modal fade" id="servis{{ service["service_id"] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            	<div class="modal-box">
+										  <div class="m-header">
+										      
+										      <div class="service-modal-id">
+											  
+											  <span id="serviceModalID">{{ service["service_id"] }}</span>
+											</div>
+                              
+                                <h5 class="m-title" id="exampleModalLabel">{{ service["service_name"] }} </h5> 
+                                <button type="button" class="m-close" data-dismiss="modal" aria-label="Close">
+                                    
+                                  <i class="ri-close-line"></i>
+                                </button>
+                              </div>
+                              
+                              
+                              <div class="m-body">
+                                <p id="serviceModalText" class="detail-data details-split-959"> {{ service["service_description"] }}</p>
+                              </div>
+                             <!-- <div class="modal-footer">
+                                <button type="button" class="btn-primary btn-actions" data-dismiss="modal">Close</button>
+                              </div> -->
+                            </div>
+                          </div>
+						  
+                        </div>
+                        
+<div class="s-col s-col-md s-col-btn">
+										  <button class="btn btn-primary btn-rounded btn-100 btn-sm" href="javascript:void(0)"   data-toggle="modal" data-target="#servis{{ service["service_id"] }}">Description</button>
+										</div>
+                                    <a></a> 
+                                    
+                                    
+                                    <div class="s-col s-col-md s-col-btn">
+										  <button class="btn btn-secondary btn-rounded btn-100 btn-sm"><a href="{{ site['url'] }}/?select_service_id={{ service['service_id'] }}&category_id={{category['category_id']}}">Buy</a></button>
+										</div>
+                   
+                        </td>
+                        
+                        
+                                        									  </div>
+									</div>
+								  </div>
+								</div>
+								
+								
+								
+                     
+                      
+                      <!-- end -->
+                    
+               
+                  </tr>
+                {% endfor %}
+                  
+                  
+                  
+                  
+                   {% endfor %}
+                   </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+          </div>
+  </div>
+</div>
+
+
+        </div>
+      </div>
+    </div> <!-- wrapper End -->
+                  
+             <div class="mobile-navbar">
+        <div class="mobile-navbar-content">
+            <a href="/" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="far fa-box-heart"></i>
+                </div>
+                <div class="mnc-item-text">New order</div>
+            </a>
+            <a href="/addfunds" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-exchange-dollar-line"></i>
+                </div>
+                <div class="mnc-item-text">Add funds</div>
+            </a>
+            <a href="/tickets" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-customer-service-2-line"></i>
+                </div>
+                <div class="mnc-item-text">Support</div>
+            </a>
+            <a href="/services" class="mnc-item">
+                <div class="mnc-item-icon">
+                    <i class="ri-list-check-2"></i>
+                </div>
+                <div class="mnc-item-text">Services</div>
+            </a>
+        </div>
+    </div>
+  
+       <div class="bs-toast">
+         <div class="bs-toast-content">
+            <div class="toast-text">Copy to clipboard</div>
+         </div>
+      </div>
+
+      <div class="overlay"></div>       
+                  
+										
+																											
+{% include 'footer.twig' %}
+
+
+
+
+
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+

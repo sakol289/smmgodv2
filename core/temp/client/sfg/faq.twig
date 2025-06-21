@@ -1,0 +1,242 @@
+{% include 'header.twig' %}
+
+
+
+
+{% if contentText %}
+<div class="container pt-5 mb-5">
+   
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel-form">
+        {{ contentText }}
+     </div></div></div></div>
+{% endif %}
+<style>
+ #faq .row.faq-tabs-row .tab-content {
+        padding-right: 0;
+        padding-left: 0;
+    }
+#result .tab-content .col-sm-3 {
+        display: none;
+    }
+#faq {
+    padding: 115px 0 100px;
+}
+
+.faq__container {
+    margin: auto;
+    padding: 0px 70px;
+    max-width: 1390px;
+    background: url('https://i.imgur.com/zaUE6vq.png') right bottom no-repeat;
+}
+
+.rtl-content .faq__container {
+    background: #fff;
+}
+
+@media (max-width:767px) {
+    .faq__container {
+        background: #fff;
+    }
+}
+.faq__title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 69px;
+    text-transform: uppercase;
+    color: #f36d42;
+}
+.faq__slide-title {
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 49px;
+    text-transform: capitalize;
+    color: #f36d42;
+}
+.faq__slide-text {
+    margin-bottom: 35px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    color: #484848;
+}
+
+.row.faq-tabs-row .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    flex-direction: column;
+}
+.row.faq-tabs-row {
+    margin-top: 35px;
+}
+.row.faq-tabs-row .nav-tabs > li > a {
+    padding: 15px 35px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #D8D8D8;
+    border-radius: 35px;
+}
+.row.faq-tabs-row .nav-tabs .nav-item {
+    padding: 0 0 35px;
+}
+.row.faq-tabs-row .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    flex-direction: column;
+    border: none;
+}
+.row.faq-tabs-row .nav-tabs > li.active > a,
+.row.faq-tabs-row .nav-tabs > li.active > a:hover,
+.row.faq-tabs-row .nav-tabs > li > a:hover,
+.row.faq-tabs-row .nav-tabs > li > a:focus {
+    background: linear-gradient(99.28deg, #f36d42 10.78%, #e76243 97.12%);
+    box-shadow: 0px 4px 20px rgba(0, 150, 255, 0.4), inset 0px 1px 2px #f1e7dc;
+}
+#faq .tab-content {
+    padding: 0 100px;
+}
+#faq .tab-content p.red-txt {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 29px;
+    color: #FF890B;
+}
+#faq .tab-content .blue-txt {
+    margin-left: 30px;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 29px;
+    color: #f36d42;
+}
+
+
+</style>
+
+
+
+            
+<section id="faq">
+  <div class="faq__container">
+   <center> <h2 class="faq__title">Frequently Asked Questions</h2></center>
+<br>
+    <div class="row faq-tabs-row">
+      <div class="col-sm-3">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item active" role="presentation">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#tabb1" role="tab" aria-controls="home"
+              aria-selected="true">New Order</a>
+          </li>
+          <li class="nav-item active" role="presentation">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#tabb2" role="tab" aria-controls="profile"
+              aria-selected="false">Payment</a>
+          </li>
+          <li class="nav-item active" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabb3" role="tab" aria-controls="contact"
+              aria-selected="false">Ticket</a>
+          </li>
+          <li class="nav-item active" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabb4" role="tab" aria-controls="contact"
+              aria-selected="false">Child Panel</a>
+          </li>
+          <li class="nav-item active" role="presentation">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#tabb5" role="tab" aria-controls="contact"
+              aria-selected="false">Refund</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-7">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane active" id="tabb1" role="tabpanel" aria-labelledby="home-tab">
+            <h3 class="faq__slide-title">How to Place an Order with SMMFansGrow </h3>
+            <p class="faq__slide-text">Placing an order for fast, affordable, high quality social engagements and social proof is quick and
+              easy. </p>
+
+            <p class="red-txt">Step 1: <span class="blue-txt">Create an Account </span></p>
+            <p class="red-txt">Step 2: <span class="blue-txt">Login to your dashboard </span></p>
+            <p class="red-txt">Step 3: <span class="blue-txt">Select the platform you need marketing help with </span>
+            </p>
+            <p class="red-txt">Step 4: <span class="blue-txt">Select the social media marketing service you need </span>
+            </p>
+            <p class="red-txt">Step 5: <span class="blue-txt">Enter payment instruction and check in later to track your
+                order status.</span></p>
+          </div>
+
+          <div class="tab-pane fade" id="tabb2" role="tabpanel" aria-labelledby="profile-tab">
+            <h3 class="faq__slide-title">How to Pay for Orders </h3>
+            <p class="faq__slide-text">After you have created an account, just follow the steps below to set your account payment correctly. You
+              only need to set it up once and you can order as many times as you want after.</p>
+
+            <p class="red-txt">Step 1: <span class="blue-txt">Login to your dashboard </span></p>
+            <p class="red-txt">Step 2: <span class="blue-txt">Select payment details </span></p>
+            <p class="red-txt">Step 3: <span class="blue-txt">Select payment option and enter your details.</span></p>
+            <p class="red-txt">Step 4: <span class="blue-txt">Select a service and click the order button</span></p>
+            <p class="red-txt">Step 5: <span class="blue-txt">Confirm payment </span></p>
+          </div>
+
+          <div class="tab-pane fade" id="tabb3" role="tabpanel" aria-labelledby="contact-tab">
+            <h3 class="faq__slide-title">How to Open A Customer Support Ticket </h3>
+            <p class="faq__slide-text">If you have any questions or encounter any problems with your order, our Customer Service Ticket system
+              has you all covered.</p>
+            <p class="red-txt">Step 1: <span class="blue-txt">Login to your dashboard </span></p>
+            <p class="red-txt">Step 2: <span class="blue-txt">Select Customer Support </span></p>
+            <p class="red-txt">Step 3: <span class="blue-txt">Click Create Ticket</span></p>
+            <p class="red-txt">Step 4: <span class="blue-txt">Enter the details of your request</span></p>
+            <p class="red-txt">Step 5: <span class="blue-txt">Answer our response email</span></p>
+          </div>
+
+          <div class="tab-pane fade" id="tabb4" role="tabpanel" aria-labelledby="contact-tab">
+            <h3 class="faq__slide-title">How to Get Child Panel Support</h3>
+            <p class="faq__slide-text">If you have any questions or encounter any problems with our Child Panel system, we will take care of
+              you.</p>
+            <p class="red-txt">Step 1: <span class="blue-txt">Login to your dashboard </span></p>
+            <p class="red-txt">Step 2: <span class="blue-txt">Select Customer Support </span></p>
+            <p class="red-txt">Step 3: <span class="blue-txt">Click Create Ticket</span></p>
+            <p class="red-txt">Step 4: <span class="blue-txt">Enter the details of your request – make sure to mention
+                Child Panel support</span></p>
+            <p class="red-txt">Step 5: <span class="blue-txt">Answer our response email</span></p>
+          </div>
+
+          <div class="tab-pane fade" id="tabb5" role="tabpanel" aria-labelledby="contact-tab">
+            <h3 class="faq__slide-title">How to Get a Refund</h3>
+            <p class="faq__slide-text">If you want a refund for the undelivered portion of your order, we’ve made getting your money back quick
+              and easy</p>
+            <p class="red-txt">Step 1: <span class="blue-txt">Login to your dashboard </span></p>
+            <p class="red-txt">Step 2: <span class="blue-txt">Select Customer Support </span></p>
+            <p class="red-txt">Step 3: <span class="blue-txt">Click Create Ticket</span></p>
+            <p class="red-txt">Step 4: <span class="blue-txt">Enter the details of your refund request</span></p>
+            <p class="red-txt">Step 5: <span class="blue-txt">Answer our response email</span></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<script type="text/javascript" src="https://cdn.mysecurepanel.com/global/ch3915babussofa4.js">
+      </script>
+
+
+
+
+
+
+
+
+
+
+
+{% include 'footer.twig' %}

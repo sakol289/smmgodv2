@@ -1,0 +1,291 @@
+{% include 'header.twig' %}
+    
+    
+    <!-- Main variables *content* -->
+        <div class="app-content">
+			<div class="container-fluid">      <div class="alert alert-hevo alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+     	  <h6><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+     	      
+     	     Now you can order your own website just like ours for only $15 a month
+ 
+     	      
+     	      </font></font></h6>
+     	</div>              
+     
+              
+			   <div class="d-card dc-dash">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-8 col-12">
+                            <div class="py-3 px-5">
+                                <div class="dch-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">new request
+                                </font></font></div>
+                                <div class="dch-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Choose the services you want and easily place your orders
+                                </font></font></div>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+              
+             
+             
+                  
+
+       
+       <section class="neworder">
+				
+						<div class="row">
+							<div class="col-lg-7 col-12 mb-5 mb-lg-0">
+								<div class="d-card">
+									
+									<div class="d-card-head">
+										<div class="dch-body">
+											 <i class="icon far fa-layer-plus me-3"></i>
+											 <span class="ml-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">new request</font></font></span>
+										</div>
+									</div>
+                            <form  action="/" method="post" id="order-form">
+                                                                                  
+                                                                                  
+                                                                                  
+                                                                                  {% if error %}
+                            <div class="alert alert-dismissible alert-danger">
+                                {{ errorText }}
+                            </div>
+                            {% endif %}
+
+                            {% if data["order"]["success"] == 1 %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <h4>{{lang['neworder.message.success']}}</h4>
+                                {{lang['neworder.success.id']}}: {{ data['order']['id'] }}<br>
+                                {{lang['neworder.success.service']}}: {{ data['order']['service'] }}
+                                <br>
+                                {{lang['neworder.success.link']}}: {{ data['order']['link'] }}<br>
+                                {{lang['neworder.success.quantity']}}: {{ data['order']['quantity'] }}<br>
+                                
+                                
+                                
+                                
+                                Spent : {{ currency["symbol"]  }} {{ (data['order']['price']*currency["value"]) |round(2, 'floor') }}<br>
+                                 {{ lang["neworder.success.balance"] }}: {{ currency["symbol"]  }} {{ (user["balance"]*currency["value"]) |round(2, 'floor') }} <br>
+                            </div>
+                            {%endif%}
+
+                            {% if data["order"]["success"] == 2 %}
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <h4>{{lang['neworder.message.success']}}</h4>
+                                {{lang['neworder.success.id']}}: {{ data['order']['id'] }}<br>
+                                {{lang['neworder.success.service']}}: {{ data['order']['service'] }}
+                                <br>
+                                {{lang['neworder.success.username']}}: {{ data['order']['link'] }}<br>
+                                {{lang['neworder.success.quantity']}}:
+                                {% if data['order']['min'] == data['order']['max'] %}
+                                {{ data['order']['max'] }}
+                                {% else %}
+                                {{ data['order']['min'] }} - {{ data['order']['max'] }}
+                                {% endif %}
+                                <br>
+                                {{lang['neworder.success.posts']}}:
+                                {% if 0 == data['order']['posts'] %}
+                                âˆž
+                                {% else %}
+                                {{ data['order']['posts'] }}
+                                {% endif %}
+                                <br>
+                                {{lang['neworder.success.delay']}}:
+                                {{ data['order']['delay'] }}
+                                <br>
+                            </div>
+                            {% endif %}	
+                            
+                            
+                            
+                            
+                            
+                                        
+                         
+                                        
+   <!--- start pop pap -->
+                          
+{# {% if error %}
+      <div class="alert alert-dismissible alert-danger">
+        {{ errorText }}
+      </div>
+    {% endif %}
+
+    {% if data["order"]["success"] == 1 %}
+<div class="order-success-card" id="order-success-card">
+<center> <p><b><span style="color:#fe5a02"> {{ user['username'] }}</b></p>
+<!--<img src="https://www.linkpicture.com/q/404-tick.png" alt="checkmark"> --> </center>
+<h2>Your order has been placed.</h2>
+<div class="order-details">
+<p><span class="service-name">
+<b style="color:black">Service :</b>&nbsp;<span style="color:#f70a45">{{data['order']['service']}}</span></span></p>
+<p><span class="link" style="color:black"><b>Link :</b>&nbsp;<a style="color:#0645ad" href="{{data['order']['link']}}">{{data['order']['link']}}</a></span></p>
+
+<p><span class="paid-amount" style="color:white"><b>You paid :</b><span style="color:white">{{ currency['symbol'] }}{{ (data['order']['price']*currency["value"]) }}</span></span><span class="quantity"><b>Quantity :</b><span style="color:blak">{{data['order']['quantity']}}</span></span></p>
+</div>
+
+
+<div class="user-details">
+<p>Order ID :{{data['order']['id']}}</p>
+<p>Remaining balance :{{ currency['symbol'] }}{{ (data['order']['balance']*currency["value"]) }}</p>
+</div>
+<button type="button" onclick="closeOrderReceiptCard()">OK</button>
+</div>
+
+
+</div>
+<script>
+
+setTimeout(function(){
+var el = $("#order-success-card");
+el.addClass("order-success-card-active");
+},1000);
+function closeOrderReceiptCard(){
+
+var el = document.getElementById("order-success-card");
+
+el.classList.remove("order-success-card-active");
+}
+</script>
+
+    {% endif %}
+    {% if data["order"]["success"] == 2 %}
+      <div class="alert alert-dismissible alert-success">
+         <strong> {{ lang["neworder.success.id"] }}: </strong> {{ data['order']['id'] }} <br>
+         <strong> {{ lang["neworder.success.service"] }}: </strong> {{ data['order']['service'] }} <br>
+         <strong> {{ lang["neworder.success.username"] }}: </strong> {{ data['order']['link'] }} <br>
+         <strong> {{ lang["neworder.success.quantity"] }}: </strong> {{ data['order']['min'] }} - {{ data['order']['max'] }} <br>
+         <strong> {{ lang["neworder.success.posts"] }}: </strong> {{ data['order']['posts'] }} <br>
+         <strong> {{ lang["neworder.success.delay"] }}: </strong>{{ data['order']['delay'] }} <br>
+       </div>
+    {% endif %} #}
+ 
+
+
+
+   <!-- end pop code -->
+                              
+                             
+                            
+                           <div class="d-card-body" id="dc-body">										<form method="post" action="/">										   <div class="form-group">
+											  <label for="orderform-category" class="control-label">Category</label>
+									        
+              <select class="form-control" id="neworder_category" name="categories" style="display: none">
+                  {% for category in categories %}
+                  <option {% if category['category_id'] == data["categories"] %} selected {% endif %} value="{{ category['category_id'] }}" ><i class="{{ category["icon"] }}"></i>{{ category["category_name"] }}</option>
+                  {% endfor %}
+                </select>
+                
+                 <div class="dropdown">
+                  <button class="form-control text-left" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                    <span id="categoryTitle"></span>
+                    <i class="fas fa-chevron-down float-right" aria-hidden="true"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="category-drop">
+                  </div>
+                </div>
+            </div>
+                       
+                    <!-- form-group end -->
+                                <div class="form-group mb-4">
+                                   <label for="service" class="control-label">{{ lang["neworder.service"] }}</label>
+               <select class="form-control" id="neworder_services" name="services" style="display: none;"> </select>
+               	<div class="dropdown">
+												<button class="form-control text-left" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+													<span id="serviceTitle"></span>
+													<i class="fa fa-caret-down float-right" aria-hidden="true"></i>
+												</button>
+												<div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="orders-drop">
+
+												</div>
+											</div>
+            </div>
+            
+           
+            
+
+          <div id="neworder_fields">...</div> 
+                
+            <div class="form-group mb-4">
+											  <label>Charge
+											  </label>
+											  <div class="form-group">
+												 <input type="text" class="form-control" id="charge" value="" placeholder="0.00" readonly="" />
+											  </div>
+										   </div>			
+
+
+                     {% if neworderTerms %}
+										  <div class="checkbox">
+											<label>
+											  <input type="checkbox" name="neworder_check">{{ lang['neworder.recheck'] }}
+											</label>
+										  </div>
+										  <br>
+										{% endif %}
+         
+         
+                                        <!-- <div class="alert alert-danger">Important: <ol><li>Please don't make order mutiple times for the same link/profile/account in different/same service wait for the first order finishes.</li><li>Please Read The Description Carefully</li></ol>
+                                
+                                <br> Thank you ðŸ’—
+                                </div> -->
+         
+                      <button type="submit" class="btn btn-primary btn-lg btn-block mb-4">Submit</button>
+										</form>
+
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-5 col-12 mb-5 mb-lg-0">
+								<div class="d-card">									
+									<div class="d-card-head">
+										<div class="dch-body">
+											 <i class="icon far fa-bell me-3"></i>
+											 <span class="ml-3"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">updates</font></font></span>
+										</div>
+									</div>
+									<div class="d-card-body">
+									    
+									    
+									    
+									        <div class="dh-noti">
+                        <ul class="app-news">			{% for new in newsList %}								<li>
+												<div class="group">
+													<div class="d-flex align-items-center">
+														<div class="icon instagram">
+														<img width="25" class="mr-1" src="/img/icons/{{ new['news_icon'] }}.png">
+														</div>
+														<div  class="title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+														   {{ new['news_title'] }} 
+														</font></font></div>
+													</div>
+													<div class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+												{{ new['news_content'] }}	
+													</font></font></div>
+													<div class="date"><i class="fal fa-calendar-alt"></i>{{ new['news_date'] }}</div>
+												</div>
+											</li>											<li>
+														{% endfor %}							</ul>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</section>
+
+			</div>
+		</div>
+    </div>
+ 
+						   
+{% include 'footer.twig' %}
+
+
+
+
+
