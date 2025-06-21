@@ -4,7 +4,7 @@
 
     define('PATH', realpath('.'));
     define('SUBFOLDER', false);
-    define('URL', 'http://127.0.0.1:1245');
+    define('URL', 'https://testv2.new-like.com');
        define('ADMIN_URL', 'admin');//dont change if dont know about that
 
   
@@ -13,10 +13,10 @@
     
     return [
       'db' => [
-        'name'    =>  'smmgodv2',
+        'name'    =>  'u579338369_smmgodv2',
         'host'    =>  'localhost',
-        'user'    =>  'root',
-        'pass'    =>  '1234',
+        'user'    =>  'u579338369_smmgodv2',
+        'pass'    =>  'Sakol@112131',
         'charset' =>  'utf8mb4' 
       ]
     ];
