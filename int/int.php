@@ -18,7 +18,7 @@ catch(PDOException $e) {
     die($e->getMessage());
 }
 
- ini_set('log_errors',0);
+ ini_set('log_errors',1);
   
 if( $_COOKIE['u_id'] && $_COOKIE['u_login'] && $_COOKIE['u_password'] ):
 
