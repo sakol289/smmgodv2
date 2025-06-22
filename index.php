@@ -7,6 +7,8 @@ require_once __DIR__.'/core/google/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
  
 $mail = new PHPMailer;
 $first_route = explode('?', $_SERVER['REQUEST_URI']);

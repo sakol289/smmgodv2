@@ -750,7 +750,7 @@ if ($action == "providers_list") {
                                                                     $provider->execute(["id" => $provider_id]);
                                                                     $provider = $provider->fetch(PDO::FETCH_ASSOC);
                                                                     if ($provider["api_type"] == 1) {
-                                                                        
+
                                                                         $services = $smmapi->action(["key" => $provider["api_key"], "action" => "services"], $provider["api_url"]);
                                                                         if ($services) {
                                                                             $grouped = array_group_by($services, "category");
@@ -768,19 +768,17 @@ if ($action == "providers_list") {
                                                                             echo "An error occurred, please try later.";
                                                                         }
                                                                     }
-                                                                } 
-                                                                
-                                                                elseif($action == "import_service"){
-                                                                    
-                                                                    $providers  = $conn->prepare("SELECT * FROM service_api");
-    $providers->execute([]);
-    $providers  = $providers->fetchAll(PDO::FETCH_ASSOC);
+                                                                } elseif ($action == "import_service") {
 
-      $category  = $conn->prepare("SELECT * FROM categories");
-      $category->execute(array());
-      $category  = $category->fetchAll(PDO::FETCH_ASSOC);
-    
-      $return = '<form class="form" action="'.site_url("admin/services/get_service_add/").'" method="post" data-xhr="true">
+                                                                    $providers  = $conn->prepare("SELECT * FROM service_api");
+                                                                    $providers->execute([]);
+                                                                    $providers  = $providers->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                    $category  = $conn->prepare("SELECT * FROM categories");
+                                                                    $category->execute(array());
+                                                                    $category  = $category->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                    $return = '<form class="form" action="' . site_url("admin/services/get_service_add/") . '" method="post" data-xhr="true">
     
         <div class="modal-body">
           <div id="firstStep">
@@ -789,10 +787,10 @@ if ($action == "providers_list") {
               <label>Service Provider</label>
                 <select class="form-control" name="provider" id="provider">
                       <option value="0">Select service provider...</option>';
-                      foreach( $providers as $provider ):
-                        $return.='<option value="'.$provider["id"].'">'.$provider["api_name"].'</option>';
-                      endforeach;
-                    $return.='</select>
+                                                                    foreach ($providers as $provider):
+                                                                        $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
+                                                                    endforeach;
+                                                                    $return .= '</select>
               </div>
             </div>
           </div>
@@ -877,15 +875,8 @@ if ($action == "providers_list") {
             });
           </script>
           ';
-    echo json_encode(["content"=>$return,"title"=>"Import Services With Categories"]);
-  
-                                                                
-                                                                    
-                                                                    
-                                                                }
-                                                                
-                                                        
-                                                                else {
+                                                                    echo json_encode(["content" => $return, "title" => "Import Services With Categories"]);
+                                                                } else {
                                                                     if ($action == "import_services_last") {
                                                                         $provider_id = $_POST["provider"];
                                                                         $services = json_decode(json_encode($_POST["services"]));
@@ -1065,100 +1056,83 @@ if ($action == "providers_list") {
                                                                                                         $return .= site_url("payment/" . $method["method_get"]);
                                                                                                         $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Seller ID</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"seller_id\" value=\"" . $extra["seller_id"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Private Key</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"private_key\" value=\"" . $extra["private_key"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"" . $extra["currency"] . "\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
                                                                                                         echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
+                                                                                                    } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'easypaisa')) {
+                                                                                                        $id = $_POST['id'];
+                                                                                                        $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                        $method->execute(['id' => $id]);
+                                                                                                        $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                        $extra = json_decode($method['method_extras'], true);
+                                                                                                        $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                        if ($method['method_type'] == 2) {
+                                                                                                            $return .= 'selected';
+                                                                                                        }
+
+                                                                                                        $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                        if ($method['method_type'] == 1) {
+                                                                                                            $return .= 'selected';
+                                                                                                        }
+
+                                                                                                        $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                        $return .= site_url('payment/' . $method['method_get']);
+                                                                                                        $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" .  '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Email</label>' . "\r\n" . '  <input type="text" class="form-control" name="email" value="' . $extra['email'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">App Pass</label>' . "\r\n" . '  <input type="text" class="form-control" name="pass" value="' . $extra['pass'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">How To Get App Password</label>' . "\r\n" . '  <input type="text" class="form-control" name="fees" value="Visit https://youtu.be/xhQxxZyhyis"disabled>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+
+                                                                                                        echo json_encode(['content' => $return, 'title' => '']);
                                                                                                     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'easypaisa')) {
-$id = $_POST['id'];
-  $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-  $method->execute(['id' => $id]);
-  $method = $method->fetch(PDO::FETCH_ASSOC);
-  $extra = json_decode($method['method_extras'], true);
-  $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
-  if ($method['method_type'] == 2) {
-    $return .= 'selected';
-  }
 
-  $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-  if ($method['method_type'] == 1) {
-    $return .= 'selected';
-  }
 
-  $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-  $return .= site_url('payment/' . $method['method_get']);
-  $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" .  '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Email</label>' . "\r\n" . '  <input type="text" class="form-control" name="email" value="' . $extra['email'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">App Pass</label>' . "\r\n" . '  <input type="text" class="form-control" name="pass" value="' . $extra['pass'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">How To Get App Password</label>' . "\r\n" . '  <input type="text" class="form-control" name="fees" value="Visit https://youtu.be/xhQxxZyhyis"disabled>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-  
-echo json_encode(['content' => $return, 'title' => '']);
 
-}
-    
-    
-    
-    
-    
-    
-    
-                                                                                                        if ($action == "edit_paymentmethod" && $_POST["id"] == "cardlink") {
-                                                                                                            $id = $_POST["id"];
-                                                                                                            $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
-                                                                                                            $method->execute(["id" => $id]);
-                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
-                                                                                                            $extra = json_decode($method["method_extras"], true);
-                                                                                                            $return = "<form class=\"form\" action=\"" . site_url("admin/settings/payment-methods/edit/" . $id) . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Method name</label>\r\n            <input type=\"text\" class=\"form-control\" readonly value=\"" . $method["method_name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Visibility</label>\r\n              <select class=\"form-control\" name=\"method_type\">\r\n                    <option value=\"2\"";
-                                                                                                            if ($method["method_type"] == 2) {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Active</option>\r\n                    <option value=\"1\"";
-                                                                                                            if ($method["method_type"] == 1) {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Passive</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">visible name</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"name\" value=\"" . $extra["name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Minimum Payment</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"min\" value=\"" . $extra["min"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Maximum Payout</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"max\" value=\"" . $extra["max"] . "\">\r\n          </div>\r\n\r\n          <hr>\r\n            <p class=\"card-description\">\r\n              <ul>\r\n                <li>\r\n                  API Return Address: <code>";
-                                                                                                            $return .= site_url("payment/" . $method["method_get"]);
-                                                                                                            $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Shop ID</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"shop_id\" value=\"" . $extra["shop_id"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Private Key</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"private_key\" value=\"" . $extra["private_key"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"" . $extra["currency"] . "\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
-                                                                                                            echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
+
+
+                                                                                                    if ($action == "edit_paymentmethod" && $_POST["id"] == "cardlink") {
+                                                                                                        $id = $_POST["id"];
+                                                                                                        $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
+                                                                                                        $method->execute(["id" => $id]);
+                                                                                                        $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                        $extra = json_decode($method["method_extras"], true);
+                                                                                                        $return = "<form class=\"form\" action=\"" . site_url("admin/settings/payment-methods/edit/" . $id) . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Method name</label>\r\n            <input type=\"text\" class=\"form-control\" readonly value=\"" . $method["method_name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Visibility</label>\r\n              <select class=\"form-control\" name=\"method_type\">\r\n                    <option value=\"2\"";
+                                                                                                        if ($method["method_type"] == 2) {
+                                                                                                            $return .= "selected";
                                                                                                         }
-                                                                                                        if ($action == "edit_paymentmethod" && $_POST["id"] == "paypal") {
-                                                                                                            $id = $_POST["id"];
-                                                                                                            $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
-                                                                                                            $method->execute(["id" => $id]);
-                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
-                                                                                                            $extra = json_decode($method["method_extras"], true);
-                                                                                                            $return = "<form class=\"form\" action=\"" . site_url("admin/settings/payment-methods/edit/" . $id) . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Method name</label>\r\n            <input type=\"text\" class=\"form-control\" readonly value=\"" . $method["method_name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Visibility</label>\r\n              <select class=\"form-control\" name=\"method_type\">\r\n                    <option value=\"2\"";
-                                                                                                            if ($method["method_type"] == 2) {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Active</option>\r\n                    <option value=\"1\"";
-                                                                                                            if ($method["method_type"] == 1) {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Passive</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n     <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Mode</label>\r\n              <select class=\"form-control\" name=\"mode\">\r\n                    <option value=\"live\"";
-                                                                                                            if ($extra["mode"] == "live") {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Live</option>\r\n                    <option value=\"test\"";
-                                                                                                            if ($extra["mode"] == "test") {
-                                                                                                                $return .= "selected";
-                                                                                                            }
-                                                                                                            $return .= ">Test</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">visible name</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"name\" value=\"" . $extra["name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Minimum Payment</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"min\" value=\"" . $extra["min"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Maximum Payout</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"max\" value=\"" . $extra["max"] . "\">\r\n          </div>\r\n\r\n          <hr>\r\n            <p class=\"card-description\">\r\n              <ul>\r\n                <li>\r\n                  API Return Address: <code>";
-                                                                                                            $return .= site_url("payment/" . $method["method_get"]);
-                                                                                                            $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Client Id</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"clientId\" value=\"" . $extra["clientId"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Client Secret</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"clientSecret\" value=\"" . $extra["clientSecret"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"" . $extra["currency"] . "\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
-                                                                                                            echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
+                                                                                                        $return .= ">Active</option>\r\n                    <option value=\"1\"";
+                                                                                                        if ($method["method_type"] == 1) {
+                                                                                                            $return .= "selected";
                                                                                                         }
-                                                                                                    else {
+                                                                                                        $return .= ">Passive</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">visible name</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"name\" value=\"" . $extra["name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Minimum Payment</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"min\" value=\"" . $extra["min"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Maximum Payout</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"max\" value=\"" . $extra["max"] . "\">\r\n          </div>\r\n\r\n          <hr>\r\n            <p class=\"card-description\">\r\n              <ul>\r\n                <li>\r\n                  API Return Address: <code>";
+                                                                                                        $return .= site_url("payment/" . $method["method_get"]);
+                                                                                                        $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Shop ID</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"shop_id\" value=\"" . $extra["shop_id"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Private Key</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"private_key\" value=\"" . $extra["private_key"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"" . $extra["currency"] . "\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
+                                                                                                        echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
+                                                                                                    }
+                                                                                                    if ($action == "edit_paymentmethod" && $_POST["id"] == "paypal") {
+                                                                                                        $id = $_POST["id"];
+                                                                                                        $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
+                                                                                                        $method->execute(["id" => $id]);
+                                                                                                        $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                        $extra = json_decode($method["method_extras"], true);
+                                                                                                        $return = "<form class=\"form\" action=\"" . site_url("admin/settings/payment-methods/edit/" . $id) . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Method name</label>\r\n            <input type=\"text\" class=\"form-control\" readonly value=\"" . $method["method_name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Visibility</label>\r\n              <select class=\"form-control\" name=\"method_type\">\r\n                    <option value=\"2\"";
+                                                                                                        if ($method["method_type"] == 2) {
+                                                                                                            $return .= "selected";
+                                                                                                        }
+                                                                                                        $return .= ">Active</option>\r\n                    <option value=\"1\"";
+                                                                                                        if ($method["method_type"] == 1) {
+                                                                                                            $return .= "selected";
+                                                                                                        }
+                                                                                                        $return .= ">Passive</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n     <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Mode</label>\r\n              <select class=\"form-control\" name=\"mode\">\r\n                    <option value=\"live\"";
+                                                                                                        if ($extra["mode"] == "live") {
+                                                                                                            $return .= "selected";
+                                                                                                        }
+                                                                                                        $return .= ">Live</option>\r\n                    <option value=\"test\"";
+                                                                                                        if ($extra["mode"] == "test") {
+                                                                                                            $return .= "selected";
+                                                                                                        }
+                                                                                                        $return .= ">Test</option>\r\n                </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">visible name</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"name\" value=\"" . $extra["name"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Minimum Payment</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"min\" value=\"" . $extra["min"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Maximum Payout</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"max\" value=\"" . $extra["max"] . "\">\r\n          </div>\r\n\r\n          <hr>\r\n            <p class=\"card-description\">\r\n              <ul>\r\n                <li>\r\n                  API Return Address: <code>";
+                                                                                                        $return .= site_url("payment/" . $method["method_get"]);
+                                                                                                        $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Client Id</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"clientId\" value=\"" . $extra["clientId"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Client Secret</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"clientSecret\" value=\"" . $extra["clientSecret"] . "\">\r\n </div>\r\n \r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"" . $extra["currency"] . "\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
+                                                                                                        echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
+                                                                                                    } else {
                                                                                                         if ($action == "edit_paymentmethod" && $_POST["id"] == "paytm") {
                                                                                                             $id = $_POST["id"];
                                                                                                             $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
@@ -1177,149 +1151,126 @@ echo json_encode(['content' => $return, 'title' => '']);
                                                                                                             $return .= site_url("payment/" . $method["method_get"]);
                                                                                                             $return .= "</code>\r\n                </li>\r\n              </ul>\r\n            </p>\r\n          <hr>\r\n\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Merchant Key</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"merchant_key\" value=\"" . $extra["merchant_key"] . "\">\r\n </div>\r\n<div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Merchant MID</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"merchant_mid\" value=\"" . $extra["merchant_mid"] . "\">\r\n </div>\r\n<div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Merchant Website</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"merchant_website\" value=\"" . $extra["merchant_website"] . "\">\r\n </div>\r\n\r\n <div class=\"form-group\">\r\n  <label class=\"form-group__service-name\">Currency</label>\r\n  <input type=\"text\" class=\"form-control\" name=\"currency\" value=\"INR\" readonly=\"\">\r\n </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Commission, %</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"fee\" value=\"" . $extra["fee"] . "\">\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update Settings</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
                                                                                                             echo json_encode(["content" => $return, "title" => "Edit payment method (Method: " . $method["method_name"] . ")"]);
-                                                                                                        } 
-                                                                                                        
-                                                                  elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'paytmqr')) {
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+                                                                                                        } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'paytmqr')) {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Paytm QR Image Link</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_key" value="' . $extra['merchant_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant MID</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_mid" value="' . $extra['merchant_mid'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '                        <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                                  </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Paytm QR Image Link</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_key" value="' . $extra['merchant_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant MID</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_mid" value="' . $extra['merchant_mid'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '                        <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                                  </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'razorpay')) {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
-}                                        
-                                                                                elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'razorpay')) {
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Public Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Key Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="key_secret" value="' . $extra['key_secret'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "webmoney") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Public Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Key Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="key_secret" value="' . $extra['key_secret'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-} 
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    elseif( $action == "edit_paymentmethod" && $_POST["id"] == "webmoney" ){
-      $id = $_POST['id'];
-          $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-          $method->execute(['id' => $id]);
-          $method = $method->fetch(PDO::FETCH_ASSOC);
-          $extra = json_decode($method['method_extras'], true);
-          $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-      
-          if ($method['method_type'] == 2) {
-              $return .= 'selected';
-          }
-      
-          $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-      
-          if ($method['method_type'] == 1) {
-              $return .= 'selected';
-          }
-      
-          $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-          $return .= site_url('payment/' . $method['method_get']);
-          $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">WMID</label>' . "\r\n" . '  <input type="text" class="form-control" name="wmid" value="' . $extra['wmid'] . '">' . "\r\n".'<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">MERCHANT PURSE</label>' . "\r\n" . '  <input type="text" class="form-control" name="purse" value="' . $extra['purse'] . '">' . "\r\n" . ' </div>'. "\r\n".'<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Secret key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . "\r\n" . ' </div>'
-          .'<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">COMMISSION</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . ' </div>' . "\r\n\r\n\r\n" . '</div>'. ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-          echo json_encode(['content' => $return, 'title' => '']);
-                                                                                                    }
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">WMID</label>' . "\r\n" . '  <input type="text" class="form-control" name="wmid" value="' . $extra['wmid'] . '">' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">MERCHANT PURSE</label>' . "\r\n" . '  <input type="text" class="form-control" name="purse" value="' . $extra['purse'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Secret key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . "\r\n" . ' </div>'
+                                                                                                                . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">COMMISSION</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . ' </div>' . "\r\n\r\n\r\n" . '</div>' . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "payeer") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
 
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "payeer" ){
- $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-   
- if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Account</label>' . "\r\n" . '  <input type="text" class="form-control" name="account" value="' . $extra['account'] . '">' . '  <label class="form-group__service-name">Client Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="client_secret" value="' . $extra['client_secret'] . '">' . '  <label class="form-group__service-name">User id</label>' . "\r\n" . '  <input type="text" class="form-control" name="user_id" value="' . $extra['user_id'] . '">' . '  <label class="form-group__service-name">User pass</label>' . "\r\n" . '  <input type="text" class="form-control" name="user_pass" value="' . $extra['user_pass'] . '">' . '<label class="form-group__service-name">M Shop</label>' . "\r\n" . '  <input type="text" class="form-control" name="m_shop" value="' . $extra['m_shop'] . '">'  . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '                           <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                                </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
 
-  $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Account</label>' . "\r\n" . '  <input type="text" class="form-control" name="account" value="' . $extra['account'] . '">'. '  <label class="form-group__service-name">Client Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="client_secret" value="' . $extra['client_secret'] . '">'. '  <label class="form-group__service-name">User id</label>' . "\r\n" . '  <input type="text" class="form-control" name="user_id" value="' . $extra['user_id'] . '">'. '  <label class="form-group__service-name">User pass</label>' . "\r\n" . '  <input type="text" class="form-control" name="user_pass" value="' . $extra['user_pass'] . '">' .'<label class="form-group__service-name">M Shop</label>' . "\r\n" . '  <input type="text" class="form-control" name="m_shop" value="' . $extra['m_shop'] . '">'  . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '                           <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                                </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    
-    echo json_encode(['content' => $return, 'title' => '']);
-}
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "gbprimepay") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "gbprimepay" ){
-    $id = $_POST['id'];
-  $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-  $method->execute(['id' => $id]);
-  $method = $method->fetch(PDO::FETCH_ASSOC);
-  $extra = json_decode($method['method_extras'], true);
-  $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-  if ($method['method_type'] == 2) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-  if ($method['method_type'] == 1) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-  $return .= site_url('payment/' . $method['method_get']);
-  $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" .  '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Token(Customer key)</label>' . "\r\n" . '  <input type="text" class="form-control" name="token" value="' . $extra['token'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-      echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-
-elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'flutterwave')) {
-$id = $_POST['id'];
-$method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-$method->execute(['id' => $id]);
-$method = $method->fetch(PDO::FETCH_ASSOC);
-$extra = json_decode($method['method_extras'], true);
-$return = '
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" .  '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Token(Customer key)</label>' . "\r\n" . '  <input type="text" class="form-control" name="token" value="' . $extra['token'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'flutterwave')) {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '
 <form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">
    ' . "\r\n\r\n" . '
    <div class="modal-body">
@@ -1329,14 +1280,14 @@ $return = '
       <div class="service-mode__block">
          ' . "\r\n" . '  
          <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-            if ($method['method_type'] == 2) {
-            $return .= 'selected';
-            }
-            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-            if ($method['method_type'] == 1) {
-            $return .= 'selected';
-            }
-            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  
          </div>
          ' . "\r\n" . ' 
       </div>
@@ -1353,8 +1304,8 @@ $return = '
       <ul>
          ' . "\r\n" . '
          <li>' . "\r\n" . ' API callback address: <code>';
-            $return .= site_url('payment/' . $method['method_get']);
-            $return .= '</code>' . "\r\n" . '
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '
          </li>
          ' . "\r\n" . '
       </ul>
@@ -1373,141 +1324,99 @@ $return = '
    ' . "\r\n" . ' 
 </form>
 ';
-echo json_encode(['content' => $return, 'title' => '']);
-}
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'toyyibpay')) {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Secret_Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Category_Code</label>' . "\r\n" . '  <input type="text" class="form-control" name="category_code" value="' . $extra['category_code'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "mollie") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
-elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'toyyibpay')) {   $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
 
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Secret_Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Category_Code</label>' . "\r\n" . '  <input type="text" class="form-control" name="category_code" value="' . $extra['category_code'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-   echo json_encode(['content' => $return, 'title' => '']);
-}
+                                                                                                            if ($extra['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
 
+                                                                                                            if ($extra['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Api key</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">' .  '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "mercadopago") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
 
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "mollie" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
 
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
 
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            if ($method['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
 
-    if ($extra['is_demo'] == 1) {
-        $return .= 'selected';
-    }
+                                                                                                            if ($method['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
 
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($extra['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Api key</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">'.  '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "mercadopago" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($method['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($method['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Access token</label>' . "\r\n" . '  <input type="text" class="form-control" name="access_token" value="' . $extra['access_token'] . '">'. '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-elseif( $action == "yeni_kupon" ){
-    $return = '<form class="form" action="'.site_url("admin/kuponlar/new").'" method="post" data-xhr="true">
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Access token</label>' . "\r\n" . '  <input type="text" class="form-control" name="access_token" value="' . $extra['access_token'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "yeni_kupon") {
+                                                                                                            $return = '<form class="form" action="' . site_url("admin/kuponlar/new") . '" method="post" data-xhr="true">
         <div class="modal-body">
 
           <div class="form-group">
@@ -1534,449 +1443,385 @@ elseif( $action == "yeni_kupon" ){
           </div>
           </form>
           ';
-    echo json_encode(["content"=>$return,"title"=>"Create new coupon"]);}
-    
-    
-    
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "wish_money" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="mode">' . "\r\n" . '  <option value="test"';
-
-    if ($extra['mode'] == 'test') {
-        $return .= 'selected';
-    }
-
-    $return .= '>Test</option>' . "\r\n" . '  <option value="live"';
-
-    if ($extra['mode'] == 'live') {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Channel</label>' . "\r\n" . '  <input type="text" class="form-control" name="channel" value="' . $extra['channel'] . '">'. '  <label class="form-group__service-name"> Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret" value="' . $extra['secret'] . '">'. '  <label class="form-group__service-name">Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="website" value="' . $extra['website'] . '">'. '  <label class="form-group__service-name">Fee</label>' . "\r\n" . '  <input type="number" class="form-control" name="fee" value="' . $extra['fee'] . '">'.  "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "opay" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($method['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($method['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">'. '  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">'. '  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">'. '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "thawani" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($extra['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($extra['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" .'  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">'. '  <label class="form-group__service-name">Publishable key</label>' . "\r\n" . '  <input type="text" class="form-control" name="publishable_key" value="' . $extra['publishable_key'] . '">'. '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="0" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">'.'  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "youcan" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($extra['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($extra['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" .'  <label class="form-group__service-name"> Private Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="private_key" value="' . $extra['private_key'] . '">'. '  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">'.'  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "esewa" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($extra['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($extra['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" .'  <label class="form-group__service-name"> Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">'. '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "khalti" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' .  "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" .'  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">'.'  <label class="form-group__service-name">Secret key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">'. '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "kashier" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
-
-    if ($method['is_demo'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
-
-    if ($method['is_demo'] == 0) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">'. '  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">'. '  <label class="form-group__service-name">Api key</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">'.'  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-elseif ($action == "edit_paymentmethod" && $_POST["id"] == "stripe"){
-  $id = $_POST['id'];
-  $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-  $method->execute(['id' => $id]);
-  $method = $method->fetch(PDO::FETCH_ASSOC);
-  $extra = json_decode($method['method_extras'], true);
-  $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-  if ($method['method_type'] == 2) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-  if ($method['method_type'] == 1) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-  $return .= site_url('payment/' . $method['method_get']);
-  $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Publishable Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_publishable_key" value="' . $extra['stripe_publishable_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_secret_key" value="' . $extra['stripe_secret_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Webhooks Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_webhooks_secret" value="' . $extra['stripe_webhooks_secret'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Currency</label>' . "\r\n" . '  <input type="text" class="form-control" name="currency" value="' . $extra['currency'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '             <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                      </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-  echo json_encode(['content' => $return, 'title' => '']);
-}
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "coinbase" ){
-            $id = $_POST['id'];
-                $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-                $method->execute(['id' => $id]);
-                $method = $method->fetch(PDO::FETCH_ASSOC);
-                $extra = json_decode($method['method_extras'], true);
-                $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-            
-                if ($method['method_type'] == 2) {
-                    $return .= 'selected';
-                }
-            
-                $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-            
-                if ($method['method_type'] == 1) {
-                    $return .= 'selected';
-                }
-            
-                $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-                $return .= site_url('payment/' . $method['method_get']);
-                $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">API KEY</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '' . "\r\n\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">WEBHOOK SHARED API KEY</label>' . "\r\n" . '  <input type="text" class="form-control" name="webhook_api" value="' . $extra['webhook_api'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" .'<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">COMMISSION</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . '         <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                 </div>'. ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-                echo json_encode(['content' => $return, 'title' => '']);
-                
-}
-            
-
-
-elseif ($action == "edit_paymentmethod" && $_POST["id"] == "payumoney") {
-  $id = $_POST['id'];
-  $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-  $method->execute(['id' => $id]);
-  $method = $method->fetch(PDO::FETCH_ASSOC);
-  $extra = json_decode($method['method_extras'], true);
-  $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-  if ($method['method_type'] == 2) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-  if ($method['method_type'] == 1) {
-    $return .= 'selected';
-  }
-
-  $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-  $return .= site_url('payment/' . $method['method_get']);
-  $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_key" value="' . $extra['merchant_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Salt Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="salt" value="' . $extra['salt'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Currency</label>' . "\r\n" . '  <input type="text" class="form-control" name="currency" value="' . $extra['currency'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '         <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '             </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-  echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "custom3" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
-    $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "custom2" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
-    $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-
-
-
-
-
-
-
-elseif( $action == "edit_paymentmethod" && $_POST["id"] == "custom" ){
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
-    $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-}
-elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'perfectmoney')) {
-    $id = $_POST['id'];
-    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
-    $method->execute(['id' => $id]);
-    $method = $method->fetch(PDO::FETCH_ASSOC);
-    $extra = json_decode($method['method_extras'], true);
-    $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
-
-    if ($method['method_type'] == 2) {
-        $return .= 'selected';
-    }
-
-    $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
-
-    if ($method['method_type'] == 1) {
-        $return .= 'selected';
-    }
-
-     $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
-    $return .= site_url('payment/' . $method['method_get']);
-    $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Alternate Passphrase</label>' . "\r\n" . '  <input type="text" class="form-control" name="passphrase" value="' . $extra['passphrase'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">USD ID</label>' . "\r\n" . '  <input type="text" class="form-control" name="usd" value="' . $extra['usd'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website Name</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '            <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                    </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
-    echo json_encode(['content' => $return, 'title' => '']);
-} 
-                                                                                                        else {
+                                                                                                            echo json_encode(["content" => $return, "title" => "Create new coupon"]);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "wish_money") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="mode">' . "\r\n" . '  <option value="test"';
+
+                                                                                                            if ($extra['mode'] == 'test') {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Test</option>' . "\r\n" . '  <option value="live"';
+
+                                                                                                            if ($extra['mode'] == 'live') {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Channel</label>' . "\r\n" . '  <input type="text" class="form-control" name="channel" value="' . $extra['channel'] . '">' . '  <label class="form-group__service-name"> Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret" value="' . $extra['secret'] . '">' . '  <label class="form-group__service-name">Website</label>' . "\r\n" . '  <input type="text" class="form-control" name="website" value="' . $extra['website'] . '">' . '  <label class="form-group__service-name">Fee</label>' . "\r\n" . '  <input type="number" class="form-control" name="fee" value="' . $extra['fee'] . '">' .  "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "opay") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
+
+                                                                                                            if ($method['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">' . '  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . '  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "thawani") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($extra['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
+
+                                                                                                            if ($extra['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . '  <label class="form-group__service-name">Publishable key</label>' . "\r\n" . '  <input type="text" class="form-control" name="publishable_key" value="' . $extra['publishable_key'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="0" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "youcan") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($extra['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
+
+                                                                                                            if ($extra['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name"> Private Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="private_key" value="' . $extra['private_key'] . '">' . '  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">' . '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "esewa") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($extra['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
+
+                                                                                                            if ($extra['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name"> Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">' . '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "khalti") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' .  "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Public key</label>' . "\r\n" . '  <input type="text" class="form-control" name="public_key" value="' . $extra['public_key'] . '">' . '  <label class="form-group__service-name">Secret key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . '  <label class="form-group__service-name">Fee  (%)</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="fee" value="' . $extra['fee'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "kashier") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Mode</label>' . "\r\n" . '<select class="form-control" name="is_demo">' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['is_demo'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Demo</option>' . "\r\n" . '  <option value="0"';
+
+                                                                                                            if ($method['is_demo'] == 0) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Live</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant id</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_id" value="' . $extra['merchant_id'] . '">' . '  <label class="form-group__service-name"> Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="secret_key" value="' . $extra['secret_key'] . '">' . '  <label class="form-group__service-name">Api key</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">' . '  <label class="form-group__service-name">Dollar rate</label>' . "\r\n" . '  <input type="number" step="0.01" min="1" class="form-control" name="dollar_rate" value="' . $extra['dollar_rate'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "stripe") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Publishable Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_publishable_key" value="' . $extra['stripe_publishable_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Secret Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_secret_key" value="' . $extra['stripe_secret_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Stripe Webhooks Secret</label>' . "\r\n" . '  <input type="text" class="form-control" name="stripe_webhooks_secret" value="' . $extra['stripe_webhooks_secret'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Currency</label>' . "\r\n" . '  <input type="text" class="form-control" name="currency" value="' . $extra['currency'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '             <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                      </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "coinbase") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">API KEY</label>' . "\r\n" . '  <input type="text" class="form-control" name="api_key" value="' . $extra['api_key'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '' . "\r\n\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">WEBHOOK SHARED API KEY</label>' . "\r\n" . '  <input type="text" class="form-control" name="webhook_api" value="' . $extra['webhook_api'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">COMMISSION</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . '         <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                 </div>' . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "payumoney") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_key" value="' . $extra['merchant_key'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Salt Key</label>' . "\r\n" . '  <input type="text" class="form-control" name="salt" value="' . $extra['salt'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Currency</label>' . "\r\n" . '  <input type="text" class="form-control" name="currency" value="' . $extra['currency'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '         <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '             </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "custom3") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
+                                                                                                            $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "custom2") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
+                                                                                                            $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif ($action == "edit_paymentmethod" && $_POST["id"] == "custom") {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n";
+                                                                                                            $return .= '' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '</div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'perfectmoney')) {
+                                                                                                            $id = $_POST['id'];
+                                                                                                            $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+                                                                                                            $method->execute(['id' => $id]);
+                                                                                                            $method = $method->fetch(PDO::FETCH_ASSOC);
+                                                                                                            $extra = json_decode($method['method_extras'], true);
+                                                                                                            $return = '<form class="form" action="' . site_url('admin/settings/payment-methods/edit/' . $id) . '" method="post" data-xhr="true">' . "\r\n\r\n" . '<div class="modal-body">' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Method name</label>' . "\r\n" . '  <input type="text" class="form-control" readonly value="' . $method['method_name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="service-mode__block">' . "\r\n" . '  <div class="form-group">' . "\r\n" . '  <label>Visibility</label>' . "\r\n" . '<select class="form-control" name="method_type">' . "\r\n" . '  <option value="2"';
+
+                                                                                                            if ($method['method_type'] == 2) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Active</option>' . "\r\n" . '  <option value="1"';
+
+                                                                                                            if ($method['method_type'] == 1) {
+                                                                                                                $return .= 'selected';
+                                                                                                            }
+
+                                                                                                            $return .= '>Inactive</option>' . "\r\n" . '</select>' . "\r\n" . '  </div>' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Visible name</label>' . "\r\n" . '  <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Minimum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="min" value="' . $extra['min'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Maximum Payment</label>' . "\r\n" . '  <input type="text" class="form-control" name="max" value="' . $extra['max'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n" . ' <hr>' . "\r\n" . '  <p class="card-description">' . "\r\n" . '<ul>' . "\r\n" . '<li>' . "\r\n" . ' API callback address: <code>';
+                                                                                                            $return .= site_url('payment/' . $method['method_get']);
+                                                                                                            $return .= '</code>' . "\r\n" . '</li>' . "\r\n" . '</ul>' . "\r\n" . '  </p>' . "\r\n" . ' <hr>' . "\r\n\r\n" . ' <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Alternate Passphrase</label>' . "\r\n" . '  <input type="text" class="form-control" name="passphrase" value="' . $extra['passphrase'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">USD ID</label>' . "\r\n" . '  <input type="text" class="form-control" name="usd" value="' . $extra['usd'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Merchant Website Name</label>' . "\r\n" . '  <input type="text" class="form-control" name="merchant_website" value="' . $extra['merchant_website'] . '">' . "\r\n" . ' </div>' . "\r\n" . '<div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Commission, %</label>' . "\r\n" . '  <input type="text" class="form-control" name="fee" value="' . $extra['fee'] . '">' . "\r\n" . ' </div>' . "\r\n\r\n\r\n" . '            <div class="form-group">' . "\r\n" . '  <label class="form-group__service-name">Content</label>' . "\r\n" . '  <textarea  class="form-control summernote" name="content" id="custom-payment-content">' . $extra['content'] . '</textarea>' . "\r\n" . '</div>' . "\r\n\r\n" . '                    </div>' . "\r\n\r\n" . ' <div class="modal-footer">' . "\r\n" . '  <button type="submit" class="btn btn-primary">Update</button>' . "\r\n" . '  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>' . "\r\n" . ' </div>' . "\r\n" . ' </form>';
+                                                                                                            echo json_encode(['content' => $return, 'title' => '']);
+                                                                                                        } else {
                                                                                                             if ($action == "edit_paymentmethod" && $_POST["id"] == "weepay") {
                                                                                                                 $id = $_POST["id"];
                                                                                                                 $method = $conn->prepare("SELECT * FROM payment_methods WHERE method_get=:id ");
@@ -2516,10 +2361,10 @@ elseif (($action == 'edit_paymentmethod') && ($_POST['id'] == 'perfectmoney')) {
     }
 }
 
-if( $action == "add_currency" ){
-            $currency_code = abcus("id", $settings["site_currency"], "name");
+if ($action == "add_currency") {
+    $currency_code = abcus("id", $settings["site_currency"], "name");
 
-    $return = '<form class="form" action="'.site_url("admin/settings/currency/add").'" method="post" data-xhr="true">
+    $return = '<form class="form" action="' . site_url("admin/settings/currency/add") . '" method="post" data-xhr="true">
 
         <div class="modal-body">
 
@@ -2535,7 +2380,7 @@ if( $action == "add_currency" ){
           </div>
 
           <div class="form-group">
-            <label class="form-group__service-name">1 '.$currency_code.' = </label>
+            <label class="form-group__service-name">1 ' . $currency_code . ' = </label>
             <input type="text" class="form-control" name="value" value="">
           </div>
        
@@ -2544,37 +2389,36 @@ if( $action == "add_currency" ){
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
           </form>';
-    echo json_encode(["content"=>$return,"title"=>"Add Currency"]);
-    }
-if( $action == "edit_currency" ){
+    echo json_encode(["content" => $return, "title" => "Add Currency"]);
+}
+if ($action == "edit_currency") {
     $id         = $_POST["id"];
     $provider   = $conn->prepare("SELECT * FROM currency WHERE id=:id ");
-    $provider   ->execute(array("id"=>$id));
+    $provider->execute(array("id" => $id));
     $provider   = $provider->fetch(PDO::FETCH_ASSOC);
-    $cur=$provider["name"];
-    if($provider["rate"]==2){
-                      $provider["value"]=liverate($cur);  
-    }else{
-                           $provider["value"]=$provider["value"];  
-   
+    $cur = $provider["name"];
+    if ($provider["rate"] == 2) {
+        $provider["value"] = liverate($cur);
+    } else {
+        $provider["value"] = $provider["value"];
     }
-                        
-               
-    $return = '<form class="form" action="'.site_url("admin/settings/currency/edit/".$id).'" method="post" data-xhr="true">
+
+
+    $return = '<form class="form" action="' . site_url("admin/settings/currency/edit/" . $id) . '" method="post" data-xhr="true">
 
         <div class="modal-body">
 
           <div class="form-group">
             <label class="form-group__service-name">Currency Name</label>
-            <input type="text" class="form-control" name="name" value="'.$provider["name"].'">
+            <input type="text" class="form-control" name="name" value="' . $provider["name"] . '">
           </div>
           <div class="form-group">
             <label class="form-group__service-name">Currency Symbol</label>
-            <input type="text" class="form-control" name="symbol" value="'.$provider["symbol"].'">
+            <input type="text" class="form-control" name="symbol" value="' . $provider["symbol"] . '">
           </div>
 <div class="form-group">
             <label class="form-group__service-name">Exchange Rates</label>
-            <input type="text" class="form-control" name="currencyvalue" value="'.$provider["value"].'">
+            <input type="text" class="form-control" name="currencyvalue" value="' . $provider["value"] . '">
           </div> 
 
 
@@ -2582,8 +2426,14 @@ if( $action == "edit_currency" ){
                 <div class="form-group">
                 <label>Currency Status</label>
                   <select class="form-control" name="status">
-                      <option value="1"'; if( $provider["status"] == 1 ): $return.='selected'; endif; $return.='>Enabled</option>
-                      <option value="2"'; if( $provider["status"] == 2 ): $return.='selected'; endif; $return.='>Disabled</option>
+                      <option value="1"';
+    if ($provider["status"] == 1): $return .= 'selected';
+    endif;
+    $return .= '>Enabled</option>
+                      <option value="2"';
+    if ($provider["status"] == 2): $return .= 'selected';
+    endif;
+    $return .= '>Disabled</option>
                   </select>
                 </div>
               </div>
@@ -2597,24 +2447,21 @@ if( $action == "edit_currency" ){
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 
-         </form>';  
-    echo json_encode(["content"=>$return,"title"=>"Edit currency (".$provider["name"].") "]);
-   
-
- }
- elseif( $action == "coustm_rate" ){
+         </form>';
+    echo json_encode(["content" => $return, "title" => "Edit currency (" . $provider["name"] . ") "]);
+} elseif ($action == "coustm_rate") {
     $id     = $_POST["id"];
     $row    = $conn->prepare("SELECT * FROM clients WHERE client_id=:id ");
-    $row ->execute(array("id"=>$id));
+    $row->execute(array("id" => $id));
     $row    = $row->fetch(PDO::FETCH_ASSOC);
-    
-    $return = '<form class="form" action="'.site_url("admin/clients/set_discount/".$id).'" method="post" data-xhr="true">
+
+    $return = '<form class="form" action="' . site_url("admin/clients/set_discount/" . $id) . '" method="post" data-xhr="true">
         <div class="modal-body">
 
           <div class="service-mode__block">
             <div class="form-group">
             <label>Discount Percentage (%)</label>
-              <input class="form-control" name="coustm_rate" placeholder="25"   value="'.$row["coustm_rate"].'"    >
+              <input class="form-control" name="coustm_rate" placeholder="25"   value="' . $row["coustm_rate"] . '"    >
             </div>
           </div>
 
@@ -2625,8 +2472,5 @@ if( $action == "edit_currency" ){
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
           </form>';
-    echo json_encode(["content"=>$return,"title"=>"Bulk Discount (For: ".$row["username"].") "]);
-
-
+    echo json_encode(["content" => $return, "title" => "Bulk Discount (For: " . $row["username"] . ") "]);
 }
-?>
