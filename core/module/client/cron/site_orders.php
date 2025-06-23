@@ -1,8 +1,8 @@
 <?php
 
-echo 3;
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// echo 3;
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 define('BASE_PATH', dirname(__DIR__, 4));
 require_once BASE_PATH . '/int/classes/smmapi.php';
 
