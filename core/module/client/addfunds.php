@@ -841,7 +841,7 @@ elseif ($_POST && $_POST["payment_type"]):
 
                 if (weepayMobile()) {
                     echo '<meta name="viewport" content="width=device-width, initial-scale=1">
-   <div id="weePay-checkout-form" class="responsive"></div>';
+            <div id="weePay-checkout-form" class="responsive"></div>';
                     die;
                 } else {
                     echo '<div id="weePay-checkout-form" class="popup"></div>';
@@ -992,7 +992,7 @@ elseif ($_POST && $_POST["payment_type"]):
             $insert->execute(array("c_id" => $user['client_id'], "amount" => $amount, "code" => $paymentCode, "method" => $method_id, "mode" => "Auto", "date" => date("Y.m.d H:i:s"), "ip" => GetIP(), "extra" => $m_orderid));
             $success = 1;
             $successText = "Your payment was initiated successfully, you are being redirected..";
-?>
+                    ?>
             <form id="payeer_payment" method="post" action="https://payeer.com/merchant/">
                 <input type="hidden" name="m_shop" value="<?= $m_shop ?>">
                 <input type="hidden" name="m_orderid" value="<?= $m_orderid ?>">
@@ -1013,18 +1013,18 @@ elseif ($_POST && $_POST["payment_type"]):
                 <script>
                     $("form#payeer_payment").submit();
                 </script>
-    <?php
-        // $arGetParams = array(
-        //     'm_shop' => $m_shop,
-        //     'm_orderid' => $m_orderid,
-        //     'm_amount' => $m_amount,
-        //     'm_curr' => $m_curr,
-        //     'm_desc' => $m_desc,
-        //     'm_sign' => $sign,
-        //     );
-        // $url = 'https://payeer.com/merchant/?'.http_build_query($arGetParams);
+            <?php
+                // $arGetParams = array(
+                //     'm_shop' => $m_shop,
+                //     'm_orderid' => $m_orderid,
+                //     'm_amount' => $m_amount,
+                //     'm_curr' => $m_curr,
+                //     'm_desc' => $m_desc,
+                //     'm_sign' => $sign,
+                //     );
+                // $url = 'https://payeer.com/merchant/?'.http_build_query($arGetParams);
 
-        // $payment_url = $url;
+                // $payment_url = $url;
 
 
 
@@ -1341,37 +1341,37 @@ elseif ($_POST && $_POST["payment_type"]):
             $success_url = site_url('payment/esewa') . '?payment_id=' . $paymentCode;
 
             echo '
-        <div class="dimmer active" style="min-height: 400px;">
-                          <div class="loader"></div>
-                          <div class="dimmer-content">
-                            <center><h2>Please do not refresh this page</h2></center>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                              <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#e15b64" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
-                              </circle>
-                              <circle cx="50" cy="50" r="23" stroke-width="8" stroke="#f8b26a" stroke-dasharray="36.12831551628262 36.12831551628262" stroke-dashoffset="36.12831551628262" fill="none" stroke-linecap="round">
-                                <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
-                              </circle>
-                            </svg>
-                          </div>
-                        </div>
+            <div class="dimmer active" style="min-height: 400px;">
+                            <div class="loader"></div>
+                            <div class="dimmer-content">
+                                <center><h2>Please do not refresh this page</h2></center>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#e15b64" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                                    <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                                </circle>
+                                <circle cx="50" cy="50" r="23" stroke-width="8" stroke="#f8b26a" stroke-dasharray="36.12831551628262 36.12831551628262" stroke-dashoffset="36.12831551628262" fill="none" stroke-linecap="round">
+                                    <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
+                                </circle>
+                                </svg>
+                            </div>
+                            </div>
 
-        <form  id="form" action="' . $url . '" method="POST">
-            <input value="' . $total_amount . '" name="tAmt" type="hidden">
-            <input value="' . $amount_fee . '" name="amt" type="hidden">
-            <input value="' . $fees . '" name="txAmt" type="hidden">
-            <input value="0" name="psc" type="hidden">
-            <input value="0" name="pdc" type="hidden">
-            <input value="' . $merchant_id . '" name="scd" type="hidden">
-            <input value="' . $paymentCode . '" name="pid" type="hidden">
-            <input value="' . $success_url . '" type="hidden" name="su">
-            <input value="' . $success_url . '" type="hidden" name="fu">
-            </form>
-            
-              <script type="text/javascript">
-            document.getElementById("form").submit();
-          </script>
-';
+            <form  id="form" action="' . $url . '" method="POST">
+                <input value="' . $total_amount . '" name="tAmt" type="hidden">
+                <input value="' . $amount_fee . '" name="amt" type="hidden">
+                <input value="' . $fees . '" name="txAmt" type="hidden">
+                <input value="0" name="psc" type="hidden">
+                <input value="0" name="pdc" type="hidden">
+                <input value="' . $merchant_id . '" name="scd" type="hidden">
+                <input value="' . $paymentCode . '" name="pid" type="hidden">
+                <input value="' . $success_url . '" type="hidden" name="su">
+                <input value="' . $success_url . '" type="hidden" name="fu">
+                </form>
+                
+                <script type="text/javascript">
+                document.getElementById("form").submit();
+            </script>
+            ';
 
 
         elseif ($method_id == 22):
@@ -1405,40 +1405,40 @@ elseif ($_POST && $_POST["payment_type"]):
 
 
             echo '<div class="dimmer active" style="min-height: 400px;">
-      <div class="loader"></div>
-      <div class="dimmer-content">
-        <center><h2>Please do not refresh this page</h2></center>
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-          <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#e15b64" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
-          </circle>
-          <circle cx="50" cy="50" r="23" stroke-width="8" stroke="#f8b26a" stroke-dasharray="36.12831551628262 36.12831551628262" stroke-dashoffset="36.12831551628262" fill="none" stroke-linecap="round">
-            <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
-          </circle>
-        </svg>
-        <form id=pay name=pay method="POST" action="https://merchant.wmtransfer.com/lmi/payment.asp">
-            <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="' . $amount . '">
-            <input type="hidden" name="LMI_PAYMENT_DESC" value="' . $webmoney["memo"] . '">
-            <input type="hidden" name="LMI_PAYMENT_NO" value="' . $order_id . '">
-            <input type="hidden" name="LMI_PAYEE_PURSE" value="' . $web_id . '">
-            <input type="hidden" name="LMI_SIM_MODE" value="0">
-           
-            <input type="hidden" name="LMI_RESULT_URL" value="' . $webmoney["result_url"] . '">
-            <input type="hidden" name="LMI_SUCCESS_URL" value="' . $webmoney["success_url"] . '">
-            <input type="hidden" name="LMI_SUCCESS_METHOD" value="1">
-            <input type="hidden" name="LMI_FAIL_URL" value="' . $webmoney["cancel_url"] . '">
-            <input type="hidden" name="LMI_FAIL_METHOD" value="2">
-        
-            <input type="hidden" name="FIELD_1" value="' . $user["client_id"] . '">
-            <input type="hidden" name="FIELD_2" value="' . $order_id . '">
-            
+            <div class="loader"></div>
+            <div class="dimmer-content">
+                <center><h2>Please do not refresh this page</h2></center>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:#fff;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#e15b64" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                </circle>
+                <circle cx="50" cy="50" r="23" stroke-width="8" stroke="#f8b26a" stroke-dasharray="36.12831551628262 36.12831551628262" stroke-dashoffset="36.12831551628262" fill="none" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
+                </circle>
+                </svg>
+                <form id=pay name=pay method="POST" action="https://merchant.wmtransfer.com/lmi/payment.asp">
+                    <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="' . $amount . '">
+                    <input type="hidden" name="LMI_PAYMENT_DESC" value="' . $webmoney["memo"] . '">
+                    <input type="hidden" name="LMI_PAYMENT_NO" value="' . $order_id . '">
+                    <input type="hidden" name="LMI_PAYEE_PURSE" value="' . $web_id . '">
+                    <input type="hidden" name="LMI_SIM_MODE" value="0">
+                
+                    <input type="hidden" name="LMI_RESULT_URL" value="' . $webmoney["result_url"] . '">
+                    <input type="hidden" name="LMI_SUCCESS_URL" value="' . $webmoney["success_url"] . '">
+                    <input type="hidden" name="LMI_SUCCESS_METHOD" value="1">
+                    <input type="hidden" name="LMI_FAIL_URL" value="' . $webmoney["cancel_url"] . '">
+                    <input type="hidden" name="LMI_FAIL_METHOD" value="2">
+                
+                    <input type="hidden" name="FIELD_1" value="' . $user["client_id"] . '">
+                    <input type="hidden" name="FIELD_2" value="' . $order_id . '">
+                    
 
-          <script type="text/javascript">
-            document.getElementById("pay").submit();
-          </script>
-        </form>
-      </div>
-    </div>';
+                <script type="text/javascript">
+                    document.getElementById("pay").submit();
+                </script>
+                </form>
+            </div>
+            </div>';
 
 
 
@@ -1487,49 +1487,49 @@ elseif ($_POST && $_POST["payment_type"]):
 
             $callback_url = site_url('payment/khalti') . '?payment_id=' . $paymentCode . '&amount=' . $amount;
             $response =  '
-       <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
-       <script>
-        var config = {
-            // replace the publicKey with yours
-            "publicKey": "' . $public_key . '",
-            "productIdentity": "' . $paymentCode . '",
-            "productName": "' . $paymentCode . '",
-            "productUrl": "' . site_url('/' . $paymentCode) . '",
-            "paymentPreference": [
-                "KHALTI",
-                "EBANKING",
-                "MOBILE_BANKING",
-                "CONNECT_IPS",
-                "SCT",
-                ],
-            "eventHandler": {
-                onSuccess (payload) {
-                    // hit merchant api for initiating verfication
-                    console.log(payload);
-                    window.location = "' . $callback_url . '&token="+payload.token;
-                },
-                onError (error) {
-                    console.log(error);
-                },
-                onClose () {
-                    console.log("widget is closing");
-                }
-            }
-        };
+                <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+                <script>
+                    var config = {
+                        // replace the publicKey with yours
+                        "publicKey": "' . $public_key . '",
+                        "productIdentity": "' . $paymentCode . '",
+                        "productName": "' . $paymentCode . '",
+                        "productUrl": "' . site_url('/' . $paymentCode) . '",
+                        "paymentPreference": [
+                            "KHALTI",
+                            "EBANKING",
+                            "MOBILE_BANKING",
+                            "CONNECT_IPS",
+                            "SCT",
+                            ],
+                        "eventHandler": {
+                            onSuccess (payload) {
+                                // hit merchant api for initiating verfication
+                                console.log(payload);
+                                window.location = "' . $callback_url . '&token="+payload.token;
+                            },
+                            onError (error) {
+                                console.log(error);
+                            },
+                            onClose () {
+                                console.log("widget is closing");
+                            }
+                        }
+                    };
 
-        var checkout = new KhaltiCheckout(config);
-        checkout.show({amount: ' . $amount . '});
-        
-    </script>';
+                    var checkout = new KhaltiCheckout(config);
+                    checkout.show({amount: ' . $amount . '});
+                    
+                </script>';
 
-            $insert = $conn->prepare("INSERT INTO payments SET client_id=:c_id, payment_amount=:amount, payment_privatecode=:code, payment_method=:method, payment_mode=:mode, payment_create_date=:date, payment_ip=:ip, payment_extra=:extra");
-            $insert->execute(array("c_id" => $user['client_id'], "amount" => $amount_fee, "code" => $paymentCode, "method" => $method_id, "mode" => "Automatic", "date" => date("Y.m.d H:i:s"), "ip" => GetIP(), "extra" => $paymentCode));
+                        $insert = $conn->prepare("INSERT INTO payments SET client_id=:c_id, payment_amount=:amount, payment_privatecode=:code, payment_method=:method, payment_mode=:mode, payment_create_date=:date, payment_ip=:ip, payment_extra=:extra");
+                        $insert->execute(array("c_id" => $user['client_id'], "amount" => $amount_fee, "code" => $paymentCode, "method" => $method_id, "mode" => "Automatic", "date" => date("Y.m.d H:i:s"), "ip" => GetIP(), "extra" => $paymentCode));
 
 
-            $_SESSION['khalti_code'] = $response;
+                        $_SESSION['khalti_code'] = $response;
 
-            header("Location: " . site_url('addfunds'));
-            exit;
+                        header("Location: " . site_url('addfunds'));
+                        exit;
 
 
 
@@ -1561,18 +1561,18 @@ elseif ($_POST && $_POST["payment_type"]):
 
             // Set up the form for the payment
             echo '
-<form method="post" name="payuForm" id="pay" action="https://payeer.com/merchant/">
-  <input type="hidden" name="m_shop" value="' . $m_shop . '">
-  <input type="hidden" name="m_orderid" value="' . $m_orderid . '">
-  <input type="hidden" name="m_amount" value="' . $m_amount . '">
-  <input type="hidden" name="m_curr" value="' . $m_curr . '">
-  <input type="hidden" name="m_desc" value="' . $m_desc . '">
-  <input type="hidden" name="m_sign" value="' . $sign . '">
-             <script type="text/javascript">
-                document.getElementById("pay").submit();
-              </script>
-</form>
-';
+            <form method="post" name="payuForm" id="pay" action="https://payeer.com/merchant/">
+            <input type="hidden" name="m_shop" value="' . $m_shop . '">
+            <input type="hidden" name="m_orderid" value="' . $m_orderid . '">
+            <input type="hidden" name="m_amount" value="' . $m_amount . '">
+            <input type="hidden" name="m_curr" value="' . $m_curr . '">
+            <input type="hidden" name="m_desc" value="' . $m_desc . '">
+            <input type="hidden" name="m_sign" value="' . $sign . '">
+                        <script type="text/javascript">
+                            document.getElementById("pay").submit();
+                        </script>
+            </form>
+            ';
 
 
 
@@ -1598,22 +1598,22 @@ elseif ($_POST && $_POST["payment_type"]):
 
 
             echo '
-<form action="https://api.gbprimepay.com/v3/qrcode" method="POST" id="pay"> 
-              <input type="hidden" name="token" value="' . $token . '">
-  <input type="hidden" name="referenceNo"   value="' . $order_id . '">
-  <input type="hidden" name="backgroundUrl" value="' . $backgroundUrl . '">
-            <input type="hidden" name="amount"      value="' . $amount . '"/>
+            <form action="https://api.gbprimepay.com/v3/qrcode" method="POST" id="pay"> 
+                        <input type="hidden" name="token" value="' . $token . '">
+            <input type="hidden" name="referenceNo"   value="' . $order_id . '">
+            <input type="hidden" name="backgroundUrl" value="' . $backgroundUrl . '">
+                        <input type="hidden" name="amount"      value="' . $amount . '"/>
 
 
-            
+                        
 
 
-              <script type="text/javascript">
-                document.getElementById("pay").submit();
-              </script>
-            </form>
-          </div>
-        </div>';
+                        <script type="text/javascript">
+                            document.getElementById("pay").submit();
+                        </script>
+                        </form>
+                    </div>
+                    </div>';
 
 
 
@@ -1706,7 +1706,7 @@ elseif ($_POST && $_POST["payment_type"]):
               </script>
             </form>
           </div>
-        </div>';
+            </div>';
 
 
 
@@ -1773,22 +1773,22 @@ elseif ($_POST && $_POST["payment_type"]):
                 <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" keyTimes="0;1" values="0 50 50;-360 50 50"></animateTransform>
               </circle>
             </svg>
-    <form action="https://checkout.flutterwave.com/v3/hosted/pay" method="post" name="flutterform" id="pay">
-      <input type="hidden" name="public_key" value="' . $posted["public_key"] . '" />
-      <input type="hidden" name="customer[email]" value="' . $posted["email"] . '" />
-      <input type="hidden" name="customer[phone_number]" value="' . $posted["phone"] . '" />
-      <input type="hidden" name="customer[name]" value="' . $posted["name"] . '" />
-      <input type="hidden" name="tx_ref" value="' . $posted["tx_ref"] . '" />
-      <input type="hidden" name="amount" value="' . $posted["amount"] . '" />
-      <input type="hidden" name="currency" value="' . $extra['currency'] . '" />
-      <input type="hidden" name="meta[token]" value="' . $abusaleh . '" />
-      <input type="hidden" name="redirect_url" value="' . $posted["redirect_url"] . '" />
-      <script type="text/javascript">
-                document.getElementById("pay").submit();
-              </script>
-    </form>
-  </div>
-</div>';
+                <form action="https://checkout.flutterwave.com/v3/hosted/pay" method="post" name="flutterform" id="pay">
+                <input type="hidden" name="public_key" value="' . $posted["public_key"] . '" />
+                <input type="hidden" name="customer[email]" value="' . $posted["email"] . '" />
+                <input type="hidden" name="customer[phone_number]" value="' . $posted["phone"] . '" />
+                <input type="hidden" name="customer[name]" value="' . $posted["name"] . '" />
+                <input type="hidden" name="tx_ref" value="' . $posted["tx_ref"] . '" />
+                <input type="hidden" name="amount" value="' . $posted["amount"] . '" />
+                <input type="hidden" name="currency" value="' . $extra['currency'] . '" />
+                <input type="hidden" name="meta[token]" value="' . $abusaleh . '" />
+                <input type="hidden" name="redirect_url" value="' . $posted["redirect_url"] . '" />
+                <script type="text/javascript">
+                            document.getElementById("pay").submit();
+                        </script>
+                </form>
+            </div>
+            </div>';
 
 
 
@@ -1846,9 +1846,9 @@ elseif ($_POST && $_POST["payment_type"]):
 
         elseif ($method_id == 35):
 
-            /*   ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);*/
+                        /*   ini_set('display_errors', '1');
+            ini_set('display_startup_errors', '1');
+            error_reporting(E_ALL);*/
 
             require_once('core/lib/mollie/vendor/autoload.php');
             require_once('core/lib/mollie/examples/functions.php');
