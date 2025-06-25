@@ -164,10 +164,10 @@ elseif ($_POST && $_POST["payment_type"]):
     } elseif (!is_numeric($amount) and $_POST["payment_type"] != "2013") {
         $error    = 1;
         $errorText = $languageArray["error.addfunds.online.amount"];
-    } elseif ($amount < $method["method_min"]) {
+    } elseif ($amount < $method["method_min"] and $_POST["payment_type"] != "2013") {
         $error    = 1;
         $errorText = str_replace("{min}", $method["method_min"], $languageArray["error.addfunds.online.min"]);
-    } elseif ($amount > $method["method_max"] && $method["method_max"] != 0) {
+    } elseif ($amount > $method["method_max"] && $method["method_max"] != 0 and $_POST["payment_type"] != "2013") {
         $error    = 1;
         $errorText = str_replace("{max}", $method["method_max"], $languageArray["error.addfunds.online.max"]);
     } else {
