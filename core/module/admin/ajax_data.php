@@ -1610,16 +1610,6 @@ if ($action == "providers_list") {
                                                                                                                         </div>
                                                                                                                     </div>
 
-                                                                                                                    <div class="service-mode__block">
-                                                                                                                        <div class="form-group">
-                                                                                                                            <label>Mode</label>
-                                                                                                                            <select class="form-control" name="is_demo">
-                                                                                                                                <option value="1" ' . ($is_demo == 1 ? 'selected' : '') . '>Demo</option>
-                                                                                                                                <option value="0" ' . ($is_demo == 0 ? 'selected' : '') . '>Live</option>
-                                                                                                                            </select>
-                                                                                                                        </div>
-                                                                                                                    </div>
-
                                                                                                                     <div class="form-group">
                                                                                                                         <label class="form-group__service-name">Visible name</label>
                                                                                                                         <input type="text" class="form-control" name="name" value="' . $extra['name'] . '">
