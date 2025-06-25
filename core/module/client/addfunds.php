@@ -92,7 +92,7 @@ if ($_POST && $_POST["payment_bank"]):
     } elseif (empty($bank)) {
         $error    = 1;
         $errorText = $languageArray["error.addfunds.bank.account"];
-    } elseif (!is_numeric($amount)) {
+    } elseif (!is_numeric($amount) or $method_id != 2013) {
         $error    = 1;
         $errorText =  $languageArray["error.addfunds.bank.amount"];
     } elseif (empty($gonderen)) {
