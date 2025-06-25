@@ -77,14 +77,14 @@
                                                 </select>
                                             </div>
 
-                                            <!-- Instructions for payment['id'] == 40 -->
-                                            <div class="fga mb-4 custom-payment-content-40" style="display:none">
+                                            <!-- Instructions for payment['id'] == 2013 -->
+                                            <div class="fga mb-4 custom-payment-content-2013" style="display:none">
                                                 <label class="fla" for="instructions">Instructions:</label>
                                                 <br>
                                                 <p>
                                                     {% set hasInstructions = false %}
                                                     {% for payment in paymentsList %}
-                                                        {% if payment['id'] == 40 %}
+                                                        {% if payment['id'] == 2013 %}
                                                             {{ payment['content'] | default('Please follow the instructions provided by the payment provider.') }}
                                                             {% set hasInstructions = true %}
                                                         {% endif %}
@@ -229,7 +229,7 @@
                 // Reset visibility
                 $(".custom-payment-content").hide();
                 $(".custom-payment-content-bkash").hide();
-                $(".custom-payment-content-40").hide();
+                $(".custom-payment-content-2013").hide();
                 $("#qr").hide();
                 $(".normal-payment").show();
                 paymentAmountField.show();
@@ -241,21 +241,21 @@
                 } else if (selectedValue == 34) {
                     $(".normal-payment").hide();
                     $(".custom-payment-content").show();
-                } else if (selectedValue == 40) {
+                } else if (selectedValue == 2013) {
                     $(".normal-payment").hide();
-                    $(".custom-payment-content-40").show();
+                    $(".custom-payment-content-2013").show();
                     paymentAmountField.hide();
-                    // Set custom action URL for payment['id'] == 40
+                    // Set custom action URL for payment['id'] == 2013
                     var customUrl = '';
                     {% for payment in paymentsList %}
-                        {% if payment['id'] == 40 %}
+                        {% if payment['id'] == 2013 %}
                             customUrl = "{{ payment['custom_url'] | default('https://example.com/custom-payment') }}";
                         {% endif %}
                     {% endfor %}
                     if (customUrl) {
                         form.attr('action', customUrl);
                     } else {
-                        console.warn('Custom URL for payment id 40 is not defined.');
+                        console.warn('Custom URL for payment id 2013 is not defined.');
                     }
                 } else if (selectedValue == 14) {
                     $("#qr").show();
