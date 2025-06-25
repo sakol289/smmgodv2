@@ -56,13 +56,13 @@
                                         {% if error %}
                                             <div class="alert alert-dismissible alert-danger">
                                                 <button type="button" class="close" data-dismiss="alert">×</button>
-                                                {{ errorText }}
+                                                {{ errorText | default('An error occurred.') }}
                                             </div>
                                         {% endif %}
                                         {% if success %}
                                             <div class="alert alert-dismissible alert-success">
                                                 <button type="button" class="close" data-dismiss="alert">×</button>
-                                                {{ successText }}
+                                                {{ successText | default('Operation successful.') }}
                                             </div>
                                         {% endif %}
 
@@ -72,7 +72,7 @@
                                                 <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
                                                     <option value="">Select Payment Method</option>
                                                     {% for payment in paymentsList %}
-                                                        <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] }}</option>
+                                                        <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] | default('Unknown Method') }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -223,7 +223,6 @@
             // Handle payment method change
             $("#payment_method").on('change', function() {
                 var selectedValue = $(this).val();
-                var form = $('#payment_form');
                 var paymentAmountField = $('.payment-amount-field');
 
                 // Reset visibility
@@ -233,7 +232,6 @@
                 $("#qr").hide();
                 $(".normal-payment").show();
                 paymentAmountField.show();
-                form.attr('action', 'addfunds');
 
                 if (selectedValue == 21) {
                     $(".normal-payment").hide();
@@ -244,19 +242,7 @@
                 } else if (selectedValue == 2013) {
                     $(".normal-payment").hide();
                     $(".custom-payment-content-2013").show();
-                    paymentAmountField.hide();
-                    // Set custom action URL for payment['id'] == 2013
-                    var customUrl = '';
-                    {% for payment in paymentsList %}
-                        {% if payment['id'] == 2013 %}
-                            customUrl = "{{ payment['custom_url'] | default('https://example.com/custom-payment') }}";
-                        {% endif %}
-                    {% endfor %}
-                    if (customUrl) {
-                        form.attr('action', customUrl);
-                    } else {
-                        console.warn('Custom URL for payment id 2013 is not defined.');
-                    }
+                    paymentAmountField.hide(); // Hide payment_amount for payment['id'] == 2013
                 } else if (selectedValue == 14) {
                     $("#qr").show();
                 }
@@ -269,7 +255,7 @@
 
     function handleOrderType(selectObject) {
         var element = document.getElementById("qr");
-        var element2 = document.getElementById("ppqr"); // Note: ppqr is not in the provided HTML, may need to add
+        var element2 = document.getElementById("ppqr"); // Note: ppqr is not in HTML, may need to add
         var selectedValue = selectObject.value;
 
         // Reset visibility
