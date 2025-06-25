@@ -161,7 +161,7 @@ elseif ($_POST && $_POST["payment_type"]):
     if (empty($method_id)) {
         $error    = 1;
         $errorText = $languageArray["error.addfunds.online.method"];
-    } elseif (!is_numeric($amount) and $payment_type != "2013") {
+    } elseif (!is_numeric($amount) and $_POST["payment_type"] != "2013") {
         $error    = 1;
         $errorText = $languageArray["error.addfunds.online.amount"];
     } elseif ($amount < $method["method_min"]) {
