@@ -2,6 +2,8 @@
 
 //unset($_SESSION["kashier_code"]);
 
+var_dump($_POST);
+
 $title .= $languageArray["addfunds.title"];
 
 if ($_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1) {
@@ -92,7 +94,7 @@ if ($_POST && $_POST["payment_bank"]):
     } elseif (empty($bank)) {
         $error    = 1;
         $errorText = $languageArray["error.addfunds.bank.account"];
-    } elseif (!is_numeric($amount) or $method_id != 2013) {
+    } elseif (!is_numeric($amount) or $method_id != "2013") {
         $error    = 1;
         $errorText =  $languageArray["error.addfunds.bank.amount"];
     } elseif (empty($gonderen)) {
