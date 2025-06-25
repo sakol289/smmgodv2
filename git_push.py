@@ -36,8 +36,9 @@ def git_push():
         subprocess.run(["git", "add", "."], check=True)
         
         # รับข้อความ commit จากผู้ใช้
-        commit_message = input("Enter commit message: ")
-        full_commit_message = f"{commit_message} (Version {new_version:.2f})"
+        # commit_message = input("Enter commit message: ")
+        full_commit_message = f"(Version {new_version:.2f})"
+        # full_commit_message = f"{commit_message} (Version {new_version:.2f})"
         
         # Commit การเปลี่ยนแปลง
         subprocess.run(["git", "commit", "-m", full_commit_message], check=True)
