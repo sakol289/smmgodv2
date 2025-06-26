@@ -10,7 +10,8 @@ $config = require_once '../app/config.php';
 
 
 if( $_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1  ){
-  Header("Location:".site_url('logout'));
+	echo "คุณไม่มีสิทธิ์เข้าถึงหน้านี้";
+//   Header("Location:".site_url('logout'));
 }
 try {
 	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
