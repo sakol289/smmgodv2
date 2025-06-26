@@ -1,3 +1,28 @@
+<?php 
+
+session_start();
+ob_start();
+
+var_dump($_SESSION);
+
+require_once '../vendor/autoload.php';
+$config = require_once '../app/config.php';
+
+try {
+	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
+}
+catch(PDOException $e) {
+	die($e->getMessage());
+}
+
+$method       = $conn->prepare("SELECT * FROM payment_methods WHERE method_get='paymentv2'");
+$method       = $method->fetch(PDO::FETCH_ASSOC);
+$extras       = json_decode($method["method_extras"], true);
+
+var_dump($extras);
+
+?>
+
 <!DOCTYPE html>
 <html lang="th">
 
