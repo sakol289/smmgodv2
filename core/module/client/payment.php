@@ -2190,7 +2190,7 @@ elseif ($method_name == "paymentv2"):
         exit;
     }
 
-    var_dump($extras["apiSecret"]);
+    var_dump($extras);
 
 
 
