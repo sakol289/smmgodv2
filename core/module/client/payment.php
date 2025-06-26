@@ -2151,10 +2151,12 @@ elseif ($method_name == "paymentv2"):
 
     var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
+    echo "googlesecret: ";
+    var_dump($googlesecret);
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
     var_dump($captcha_control);
-    
+
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
 //     if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])):
 //         $payment        = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
