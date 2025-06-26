@@ -8,8 +8,8 @@ ob_start();
 
 // var_dump($_SESSION);
 
-require_once '../../vendor/autoload.php';
-$config = require_once '../../app/config.php';
+require_once '../vendors/autoload.php';
+$config = require_once '../int/config.php';
 
 
 if( $_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1  ){
