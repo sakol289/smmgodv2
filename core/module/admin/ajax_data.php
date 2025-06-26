@@ -1621,7 +1621,7 @@ if ($action == "providers_list") {
                                                                                                                     </div>
 
                                                                                                                     <div class="form-group">
-                                                                                                                        <label class="form-group__service-name">ClientSecret</label>
+                                                                                                                        <label class="form-group__service-name">Client Secret</label>
                                                                                                                         <input type="text" class="form-control" name="ClientSecret" value="' . $extra['ClientSecret'] . '">
                                                                                                                     </div>
 
