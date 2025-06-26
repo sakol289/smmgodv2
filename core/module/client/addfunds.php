@@ -2,7 +2,7 @@
 
 //unset($_SESSION["kashier_code"]);
 
-var_dump($_POST);
+// var_dump($_POST);
 
 $title .= $languageArray["addfunds.title"];
 
@@ -1998,6 +1998,12 @@ elseif ($_POST && $_POST["payment_type"]):
             $_SESSION['TID'] = $result->txn_id;
             $pay_url = $result->redirect_url;
             header("location: $pay_url");
+
+        elseif ($method_id == 2013):
+            $insert                       = $conn->prepare("INSERT INTO payments SET client_id=:c_id, payment_amount=:amount, payment_privatecode=:code, payment_method=:method, payment_mode=:mode, payment_create_date=:date, payment_ip=:ip, payment_extra=:extra");
+            $insert->execute(array("c_id" => $user['client_id'], "amount" => $amount, "code" => $paymentCode, "method" => $method_id, "mode" => "", "date" => date("Y.m.d H:i:s"), "ip" => GetIP(), "extra" => $result->txn_id));
+            $_SESSION['cybersafepayment'] = true;
+            header("location: paymentv2/index.php");
 
 
 
