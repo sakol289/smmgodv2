@@ -2156,7 +2156,7 @@ elseif ($method_name == "paymentv2"):
 
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
-    if( $captcha && $captcha_control->success == false ){
+    if( $grecaptcharesponse && $captcha_control->success == false ){
         echo "Please verify that you are not a robot.";
         exit;
     }
