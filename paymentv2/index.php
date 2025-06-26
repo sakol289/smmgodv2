@@ -27,7 +27,7 @@ $method->execute();
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
-var_dump($method);
+// var_dump($method);
 var_dump($extras);
 
 ?>
@@ -111,7 +111,7 @@ var_dump($extras);
 								<div class="mb-4">
 									<p class="mb-2">📌 สแกน QR นี้ผ่านแอปธนาคารของคุณ:</p>
 									<div class="border p-3 text-center rounded">
-										<img src="https://via.placeholder.com/220x220.png?text=QR+Code"
+										<img src="<? echo $extras['imageqrcode'];?>"
 											alt="QR Code พร้อมเพย์" class="img-fluid rounded">
 									</div>
 								</div>
