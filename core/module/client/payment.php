@@ -2216,7 +2216,7 @@ elseif ($method_name == "paymentv2"):
 
     $response = curl_exec($curl);
     $data = json_decode($response);
-
+    var_dump($data);
 
 
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
