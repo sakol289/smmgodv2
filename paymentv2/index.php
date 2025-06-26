@@ -13,6 +13,11 @@ if (!isset($_SESSION["neira_userlogin"]) || $_SESSION["neira_userlogin"] != 1 ||
     exit;
 }
 
+if (!isset($_SESSION["cybersafepayment"])) {
+    header("Location: paymentv2/status.php?error=ห้ามเข้าโดยไม่ได้รับอนุณาต");
+    exit;
+}
+
 try {
     $conn = new PDO(
         "mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"],
