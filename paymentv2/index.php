@@ -22,7 +22,7 @@ catch(PDOException $e) {
 	die($e->getMessage());
 }
 
-$method       = $conn->prepare("SELECT * FROM payment_methods");
+$method       = $conn->prepare("SELECT * FROM payment_methods whare method_name='paymentv2'");
 $method->execute();
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
@@ -80,8 +80,8 @@ var_dump($extras);
 				<div class="card mb-4">
 					<div class="card-header fw-semibold">ข้อมูลรายการ</div>
 					<div class="card-body">
-						<p class="d-flex justify-content-between"><span
-								class="text-muted">หมายเลขคำสั่ง</span><code>clj13a2m</code></p>
+						<!-- <p class="d-flex justify-content-between"><span
+								class="text-muted">หมายเลขคำสั่ง</span><code>clj13a2m</code></p> -->
 						<p class="d-flex justify-content-between"><span class="text-muted">ประเภทรายการ</span>
 							<span class="badge bg-primary">ชำระค่าบริการ</span>
 						</p>
