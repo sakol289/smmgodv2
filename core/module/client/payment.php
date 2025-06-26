@@ -2153,6 +2153,8 @@ elseif ($method_name == "paymentv2"):
     $googlesecret   = $settings["recaptcha_secret"];
     echo "googlesecret: ";
     var_dump($googlesecret);
+    $grecaptcharesponse  = $_POST['g-recaptcha-response'];
+
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $captcha . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
     var_dump($captcha_control);
