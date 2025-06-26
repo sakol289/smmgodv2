@@ -8,6 +8,9 @@ var_dump($_SESSION);
 require_once '../vendor/autoload.php';
 $config = require_once '../app/config.php';
 
+if( $_SESSION["neira_userlogin"] != 1 ){
+  Header("Location:".site_url('/'));
+}
 try {
 	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
 }
