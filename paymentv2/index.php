@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>DriteStudio Payment</title>
+	<title>CyberSafePayment</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -18,7 +18,7 @@
 					style="width: 32px; height: 32px;">
 					<i class="fas fa-check"></i>
 				</div>
-				<h1 class="h5 fw-bold m-0">DriteStudio Payment</h1>
+				<h1 class="h5 fw-bold m-0">CyberSafePayment</h1>
 			</a>
 		</div>
 	</header>
@@ -121,7 +121,7 @@
 	</main>
 
 	<footer class="bg-white border-top text-center py-4 mt-5">
-		<small class="text-muted">&copy; 2025 DriteStudio Payment - ระบบชำระเงินออนไลน์ที่ปลอดภัยและรวดเร็ว</small>
+		<small class="text-muted">&copy; 2025 CyberSafePayment - ระบบชำระเงินออนไลน์ที่ปลอดภัยและรวดเร็ว</small>
 		<br>
 		<a href="/license" class="text-decoration-none text-primary small mt-2 d-inline-block"><i
 				class="fas fa-id-card me-1"></i>License</a>
