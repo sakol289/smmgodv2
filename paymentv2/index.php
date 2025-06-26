@@ -3,7 +3,7 @@
 session_start();
 ob_start();
 
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 require_once '../vendor/autoload.php';
 $config = require_once '../app/config.php';
