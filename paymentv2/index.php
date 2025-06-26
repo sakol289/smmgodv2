@@ -23,6 +23,7 @@ catch(PDOException $e) {
 }
 
 $method       = $conn->prepare("SELECT * FROM `payment_methods`");
+$method->execute();
 $method       = $method->fetchAll(PDO::FETCH_ASSOC);
 
 var_dump($method);
