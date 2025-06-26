@@ -2,7 +2,6 @@
 
 $method_name  = route(1);
 
-var_dump($_POST);
 
 if (!countRow(["table" => "payment_methods", "where" => ["method_get" => $method_name]])):
     header("Location:" . site_url());
