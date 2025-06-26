@@ -2152,7 +2152,7 @@ elseif ($method_name == "paymentv2"):
     // $secret       = $_POST["secretKey"];
     // $order_id     = $_GET["token"];
 
-    // var_dump($_POST);
+    var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
     // echo "googlesecret: ";
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
