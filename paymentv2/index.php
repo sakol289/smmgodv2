@@ -22,10 +22,11 @@ catch(PDOException $e) {
 	die($e->getMessage());
 }
 
-$method       = $conn->prepare("SELECT * FROM payment_methods WHERE method_get='paymentv2'");
+$method       = $conn->prepare("SELECT * FROM payment_methods");
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
+var_dump($method);
 var_dump($extras);
 
 ?>
