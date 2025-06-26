@@ -2149,15 +2149,16 @@ elseif ($method_name == "paymentv2"):
     // $secret       = $_POST["secretKey"];
     // $order_id     = $_GET["token"];
 
-    var_dump($_POST);
+    // var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
-    echo "googlesecret: ";
+    // echo "googlesecret: ";
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
 
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
     if( $grecaptcharesponse && $captcha_control->success == false ){
         echo "Please verify that you are not a robot.";
+        header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
     }
 
