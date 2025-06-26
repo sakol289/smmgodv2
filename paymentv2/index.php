@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -11,14 +11,13 @@ ob_start();
 $config = require_once '../int/config.php';
 
 
-if( $_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1  ){
+if ($_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1) {
 	// echo "คุณไม่มีสิทธิ์เข้าถึงหน้านี้";
-  header("Location:/");
+	header("Location:/");
 }
 try {
 	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
-}
-catch(PDOException $e) {
+} catch (PDOException $e) {
 	die($e->getMessage());
 }
 
@@ -111,8 +110,7 @@ var_dump($extras);
 								<div class="mb-4">
 									<p class="mb-2">📌 สแกน QR นี้ผ่านแอปธนาคารของคุณ:</p>
 									<div class="border p-3 text-center rounded">
-										<img src="<? echo $extras['imageqrcode'];?>"
-											alt="QR Code พร้อมเพย์" class="img-fluid rounded">
+										<img src="<?php echo htmlspecialchars($extras['imageqrcode']); ?>" alt="QR Code พร้อมเพย์" class="img-fluid rounded">
 									</div>
 								</div>
 
@@ -120,17 +118,17 @@ var_dump($extras);
 									<label for="paymentSlip" class="form-label">อัปโหลดสลิป</label>
 									<div class="border border-dashed border-secondary rounded p-4 text-center bg-white">
 										<i class="fas fa-file-upload fa-2x text-muted mb-2"></i>
-										<p class="text-muted mb-2">เลือกรูปภาพสลิปการโอน</p>
-										<label for="paymentSlip" class="btn btn-primary">📁 อัปโหลดรูป</label>
+										<p class="text-muted mb-2" id="uploadStatus">เลือกรูปภาพสลิปการโอน</p>
+										<label for="paymentSlip" class="btn btn-primary" id="uploadButtonLabel">📁 อัปโหลดรูป</label>
 										<input type="file" id="paymentSlip" name="paymentSlip" accept="image/*" class="d-none">
 									</div>
+									<div id="qrError" class="text-danger small mt-2 d-none">ไม่สามารถอ่าน QR Code ได้ กรุณาอัปโหลดสลิปที่มี QR Code ชัดเจน</div>
 								</div>
 							</div>
 
 							<div id="angpaoSection" class="d-none">
 								<label for="angpaoLink" class="form-label">ลิงก์ซองอั่งเปา</label>
-								<input type="url" class="form-control" id="angpaoLink" name="angpaoLink"
-									placeholder="วางลิงก์ซองอั่งเปาที่นี่">
+								<input type="url" class="form-control" id="angpaoLink" name="angpaoLink" placeholder="วางลิงก์ซองอั่งเปาที่นี่">
 							</div>
 
 							<div class="alert alert-warning small mt-4">
@@ -141,7 +139,7 @@ var_dump($extras);
 								</ul>
 							</div>
 
-							<button type="submit" class="btn btn-primary w-100 mt-4">ยืนยันการชำระเงิน</button>
+							<button type="submit" class="btn btn-primary w-100 mt-4" id="submitButton" disabled>ยืนยันการชำระเงิน</button>
 						</form>
 					</div>
 				</div>
@@ -162,32 +160,75 @@ var_dump($extras);
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- เพิ่มไลบรารี jsQR -->
+	<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 	<script>
 		const paymentTypeSelect = document.getElementById('paymentType');
 		const qrSection = document.getElementById('qrSection');
 		const angpaoSection = document.getElementById('angpaoSection');
 		const paymentSlipInput = document.getElementById('paymentSlip');
-		const uploadButtonLabel = document.querySelector('label[for="paymentSlip"]');
+		const uploadButtonLabel = document.getElementById('uploadButtonLabel');
+		const uploadStatus = document.getElementById('uploadStatus');
+		const qrError = document.getElementById('qrError');
+		const submitButton = document.getElementById('submitButton');
 
-		paymentTypeSelect.addEventListener('change', function () {
+		paymentTypeSelect.addEventListener('change', function() {
 			if (this.value === 'angpao') {
 				qrSection.classList.add('d-none');
 				angpaoSection.classList.remove('d-none');
+				submitButton.disabled = false; // เปิดใช้งานปุ่มสำหรับซองอั่งเปา
+				qrError.classList.add('d-none');
 			} else {
 				qrSection.classList.remove('d-none');
 				angpaoSection.classList.add('d-none');
+				submitButton.disabled = true; // ปิดใช้งานปุ่มจนกว่าสลิปจะถูกตรวจสอบ
 			}
 		});
 
-		// Optional: Display selected file name
 		paymentSlipInput.addEventListener('change', function() {
 			if (this.files && this.files.length > 0) {
-				const fileName = this.files[0].name;
-				// You might want to update a text element instead of the button label for better UX
-				// For now, let's update the button label as a simple indicator
-				uploadButtonLabel.textContent = `📁 ${fileName}`;
+				const file = this.files[0];
+				uploadButtonLabel.textContent = `📁 ${file.name}`;
+				uploadStatus.textContent = 'กำลังตรวจสอบ QR Code...';
+
+				// อ่านไฟล์ภาพ
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					const img = new Image();
+					img.onload = function() {
+						// สร้าง canvas เพื่อประมวลผลภาพ
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+						canvas.width = img.width;
+						canvas.height = img.height;
+						ctx.drawImage(img, 0, 0, img.width, img.height);
+
+						// ใช้ jsQR เพื่ออ่าน QR Code
+						const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+						const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+						if (code) {
+							// QR Code อ่านได้
+							uploadStatus.textContent = 'ตรวจพบ QR Code สำเร็จ';
+							qrError.classList.add('d-none');
+							submitButton.disabled = false; // เปิดใช้งานปุ่มยืนยัน
+							// ตัวเลือก: เก็บข้อมูล QR Code หากต้องการตรวจสอบ
+							console.log('QR Code Data:', code.data);
+						} else {
+							// QR Code อ่านไม่ได้
+							uploadStatus.textContent = 'เลือกรูปภาพสลิปการโอน';
+							qrError.classList.remove('d-none');
+							submitButton.disabled = true; // ปิดใช้งานปุ่มยืนยัน
+						}
+					};
+					img.src = e.target.result;
+				};
+				reader.readAsDataURL(file);
 			} else {
 				uploadButtonLabel.textContent = '📁 อัปโหลดรูป';
+				uploadStatus.textContent = 'เลือกรูปภาพสลิปการโอน';
+				qrError.classList.add('d-none');
+				submitButton.disabled = true;
 			}
 		});
 	</script>
