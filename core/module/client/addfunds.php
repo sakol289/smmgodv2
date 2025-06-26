@@ -4,6 +4,10 @@
 
 // var_dump($_POST);
 
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $title .= $languageArray["addfunds.title"];
 
 if ($_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1) {
