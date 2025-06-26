@@ -16,6 +16,7 @@ if( $_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1  ){
 //   Header("Location:".site_url('logout'));
 }
 try {
+	var_dump("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
 	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
 }
 catch(PDOException $e) {
