@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $method_name  = route(1);
 
 
@@ -2162,7 +2165,7 @@ elseif ($method_name == "paymentv2"):
         exit;
     }
 
-    
+
 
 
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
