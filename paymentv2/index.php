@@ -14,7 +14,7 @@ if (!isset($_SESSION["neira_userlogin"]) || $_SESSION["neira_userlogin"] != 1 ||
 }
 
 if (!isset($_SESSION["cybersafepayment"])) {
-    header("Location: paymentv2/status.php?error=ห้ามเข้าโดยไม่ได้รับอนุณาต");
+    header("Location: /paymentv2/status.php?error=ห้ามเข้าโดยไม่ได้รับอนุณาต");
     exit;
 }
 
