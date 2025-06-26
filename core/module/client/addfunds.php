@@ -2003,7 +2003,7 @@ elseif ($_POST && $_POST["payment_type"]):
             $insert                       = $conn->prepare("INSERT INTO payments SET client_id=:c_id, payment_amount=:amount, payment_privatecode=:code, payment_method=:method, payment_mode=:mode, payment_create_date=:date, payment_ip=:ip, payment_extra=:extra");
             $insert->execute(array("c_id" => $user['client_id'], "amount" => $amount, "code" => $paymentCode, "method" => $method_id, "mode" => "", "date" => date("Y.m.d H:i:s"), "ip" => GetIP(), "extra" => $result->txn_id));
             $_SESSION['cybersafepayment'] = true;
-            header("location: paymentv2/index.php");
+            header("location: /paymentv2/index.php");
 
 
 
