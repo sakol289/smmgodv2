@@ -16,6 +16,30 @@ $method->execute(array("get" => $method_name));
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
+function countDigit(string $account0, string $account1): int {
+    $count = 0;
+
+    // ลบเครื่องหมายขีดกลางและตรวจสอบว่าไม่ใช่ค่าว่าง
+    $account0 = str_replace('-', '', $account0);
+    $account1 = str_replace('-', '', $account1);
+
+    // ตรวจสอบว่าทั้งสองสตริงไม่ว่างและมีความยาวเท่ากัน
+    if (!empty($account0) && !empty($account1) && strlen($account0) === strlen($account1)) {
+        // วนลูปผ่านแต่ละตัวอักษร
+        for ($i = 0; $i < strlen($account0); $i++) {
+            // ตรวจสอบว่าเป็นตัวเลขและกำหนดค่าได้
+            if (isset($account0[$i]) && is_numeric($account0[$i]) && isset($account1[$i]) && is_numeric($account1[$i])) {
+                // ถ้าตัวเลขในตำแหน่งเดียวกันไม่เท่ากัน คืนค่า 0
+                if ($account0[$i] !== $account1[$i]) {
+                    return 0;
+                }
+                $count++;
+            }
+        }
+    }
+
+    return $count;
+}
 
 if ($method_name == "shopier"):
     ## Shopier başla ##
@@ -2152,18 +2176,21 @@ elseif ($method_name == "paymentv2"):
     // $secret       = $_POST["secretKey"];
     // $order_id     = $_GET["token"];
 
-    var_dump($_POST);
+    // var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
     // echo "googlesecret: ";
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
 
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
-    if( $grecaptcharesponse && $captcha_control->success == false ){
+    if (false){
+    // if( $grecaptcharesponse && $captcha_control->success == false ){
         echo "Please verify that you are not a robot.";
         header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
     }
+
+    var_dump($extras["apiSecret"]);
 
 
 
