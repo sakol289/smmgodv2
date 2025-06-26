@@ -2162,6 +2162,8 @@ elseif ($method_name == "paymentv2"):
         exit;
     }
 
+    
+
 
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
 //     if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])):

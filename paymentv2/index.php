@@ -42,15 +42,12 @@ if (json_last_error() !== JSON_ERROR_NONE || empty($extras['imageqrcode'])) {
     die("ข้อผิดพลาด: ไม่สามารถถอดรหัส method_extras หรือไม่มี imageqrcode");
 }
 
-
 $settings = $conn->prepare('SELECT * FROM settings WHERE id=:id');
 $settings->execute(array('id' => 1));
 $settings = $settings->fetch(PDO::FETCH_ASSOC);
 
-// กำหนด reCAPTCHA site key (ต้องสมัครที่ https://www.google.com/recaptcha)
-$recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้วย Site Key ของคุณ
-
-// var_dump($extras);
+// กำหนด reCAPTCHA site key
+$recaptchaSiteKey = $settings['recaptcha_key'];
 ?>
 <!DOCTYPE html>
 <html lang="th">
@@ -61,7 +58,6 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
     <title>CyberSafePayment</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- เพิ่ม reCAPTCHA script -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
@@ -114,7 +110,7 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">วิธีการยืนยันการชำระเงิน</div>
                     <div class="card-body">
-                        <form id="paymentConfirmationForm" method="POST" enctype="multipart/form-data">
+                        <form id="paymentConfirmationForm" method="POST" action="/payment/paymentv2" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="paymentType" class="form-label">เลือกประเภทการชำระเงิน</label>
                                 <select class="form-select" id="paymentType" name="paymentType">
@@ -149,14 +145,14 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
                                 <div id="angpaoError" class="text-danger small mt-2 d-none">กรุณากรอกลิงก์ซองอั่งเปาที่ถูกต้อง</div>
                             </div>
 
-                            <!-- เพิ่ม reCAPTCHA -->
                             <div class="mb-3">
-                                <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars($recaptchaSiteKey); ?>"></div>
+                                <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars($recaptchaSiteKey); ?>" data-callback="recaptchaCallback"></div>
                                 <div id="recaptchaError" class="text-danger small mt-2 d-none">กรุณายืนยันว่าไม่ใช่บอท</div>
                             </div>
 
-                            <!-- ฟิลด์ซ่อนสำหรับ idkey -->
                             <input type="hidden" id="idkey" name="idkey">
+                            <input type="hidden" id="payment_method" name="payment_method">
+                            <input type="hidden" id="status" name="status">
 
                             <div class="alert alert-warning small mt-4">
                                 <strong>คำแนะนำ:</strong>
@@ -174,7 +170,8 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
         </div>
 
         <div class="mt-4">
-            <a href="#" class="btn btn-link text-decoration-none"><i class="fas fa-arrow-left me-2"></i>กลับไปหน้าชำระเงิน</a>
+            <a href="#" class="btn btn-link text-decoration-none"><i
+                    class="fas fa-arrow-left me-2"></i>กลับไปหน้าชำระเงิน</a>
         </div>
     </main>
 
@@ -199,15 +196,18 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
         const submitButton = document.getElementById('submitButton');
         const form = document.getElementById('paymentConfirmationForm');
         const idkeyInput = document.getElementById('idkey');
+        const paymentMethodInput = document.getElementById('payment_method');
+        const statusInput = document.getElementById('status');
         const angpaoLinkInput = document.getElementById('angpaoLink');
         const recaptchaError = document.getElementById('recaptchaError');
 
-        let qrCodeData = null; // เก็บข้อมูล QR Code
+        let qrCodeData = null;
 
-        // ตรวจสอบประเภทการชำระเงิน
         paymentTypeSelect.addEventListener('change', function() {
             qrCodeData = null;
             idkeyInput.value = '';
+            statusInput.value = 'false';
+            paymentMethodInput.value = this.value === 'qr' ? 'slip' : 'angpao';
             submitButton.disabled = true;
             qrError.classList.add('d-none');
             angpaoError.classList.add('d-none');
@@ -216,7 +216,6 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
             if (this.value === 'angpao') {
                 qrSection.classList.add('d-none');
                 angpaoSection.classList.remove('d-none');
-                // ตรวจสอบลิงก์เมื่อเปลี่ยนไปที่ซองอั่งเปา
                 validateAngpaoLink();
             } else {
                 qrSection.classList.remove('d-none');
@@ -224,7 +223,6 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
             }
         });
 
-        // ตรวจสอบการอัปโหลดสลิป
         paymentSlipInput.addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
                 const file = this.files[0];
@@ -247,14 +245,17 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
                         if (code) {
                             uploadStatus.textContent = 'ตรวจพบ QR Code สำเร็จ';
                             qrError.classList.add('d-none');
-                            qrCodeData = code.data; // เก็บข้อมูล QR Code
-                            idkeyInput.value = qrCodeData; // ใช้ QR Code เป็น refqrcode
+                            qrCodeData = code.data;
+                            idkeyInput.value = qrCodeData;
+                            statusInput.value = 'true';
+                            paymentMethodInput.value = 'slip';
                             checkFormValidity();
                         } else {
                             uploadStatus.textContent = 'เลือกรูปภาพสลิปการโอน';
                             qrError.classList.remove('d-none');
                             qrCodeData = null;
                             idkeyInput.value = '';
+                            statusInput.value = 'false';
                             submitButton.disabled = true;
                         }
                     };
@@ -267,27 +268,29 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
                 qrError.classList.add('d-none');
                 qrCodeData = null;
                 idkeyInput.value = '';
+                statusInput.value = 'false';
                 submitButton.disabled = true;
             }
         });
 
-        // ตรวจสอบลิงก์ซองอั่งเปา
         angpaoLinkInput.addEventListener('input', validateAngpaoLink);
 
         function validateAngpaoLink() {
             const link = angpaoLinkInput.value.trim();
             if (link && isValidUrl(link)) {
-                idkeyInput.value = link; // ใช้ลิงก์เป็น linkangpao
+                idkeyInput.value = link;
+                statusInput.value = 'true';
+                paymentMethodInput.value = 'angpao';
                 angpaoError.classList.add('d-none');
                 checkFormValidity();
             } else {
                 idkeyInput.value = '';
+                statusInput.value = 'false';
                 angpaoError.classList.remove('d-none');
                 submitButton.disabled = true;
             }
         }
 
-        // ตรวจสอบความถูกต้องของ URL
         function isValidUrl(string) {
             try {
                 new URL(string);
@@ -297,7 +300,6 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
             }
         }
 
-        // ตรวจสอบความพร้อมของฟอร์ม
         function checkFormValidity() {
             const recaptchaResponse = grecaptcha.getResponse();
             if (paymentTypeSelect.value === 'qr' && qrCodeData && recaptchaResponse) {
@@ -312,49 +314,10 @@ $recaptchaSiteKey = $settings['recaptcha_key']; // แทนที่ด้ว�
             }
         }
 
-        // เรียกเมื่อ reCAPTCHA สำเร็จ
         function recaptchaCallback() {
             recaptchaError.classList.add('d-none');
             checkFormValidity();
         }
-
-        // จัดการการส่งฟอร์ม
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const recaptchaResponse = grecaptcha.getResponse();
-
-            if (!recaptchaResponse) {
-                recaptchaError.classList.remove('d-none');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('status', idkeyInput.value ? 'true' : 'false');
-            formData.append('idkey', idkeyInput.value);
-            formData.append('g-recaptcha-response', recaptchaResponse);
-            if (paymentTypeSelect.value === 'qr' && paymentSlipInput.files[0]) {
-                formData.append('paymentSlip', paymentSlipInput.files[0]);
-            }
-
-            fetch('/payment/paymentv2', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('ยืนยันการชำระเงินสำเร็จ!');
-                    window.location.href = '/success'; // หรือหน้าที่ต้องการ
-                } else {
-                    alert('เกิดข้อผิดพลาด: ' + (data.message || 'ไม่สามารถยืนยันการชำระเงินได้'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
-            });
-        });
     </script>
 </body>
-
 </html>
