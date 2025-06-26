@@ -22,7 +22,7 @@ catch(PDOException $e) {
 	die($e->getMessage());
 }
 
-$method       = $conn->prepare("SELECT * FROM payment_methods");
+$method       = $conn->prepare("SELECT * FROM `payment_methods`");
 $method       = $method->fetchAll(PDO::FETCH_ASSOC);
 
 var_dump($method);
