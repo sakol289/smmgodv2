@@ -2152,12 +2152,15 @@ elseif ($method_name == "paymentv2"):
     var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
     echo "googlesecret: ";
-    var_dump($googlesecret);
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
 
     $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
-    var_dump($captcha_control);
+    if( $captcha && $captcha_control->success == false ){
+        echo "Please verify that you are not a robot.";
+        exit;
+    }
+
 
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
 //     if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])):
