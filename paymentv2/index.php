@@ -16,7 +16,6 @@ if( $_SESSION["neira_userlogin"] != 1  || $user["client_type"] == 1  ){
 //   Header("Location:".site_url('logout'));
 }
 try {
-	var_dump("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
 	$conn = new PDO("mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", $config["db"]["user"], $config["db"]["pass"]);
 }
 catch(PDOException $e) {
@@ -24,11 +23,9 @@ catch(PDOException $e) {
 }
 
 $method       = $conn->prepare("SELECT * FROM payment_methods");
-$method       = $method->fetch(PDO::FETCH_ASSOC);
-$extras       = json_decode($method["method_extras"], true);
+$method       = $method->fetchAll(PDO::FETCH_ASSOC);
 
 var_dump($method);
-var_dump($extras);
 
 ?>
 
