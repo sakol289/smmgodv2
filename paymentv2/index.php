@@ -8,7 +8,6 @@ ob_start();
 
 // var_dump($_SESSION);
 
-require_once '../vendors/autoload.php';
 $config = require_once '../int/config.php';
 
 
