@@ -2299,7 +2299,6 @@ elseif ($method_name == "paymentv2"):
                         $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                     } else {
                         echo "[DEBUG] No bonus.<br>";
-                        echo "ttttt2 : " . $amount;
                         $amount = $payment["payment_amount"];
                         echo "ttttt3 : " . $amount;
                     }
