@@ -2217,7 +2217,7 @@ elseif ($method_name == "paymentv2"):
     $response = curl_exec($curl);
     $data = json_decode($response);
     echo "=====================<br>";
-    var_dump($data->data->receiver);
+    var_dump($data->data->receiver->proxy->value);
     echo "=====================<br>";
     if ($data && isset($data->valid)) {
         $data = json_decode($response,true);
