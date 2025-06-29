@@ -2228,9 +2228,14 @@ elseif ($method_name == "paymentv2"):
 
         echo "Proxy Value: " . $proxyValue . "<br>";
         echo "Account Bank: " . $accbank . "<br>";
+        echo "time slip " . $data->data->transTime . "<br>";
 
-
-        echo countDigit($proxyValue,$accbank);
+        if (countDigit($proxyValue, $accbank) <= 4) {
+            echo "ok work";
+        } else {
+            echo "สลิปไม่ตรงกับบัญชีในระบบ";
+            header("Location: /paymentv2/status.php?error=สลิปไม่ตรงกับบัญชีในระบบ");
+        }
     } else {
         echo "Invalid response from payment gateway.";
         header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
