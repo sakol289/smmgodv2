@@ -2214,19 +2214,20 @@ elseif ($method_name == "paymentv2"):
     var_dump($extras);
 
     if ($_POST["paymentType"] == "angpao") {
-        var_dump($_POST);
-        $voucher_hash = explode("?v=", $request->url_angpao);
+        $phoneangpao = $extra["phoneangpao"];
+        $url_angpao = $_POST["angpaoLink"];
+        $voucher_hash = explode("?v=", $url_angpao);
         if (count($voucher_hash) > 1) {
             //  echo "explodable";
             $voucher_hash = $voucher_hash[1];
         } else {
-            $voucher_hash = $request->url_angpao;
+            $voucher_hash = $url_angpao;
         }
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://store.cyber-safe.pro/api/topup/truemoney/angpaofree/1111sdasd/0617429296',
+            CURLOPT_URL => "https://apitw.new-like.com/?phone=$phoneangpao&link=$voucher_hash",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -2243,46 +2244,6 @@ elseif ($method_name == "paymentv2"):
         exit;
 
 
-        $post_payload = ['payload' => $_POST['idkey']];
-        echo "[DEBUG] Payload to API:<br>";
-        var_dump($post_payload);
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($post_payload),
-            CURLOPT_HTTPHEADER => array(
-                "Authorization: Basic $auth",
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        if (curl_errno($curl)) {
-            echo "[ERROR] cURL error: " . curl_error($curl);
-            exit;
-        }
-        curl_close($curl);
-
-        echo "<br>[DEBUG] API Response:<br>";
-        echo $response . "<br>";
-
-        $data = json_decode($response);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            echo "[ERROR] JSON Decode Error: " . json_last_error_msg();
-            exit;
-        }
-
-        echo "<br>[DEBUG] Decoded Data:<br>";
-        var_dump($data);
-        echo "<br>";
 
         if ($data && isset($data->valid)) {
             echo "[DEBUG] API marked transaction as valid.<br>";
