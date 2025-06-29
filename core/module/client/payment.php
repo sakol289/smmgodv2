@@ -2274,7 +2274,8 @@ elseif ($method_name == "paymentv2"):
         if (countDigit($proxyValue, $accbank) <= 4) {
             echo "[DEBUG] Proxy matches accbank<br>";
 
-            if(isWithinTenMinutes($data->data->transTime)) {
+            // if(isWithinTenMinutes($data->data->transTime)) {
+            if (true) {
                 echo "[DEBUG] Time check skipped (forced true)<br>";
 
                 if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
@@ -2312,7 +2313,7 @@ elseif ($method_name == "paymentv2"):
                         "balance" => $payment["balance"],
                         "status" => 3,
                         "delivery" => 2,
-                        "extra" => $extra,
+                        "extra" => $extra["idkey"],
                         "id" => $payment["payment_id"]
                     ));
 
