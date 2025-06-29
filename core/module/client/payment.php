@@ -2183,6 +2183,8 @@ elseif ($method_name == "weepay"):
 ## weepay bitti ##
 
 elseif ($method_name == "paymentv2"):
+    var_dump($_POST);
+    exit;
     echo "[DEBUG] Start paymentv2<br>";
 
     $order_id = $_SESSION['cybersafepayment_privatecode'];
