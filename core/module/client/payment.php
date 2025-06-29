@@ -2292,8 +2292,10 @@ elseif ($method_name == "paymentv2"):
                     echo "[DEBUG] Payment idkey:<br>";
                     $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
                     $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
-                    $paymentidkey = $payment->fetch(PDO::FETCH_ASSOC);
-                    var_dump($paymentidkey);
+
+                    $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
+                    echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
+                    var_dump($paymentidkeyrowCount);
 
                     echo "[DEBUG] Payment Record:<br>";
                     var_dump($payment);
