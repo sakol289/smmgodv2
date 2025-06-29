@@ -2234,6 +2234,7 @@ elseif ($method_name == "paymentv2"):
     if ($data && isset($data->valid)) {
         // $data = json_decode($response, true);
         $proxyValue = $data->data->receiver->proxy->value;
+        $amountinapi = $data->data->amount;
         $accbank = $extras["accbank"];
 
         echo "Proxy Value: " . $proxyValue . "<br>";
@@ -2244,6 +2245,10 @@ elseif ($method_name == "paymentv2"):
             // if(isWithinTenMinutes($data->data->transTime)) {
             if (true) {
                 if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
+
+                    $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_id=:orderid");
+                    $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
+
                     $payment = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
                     $payment->execute(array("orderid" => $order_id));
                     $payment = $payment->fetch(PDO::FETCH_ASSOC);
