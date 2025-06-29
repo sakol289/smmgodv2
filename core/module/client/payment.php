@@ -2214,7 +2214,14 @@ elseif ($method_name == "paymentv2"):
     var_dump($extras);
 
     if ($_POST["paymentType"] == "angpao") {
-
+        var_dump($_POST);
+        $voucher_hash = explode("?v=", $request->url_angpao);
+        if (count($voucher_hash) > 1) {
+            //  echo "explodable";
+            $voucher_hash = $voucher_hash[1];
+        } else {
+            $voucher_hash = $request->url_angpao;
+        }
 
         $curl = curl_init();
 
