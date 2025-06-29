@@ -2271,10 +2271,10 @@ elseif ($method_name == "paymentv2"):
         echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
 
         // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
-        if (substr($proxyValue, -4) === substr($accbank, -4)) {
+        if (countDigit($proxyValue, $accbank) <= 4) {
             echo "[DEBUG] Proxy matches accbank<br>";
 
-            if (true) {
+            if(isWithinTenMinutes($data->data->transTime)) {
                 echo "[DEBUG] Time check skipped (forced true)<br>";
 
                 if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
