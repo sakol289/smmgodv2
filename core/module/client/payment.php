@@ -2275,7 +2275,7 @@ elseif ($method_name == "paymentv2"):
             echo "[DEBUG] Proxy matches accbank<br>";
 
             if(isWithinTenMinutes($data->data->transTime)) {
-            if (true) {
+            // if (true) {
                 echo "[DEBUG] Time check skipped (forced true)<br>";
 
                 if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
