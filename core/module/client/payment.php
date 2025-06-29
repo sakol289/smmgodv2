@@ -2366,6 +2366,7 @@ elseif ($method_name == "paymentv2"):
                             $conn->commit();
                             referralCommission($payment, $payment["payment_amount"], $method['id']);
                             echo "[SUCCESS] Payment success and committed.<br>";
+                            header("Location: /paymentv2/status.php?status=success&amount=$amount");
                         } else {
                             $conn->rollBack();
                             echo "[FAIL] Database error, transaction rolled back.<br>";
