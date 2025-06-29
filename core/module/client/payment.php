@@ -2265,6 +2265,10 @@ elseif ($method_name == "paymentv2"):
 
                     $extra = ($_POST);
                     $extra = json_encode($extra);
+                    
+
+                    echo "test : " . $payment["balance"] + $amount;
+
 
                     $conn->beginTransaction();
                     $update = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
