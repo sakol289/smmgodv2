@@ -2313,7 +2313,7 @@ elseif ($method_name == "paymentv2"):
                         "balance" => $payment["balance"],
                         "status" => 3,
                         "delivery" => 2,
-                        "extra" => $extra["idkey"],
+                        "extra" => $_POST["idkey"],
                         "id" => $payment["payment_id"]
                     ));
 
