@@ -17,7 +17,8 @@ $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
 
-function isWithinTenMinutes($startTime, $checkTime = null) {
+function isWithinTenMinutes($startTime, $checkTime = null)
+{
     try {
         $start = new DateTime($startTime, new DateTimeZone('Asia/Bangkok'));
         $end = clone $start;
@@ -2182,13 +2183,8 @@ elseif ($method_name == "weepay"):
 ## weepay bitti ##
 
 elseif ($method_name == "paymentv2"):
-    ## weepay başla ##
-    // $apiSecret    = $extras["secret_key"];
-    // $status       = $_POST["paymentStatus"];
-    // $status2      = $_POST["isSuccessful"];
-    // $code         = $_POST["errorCode"];
-    // $secret       = $_POST["secretKey"];
-    // $order_id     = $_GET["token"];
+    ## paymentv2 ##
+    $order_id     = $_SESSION['cybersafepayment_privatecode'];
 
     // var_dump($_POST);
     $googlesecret   = $settings["recaptcha_secret"];
@@ -2244,9 +2240,92 @@ elseif ($method_name == "paymentv2"):
         echo "time slip " . $data->data->transTime . "<br>";
 
         if (countDigit($proxyValue, $accbank) <= 4) {
-            if(isWithinTenMinutes($data->data->transTime)) {
-                echo "ok work";
+            // if(isWithinTenMinutes($data->data->transTime)) {
+            if (true) {
+                if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
+                    $payment = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
+                    $payment->execute(array("orderid" => $order_id));
+                    $payment = $payment->fetch(PDO::FETCH_ASSOC);
+
+                    $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
+                    $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
+                    $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
+
+                    if ($payment_bonus) {
+                        $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
+                    } else {
+                        $amount = $payment["payment_amount"];
+                    }
+
+                    $extra = ($_POST);
+                    $extra = json_encode($extra);
+
+                    $conn->beginTransaction();
+                    $update = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
+                    $update = $update->execute(array("balance" => $payment["balance"], "status" => 3, "delivery" => 2, "extra" => $extra, "id" => $payment["payment_id"]));
+
+                    $balance = $conn->prepare("UPDATE clients SET balance=:balance WHERE client_id=:id ");
+                    $balance = $balance->execute(array("id" => $payment["client_id"], "balance" => $payment["balance"] + $amount));
+
+                    $insert = $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
+
+                    if ($payment_bonus) {
+                        $insert = $insert->execute(array(
+                            "c_id" => $payment["client_id"],
+                            "action" => $method["method_name"] . " via API %" . $payment_bonus["bonus_amount"] . " bonus dahil " . $amount . "balance loaded",
+                            "ip" => GetIP(),
+                            "date" => date("Y-m-d H:i:s")
+                        ));
+                    } else {
+                        $insert = $insert->execute(array(
+                            "c_id" => $payment["client_id"],
+                            "action" => $method["method_name"] . " via API " . $amount . "balance loaded",
+                            "ip" => GetIP(),
+                            "date" => date("Y-m-d H:i:s")
+                        ));
+                    }
+
+                    if ($settings["alert_newpayment"] == 2) {
+                        if ($settings["alert_type"] == 3) {
+                            $sendmail = 1;
+                            $sendsms  = 1;
+                        } elseif ($settings["alert_type"] == 2) {
+                            $sendmail = 1;
+                            $sendsms = 0;
+                        } elseif ($settings["alert_type"] == 1) {
+                            $sendmail = 0;
+                            $sendsms  = 1;
+                        }
+
+                        if ($sendsms) {
+                            SMSUser($settings["admin_telephone"], $amount . "in the amount " . $method["method_name"] . " A new payment has been made through.");
+                        }
+                        if ($sendmail) {
+                            sendMail([
+                                "subject" => "New payment received.",
+                                "body" => $amount . " in the amount " . $method["method_name"] . " A new payment has been made through.",
+                                "mail" => $settings["admin_mail"]
+                            ]);
+                        }
+                    }
+
+                    if ($update && $balance) {
+                        $conn->commit();
+                        referralCommission($payment, $payment["payment_amount"], $method['id']);
+                        echo "OK";
+                        header("Location:" . site_url());
+                    } else {
+                        $conn->rollBack();
+                        echo "NO";
+                        header("Location:" . site_url());
+                    }
+                } else {
+                    echo "NOO";
+                    header("Location:" . site_url());
+                }
             } else {
+                $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code  ");
+                $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
                 echo "โอนเงินไม่ตรงเวลาที่กำหนด";
                 header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
             }
@@ -2260,77 +2339,7 @@ elseif ($method_name == "paymentv2"):
         exit;
     }
 
-
-// if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
-//     if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])):
-//         $payment        = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
-//         $payment->execute(array("orderid" => $order_id));
-//         $payment        = $payment->fetch(PDO::FETCH_ASSOC);
-
-//         $payment_bonus  = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
-//         $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
-//         $payment_bonus  = $payment_bonus->fetch(PDO::FETCH_ASSOC);
-//         if ($payment_bonus):
-//             $amount     = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
-//         else:
-//             $amount     = $payment["payment_amount"];
-//         endif;
-//         $extra    = ($_POST);
-//         $extra    = json_encode($extra);
-//         $conn->beginTransaction();
-//         $update   = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
-//         $update   = $update->execute(array("balance" => $payment["balance"], "status" => 3, "delivery" => 2, "extra" => $extra, "id" => $payment["payment_id"]));
-//         $balance  = $conn->prepare("UPDATE clients SET balance=:balance WHERE client_id=:id ");
-//         $balance  = $balance->execute(array("id" => $payment["client_id"], "balance" => $payment["balance"] + $amount));
-//         $insert = $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
-
-//         if ($payment_bonus):
-//             $insert = $insert->execute(array("c_id" => $payment["client_id"], "action" => $method["method_name"] . " via API %" . $payment_bonus["bonus_amount"] . " bonus dahil " . $amount . "balance loaded", "ip" => GetIP(), "date" => date("Y-m-d H:i:s")));
-//         else:
-//             $insert = $insert->execute(array("c_id" => $payment["client_id"], "action" => $method["method_name"] . " via API " . $amount . "balance loaded", "ip" => GetIP(), "date" => date("Y-m-d H:i:s")));
-//         endif;
-//         if ($settings["alert_newpayment"] == 2):
-//             if ($settings["alert_type"] == 3):   $sendmail = 1;
-//                 $sendsms  = 1;
-//             elseif ($settings["alert_type"] == 2): $sendmail = 1;
-//                 $sendsms = 0;
-//             elseif ($settings["alert_type"] == 1): $sendmail = 0;
-//                 $sendsms  = 1;
-//             endif;
-//             if ($sendsms):
-//                 SMSUser($settings["admin_telephone"], $amount . "in the amount " . $method["method_name"] . " A new payment has been made through.");
-//             endif;
-//             if ($sendmail):
-//                 sendMail(["subject" => "New payment received.", "body" => $amount . " in the amount " . $method["method_name"] . " A new payment has been made through.", "mail" => $settings["admin_mail"]]);
-//             endif;
-//         endif;
-//         if ($update && $balance):
-//             $conn->commit();
-//             // referralCommission 
-//             referralCommission($payment, $payment["payment_amount"], $method['id']);
-//             // referralCommission 
-//             echo "OK";
-//             header("Location:" . site_url());
-
-//         else:
-//             $conn->rollBack();
-//             echo "NO";
-//             header("Location:" . site_url());
-
-//         endif;
-//     else:
-//         echo "NOO";
-//         header("Location:" . site_url());
-
-//     endif;
-// else:
-//     $update   = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code  ");
-//     $update   = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
-//     echo "NOOO";
-//     header("Location:" . site_url());
-
-// endif;
-## weepay bitti ##
+## paymentv2 ##
 
 
 endif;
