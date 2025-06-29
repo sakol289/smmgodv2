@@ -2222,7 +2222,7 @@ elseif ($method_name == "paymentv2"):
         $proxyValue = $data["data"];
         $accbank = $extras["accbank"];
 
-        echo "Proxy Value: " . $proxyValue . "<br>";
+        echo "Proxy Value: " . var_dump($proxyValue) . "<br>";
         echo "Account Bank: " . $accbank . "<br>";
     } else {
         echo "Invalid response from payment gateway.";
