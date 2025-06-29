@@ -16,6 +16,19 @@ $method->execute(array("get" => $method_name));
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
+
+function isWithinTenMinutes($startTime, $checkTime = null) {
+    try {
+        $start = new DateTime($startTime, new DateTimeZone('Asia/Bangkok'));
+        $end = clone $start;
+        $end->modify('+10 minutes');
+        $check = $checkTime ? new DateTime($checkTime, new DateTimeZone('Asia/Bangkok')) : new DateTime('now', new DateTimeZone('Asia/Bangkok'));
+        return $check >= $start && $check <= $end;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
 function countDigit(string $account0, string $account1): int
 {
     $count = 0;
@@ -2231,7 +2244,12 @@ elseif ($method_name == "paymentv2"):
         echo "time slip " . $data->data->transTime . "<br>";
 
         if (countDigit($proxyValue, $accbank) <= 4) {
-            echo "ok work";
+            // echo "ok work";
+            if(isWithinTenMinutes($data["data"]["transTime"])) {
+            } else {
+                echo "โอนเงินไม่ตรงเวลาที่กำหนด";
+                header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
+            }
         } else {
             echo "สลิปไม่ตรงกับบัญชีในระบบ";
             header("Location: /paymentv2/status.php?error=สลิปไม่ตรงกับบัญชีในระบบ");
