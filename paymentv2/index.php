@@ -234,7 +234,8 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
         paymentSlipInput.addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
                 const file = this.files[0];
-                uploadButtonLabel.textContent = `📁 ${file.name}`;
+                uploadButtonLabel.textContent = `📁 upload file work`;
+                // uploadButtonLabel.textContent = `📁 ${file.name}`;
                 uploadStatus.textContent = 'กำลังตรวจสอบ QR Code...';
 
                 const reader = new FileReader();
