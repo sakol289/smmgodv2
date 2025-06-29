@@ -2183,6 +2183,8 @@ elseif ($method_name == "weepay"):
 ## weepay bitti ##
 
 elseif ($method_name == "paymentv2"):
+    var_dump($_POST);
+    exit;
     echo "[DEBUG] Start paymentv2<br>";
 
     $order_id = $_SESSION['cybersafepayment_privatecode'];
@@ -2274,7 +2276,7 @@ elseif ($method_name == "paymentv2"):
         if (countDigit($proxyValue, $accbank) <= 4) {
             echo "[DEBUG] Proxy matches accbank<br>";
 
-            // if(isWithinTenMinutes($data->data->transTime)) {
+            if(isWithinTenMinutes($data->data->transTime)) {
             if (true) {
                 echo "[DEBUG] Time check skipped (forced true)<br>";
 
