@@ -2298,7 +2298,7 @@ elseif ($method_name == "paymentv2"):
                     var_dump($paymentidkeyrowCount);
 
 
-                    if ($rowCount == 0) {
+                    if ($paymentidkeyrowCount == 0) {
                         echo "[DEBUG] Payment Record:<br>";
                         var_dump($payment);
 
