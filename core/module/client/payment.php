@@ -2183,42 +2183,54 @@ elseif ($method_name == "weepay"):
 ## weepay bitti ##
 
 elseif ($method_name == "paymentv2"):
-    ## paymentv2 ##
-    $order_id     = $_SESSION['cybersafepayment_privatecode'];
+    echo "[DEBUG] Start paymentv2<br>";
 
-    // var_dump($_POST);
-    // exit;
-    $googlesecret   = $settings["recaptcha_secret"];
-    // echo "googlesecret: ";
-    $grecaptcharesponse  = $_POST['g-recaptcha-response'];
+    $order_id = $_SESSION['cybersafepayment_privatecode'];
+    echo "[DEBUG] Order ID: $order_id<br>";
 
-    $ca1ptcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
-    $captcha_control = json_decode($captcha_control);
-    if (false) {
-        // if( $grecaptcharesponse && $captcha_control->success == false ){
-        echo "Please verify that you are not a robot.";
+    $googlesecret = $settings["recaptcha_secret"];
+    $grecaptcharesponse = $_POST['g-recaptcha-response'];
+    echo "[DEBUG] Captcha Response: $grecaptcharesponse<br>";
+
+    // ตรวจสอบ CAPTCHA
+    $captcha_control_raw = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=$grecaptcharesponse&remoteip=" . $_SERVER['REMOTE_ADDR']);
+    echo "[DEBUG] CAPTCHA raw response: $captcha_control_raw<br>";
+
+    $captcha_control = json_decode($captcha_control_raw);
+    if (!$grecaptcharesponse || !$captcha_control || !$captcha_control->success) {
+        echo "[ERROR] CAPTCHA verification failed.<br>";
         header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
     }
 
+    // โหลด method extras
+    $method = $conn->prepare('SELECT * FROM payment_methods WHERE method_get=:id ');
+    $method->execute(['id' => 'paymentv2']);
+    $method = $method->fetch(PDO::FETCH_ASSOC);
+    $extras = json_decode($method['method_extras'], true);
+
+    echo "[DEBUG] Extras:<br>";
     var_dump($extras);
 
+    // เตรียม auth สำหรับ cURL
+    $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
+    echo "[DEBUG] Auth Header (Base64): $auth<br>";
+
+    $post_payload = ['payload' => $_POST['idkey']];
+    echo "[DEBUG] Payload to API:<br>";
+    var_dump($post_payload);
 
     $curl = curl_init();
-
-    // Encode clientId:clientSecret เป็น Base64 สำหรับ Authorization header
-    $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
-
     curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30, // ป้องกันการรอนานเกินไป
+        CURLOPT_TIMEOUT => 30,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => json_encode(['payload' => $_POST['idkey']]), // ใช้ json_encode เพื่อความปลอดภัย
+        CURLOPT_POSTFIELDS => json_encode($post_payload),
         CURLOPT_HTTPHEADER => array(
             "Authorization: Basic $auth",
             'Content-Type: application/json'
@@ -2226,25 +2238,47 @@ elseif ($method_name == "paymentv2"):
     ));
 
     $response = curl_exec($curl);
+    if (curl_errno($curl)) {
+        echo "[ERROR] cURL error: " . curl_error($curl);
+        exit;
+    }
+    curl_close($curl);
+
+    echo "<br>[DEBUG] API Response:<br>";
+    echo $response . "<br>";
+
     $data = json_decode($response);
-    echo "<br>=====================<br>";
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        echo "[ERROR] JSON Decode Error: " . json_last_error_msg();
+        exit;
+    }
+
+    echo "<br>[DEBUG] Decoded Data:<br>";
     var_dump($data);
-    echo "<br>=====================<br>";
-    // exit;
+    echo "<br>";
+
     if ($data && isset($data->valid)) {
-        // $data = json_decode($response, true);
+        echo "[DEBUG] API marked transaction as valid.<br>";
+
+        if (!isset($data->data->receiver->proxy->value)) {
+            echo "[ERROR] Missing proxy value from response.<br>";
+            exit;
+        }
+
         $proxyValue = $data->data->receiver->proxy->value;
         $amountinapi = $data->data->amount;
         $accbank = $extras["accbank"];
+        echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
 
-        echo "Proxy Value: " . $proxyValue . "<br>";
-        echo "Account Bank: " . $accbank . "<br>";
-        echo "time slip " . $data->data->transTime . "<br>";
+        // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
+        if (substr($proxyValue, -4) === substr($accbank, -4)) {
+            echo "[DEBUG] Proxy matches accbank<br>";
 
-        if (countDigit($proxyValue, $accbank) <= 4) {
-            // if(isWithinTenMinutes($data->data->transTime)) {
             if (true) {
+                echo "[DEBUG] Time check skipped (forced true)<br>";
+
                 if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
+                    echo "[DEBUG] Found matching payment record.<br>";
 
                     $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_privatecode=:orderid");
                     $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
@@ -2253,70 +2287,63 @@ elseif ($method_name == "paymentv2"):
                     $payment->execute(array("orderid" => $order_id));
                     $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
+                    echo "[DEBUG] Payment Record:<br>";
+                    var_dump($payment);
+
                     $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
                     $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
                     $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
 
                     if ($payment_bonus) {
-                        echo "ttttt1";
+                        echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
                         $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                     } else {
-                        echo "ttttt2";
-                        $amount = $payment->payment_amount;
+                        echo "[DEBUG] No bonus.<br>";
+                        $amount = $payment["payment_amount"];
                     }
 
-                    $extra = ($_POST);
-                    $extra = json_encode($extra);
-                    
-
-                    echo "test1 : " . var_dump($payment);
-                    echo "test2 : " . var_dump($amount);
-
+                    $extra = json_encode($_POST);
 
                     $conn->beginTransaction();
+
                     $update = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
-                    $update = $update->execute(array("balance" => $payment["balance"], "status" => 3, "delivery" => 2, "extra" => $extra, "id" => $payment["payment_id"]));
+                    $update = $update->execute(array(
+                        "balance" => $payment["balance"],
+                        "status" => 3,
+                        "delivery" => 2,
+                        "extra" => $extra,
+                        "id" => $payment["payment_id"]
+                    ));
 
                     $balance = $conn->prepare("UPDATE clients SET balance=:balance WHERE client_id=:id ");
-                    $balance = $balance->execute(array("id" => $payment["client_id"], "balance" => $payment["balance"] + $amount));
+                    $balance = $balance->execute(array(
+                        "id" => $payment["client_id"],
+                        "balance" => $payment["balance"] + $amount
+                    ));
+
+                    $action = $method["method_name"] . " via API " . ($payment_bonus ? "%" . $payment_bonus["bonus_amount"] . " bonus dahil " : "") . $amount . " balance loaded";
 
                     $insert = $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
-
-                    if ($payment_bonus) {
-                        $insert = $insert->execute(array(
-                            "c_id" => $payment["client_id"],
-                            "action" => $method["method_name"] . " via API %" . $payment_bonus["bonus_amount"] . " bonus dahil " . $amount . "balance loaded",
-                            "ip" => GetIP(),
-                            "date" => date("Y-m-d H:i:s")
-                        ));
-                    } else {
-                        $insert = $insert->execute(array(
-                            "c_id" => $payment["client_id"],
-                            "action" => $method["method_name"] . " via API " . $amount . "balance loaded",
-                            "ip" => GetIP(),
-                            "date" => date("Y-m-d H:i:s")
-                        ));
-                    }
+                    $insert = $insert->execute(array(
+                        "c_id" => $payment["client_id"],
+                        "action" => $action,
+                        "ip" => GetIP(),
+                        "date" => date("Y-m-d H:i:s")
+                    ));
 
                     if ($settings["alert_newpayment"] == 2) {
-                        if ($settings["alert_type"] == 3) {
-                            $sendmail = 1;
-                            $sendsms  = 1;
-                        } elseif ($settings["alert_type"] == 2) {
-                            $sendmail = 1;
-                            $sendsms = 0;
-                        } elseif ($settings["alert_type"] == 1) {
-                            $sendmail = 0;
-                            $sendsms  = 1;
-                        }
+                        $sendmail = $settings["alert_type"] >= 2;
+                        $sendsms = in_array($settings["alert_type"], [1, 3]);
 
                         if ($sendsms) {
-                            SMSUser($settings["admin_telephone"], $amount . "in the amount " . $method["method_name"] . " A new payment has been made through.");
+                            echo "[DEBUG] Sending SMS alert<br>";
+                            SMSUser($settings["admin_telephone"], "$amount in the amount {$method["method_name"]} A new payment has been made through.");
                         }
                         if ($sendmail) {
+                            echo "[DEBUG] Sending Email alert<br>";
                             sendMail([
                                 "subject" => "New payment received.",
-                                "body" => $amount . " in the amount " . $method["method_name"] . " A new payment has been made through.",
+                                "body" => "$amount in the amount {$method["method_name"]} A new payment has been made through.",
                                 "mail" => $settings["admin_mail"]
                             ]);
                         }
@@ -2325,34 +2352,29 @@ elseif ($method_name == "paymentv2"):
                     if ($update && $balance) {
                         $conn->commit();
                         referralCommission($payment, $payment["payment_amount"], $method['id']);
-                        echo "OK";
-                        // header("Location:" . site_url());
+                        echo "[SUCCESS] Payment success and committed.<br>";
                     } else {
                         $conn->rollBack();
-                        echo "NO";
-                        // header("Location:" . site_url());
+                        echo "[FAIL] Database error, transaction rolled back.<br>";
                     }
                 } else {
-                    echo "NOO";
-                    // header("Location:" . site_url());
+                    echo "[DEBUG] No matching payment record found.<br>";
                 }
             } else {
-                $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code  ");
+                echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
+                $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                 $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
-                echo "โอนเงินไม่ตรงเวลาที่กำหนด";
                 header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
             }
         } else {
-            echo "สลิปไม่ตรงกับบัญชีในระบบ";
+            echo "[ERROR] Proxy does not match account bank.<br>";
             header("Location: /paymentv2/status.php?error=สลิปไม่ตรงกับบัญชีในระบบ");
         }
     } else {
-        echo "Invalid response from payment gateway.";
+        echo "[ERROR] Invalid or empty response from API.<br>";
         header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
         exit;
     }
 
-## paymentv2 ##
-
-
 endif;
+
