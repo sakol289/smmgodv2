@@ -136,9 +136,7 @@
 			</div>
 
 
-
-
-			<div class="form-group">
+			<div class="form-group payment-amount-field">
 				<label for="amount" class="control-label">Amount</label>
 				<input type="number" class="form-control" name="payment_amount" id="amount" value="{{ data['payment_amount'] }}">
 			</div>
@@ -196,133 +194,131 @@
 	</div>
 </a>{% endfor %}</div></div></div></div></div><div class="mobile-navbar"><div class="mobile-navbar-content"><a href="/" class="mnc-item"><div class="mnc-item-icon"><i class="far fa-box-heart"></i></div><div class="mnc-item-text">New order</div></a><a href="/addfunds" class="mnc-item"><div class="mnc-item-icon"><i class="ri-exchange-dollar-line"></i></div><div class="mnc-item-text">Add funds</div></a><a href="/tickets" class="mnc-item"><div class="mnc-item-icon"><i class="ri-customer-service-2-line"></i></div><div class="mnc-item-text">Tickets</div></a><a href="/services" class="mnc-item"><div class="mnc-item-icon"><i class="ri-list-check-2"></i></div><div class="mnc-item-text">Services</div></a></div></div><div class="bs-toast"><div class="bs-toast-content"><div class="toast-text">Copy to clipboard</div></div></div><div class="overlay"></div>{% if kashier_code %}<style>#el-kashier-button {
 	display: none;
-}</style> 
-<script>
-    // Ensure jQuery is loaded
-    if (typeof jQuery === 'undefined') {
-        console.error('jQuery is not loaded. Please ensure it is included in header.twig.');
-    } else {
-        $(document).ready(function() {
-            // Format total_ords if exists
-            var total_ords = $('#total_ords').text();
-            if (total_ords) {
-                var formatted = total_ords.replace(/\d+/g, n => Number(n).toLocaleString("en"));
-                $('#total_ords').text(formatted);
-            }
-
-            // Handle payment method change
-            $("#payment_method").on('change', function() {
-                var selectedValue = $(this).val();
-                var paymentAmountField = $('.payment-amount-field');
-
-                // Reset visibility
-                $(".custom-payment-content").hide();
-                $(".custom-payment-content-bkash").hide();
-                $(".custom-payment-content-2013").hide();
-                $("#qr").hide();
-                $(".normal-payment").show();
-                paymentAmountField.show();
-
-                if (selectedValue == 21) {
-                    $(".normal-payment").hide();
-                    $(".custom-payment-content-bkash").show();
-                } else if (selectedValue == 34) {
-                    $(".normal-payment").hide();
-                    $(".custom-payment-content").show();
-                } else if (selectedValue == 2013) {
-                    $(".normal-payment").hide();
-                    $(".custom-payment-content-2013").show();
-                    paymentAmountField.hide(); // Hide payment_amount for payment['id'] == 2013
-                } else if (selectedValue == 14) {
-                    $("#qr").show();
-                }
-            });
-
-            // Trigger change on page load to handle pre-selected value
-            $("#payment_method").trigger('change');
-        });
-    }
-
-    function handleOrderType(selectObject) {
-        var element = document.getElementById("qr");
-        var element2 = document.getElementById("ppqr"); // Note: ppqr is not in HTML, may need to add
-        var selectedValue = selectObject.value;
-
-        // Reset visibility
-        if (element) element.style.display = "none";
-        if (element2) element2.style.display = "none";
-
-        if (selectedValue == "14") {
-            if (element) element.style.display = "block";
-        } else if (selectedValue == "114") {
-            if (element2) element2.style.display = "block";
-        }
-
-        // Trigger jQuery change event to sync with payment_method logic
-        $("#payment_method").trigger('change');
-    }
-
-    // Handle kashier_code if present
-    {% if kashier_code %}
-        var interval = setInterval(function () {
-            var link = $('#el-kashier-button');
-            if (link.length) {
-                link.click();
-                clearInterval(interval);
-            }
-        }, 1000);
-    {% endif %}
-</script>
-
-<script>
+}</style> <script>
+		    // Ensure jQuery is loaded
+		    if (typeof jQuery === 'undefined') {
+		        console.error('jQuery is not loaded. Please ensure it is included in header.twig.');
+		    } else {
+		        $(document).ready(function() {
+		            // Format total_ords if exists
+		            var total_ords = $('#total_ords').text();
+		            if (total_ords) {
+		                var formatted = total_ords.replace(/\d+/g, n => Number(n).toLocaleString("en"));
+		                $('#total_ords').text(formatted);
+		            }
 		
-	         var interval = setInterval(function () {
-	            var link =$('#el-kashier-button');
-	            if(link.length){
-	                link.click();
-	                clearInterval(interval);
-	            }
-	        }, 1000);
-	  
-	 
-	</script>{{ kashier_code  }}{{ unset_kashier_code  }}{% endif %}{% include 'footer.twig' %} <script>
-	    
-	   $("#payment_method").on('change', function() {
-	       
-	        
-	       if($(this).val() == 21){
-	              $(".normal-payment").hide();
-	               $(".custom-payment-content").hide();
-	               $(".custom-payment-content-bkash").show();
-	       }
-	       else if($(this).val() == 34){
-	              $(".normal-payment").hide();
-	            $(".custom-payment-content-bkash").hide();
-	               $(".custom-payment-content").show();
-	       }
-	       else{
-	            $(".custom-payment-content").hide();
-	            $(".custom-payment-content-bkash").hide();
-	           $(".normal-payment").show();
-	       }
-	       
-	   });
-	</script><!-- start --> <script>document.getElementById("qr").style.display = "none";
-	
-	
-	function handleOrderType(selectObject) {
-	var element = document.getElementById("qr");
-	var element2 = document.getElementById("ppqr");
-	
-	if (selectObject.value == "14") {
-	element.style.display = "block";
-	element2.style.display = "none";
-	} else if (selectObject.value == "114") {
-	element.style.display = "none";
-	element2.style.display = "block";
-	} else {
-	element.style.display = "none";
-	element2.style.display = "none";
-	}
-	}
-	</script><!-- end -->
+		            // Handle payment method change
+		            $("#payment_method").on('change', function() {
+		                var selectedValue = $(this).val();
+		                var paymentAmountField = $('.payment-amount-field');
+		
+		                // Reset visibility
+		                $(".custom-payment-content").hide();
+		                $(".custom-payment-content-bkash").hide();
+		                $(".custom-payment-content-2013").hide();
+		                $("#qr").hide();
+		                paymentAmountField.show();
+		
+		                if (selectedValue == 21) {
+		                    $(".custom-payment-content-bkash").show();
+		                } else if (selectedValue == 34) {
+		                    $(".custom-payment-content").show();
+		                } else if (selectedValue == 2013) {
+		                    $(".custom-payment-content-2013").show();
+		                    paymentAmountField.hide(); // Hide payment_amount for payment['id'] == 2013
+		                } else if (selectedValue == 14) {
+		                    $("#qr").show();
+		                }
+		            });
+		
+		            // Trigger change on page load to handle pre-selected value
+		            $("#payment_method").trigger('change');
+		        });
+		    }
+		
+		    function handleOrderType(selectObject) {
+		        var element = document.getElementById("qr");
+		        var element2 = document.getElementById("ppqr"); // Note: ppqr is not in HTML, may need to add
+		        var selectedValue = selectObject.value;
+		
+		        // Reset visibility
+		        if (element) element.style.display = "none";
+		        if (element2) element2.style.display = "none";
+		
+		        if (selectedValue == "14") {
+		            if (element) element.style.display = "block";
+		        } else if (selectedValue == "114") {
+		            if (element2) element2.style.display = "block";
+		        }
+		
+		        // Trigger jQuery change event to sync with payment_method logic
+		        $("#payment_method").trigger('change');
+		    }
+		
+		    // Handle kashier_code if present
+		    {% if kashier_code %}
+		        var interval = setInterval(function () {
+		            var link = $('#el-kashier-button');
+		            if (link.length) {
+		                link.click();
+		                clearInterval(interval);
+		            }
+		        }, 1000);
+		    {% endif %}
+		</script> <script>
+				
+			         var interval = setInterval(function () {
+			            var link =$('#el-kashier-button');
+			            if(link.length){
+			                link.click();
+			                clearInterval(interval);
+			            }
+			        }, 1000);
+			  
+			 
+			</script>{{ kashier_code  }}{{ unset_kashier_code  }}{% endif %}{% include 'footer.twig' %} <script>
+			    
+			   $("#payment_method").on('change', function() {
+		       var selectedValue = $(this).val();
+		       var paymentAmountField = $('.payment-amount-field');
+		       
+		       // Reset visibility
+		       $(".custom-payment-content").hide();
+		       $(".custom-payment-content-bkash").hide();
+		       $(".custom-payment-content-2013").hide();
+		       $("#qr").hide();
+		       paymentAmountField.show();
+		       
+		       if(selectedValue == 21){
+		           $(".custom-payment-content-bkash").show();
+		       }
+		       else if(selectedValue == 34){
+		           $(".custom-payment-content").show();
+		       }
+		       else if(selectedValue == 2013){
+		           $(".custom-payment-content-2013").show();
+		           paymentAmountField.hide(); // Hide payment_amount for payment['id'] == 2013
+		       }
+		       else if(selectedValue == 14){
+		           $("#qr").show();
+		       }
+		   });
+			</script><!-- start --> <script>document.getElementById("qr").style.display = "none";
+		
+		
+		function handleOrderType(selectObject) {
+		var element = document.getElementById("qr");
+		var element2 = document.getElementById("ppqr");
+		
+		if (selectObject.value == "14") {
+		element.style.display = "block";
+		element2.style.display = "none";
+		} else if (selectObject.value == "114") {
+		element.style.display = "none";
+		element2.style.display = "block";
+		} else {
+		element.style.display = "none";
+		element2.style.display = "none";
+		}
+		}
+		</script><!-- end -->
