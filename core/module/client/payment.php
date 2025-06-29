@@ -2288,6 +2288,13 @@ elseif ($method_name == "paymentv2"):
                     $payment->execute(array("orderid" => $order_id));
                     $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
+
+                    echo "[DEBUG] Payment idkey:<br>";
+                    $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
+                    $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
+                    $paymentidkey = $payment->fetch(PDO::FETCH_ASSOC);
+                    var_dump($paymentidkey);
+
                     echo "[DEBUG] Payment Record:<br>";
                     var_dump($payment);
 
