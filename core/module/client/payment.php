@@ -2262,7 +2262,7 @@ elseif ($method_name == "paymentv2"):
                         $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                     } else {
                         echo "ttttt2";
-                        $amount = $payment["payment_amount"];
+                        $amount = $payment->payment_amount;
                     }
 
                     $extra = ($_POST);
