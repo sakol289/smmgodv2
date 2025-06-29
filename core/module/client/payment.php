@@ -2244,7 +2244,7 @@ elseif ($method_name == "paymentv2"):
         echo "time slip " . $data->data->transTime . "<br>";
 
         if (countDigit($proxyValue, $accbank) <= 4) {
-            if(isWithinTenMinutes($data["data"]["transTime"])) {
+            if(isWithinTenMinutes($data->data->transTime)) {
                 echo "ok work";
             } else {
                 echo "โอนเงินไม่ตรงเวลาที่กำหนด";
