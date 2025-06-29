@@ -2200,6 +2200,8 @@ elseif ($method_name == "paymentv2"):
     $captcha_control = json_decode($captcha_control_raw);
     if (!$grecaptcharesponse || !$captcha_control || !$captcha_control->success) {
         // echo "[ERROR] CAPTCHA verification failed.<br>";
+        unset($_SESSION['cybersafepayment']);
+        unset($_SESSION['cybersafepayment_privatecode']);
         header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
     }
