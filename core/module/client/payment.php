@@ -2216,11 +2216,13 @@ elseif ($method_name == "paymentv2"):
 
     $response = curl_exec($curl);
     $data = json_decode($response);
-    var_dump($data);
+    var_dump($data["data"]["receiver"]["proxy"]["value"]);
     if ($data && isset($data->valid)) {
+        $data = json_decode($response,true);
+        $proxyValue = $data["data"]["receiver"]["proxy"]["value"];
         $accbank = $extras["accbank"];
 
-        echo "Proxy Value: " . var_dump($data) . "<br>";
+        echo "Proxy Value: " . $proxyValue . "<br>";
         echo "Account Bank: " . $accbank . "<br>";
     } else {
         echo "Invalid response from payment gateway.";
