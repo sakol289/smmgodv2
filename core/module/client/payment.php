@@ -2184,22 +2184,22 @@ elseif ($method_name == "weepay"):
 
 elseif ($method_name == "paymentv2"):
 
-    echo "[DEBUG] Start paymentv2<br>";
+    // echo "[DEBUG] Start paymentv2<br>";
 
-    $order_id = $_SESSION['cybersafepayment_privatecode'];
-    echo "[DEBUG] Order ID: $order_id<br>";
+    // $order_id = $_SESSION['cybersafepayment_privatecode'];
+    // echo "[DEBUG] Order ID: $order_id<br>";
 
-    $googlesecret = $settings["recaptcha_secret"];
-    $grecaptcharesponse = $_POST['g-recaptcha-response'];
-    echo "[DEBUG] Captcha Response: $grecaptcharesponse<br>";
+    // $googlesecret = $settings["recaptcha_secret"];
+    // $grecaptcharesponse = $_POST['g-recaptcha-response'];
+    // echo "[DEBUG] Captcha Response: $grecaptcharesponse<br>";
 
     // ตรวจสอบ CAPTCHA
     $captcha_control_raw = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=$grecaptcharesponse&remoteip=" . $_SERVER['REMOTE_ADDR']);
-    echo "[DEBUG] CAPTCHA raw response: $captcha_control_raw<br>";
+    // echo "[DEBUG] CAPTCHA raw response: $captcha_control_raw<br>";
 
     $captcha_control = json_decode($captcha_control_raw);
     if (!$grecaptcharesponse || !$captcha_control || !$captcha_control->success) {
-        echo "[ERROR] CAPTCHA verification failed.<br>";
+        // echo "[ERROR] CAPTCHA verification failed.<br>";
         header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
     }
@@ -2210,8 +2210,8 @@ elseif ($method_name == "paymentv2"):
     $method = $method->fetch(PDO::FETCH_ASSOC);
     $extras = json_decode($method['method_extras'], true);
 
-    echo "[DEBUG] Extras:<br>";
-    var_dump($extras);
+    // echo "[DEBUG] Extras:<br>";
+    // var_dump($extras);
 
     if ($_POST["paymentType"] == "angpao") {
         $phoneangpao = $extras["phoneangpao"];
@@ -2240,22 +2240,22 @@ elseif ($method_name == "paymentv2"):
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        // echo $response;
         $data_response = json_decode($response, true);
-        echo "status angpao : " . $data_response['status']['message'];
+        // echo "status angpao : " . $data_response['status']['message'];
         // exit;
 
 
 
         if ($data_response['status']['message'] == "success") {
-            echo "[DEBUG] API marked transaction as valid.<br>";
+            // echo "[DEBUG] API marked transaction as valid.<br>";
 
-            echo "[DEBUG] Time check skipped (forced true)<br>";
+            // echo "[DEBUG] Time check skipped (forced true)<br>";
             
             $amountinapi = floatval($data_response['data']['voucher']['amount_baht']);
 
             if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
-                echo "[DEBUG] Found matching payment record.<br>";
+                // echo "[DEBUG] Found matching payment record.<br>";
 
                 $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_privatecode=:orderid");
                 $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
@@ -2265,30 +2265,30 @@ elseif ($method_name == "paymentv2"):
                 $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
 
-                echo "[DEBUG] Payment idkey:<br>";
+                // echo "[DEBUG] Payment idkey:<br>";
                 $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
                 $paymentidkey->execute(array("idkey" => $voucher_hash));
 
                 $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
-                echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
-                var_dump($paymentidkeyrowCount);
+                // echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
+                // var_dump($paymentidkeyrowCount);
 
 
                 if ($paymentidkeyrowCount == 0) {
-                    echo "[DEBUG] Payment Record:<br>";
-                    var_dump($payment);
+                    // echo "[DEBUG] Payment Record:<br>";
+                    // var_dump($payment);
 
                     $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
                     $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
                     $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
 
                     if ($payment_bonus) {
-                        echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
+                        // echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
                         $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                     } else {
-                        echo "[DEBUG] No bonus.<br>";
+                        // echo "[DEBUG] No bonus.<br>";
                         $amount = $payment["payment_amount"];
-                        echo "ttttt3 : " . $amount;
+                        // echo "ttttt3 : " . $amount;
                     }
 
                     $extra = json_encode($_POST);
@@ -2325,11 +2325,11 @@ elseif ($method_name == "paymentv2"):
                         $sendsms = in_array($settings["alert_type"], [1, 3]);
 
                         if ($sendsms) {
-                            echo "[DEBUG] Sending SMS alert<br>";
+                            // echo "[DEBUG] Sending SMS alert<br>";
                             SMSUser($settings["admin_telephone"], "$amount in the amount {$method["method_name"]} A new payment has been made through.");
                         }
                         if ($sendmail) {
-                            echo "[DEBUG] Sending Email alert<br>";
+                            // echo "[DEBUG] Sending Email alert<br>";
                             sendMail([
                                 "subject" => "New payment received.",
                                 "body" => "$amount in the amount {$method["method_name"]} A new payment has been made through.",
@@ -2341,24 +2341,24 @@ elseif ($method_name == "paymentv2"):
                     if ($update && $balance) {
                         $conn->commit();
                         referralCommission($payment, $payment["payment_amount"], $method['id']);
-                        echo "[SUCCESS] Payment success and committed.<br>";
+                        // echo "[SUCCESS] Payment success and committed.<br>";
                         header("Location: /paymentv2/status.php?status=success&amount=$amount");
                     } else {
                         $conn->rollBack();
                         unset($_SESSION['cybersafepayment']);
                         unset($_SESSION['cybersafepayment_privatecode']);
-                        echo "[FAIL] Database error, transaction rolled back.<br>";
+                        // echo "[FAIL] Database error, transaction rolled back.<br>";
                     }
                 } else {
                     unset($_SESSION['cybersafepayment']);
                     unset($_SESSION['cybersafepayment_privatecode']);
-                    echo "[ERROR] Duplicate slip<br>";
+                    // echo "[ERROR] Duplicate slip<br>";
                     header("Location: /paymentv2/status.php?error=Duplicate slip.");
                 }
             } else {
                 unset($_SESSION['cybersafepayment']);
                 unset($_SESSION['cybersafepayment_privatecode']);
-                echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
+                // echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
                 $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                 $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
                 header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
@@ -2366,16 +2366,18 @@ elseif ($method_name == "paymentv2"):
         } else {
             unset($_SESSION['cybersafepayment']);
             unset($_SESSION['cybersafepayment_privatecode']);
-            echo "[ERROR] status : error angpao";
+            // echo "[ERROR] status : error angpao";
+            header("Location: /paymentv2/status.php?error=error angpao");
+
         }
     } else if ($_POST["paymentType"] == "qr") {
 
         // เตรียม auth สำหรับ cURL
         $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
-        echo "[DEBUG] Auth Header (Base64): $auth<br>";
+        // echo "[DEBUG] Auth Header (Base64): $auth<br>";
 
         $post_payload = ['payload' => $_POST['idkey']];
-        echo "[DEBUG] Payload to API:<br>";
+        // echo "[DEBUG] Payload to API:<br>";
         var_dump($post_payload);
 
         $curl = curl_init();
@@ -2397,47 +2399,49 @@ elseif ($method_name == "paymentv2"):
 
         $response = curl_exec($curl);
         if (curl_errno($curl)) {
-            echo "[ERROR] cURL error: " . curl_error($curl);
+            // echo "[ERROR] cURL error: " . curl_error($curl);
             exit;
         }
         curl_close($curl);
 
-        echo "<br>[DEBUG] API Response:<br>";
-        echo $response . "<br>";
+        // echo "<br>[DEBUG] API Response:<br>";
+        // echo $response . "<br>";
 
         $data = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            echo "[ERROR] JSON Decode Error: " . json_last_error_msg();
+            // echo "[ERROR] JSON Decode Error: " . json_last_error_msg();
             exit;
         }
 
-        echo "<br>[DEBUG] Decoded Data:<br>";
-        var_dump($data);
-        echo "<br>";
+        // echo "<br>[DEBUG] Decoded Data:<br>";
+        // var_dump($data);
+        // echo "<br>";
 
         if ($data && isset($data->valid)) {
-            echo "[DEBUG] API marked transaction as valid.<br>";
+            // echo "[DEBUG] API marked transaction as valid.<br>";
 
             if (!isset($data->data->receiver->proxy->value)) {
-                echo "[ERROR] Missing proxy value from response.<br>";
+                // echo "[ERROR] Missing proxy value from response.<br>";
                 exit;
+                header("Location: /paymentv2/status.php?error=system error");
+
             }
 
             $proxyValue = $data->data->receiver->proxy->value;
             $amountinapi = $data->data->amount;
             $accbank = $extras["accbank"];
-            echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
+            // echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
 
             // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
             if (countDigit($proxyValue, $accbank) <= 4) {
-                echo "[DEBUG] Proxy matches accbank<br>";
+                // echo "[DEBUG] Proxy matches accbank<br>";
 
                 if (isWithinTenMinutes($data->data->transTime)) {
                     // if (true) {
-                    echo "[DEBUG] Time check skipped (forced true)<br>";
+                    // echo "[DEBUG] Time check skipped (forced true)<br>";
 
                     if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
-                        echo "[DEBUG] Found matching payment record.<br>";
+                        // echo "[DEBUG] Found matching payment record.<br>";
 
                         $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_privatecode=:orderid");
                         $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
@@ -2447,30 +2451,30 @@ elseif ($method_name == "paymentv2"):
                         $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
 
-                        echo "[DEBUG] Payment idkey:<br>";
+                        // echo "[DEBUG] Payment idkey:<br>";
                         $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
                         $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
 
                         $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
-                        echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
-                        var_dump($paymentidkeyrowCount);
+                        // echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
+                        // var_dump($paymentidkeyrowCount);
 
 
                         if ($paymentidkeyrowCount == 0) {
-                            echo "[DEBUG] Payment Record:<br>";
-                            var_dump($payment);
+                            // echo "[DEBUG] Payment Record:<br>";
+                            // var_dump($payment);
 
                             $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
                             $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
                             $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
 
                             if ($payment_bonus) {
-                                echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
+                                // echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
                                 $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                             } else {
-                                echo "[DEBUG] No bonus.<br>";
+                                // echo "[DEBUG] No bonus.<br>";
                                 $amount = $payment["payment_amount"];
-                                echo "ttttt3 : " . $amount;
+                                // echo "ttttt3 : " . $amount;
                             }
 
                             $extra = json_encode($_POST);
@@ -2507,11 +2511,11 @@ elseif ($method_name == "paymentv2"):
                                 $sendsms = in_array($settings["alert_type"], [1, 3]);
 
                                 if ($sendsms) {
-                                    echo "[DEBUG] Sending SMS alert<br>";
+                                    // echo "[DEBUG] Sending SMS alert<br>";
                                     SMSUser($settings["admin_telephone"], "$amount in the amount {$method["method_name"]} A new payment has been made through.");
                                 }
                                 if ($sendmail) {
-                                    echo "[DEBUG] Sending Email alert<br>";
+                                    // echo "[DEBUG] Sending Email alert<br>";
                                     sendMail([
                                         "subject" => "New payment received.",
                                         "body" => "$amount in the amount {$method["method_name"]} A new payment has been made through.",
@@ -2523,24 +2527,26 @@ elseif ($method_name == "paymentv2"):
                             if ($update && $balance) {
                                 $conn->commit();
                                 referralCommission($payment, $payment["payment_amount"], $method['id']);
-                                echo "[SUCCESS] Payment success and committed.<br>";
+                                // echo "[SUCCESS] Payment success and committed.<br>";
                                 header("Location: /paymentv2/status.php?status=success&amount=$amount");
                             } else {
                                 $conn->rollBack();
                                 unset($_SESSION['cybersafepayment']);
                                 unset($_SESSION['cybersafepayment_privatecode']);
-                                echo "[FAIL] Database error, transaction rolled back.<br>";
+                                // echo "[FAIL] Database error, transaction rolled back.<br>";
+                            header("Location: /paymentv2/status.php?error=Database error, transaction rolled back.");
+
                             }
                         } else {
                             unset($_SESSION['cybersafepayment']);
                             unset($_SESSION['cybersafepayment_privatecode']);
-                            echo "[ERROR] Duplicate slip<br>";
+                            // echo "[ERROR] Duplicate slip<br>";
                             header("Location: /paymentv2/status.php?error=Duplicate slip.");
                         }
                     } else {
                         unset($_SESSION['cybersafepayment']);
                         unset($_SESSION['cybersafepayment_privatecode']);
-                        echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
+                        // echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
                         $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                         $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
                         header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
@@ -2548,19 +2554,19 @@ elseif ($method_name == "paymentv2"):
                 } else {
                     unset($_SESSION['cybersafepayment']);
                     unset($_SESSION['cybersafepayment_privatecode']);
-                    echo "[ERROR] Proxy does not match account bank.<br>";
+                    // echo "[ERROR] Proxy does not match account bank.<br>";
                     header("Location: /paymentv2/status.php?error=สลิปไม่ตรงกับบัญชีในระบบ");
                 }
             } else {
                 unset($_SESSION['cybersafepayment']);
                 unset($_SESSION['cybersafepayment_privatecode']);
-                echo "[ERROR] Invalid or empty response from API.<br>";
+                // echo "[ERROR] Invalid or empty response from API.<br>";
                 header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
                 exit;
             }
         }
     } else {
-        echo "paymentType noy found";
+        // echo "paymentType noy found";
         header("Location: /paymentv2/status.php?error=paymentType noy found.");
     }
 
