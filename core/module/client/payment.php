@@ -2217,6 +2217,18 @@ elseif ($method_name == "paymentv2"):
     $response = curl_exec($curl);
     $data = json_decode($response);
     var_dump($data);
+    if ($data && isset($data->valid)) {
+        $data = json_decode($response,true);
+        $proxyValue = $data["data"]["receiver"]["proxy"]["value"];
+        $accbank = $extras["accbank"];
+
+        echo "Proxy Value: " . $proxyValue . "<br>";
+        echo "Account Bank: " . $accbank . "<br>";
+    } else {
+        echo "Invalid response from payment gateway.";
+        header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
+        exit;
+    }
 
 
 // if (empty($code) && $status2 = true && $status == true && $secret == $apiSecret):
