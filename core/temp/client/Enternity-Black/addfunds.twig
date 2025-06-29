@@ -1,260 +1,233 @@
 {% include 'header.twig' %}
 
 
+<div class="wrapper-content">
+	<div class="wrapper-content__header"></div>
+	<div class="wrapper-content__body">
+		<style>
+			#pmDetails img {
+				max-width: 100%;
+				width: auto;
+				height: 100%;
+			}
+		</style>
+		<div id="block_33">
+			<div class="add-funds__form">
+				<div class="bg"></div>
+				<div class="divider-top"></div>
+				<div class="divider-bottom"></div>
+				<div class="container-fluid">
+					<div class="row add-funds__form-alignment px-lg-4">
+						<div class="col-12 col-lg-12">
+							<div class="component_card">
+								<div class="card">
 
- <div class="wrapper-content">
-                <div class="wrapper-content__header"></div>
-                <div class="wrapper-content__body">
-                    <style>
-    #pmDetails  img {
-        max-width: 100%;
-        width: auto;
-        height: 100%;
-    }
-</style>
-<div id="block_33">
-    <div class="add-funds__form">
-        <div class="bg"></div>
-        <div class="divider-top"></div>
-        <div class="divider-bottom"></div>
-        <div class="container-fluid">
-            <div class="row add-funds__form-alignment px-lg-4">
-                <div class="col-lg-6">
-                    <div class="component_card">
-                        <div class="card">
 
- 
-     
-          <form  method="post" action="addfunds">
-              
-              
-              	{% if error %}
-			  <div class="alert alert-dismissible alert-danger">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				{{ errorText }}
-			  </div>
-			{% endif %}
-			{% if success %}
-			  <div class="alert alert-dismissible alert-success">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				{{ successText }}
-			  </div>
-			{% endif %}
-			
-                               
-                                <div class="box">
-                                    <div class="form-group">
-                                        <label for="method" class="control-label">Method</label>
-                                         <select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
-                      
-                   {% for payment in paymentsList %}
-                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
-                    {% endfor %}
-                  </select>
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                                
-                                
-                                 <!-- content -->
-                  
-                  <div class="payment_contents mt-3 mb-3">
-                                                     {% for payment in paymentsList %}
-                                                         <div id="{{payment['id']}}" class="payment_content_class d-none">
-                                                             <div class="card">
-                                                                 {{payment['content']}}
-                                                             </div> 
-                                                         </div>
-                                                     {% endfor %}
-                                                 </div>
-                                
-                                
-                                
-                                 
-                                        
-                                         
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        						 <!-- Start -->
-                
-    <div id="qr">
-        
-        
-        
-              <form method="post" action="addfunds">
-                    <center><img width="300" height="600" src="{{ PaytmQRimage }}" ></img> </center>
-                    
-                    <div class="form-group">
-                        <label for="method" class="control-label">Order ID</label>
-                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
-                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
-                    </div>
-                    
-    
-          </div>
-    
-    
-    <!--end--->
-                                
-                                
-                                                      <div class="form-group normal-payment" >
-                                        <label for="amount" class="control-label">💰 Amount</label>
-                                        <div class="row">
-                                            
-                                            <div class="col-9" id="amountDiv">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="amount_symbol" style="background-color: var(--secondary-color);color: white;">@</span>
-                                                    </div>
-                                                    <input type="number" class="form-control" name="payment_amount"  placeholder="0.00" step="0.01" min="0.01" value="{{ data['payment_amount'] }}" required>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                            
-                                            <div class="col-3 align-center">
-                                                <button type="submit" class="btn btn-primary submit-btn normal-payment" style="width: 100%;border-radius: 5px;padding: 7px;">🤑 Pay</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                                                
-                    </div>
-                </div>
-                
-                
-                
-                <div class="col-lg-6">
-                    <div class="component_card">
-                        <div class="card mb-3" id="pmDetails" style="display: none">
-                            <div class="tab-content">
-                                                                                                           
-                                                                                                </div>
-                        </div>{% if contentText %}
-                                                    <div class="card">
-                                {{ contentText }}
-                              
-                            </div>{% endif %}
-                                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    
-    
-    
-    
-    
-    
-    
-     <br>
-     <div id="block_41">
-    <div class="add-funds__list">
-        <div class="bg"></div>
-        <div class="divider-top"></div>
-        <div class="divider-bottom"></div>
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-lg-12">
-                    <div class="table-bg component_table ">
-                        <div class="table-wr table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>🆔</th>
-                                                <th>🗓️ Date</th>
-                                                <th>🏦 Payment Method </th>
-                                                <th>💰 Amount</th>
-                                                
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td colspan="4">&nbsp;</td>
-                                    </tr>
+									<form method="post" action="addfunds">
 
-            {% for payment in lastPaymentsList %}
-              <tr>
-                <td>{{payment['id']}}</td>
-                 <td>{{payment['created_at']}} </td>  
-                <td class="width-40">{{payment['payment_method']}}</td>
-                <td >{{ payment['amount']|number_format(2) }}</td>
-                
-              </tr>
-            {% endfor %}   
-</td>
-          </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-5">
-                    <nav class="component_pagination">
-                        <div class="">
-                                                    </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+
+										{% if error %}
+											<div class="alert alert-dismissible alert-danger">
+												<button type="button" class="close" data-dismiss="alert">×</button>
+												{{ errorText }}
+											</div>
+										{% endif %}
+										{% if success %}
+											<div class="alert alert-dismissible alert-success">
+												<button type="button" class="close" data-dismiss="alert">×</button>
+												{{ successText }}
+											</div>
+										{% endif %}
+
+
+										<div class="box">
+											<div class="form-group">
+												<label for="method" class="control-label">Method</label>
+												<select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+
+													{% for payment in paymentsList %}
+														<option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+
+
+										<!-- content -->
+
+										<div class="payment_contents mt-3 mb-3">
+											{% for payment in paymentsList %}
+												<div id="{{payment['id']}}" class="payment_content_class d-none">
+													<div class="card">
+														{{payment['content']}}
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+
+
+										<!-- Start -->
+
+										<div id="qr">
+
+
+											<form method="post" action="addfunds">
+												<center><img width="300" height="600" src="{{ PaytmQRimage }}"></img>
+											</center>
+
+											<div class="form-group">
+												<label for="method" class="control-label">Order ID</label>
+												<p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+												<input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+											</div>
+
+
+										</div>
+
+
+										<!--end--->
+
+
+										<div class="form-group normal-payment">
+											<label for="amount" class="control-label">💰 Amount</label>
+											<div class="row">
+
+												<div class="col-9" id="amountDiv">
+													<div class="input-group mb-3">
+														<div class="input-group-prepend">
+															<span class="input-group-text" id="amount_symbol" style="background-color: var(--secondary-color);color: white;">@</span>
+														</div>
+														<input type="number" class="form-control" name="payment_amount" placeholder="0.00" step="0.01" min="0.01" value="{{ data['payment_amount'] }}" required>
+													</div>
+												</div>
+
+
+												<div class="col-3 align-center">
+													<button type="submit" class="btn btn-primary submit-btn normal-payment" style="width: 100%;border-radius: 5px;padding: 7px;">🤑 Pay</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+
+							</div>
+						</div>
+
+
+						<div class="col-lg-6">
+							<div class="component_card">
+								<div class="card mb-3" id="pmDetails" style="display: none">
+									<div class="tab-content"></div>
+								</div>
+								{% if contentText %}
+									<div class="card">
+										{{ contentText }}
+
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<br>
+		<div id="block_41">
+			<div class="add-funds__list">
+				<div class="bg"></div>
+				<div class="divider-top"></div>
+				<div class="divider-bottom"></div>
+				<div class="container">
+					<div class="row mb-3">
+						<div class="col-lg-12">
+							<div class="table-bg component_table ">
+								<div class="table-wr table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>🆔</th>
+												<th>🗓️ Date</th>
+												<th>🏦 Payment Method
+												</th>
+												<th>💰 Amount</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="4">&nbsp;</td>
+											</tr>
+
+											{% for payment in lastPaymentsList %}
+												<tr>
+													<td>{{payment['id']}}</td>
+													<td>{{payment['created_at']}}
+													</td>
+													<td class="width-40">{{payment['payment_method']}}</td>
+													<td>{{ payment['amount']|number_format(2) }}</td>
+
+												</tr>
+											{% endfor %}
+										</tbody>
+									</td>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-5">
+					<nav class="component_pagination">
+						<div class=""></div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-   
-  <script>
+
+ <script>
   	var total_ords = $('#total_ords').text();
 	var formatted = total_ords.replace(/\d+/g, n => Number(n).toLocaleString("en"));
 	$('#total_ords').text(formatted);
   </script>
 
 
-
-
-
-
-
-
-
 {% if kashier_code %}
 
- <style>
-        #el-kashier-button{
-            display: none;
-        }
-    </style>
-	
-	<script>
-	
-         var interval = setInterval(function () {
-            var link =$('#el-kashier-button');
-            if(link.length){
-                link.click();
-                clearInterval(interval);
-            }
-        }, 1000);
-  
- 
-</script>
+	<style>
+		#el-kashier-button {
+			display: none;
+		}
+	</style>
 
-{{ kashier_code  }}
+	 <script>
+		
+	         var interval = setInterval(function () {
+	            var link =$('#el-kashier-button');
+	            if(link.length){
+	                link.click();
+	                clearInterval(interval);
+	            }
+	        }, 1000);
+	  
+	 
+	</script>
 
-{{ unset_kashier_code  }}
+	{{ kashier_code  }}
+
+	{{ unset_kashier_code  }}
 {% endif %}
 
 
 {% include 'footer.twig' %}
 
 
-<script>
+ <script>
     
    $("#payment_method").on('change', function() {
        
@@ -279,13 +252,9 @@
 </script>
 
 
-
-
-
-
 <!-- start -->
 
-<script>document.getElementById("qr").style.display = "none";
+ <script>document.getElementById("qr").style.display = "none";
 
 
 function handleOrderType(selectObject) {
@@ -308,11 +277,7 @@ element2.style.display = "none";
 <!-- end -->
 
 
-
-
-
-
-<script>
+ <script>
             var payment_id = $("#payment_method").val();
             $('#' + payment_id).removeClass("d-none");
             $("#payment_method").on("change", function () {
@@ -321,7 +286,3 @@ element2.style.display = "none";
                 $('#' + change_payment_id).removeClass("d-none");
             });
         </script>
-
-
-
-
