@@ -2267,7 +2267,8 @@ elseif ($method_name == "paymentv2"):
                     $extra = json_encode($extra);
                     
 
-                    echo "test : " . $payment["balance"] + $amount;
+                    echo "test1 : " . var_dump($payment);
+                    echo "test2 : " . var_dump($amount);
 
 
                     $conn->beginTransaction();
