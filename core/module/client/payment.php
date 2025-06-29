@@ -2186,8 +2186,8 @@ elseif ($method_name == "paymentv2"):
     ## paymentv2 ##
     $order_id     = $_SESSION['cybersafepayment_privatecode'];
 
-    var_dump($_POST);
-    exit;
+    // var_dump($_POST);
+    // exit;
     $googlesecret   = $settings["recaptcha_secret"];
     // echo "googlesecret: ";
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
@@ -2314,15 +2314,15 @@ elseif ($method_name == "paymentv2"):
                         $conn->commit();
                         referralCommission($payment, $payment["payment_amount"], $method['id']);
                         echo "OK";
-                        header("Location:" . site_url());
+                        // header("Location:" . site_url());
                     } else {
                         $conn->rollBack();
                         echo "NO";
-                        header("Location:" . site_url());
+                        // header("Location:" . site_url());
                     }
                 } else {
                     echo "NOO";
-                    header("Location:" . site_url());
+                    // header("Location:" . site_url());
                 }
             } else {
                 $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code  ");
