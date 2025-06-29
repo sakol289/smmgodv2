@@ -286,7 +286,20 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
         function validateAngpaoLink() {
             const link = angpaoLinkInput.value.trim();
             if (link && isValidUrl(link)) {
-                idkeyInput.value = link;
+                // Check if it's a valid angpao link (contains ?v=)
+                if (!link.includes('?v=')) {
+                    alert('ไม่ใช่ลิ้งangpao กรุณาตรวจสอบลิ้งอีกครั้ง');
+                    idkeyInput.value = '';
+                    statusInput.value = 'false';
+                    angpaoError.classList.remove('d-none');
+                    angpaoError.textContent = 'ไม่ใช่ลิ้งangpao กรุณาตรวจสอบลิ้งอีกครั้ง';
+                    submitButton.disabled = true;
+                    return;
+                }
+                
+                // Process angpao link to extract voucher hash
+                const processedLink = processAngpaoLink(link);
+                idkeyInput.value = processedLink;
                 statusInput.value = 'true';
                 paymentMethodInput.value = 'angpao';
                 angpaoError.classList.add('d-none');
@@ -295,8 +308,22 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
                 idkeyInput.value = '';
                 statusInput.value = 'false';
                 angpaoError.classList.remove('d-none');
+                angpaoError.textContent = 'กรุณากรอกลิ้งซองอั่งเปาที่ถูกต้อง';
                 submitButton.disabled = true;
             }
+        }
+
+        function processAngpaoLink(url) {
+            // Extract voucher hash from angpao link
+            // Similar to PHP logic: explode("?v=", $url_angpao)
+            if (url.includes('?v=')) {
+                const parts = url.split('?v=');
+                if (parts.length > 1) {
+                    return parts[1]; // Return the voucher hash part
+                }
+            }
+            // If no ?v= found, return the original URL
+            return url;
         }
 
         function isValidUrl(string) {
