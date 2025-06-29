@@ -2216,10 +2216,10 @@ elseif ($method_name == "paymentv2"):
 
     $response = curl_exec($curl);
     $data = json_decode($response);
-    var_dump($data->data);
+    var_dump($data->data->receiver->proxy->value);
     if ($data && isset($data->valid)) {
         $data = json_decode($response,true);
-        $proxyValue = $data["data"]["receiver"]["proxy"]["value"];
+        // $proxyValue = $data["data"]["receiver"]["proxy"]["value"];
         $accbank = $extras["accbank"];
 
         echo "Proxy Value: " . $proxyValue . "<br>";
