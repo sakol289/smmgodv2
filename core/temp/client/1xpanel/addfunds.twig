@@ -43,6 +43,7 @@
 								<div class="form-group">
 									<label for="method" class="control-label">Method</label>
 									<select class="form-control" id="payment_method" name="payment_type" onchange="handleOrderType(this)">
+                           <option selected>กรุณาเลือกoption</option>
 
 										{% for payment in paymentsList %}
 											<option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] }}</option>
