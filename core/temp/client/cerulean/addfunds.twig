@@ -1,355 +1,353 @@
 {% include 'header.twig' %}
 <div class="app-content">
-           {% if khalti_code %}
+	{% if khalti_code %}
 
-{{khalti_code}}
+		{{khalti_code}}
 
-{% endif %}
+	{% endif %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-2">
 
-        {% if error %}
-          <div class="alert alert-dismissible alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ errorText }}
-          </div>
-        {% endif %}
-        {% if success %}
-          <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ successText }}
-          </div>
-        {% endif %}
-      </div>
-
- 
-    <div class="col-md-12">
-
-        {% if paymentsList %}
-          <div class="g-card mb-3">
-         <div class="g-card-body">
-              <form method="post" action="addfunds">
-
-                <div class="form-group">
-                  <label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
-                                            
-                                             <select id="method" name="payment_type" class="form-control" id="payment_method" name="payment_type">
-                                            
-                                           
-                                                
-                                                   {% for payment in paymentsList %}
-                      <option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %} >{{ payment['method_name'] }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-                                            
-                                           <div class="fga mb-4 custom-payment-content"  style="display:none">
-                                       <label class="fla" for="amount">Instructions:</label>
-                                       <br>
-                                       <p>
-                                           
-                                            {% for payment in paymentsList %}
-													  {% if payment['id'] == 21 %} 
-													    {{ payment['content'] }}
-													  {% endif %}
-													{% endfor %}
-                                           
-                                       </p>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                     
-                                        
-                                        <div class="fga mb-4 normal-payment" >
-                                             <label for="method" class="control-label">{{ lang['addfunds.amount'] }}  &nbsp;&nbsp; {{currency['symbol']}}</label>
-                      <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
-                  </div>
-                                        
-                                     
-                <button type="submit" class="btn btn-primary">{{ lang['addfunds.button'] }}</button>
-              </form>
-            </div>
-          </div>
-        {% endif %}
-      </div>
+				{% if error %}
+					<div class="alert alert-dismissible alert-danger">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						{{ errorText }}
+					</div>
+				{% endif %}
+				{% if success %}
+					<div class="alert alert-dismissible alert-success">
+						<button type="button" class="close" data-dismiss="alert">×</button>
+						{{ successText }}
+					</div>
+				{% endif %}
+			</div>
 
 
+			<div class="col-md-12">
 
- <div class="col-md-6">
-               
-    <div class="g-card mb-3 mt-3 mt-md-1 h-100">
-         <div class="g-card-body">
-            <form method="post" action="addfunds">
-                    <center><img width="85%" src="{{ PaytmQRimage }}"></center>
-                    <div class="form-group col-md-12">
-                        <label for="method" class="control-label">Amount</label>
-                        <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="method" class="control-label">Order ID</label>
-                        <p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
-                        <input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
-                    </div>
-                    <input type="hidden" class="form-control" name="payment_type" value="14">
-                    <div class="col-md-12">
-                      <button type="submit" class="w-100 btn btn-primary">Submit</button>
-                    </div>
-            </div>
-      </div>
-        </div>
+				{% if paymentsList %}
+					<div class="g-card mb-3">
+						<div class="g-card-body">
+							<form method="post" action="addfunds">
+
+								<div class="form-group">
+									<label for="method" class="control-label">{{ lang['addfunds.method'] }}</label>
+
+									<select id="method" name="payment_type" class="form-control" id="payment_method" name="payment_type">
 
 
-<!--  <div class="col-md-6">
-               
-    <div class="g-card mb-3 mt-3 mt-md-1 h-100">
-         <div class="g-card-body">
-                <form method="post" action="addfunds">
-                    <center><img width="80%" src="/easpaisa.png"></center>
-                    <div class="form-group col-md-12">
-                        <label for="method" class="control-label">Amount In PKR </label>
-                        <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="method" class="control-label">Trx ID</label>
-                        <p>Enter Trx ID without spaces. Example - 12345678903</p>
-                        <input class="form-control" name="phqr_orderid" value="{{ data['phqr_orderid'] }}">
-                    </div>
-                    <input type="hidden" class="form-control" name="payment_type" value="116">
-                    <div class="col-md-12">
-                                      <button type="submit" class="w-100 btn btn-primary">Submit</button>
-                    </div>
-                </form>   </div>
-            </div>
-      </div>
-        </div> -->
+										{% for payment in paymentsList %}
+											<option value="{{ payment['id'] }}" {% if data['payment_type'] == payment['id'] %} selected {% endif %}>{{ payment['method_name'] }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+								<div class="fga mb-4 custom-payment-content" style="display:none">
+									<label class="fla" for="amount">Instructions:</label>
+									<br>
+									<p>
+
+										{% for payment in paymentsList %}
+											{% if payment['id'] == 21 %}
+												{{ payment['content'] }}
+											{% endif %}
+										{% endfor %}
+
+									</p>
+								</div>
+
+								<div class="form-group">
 
 
-
-    <div class="col-md-12">
-<div class="g-card">
-            <div class="g-card-body text-white">
-              	 {% if error %}
-        <div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          {{ errorText }}
-        </div>
-      {% elseif success %}
-        <div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          {{ successText }}
-        </div>
-      {% endif %}	
-						 <form method="post" action="kupon">
-            <div class="form-group">
-              <label style="padding: 10px;
-    font-size: 25px;
-    font-weight: 700;" for="subject" class="control-label">Coupon Code</label>
-              <input type="text" class="form-control" id="kuponadi" name="kuponadi">
-            </div>
-            <button style="background-color: #fed53c;
-    color: #000;" type="submit" class="btn btn-block btn-big-primary">Redeem</button>
-          </form>
-          </div>
-        </div>
-
-
-<!--	<div class="col-lg-6">
-                    <div class="card">
-                        <div class="py-4 px-lg-3 px-4">
-						
-									<div class="s-head th-3">
-										<div class="d-flex align-items-center">
-											<div class="col-lg-2">
-												<div class="s-icon">
-													<i style="color: white;"class="fal fa-receipt"></i>
-												</div>
-											</div>
-											<div class="col-lg-10 col-12">
-												<h3> <span style="color: white;"> {{ lang['smmspot.addfunds.last_payments'] }} </h3>
-												<p style="color:white">{{ lang['smmspot.addfunds.last_payments_desc'] }}</p>
-											</div>
-										</div>
+									<div class="fga mb-4 normal-payment">
+										<label for="method" class="control-label">{{ lang['addfunds.amount'] }}
+											&nbsp;&nbsp;
+											{{currency['symbol']}}</label>
+										<input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
 									</div>
-                       
-                                    <div class="old-payments">
-									
-									        {% for payment in lastPaymentsList %}
 
-									     
-										<div class="card mb-3">
-											<div class="py-4 px-lg-3 px-4">
-												<div class="row">
-													<div class="col-lg-3 col-6">
-														<h6 style="color:white"class="op-title">Payment No</h6>
-														<div class="op-id"><span style="color: white;">{{payment['id']}}</div>
-													</div>
-													<div class="col-lg-6 col-6">
-														<h6 class="op-title">
-															<span><span style="color: white;">{{payment['payment_method']}}</span>
-														</h6>
-														<div class="op-date"><span style="color: white;">{{payment['created_at']}}1</div>
-													</div>
-													<div class="col-lg-3 col-12">
-														<div class="op-status"><span style="color: white;">{{ payment['amount']|number_format(2) }}</div>
-													</div>
+
+									<button type="submit" class="btn btn-primary">{{ lang['addfunds.button'] }}</button>
+								</form>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+
+
+				{# <div class="col-md-6">
+
+					<div class="g-card mb-3 mt-3 mt-md-1 h-100">
+						<div class="g-card-body">
+							<form method="post" action="addfunds">
+								<center><img width="85%" src="{{ PaytmQRimage }}"></center>
+								<div class="form-group col-md-12">
+									<label for="method" class="control-label">Amount</label>
+									<input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+								</div>
+								<div class="form-group col-md-12">
+									<label for="method" class="control-label">Order ID</label>
+									<p>Enter Transaction/Order ID without spaces. Example - 202010122210100058</p>
+									<input class="form-control" name="paytmqr_orderid" value="{{ data['paytmqr_orderid'] }}">
+								</div>
+								<input type="hidden" class="form-control" name="payment_type" value="14">
+								<div class="col-md-12">
+									<button type="submit" class="w-100 btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</div>
+					</div> #}
+
+
+					<!--  <div class="col-md-6">
+										               
+										    <div class="g-card mb-3 mt-3 mt-md-1 h-100">
+										         <div class="g-card-body">
+										                <form method="post" action="addfunds">
+										                    <center><img width="80%" src="/easpaisa.png"></center>
+										                    <div class="form-group col-md-12">
+										                        <label for="method" class="control-label">Amount In PKR </label>
+										                        <input class="form-control" name="payment_amount" value="{{ data['payment_amount'] }}">
+										                    </div>
+										                    <div class="form-group col-md-12">
+										                        <label for="method" class="control-label">Trx ID</label>
+										                        <p>Enter Trx ID without spaces. Example - 12345678903</p>
+										                        <input class="form-control" name="phqr_orderid" value="{{ data['phqr_orderid'] }}">
+										                    </div>
+										                    <input type="hidden" class="form-control" name="payment_type" value="116">
+										                    <div class="col-md-12">
+										                                      <button type="submit" class="w-100 btn btn-primary">Submit</button>
+										                    </div>
+										                </form>   </div>
+										            </div>
+										      </div>
+										        </div> -->
+
+
+					<div class="col-md-12">
+						<div class="g-card">
+							<div class="g-card-body text-white">
+								{% if error %}
+									<div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										{{ errorText }}
+									</div>
+								{% elseif success %}
+									<div class="alert alert-dismissible alert-success {% if site['rtl'] %} rtl-alert {% endif %}">
+										<button type="button" class="close" data-dismiss="alert">×</button>
+										{{ successText }}
+									</div>
+								{% endif %}
+								<form method="post" action="kupon">
+									<div class="form-group">
+										<label style="padding: 10px;
+																						    font-size: 25px;
+																						    font-weight: 700;" for="subject" class="control-label">Coupon Code</label>
+										<input type="text" class="form-control" id="kuponadi" name="kuponadi">
+									</div>
+									<button style="background-color: #fed53c;
+																				    color: #000;" type="submit" class="btn btn-block btn-big-primary">Redeem</button>
+								</form>
+							</div>
+						</div>
+
+
+						<!--	<div class="col-lg-6">
+												                    <div class="card">
+												                        <div class="py-4 px-lg-3 px-4">
+																		
+																					<div class="s-head th-3">
+																						<div class="d-flex align-items-center">
+																							<div class="col-lg-2">
+																								<div class="s-icon">
+																									<i style="color: white;"class="fal fa-receipt"></i>
+																								</div>
+																							</div>
+																							<div class="col-lg-10 col-12">
+																								<h3> <span style="color: white;"> {{ lang['smmspot.addfunds.last_payments'] }} </h3>
+																								<p style="color:white">{{ lang['smmspot.addfunds.last_payments_desc'] }}</p>
+																							</div>
+																						</div>
+																					</div>
+												                       
+												                                    <div class="old-payments">
+																					
+																					        {% for payment in lastPaymentsList %}
+												
+																					     
+																						<div class="card mb-3">
+																							<div class="py-4 px-lg-3 px-4">
+																								<div class="row">
+																									<div class="col-lg-3 col-6">
+																										<h6 style="color:white"class="op-title">Payment No</h6>
+																										<div class="op-id"><span style="color: white;">{{payment['id']}}</div>
+																									</div>
+																									<div class="col-lg-6 col-6">
+																										<h6 class="op-title">
+																											<span><span style="color: white;">{{payment['payment_method']}}</span>
+																										</h6>
+																										<div class="op-date"><span style="color: white;">{{payment['created_at']}}1</div>
+																									</div>
+																									<div class="col-lg-3 col-12">
+																										<div class="op-status"><span style="color: white;">{{ payment['amount']|number_format(2) }}</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																						
+																						
+																							{% endfor %}
+																					
+																					
+																						
+												                                    </div>
+												
+												                       
+												                        </div>
+												                    </div>
+												                </div> -->
+
+
+						{% if bankPayment == 2 %}
+
+							<div class="col-md-6">
+
+								<div class="g-card mb-3 mt-3 mt-md-1 h-100">
+									<div class="g-card-body">
+										<form method="post" action="addfunds">
+
+											<div class="form-group col-md-12">
+												<label for="method" class="control-label">{{ lang['addfunds.bank'] }}</label>
+												<select class="form-control" name="payment_bank">
+													{% for bank in bankList %}
+														<option value="{{ bank['id'] }}" {% if data['payment_bank'] == payment['id'] %} selected {% endif %}>{{ bank['bank_name'] }}</option>
+													{% endfor %}
+												</select>
+											</div>
+											<div class="d-flex">
+												<div class="form-group col-md-6">
+													<label for="method" class="control-label">{{ lang['addfunds.bank.amount'] }}</label>
+													<input class="form-control" name="payment_bank_amount" value="{{ data['payment_bank_amount'] }}">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="method" class="control-label">{{ lang['addfunds.bank.sender'] }}</label>
+													<input class="form-control" name="payment_gonderen" value="{{ data['payment_gonderen'] }}">
 												</div>
 											</div>
+											<div class="col-md-12">
+												<button type="submit" class="w-100 btn btn-primary">{{ lang['addfunds.bank.button'] }}</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+
+						{% if bankPayment == 2 %}
+							<div class="col-md-6 text-white">
+
+
+								<div class="g-card mb-3 mt-4 mt-md-1 h-100">
+									<div class="g-card-body">
+
+										<p style="text-align: center;">
+											<span style="font-weight: 700; font-size: 36px;">{{lang["smmspot.addfunds.bank.accounts.title"]}}</span>
+										</p>
+
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-checkable text-white">
+												<thead>
+													<tr>
+														<th>{{lang["smmspot.addfunds.bank.accounts.bank.name"]}}</th>
+														<th>{{lang["smmspot.addfunds.bank.accounts.branch.code"]}}</th>
+														<th>{{lang["smmspot.addfunds.bank.accounts.account.number"]}}</th>
+														<th>{{lang["smmspot.addfunds.bank.accounts.iban"]}}</th>
+														<th>{{lang["smmspot.addfunds.bank.accounts.recipient.name"]}}</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													{% for bank in bankList %}
+														<tr>
+															<td>{{ bank['bank_name'] }}</td>
+															<td>{{ bank['bank_sube'] }}</td>
+															<td>{{ bank['bank_hesap'] }}</td>
+															<td>
+																<b>{{ bank['bank_iban'] }}</b><br></td>
+															<td>{{ bank["bank_alici"] }}</td>
+														</tr>
+													{% endfor %}
+												</tbody>
+											</table>
 										</div>
-										
-										
-											{% endfor %}
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endif %}
+
+				{% if contentText %}
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="g-card mb-3 mt-5">
+									<div class="g-card-body">
+										{{ contentText }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+
+
+			{% if kashier_code %}
+
+				<style>
+					#el-kashier-button {
+						display: none;
+					}
+				</style>
+
+				 <script>
 									
-									
-										
-                                    </div>
+								         var interval = setInterval(function () {
+								            var link =$('#el-kashier-button');
+								            if(link.length){
+								                link.click();
+								                clearInterval(interval);
+								            }
+								        }, 1000);
+								  
+								 
+								</script>
 
-                       
-                        </div>
-                    </div>
-                </div> -->
+				{{ kashier_code  }}
 
+				{{ unset_kashier_code  }}
+			{% endif %}
 
-      {% if bankPayment == 2 %}
-    
-    <div class="col-md-6">
-               
-    <div class="g-card mb-3 mt-3 mt-md-1 h-100">
-         <div class="g-card-body">
-                <form method="post" action="addfunds">
+			{% include 'footer.twig' %}
 
-                  <div class="form-group col-md-12">
-                    <label for="method" class="control-label">{{ lang['addfunds.bank'] }}</label>
-                    <select class="form-control" name="payment_bank">
-                     {% for bank in bankList %}
-                        <option value="{{ bank['id'] }}" {% if data['payment_bank'] == payment['id'] %} selected {% endif %} >{{ bank['bank_name'] }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-               <div class="d-flex">
-                    <div class="form-group col-md-6">
-                        <label for="method" class="control-label">{{ lang['addfunds.bank.amount'] }}</label>
-                        <input class="form-control" name="payment_bank_amount" value="{{ data['payment_bank_amount'] }}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="method" class="control-label">{{ lang['addfunds.bank.sender'] }}</label>
-                        <input class="form-control" name="payment_gonderen" value="{{ data['payment_gonderen'] }}">
-                    </div>
-                  </div>
-                    <div class="col-md-12">
-                      <button type="submit" class="w-100 btn btn-primary">{{ lang['addfunds.bank.button'] }}</button>
-                    </div>
-                </form>
-            </div>
-      </div>
-        </div>
-      {% endif %}
-
-  {% if bankPayment == 2 %}
-    <div class="col-md-6 text-white">
-
-
-            <div class="g-card mb-3 mt-4 mt-md-1 h-100">
-         <div class="g-card-body">
-
-              <p style="text-align: center;">
-                <span style="font-weight: 700; font-size: 36px;">{{lang["smmspot.addfunds.bank.accounts.title"]}}</span>
-              </p>
-
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-checkable text-white">
-                  <thead>
-                    <tr>
-                      <th>{{lang["smmspot.addfunds.bank.accounts.bank.name"]}}</th>
-                      <th>{{lang["smmspot.addfunds.bank.accounts.branch.code"]}}</th>
-                      <th>{{lang["smmspot.addfunds.bank.accounts.account.number"]}}</th>
-                      <th>{{lang["smmspot.addfunds.bank.accounts.iban"]}}</th>
-                      <th>{{lang["smmspot.addfunds.bank.accounts.recipient.name"]}}</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for bank in bankList %}
-                    <tr>
-                      <td>{{ bank['bank_name'] }}</td>
-                      <td>{{ bank['bank_sube'] }}</td>
-                      <td>{{ bank['bank_hesap'] }}</td>
-                      <td><b>{{ bank['bank_iban'] }}</b><br></td>
-                      <td>{{ bank["bank_alici"] }}</td>
-                    </tr>
-                  {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
-
-            </div>
-
-      </div>
-        </div>
-      </div>
-    </div>
-
-  {% endif %}
-
-{% if contentText %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="g-card mb-3 mt-5">
-         <div class="g-card-body">
-        {{ contentText }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endif %}
-</div>
-
-
-{% if kashier_code %}
-
- <style>
-        #el-kashier-button{
-            display: none;
-        }
-    </style>
-	
-	<script>
-	
-         var interval = setInterval(function () {
-            var link =$('#el-kashier-button');
-            if(link.length){
-                link.click();
-                clearInterval(interval);
-            }
-        }, 1000);
-  
- 
-</script>
-
-{{ kashier_code  }}
-
-{{ unset_kashier_code  }}
-{% endif %}
-
-{% include 'footer.twig' %}
-
-<script>
-    
-   $("#method").on('change', function() {
-       
-       if($(this).val() == 21){
-              $(".normal-payment").hide();
-               $(".custom-payment-content").show();
-       }
-       else{
-            $(".custom-payment-content").hide();
-           $(".normal-payment").show();
-       }
-       
-   });
-</script>
-
-
+			 <script>
+						    
+						   $("#method").on('change', function() {
+						       
+						       if($(this).val() == 21){
+						              $(".normal-payment").hide();
+						               $(".custom-payment-content").show();
+						       }
+						       else{
+						            $(".custom-payment-content").hide();
+						           $(".normal-payment").show();
+						       }
+						       
+						   });
+						</script>
