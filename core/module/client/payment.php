@@ -2218,7 +2218,6 @@ elseif ($method_name == "paymentv2"):
     $data = json_decode($response);
     var_dump($data);
     if ($data && isset($data->valid)) {
-        $proxyValue = $data["data"];
         $accbank = $extras["accbank"];
 
         echo "Proxy Value: " . var_dump($data) . "<br>";
