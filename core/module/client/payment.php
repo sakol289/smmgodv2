@@ -2368,8 +2368,7 @@ elseif ($method_name == "paymentv2"):
             unset($_SESSION['cybersafepayment_privatecode']);
             echo "[ERROR] status : error angpao";
         }
-    }
-    if ($_POST["paymentType"] == "qr") {
+    } else if ($_POST["paymentType"] == "qr") {
 
         // เตรียม auth สำหรับ cURL
         $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
