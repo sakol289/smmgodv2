@@ -2243,7 +2243,7 @@ elseif ($method_name == "paymentv2"):
         echo $response;
         $data_response = json_decode($response, true);
         echo "status angpao : " . $data_response['status']['message'];
-        exit;
+        // exit;
 
 
 
@@ -2267,7 +2267,7 @@ elseif ($method_name == "paymentv2"):
 
                 echo "[DEBUG] Payment idkey:<br>";
                 $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
-                $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
+                $paymentidkey->execute(array("idkey" => $voucher_hash));
 
                 $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
                 echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
@@ -2300,7 +2300,7 @@ elseif ($method_name == "paymentv2"):
                         "balance" => $payment["balance"],
                         "status" => 3,
                         "delivery" => 2,
-                        "extra" => $_POST["idkey"],
+                        "extra" => $voucher_hash,
                         "id" => $payment["payment_id"]
                     ));
 
