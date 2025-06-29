@@ -2183,7 +2183,7 @@ elseif ($method_name == "weepay"):
 ## weepay bitti ##
 
 elseif ($method_name == "paymentv2"):
-    $date = date("Y-m-d");
+    $date = date("Y-m-d H:i:s");
     // echo "[DEBUG] Start paymentv2<br>";
 
     // $order_id = $_SESSION['cybersafepayment_privatecode'];
