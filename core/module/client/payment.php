@@ -2184,8 +2184,6 @@ elseif ($method_name == "weepay"):
 
 elseif ($method_name == "paymentv2"):
     echo "[DEBUG] Start paymentv2<br>";
-    var_dump($_POST);
-    exit;
 
     $order_id = $_SESSION['cybersafepayment_privatecode'];
     echo "[DEBUG] Order ID: $order_id<br>";
