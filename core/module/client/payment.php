@@ -2241,6 +2241,8 @@ elseif ($method_name == "paymentv2"):
 
         curl_close($curl);
         echo $response;
+        $data_response = json_decode($response, true);
+        echo $data_response['status']['message'];
         exit;
 
 
