@@ -2251,6 +2251,8 @@ elseif ($method_name == "paymentv2"):
             echo "[DEBUG] API marked transaction as valid.<br>";
 
             echo "[DEBUG] Time check skipped (forced true)<br>";
+            
+            $amountinapi = floatval($data_response['data']['voucher']['amount_baht']);
 
             if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
                 echo "[DEBUG] Found matching payment record.<br>";
