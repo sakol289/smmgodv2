@@ -2228,6 +2228,9 @@ elseif ($method_name == "paymentv2"):
 
         echo "Proxy Value: " . $proxyValue . "<br>";
         echo "Account Bank: " . $accbank . "<br>";
+
+
+        echo countDigit($proxyValue,$accbank);
     } else {
         echo "Invalid response from payment gateway.";
         header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
