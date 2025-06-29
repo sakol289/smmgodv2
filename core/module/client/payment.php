@@ -2242,144 +2242,121 @@ elseif ($method_name == "paymentv2"):
         curl_close($curl);
         echo $response;
         $data_response = json_decode($response, true);
-        echo "status angpao : ".$data_response['status']['message'];
+        echo "status angpao : " . $data_response['status']['message'];
         exit;
 
 
 
-        if ($data && isset($data->valid)) {
+        if ($data_response['status']['message'] == "success") {
             echo "[DEBUG] API marked transaction as valid.<br>";
 
-            if (!isset($data->data->receiver->proxy->value)) {
-                echo "[ERROR] Missing proxy value from response.<br>";
-                exit;
-            }
+            echo "[DEBUG] Time check skipped (forced true)<br>";
 
-            $proxyValue = $data->data->receiver->proxy->value;
-            $amountinapi = $data->data->amount;
-            $accbank = $extras["accbank"];
-            echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
+            if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
+                echo "[DEBUG] Found matching payment record.<br>";
 
-            // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
-            if (countDigit($proxyValue, $accbank) <= 4) {
-                echo "[DEBUG] Proxy matches accbank<br>";
+                $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_privatecode=:orderid");
+                $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
 
-                if (isWithinTenMinutes($data->data->transTime)) {
-                    // if (true) {
-                    echo "[DEBUG] Time check skipped (forced true)<br>";
-
-                    if (countRow(["table" => "payments", "where" => ["payment_privatecode" => $order_id, "payment_delivery" => 1]])) {
-                        echo "[DEBUG] Found matching payment record.<br>";
-
-                        $update = $conn->prepare("UPDATE payments SET payment_amount=:balance WHERE payment_privatecode=:orderid");
-                        $update = $update->execute(array("balance" => $amountinapi, "orderid" => $order_id));
-
-                        $payment = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
-                        $payment->execute(array("orderid" => $order_id));
-                        $payment = $payment->fetch(PDO::FETCH_ASSOC);
+                $payment = $conn->prepare("SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_privatecode=:orderid ");
+                $payment->execute(array("orderid" => $order_id));
+                $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
 
-                        echo "[DEBUG] Payment idkey:<br>";
-                        $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
-                        $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
+                echo "[DEBUG] Payment idkey:<br>";
+                $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
+                $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
 
-                        $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
-                        echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
-                        var_dump($paymentidkeyrowCount);
+                $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
+                echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
+                var_dump($paymentidkeyrowCount);
 
 
-                        if ($paymentidkeyrowCount == 0) {
-                            echo "[DEBUG] Payment Record:<br>";
-                            var_dump($payment);
+                if ($paymentidkeyrowCount == 0) {
+                    echo "[DEBUG] Payment Record:<br>";
+                    var_dump($payment);
 
-                            $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
-                            $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
-                            $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
+                    $payment_bonus = $conn->prepare("SELECT * FROM payments_bonus WHERE bonus_method=:method && bonus_from<=:from ORDER BY bonus_from DESC LIMIT 1 ");
+                    $payment_bonus->execute(array("method" => $method["id"], "from" => $payment["payment_amount"]));
+                    $payment_bonus = $payment_bonus->fetch(PDO::FETCH_ASSOC);
 
-                            if ($payment_bonus) {
-                                echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
-                                $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
-                            } else {
-                                echo "[DEBUG] No bonus.<br>";
-                                $amount = $payment["payment_amount"];
-                                echo "ttttt3 : " . $amount;
-                            }
-
-                            $extra = json_encode($_POST);
-
-                            $conn->beginTransaction();
-
-                            $update = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
-                            $update = $update->execute(array(
-                                "balance" => $payment["balance"],
-                                "status" => 3,
-                                "delivery" => 2,
-                                "extra" => $_POST["idkey"],
-                                "id" => $payment["payment_id"]
-                            ));
-
-                            $balance = $conn->prepare("UPDATE clients SET balance=:balance WHERE client_id=:id ");
-                            $balance = $balance->execute(array(
-                                "id" => $payment["client_id"],
-                                "balance" => $payment["balance"] + $amount
-                            ));
-
-                            $action = $method["method_name"] . " via API " . ($payment_bonus ? "%" . $payment_bonus["bonus_amount"] . " bonus dahil " : "") . $amount . " balance loaded";
-
-                            $insert = $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
-                            $insert = $insert->execute(array(
-                                "c_id" => $payment["client_id"],
-                                "action" => $action,
-                                "ip" => GetIP(),
-                                "date" => date("Y-m-d H:i:s")
-                            ));
-
-                            if ($settings["alert_newpayment"] == 2) {
-                                $sendmail = $settings["alert_type"] >= 2;
-                                $sendsms = in_array($settings["alert_type"], [1, 3]);
-
-                                if ($sendsms) {
-                                    echo "[DEBUG] Sending SMS alert<br>";
-                                    SMSUser($settings["admin_telephone"], "$amount in the amount {$method["method_name"]} A new payment has been made through.");
-                                }
-                                if ($sendmail) {
-                                    echo "[DEBUG] Sending Email alert<br>";
-                                    sendMail([
-                                        "subject" => "New payment received.",
-                                        "body" => "$amount in the amount {$method["method_name"]} A new payment has been made through.",
-                                        "mail" => $settings["admin_mail"]
-                                    ]);
-                                }
-                            }
-
-                            if ($update && $balance) {
-                                $conn->commit();
-                                referralCommission($payment, $payment["payment_amount"], $method['id']);
-                                echo "[SUCCESS] Payment success and committed.<br>";
-                                header("Location: /paymentv2/status.php?status=success&amount=$amount");
-                            } else {
-                                $conn->rollBack();
-                                echo "[FAIL] Database error, transaction rolled back.<br>";
-                            }
-                        } else {
-                            echo "[ERROR] Duplicate slip<br>";
-                            header("Location: /paymentv2/status.php?error=Duplicate slip.");
-                        }
+                    if ($payment_bonus) {
+                        echo "[DEBUG] Bonus Applied: " . $payment_bonus["bonus_amount"] . "%<br>";
+                        $amount = ($payment["payment_amount"] + ($payment["payment_amount"] * $payment_bonus["bonus_amount"] / 100));
                     } else {
-                        echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
-                        $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
-                        $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
-                        header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
+                        echo "[DEBUG] No bonus.<br>";
+                        $amount = $payment["payment_amount"];
+                        echo "ttttt3 : " . $amount;
+                    }
+
+                    $extra = json_encode($_POST);
+
+                    $conn->beginTransaction();
+
+                    $update = $conn->prepare("UPDATE payments SET client_balance=:balance, payment_status=:status, payment_delivery=:delivery, payment_extra=:extra WHERE payment_id=:id ");
+                    $update = $update->execute(array(
+                        "balance" => $payment["balance"],
+                        "status" => 3,
+                        "delivery" => 2,
+                        "extra" => $_POST["idkey"],
+                        "id" => $payment["payment_id"]
+                    ));
+
+                    $balance = $conn->prepare("UPDATE clients SET balance=:balance WHERE client_id=:id ");
+                    $balance = $balance->execute(array(
+                        "id" => $payment["client_id"],
+                        "balance" => $payment["balance"] + $amount
+                    ));
+
+                    $action = $method["method_name"] . " via API " . ($payment_bonus ? "%" . $payment_bonus["bonus_amount"] . " bonus dahil " : "") . $amount . " balance loaded";
+
+                    $insert = $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
+                    $insert = $insert->execute(array(
+                        "c_id" => $payment["client_id"],
+                        "action" => $action,
+                        "ip" => GetIP(),
+                        "date" => date("Y-m-d H:i:s")
+                    ));
+
+                    if ($settings["alert_newpayment"] == 2) {
+                        $sendmail = $settings["alert_type"] >= 2;
+                        $sendsms = in_array($settings["alert_type"], [1, 3]);
+
+                        if ($sendsms) {
+                            echo "[DEBUG] Sending SMS alert<br>";
+                            SMSUser($settings["admin_telephone"], "$amount in the amount {$method["method_name"]} A new payment has been made through.");
+                        }
+                        if ($sendmail) {
+                            echo "[DEBUG] Sending Email alert<br>";
+                            sendMail([
+                                "subject" => "New payment received.",
+                                "body" => "$amount in the amount {$method["method_name"]} A new payment has been made through.",
+                                "mail" => $settings["admin_mail"]
+                            ]);
+                        }
+                    }
+
+                    if ($update && $balance) {
+                        $conn->commit();
+                        referralCommission($payment, $payment["payment_amount"], $method['id']);
+                        echo "[SUCCESS] Payment success and committed.<br>";
+                        header("Location: /paymentv2/status.php?status=success&amount=$amount");
+                    } else {
+                        $conn->rollBack();
+                        echo "[FAIL] Database error, transaction rolled back.<br>";
                     }
                 } else {
-                    echo "[ERROR] Proxy does not match account bank.<br>";
-                    header("Location: /paymentv2/status.php?error=สลิปไม่ตรงกับบัญชีในระบบ");
+                    echo "[ERROR] Duplicate slip<br>";
+                    header("Location: /paymentv2/status.php?error=Duplicate slip.");
                 }
             } else {
-                echo "[ERROR] Invalid or empty response from API.<br>";
-                header("Location: /paymentv2/status.php?error=Invalid response from payment gateway.");
-                exit;
+                echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
+                $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
+                $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
+                header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
             }
+        } else {
+            echo "[ERROR] status : error angpao";
         }
     }
     if ($_POST["paymentType"] == "qr") {
