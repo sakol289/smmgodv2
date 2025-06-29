@@ -110,7 +110,7 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">วิธีการยืนยันการชำระเงิน</div>
                     <div class="card-body">
-                        <form id="paymentConfirmationForm" method="POST" action="/payment/paymentv2/index.php" enctype="multipart/form-data">
+                        <form id="paymentConfirmationForm" method="POST" action="/payment/paymentv2" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="paymentType" class="form-label">เลือกประเภทการชำระเงิน</label>
                                 <select class="form-select" id="paymentType" name="paymentType">
