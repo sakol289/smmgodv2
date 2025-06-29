@@ -2343,19 +2343,27 @@ elseif ($method_name == "paymentv2"):
                         header("Location: /paymentv2/status.php?status=success&amount=$amount");
                     } else {
                         $conn->rollBack();
+                        unset($_SESSION['cybersafepayment']);
+                        unset($_SESSION['cybersafepayment_privatecode']);
                         echo "[FAIL] Database error, transaction rolled back.<br>";
                     }
                 } else {
+                    unset($_SESSION['cybersafepayment']);
+                    unset($_SESSION['cybersafepayment_privatecode']);
                     echo "[ERROR] Duplicate slip<br>";
                     header("Location: /paymentv2/status.php?error=Duplicate slip.");
                 }
             } else {
+                unset($_SESSION['cybersafepayment']);
+                unset($_SESSION['cybersafepayment_privatecode']);
                 echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
                 $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                 $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
                 header("Location: /paymentv2/status.php?error=โอนเงินไม่ตรงเวลาที่กำหนด");
             }
         } else {
+            unset($_SESSION['cybersafepayment']);
+            unset($_SESSION['cybersafepayment_privatecode']);
             echo "[ERROR] status : error angpao";
         }
     }
