@@ -2219,6 +2219,7 @@ elseif ($method_name == "paymentv2"):
     echo "<br>=====================<br>";
     var_dump($data);
     echo "<br>=====================<br>";
+    exit;
     if ($data && isset($data->valid)) {
         $data = json_decode($response,true);
         $proxyValue = $data->data->receiver->proxy->value;
