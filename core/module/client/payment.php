@@ -16,7 +16,8 @@ $method->execute(array("get" => $method_name));
 $method       = $method->fetch(PDO::FETCH_ASSOC);
 $extras       = json_decode($method["method_extras"], true);
 
-function countDigit(string $account0, string $account1): int {
+function countDigit(string $account0, string $account1): int
+{
     $count = 0;
 
     // ลบเครื่องหมายขีดกลางและตรวจสอบว่าไม่ใช่ค่าว่าง
@@ -2181,10 +2182,10 @@ elseif ($method_name == "paymentv2"):
     // echo "googlesecret: ";
     $grecaptcharesponse  = $_POST['g-recaptcha-response'];
 
-    $captcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
+    $ca1ptcha_control = robot("https://www.google.com/recaptcha/api/siteverify?secret=$googlesecret&response=" . $grecaptcharesponse . "&remoteip=" . $_SERVER['REMOTE_ADDR']);
     $captcha_control = json_decode($captcha_control);
-    if (false){
-    // if( $grecaptcharesponse && $captcha_control->success == false ){
+    if (false) {
+        // if( $grecaptcharesponse && $captcha_control->success == false ){
         echo "Please verify that you are not a robot.";
         header("Location: /paymentv2/status.php?error=Please verify that you are not a robot.");
         exit;
@@ -2193,26 +2194,26 @@ elseif ($method_name == "paymentv2"):
     var_dump($extras);
 
 
-        $curl = curl_init();
+    $curl = curl_init();
 
-        // Encode clientId:clientSecret เป็น Base64 สำหรับ Authorization header
-        $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
-    
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30, // ป้องกันการรอนานเกินไป
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode(['payload' => $_POST['idkey']]), // ใช้ json_encode เพื่อความปลอดภัย
-            CURLOPT_HTTPHEADER => array(
-                "Authorization: Basic $auth",
-                'Content-Type: application/json'
-            ),
-        ));
+    // Encode clientId:clientSecret เป็น Base64 สำหรับ Authorization header
+    $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30, // ป้องกันการรอนานเกินไป
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => json_encode(['payload' => $_POST['idkey']]), // ใช้ json_encode เพื่อความปลอดภัย
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Basic $auth",
+            'Content-Type: application/json'
+        ),
+    ));
 
     $response = curl_exec($curl);
     $data = json_decode($response);
@@ -2221,7 +2222,7 @@ elseif ($method_name == "paymentv2"):
     echo "<br>=====================<br>";
     // exit;
     if ($data && isset($data->valid)) {
-        $data = json_decode($response,true);
+        $data = json_decode($response, true);
         $proxyValue = $data->data->receiver->proxy->value;
         $accbank = $extras["accbank"];
 
