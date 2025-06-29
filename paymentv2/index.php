@@ -14,7 +14,7 @@ if (!isset($_SESSION["neira_userlogin"]) || $_SESSION["neira_userlogin"] != 1 ||
 }
 
 if (!isset($_SESSION["cybersafepayment"])) {
-    header("Location: /paymentv2/status.php?error=ห้ามเข้าโดยไม่ได้รับอนุณาต");
+    header("Location: /paymentv2/status.php?error=ห้ามเข้าโดยไม่ได้รับอนุญาต");
     exit;
 }
 
@@ -110,7 +110,7 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
                 <div class="card mb-4">
                     <div class="card-header fw-semibold">วิธีการยืนยันการชำระเงิน</div>
                     <div class="card-body">
-                        <form id="paymentConfirmationForm" method="POST" action="/payment/paymentv2" enctype="multipart/form-data">
+                        <form id="paymentConfirmationForm" method="POST" action="/payment/paymentv2/index.php" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="paymentType" class="form-label">เลือกประเภทการชำระเงิน</label>
                                 <select class="form-select" id="paymentType" name="paymentType">
@@ -203,6 +203,10 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
 
         let qrCodeData = null;
 
+        // อัปเดตค่าเริ่มต้น
+        paymentMethodInput.value = 'slip';
+        statusInput.value = 'false';
+
         paymentTypeSelect.addEventListener('change', function() {
             qrCodeData = null;
             idkeyInput.value = '';
@@ -212,6 +216,9 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
             qrError.classList.add('d-none');
             angpaoError.classList.add('d-none');
             recaptchaError.classList.add('d-none');
+            paymentSlipInput.value = ''; // รีเซ็ตไฟล์อัปโหลด
+            uploadButtonLabel.textContent = '📁 อัปโหลดรูป';
+            uploadStatus.textContent = 'เลือกรูปภาพสลิปการโอน';
 
             if (this.value === 'angpao') {
                 qrSection.classList.add('d-none');
@@ -221,6 +228,7 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
                 qrSection.classList.remove('d-none');
                 angpaoSection.classList.add('d-none');
             }
+            checkFormValidity();
         });
 
         paymentSlipInput.addEventListener('change', function() {
@@ -302,10 +310,12 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
 
         function checkFormValidity() {
             const recaptchaResponse = grecaptcha.getResponse();
-            if (paymentTypeSelect.value === 'qr' && qrCodeData && recaptchaResponse) {
+            const isQrValid = paymentTypeSelect.value === 'qr' && qrCodeData && statusInput.value === 'true';
+            const isAngpaoValid = paymentTypeSelect.value === 'angpao' && idkeyInput.value && statusInput.value === 'true';
+
+            if ((isQrValid || isAngpaoValid) && recaptchaResponse) {
                 submitButton.disabled = false;
-            } else if (paymentTypeSelect.value === 'angpao' && idkeyInput.value && recaptchaResponse) {
-                submitButton.disabled = false;
+                recaptchaError.classList.add('d-none');
             } else {
                 submitButton.disabled = true;
                 if (!recaptchaResponse) {
@@ -318,6 +328,9 @@ $recaptchaSiteKey = $settings['recaptcha_key'];
             recaptchaError.classList.add('d-none');
             checkFormValidity();
         }
+
+        // ตรวจสอบฟอร์มเมื่อโหลดหน้า
+        checkFormValidity();
     </script>
 </body>
 </html>
