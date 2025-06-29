@@ -2214,7 +2214,7 @@ elseif ($method_name == "paymentv2"):
     var_dump($extras);
 
     if ($_POST["paymentType"] == "angpao") {
-        $phoneangpao = $extra["phoneangpao"];
+        $phoneangpao = $extras["phoneangpao"];
         $url_angpao = $_POST["angpaoLink"];
         $voucher_hash = explode("?v=", $url_angpao);
         if (count($voucher_hash) > 1) {
