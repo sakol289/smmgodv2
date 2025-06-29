@@ -2289,13 +2289,13 @@ elseif ($method_name == "paymentv2"):
                     $payment = $payment->fetch(PDO::FETCH_ASSOC);
 
 
-                    echo "[DEBUG] Payment idkey:<br>";
-                    $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
-                    $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
+                    // echo "[DEBUG] Payment idkey:<br>";
+                    // $paymentidkey = $conn->prepare("SELECT * FROM payments WHERE payment_extra=:idkey ");
+                    // $paymentidkey->execute(array("idkey" => $_POST["idkey"]));
 
-                    $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
-                    echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
-                    var_dump($paymentidkeyrowCount);
+                    // $paymentidkeyrowCount = $paymentidkey->rowCount(); // ✅ จำนวน row ที่ได้
+                    // echo "[DEBUG] Rows found: " . $paymentidkeyrowCount . "<br>";
+                    // var_dump($paymentidkeyrowCount);
 
 
                     // if ($paymentidkeyrowCount == 0) {
