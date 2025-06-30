@@ -13,8 +13,8 @@
     
 if(!$_GET["refer"]){
 if($user["access"]["users"]){
-    
-    header("Location:".site_url("admin/clients"));
+        
+        header("Location:".site_url("admin/clients"));
     
 }elseif($user["access"]["orders"]){
 
@@ -55,6 +55,8 @@ if($user["access"]["users"]){
 }elseif($user["access"]["pages"] || $user["access"]["blog"] || $user["access"]["menu"] || $user["access"]["themes"] || $user["access"]["language"]){
     
         header("Location:".site_url("admin/appearance"));
+}else{
+    header("Location:".site_url("admin/dashboard"));
 }
 
 }
