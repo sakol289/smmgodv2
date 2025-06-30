@@ -2346,7 +2346,7 @@ elseif ($method_name == "paymentv2"):
                         // echo "[SUCCESS] Payment success and committed.<br>";
                         unset($_SESSION['cybersafepayment']);
                         unset($_SESSION['cybersafepayment_privatecode']);
-                        header("Location: /paymentv2/status.php?date=$date&?status=success&amount=$amount");
+                        header("Location: /paymentv2/status.php?date=$date&status=success&amount=$amount");
                     } else {
                         $conn->rollBack();
                         unset($_SESSION['cybersafepayment']);
