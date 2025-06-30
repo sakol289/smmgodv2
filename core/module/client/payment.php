@@ -2189,7 +2189,7 @@ elseif ($method_name == "paymentv2"):
     // $order_id = $_SESSION['cybersafepayment_privatecode'];
     // echo "[DEBUG] Order ID: $order_id<br>";
 
-    // $googlesecret = $settings["recaptcha_secret"];
+    $googlesecret = $settings["recaptcha_secret"];
     $grecaptcharesponse = $_POST['g-recaptcha-response'];
     // echo "[DEBUG] Captcha Response: $grecaptcharesponse<br>";
 
