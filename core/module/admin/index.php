@@ -69,4 +69,4 @@ if (empty($_GET["refer"]) && basename($_SERVER['REQUEST_URI']) !== 'dashboard') 
 }
 
 // โหลดหน้า index view
-require admin_view('index');
+require admin_view('dashboard');
