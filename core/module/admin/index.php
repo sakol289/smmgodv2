@@ -18,6 +18,9 @@ if (!$_GET["refer"]) {
         } elseif ($user["access"]["orders"]) {
 
                 header("Location:" . site_url("admin/orders"));
+        } elseif ($user["access"]["dashboard"]) {
+
+                header("Location:" . site_url("admin/dashboard"));
         } elseif ($user["access"]["subscriptions"]) {
 
                 header("Location:" . site_url("admin/subscriptions"));
