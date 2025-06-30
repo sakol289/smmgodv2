@@ -1,6 +1,6 @@
 <?php
 
-// ตั้งค่าธีมถ้า theme ถูกส่งมาและเป็น 1 หรือ 2
+// ตั้งค่าธีมถ้ามี theme=1 หรือ 2
 if (isset($_GET["theme"]) && ($_GET["theme"] == 1 || $_GET["theme"] == 2)) {
     $updateTheme = $conn->prepare('UPDATE clients SET admin_theme=:admin_theme WHERE client_id=:id');
     $updateTheme->execute(array(
@@ -14,8 +14,8 @@ if (isset($_GET["theme"]) && ($_GET["theme"] == 1 || $_GET["theme"] == 2)) {
     }
 }
 
-// ถ้าไม่มี refer ให้ redirect ตามสิทธิ์
-if (empty($_GET["refer"])) {
+// ถ้าไม่มี refer และไม่ใช่หน้า dashboard แล้วให้ redirect ไปตามสิทธิ์
+if (empty($_GET["refer"]) && basename($_SERVER['REQUEST_URI']) !== 'dashboard') {
     if (!empty($user["access"]["users"])) {
         header("Location:" . site_url("admin/clients"));
         exit;
@@ -43,9 +43,7 @@ if (empty($_GET["refer"])) {
     } elseif (!empty($user["access"]["reports"])) {
         header("Location:" . site_url("admin/reports"));
         exit;
-    } elseif (
-        !empty($user["access"]["logs"])
-    ) {
+    } elseif (!empty($user["access"]["logs"])) {
         header("Location:" . site_url("admin/logs"));
         exit;
     } elseif (
@@ -70,5 +68,5 @@ if (empty($_GET["refer"])) {
     }
 }
 
-// แสดงหน้าหลักถ้าไม่มีการ redirect
+// โหลดหน้า index view
 require admin_view('index');
