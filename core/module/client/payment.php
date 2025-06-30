@@ -2186,7 +2186,7 @@ elseif ($method_name == "paymentv2"):
     $date = date("Y-m-d H:i:s");
     // echo "[DEBUG] Start paymentv2<br>";
 
-    // $order_id = $_SESSION['cybersafepayment_privatecode'];
+    $order_id = $_SESSION['cybersafepayment_privatecode'];
     // echo "[DEBUG] Order ID: $order_id<br>";
 
     $googlesecret = $settings["recaptcha_secret"];
