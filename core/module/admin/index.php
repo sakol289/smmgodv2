@@ -14,7 +14,7 @@ endif;
 if (!$_GET["refer"]) {
         if ($user["access"]["users"]) {
 
-                header("Location:" . site_url("admin/clients11111111111"));
+                header("Location:" . site_url("admin/clients"));
         } elseif ($user["access"]["orders"]) {
 
                 header("Location:" . site_url("admin/orders"));
