@@ -2190,7 +2190,7 @@ elseif ($method_name == "paymentv2"):
     // echo "[DEBUG] Order ID: $order_id<br>";
 
     // $googlesecret = $settings["recaptcha_secret"];
-    // $grecaptcharesponse = $_POST['g-recaptcha-response'];
+    $grecaptcharesponse = $_POST['g-recaptcha-response'];
     // echo "[DEBUG] Captcha Response: $grecaptcharesponse<br>";
 
     // ตรวจสอบ CAPTCHA
