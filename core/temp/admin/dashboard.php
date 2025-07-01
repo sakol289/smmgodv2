@@ -1,30 +1,42 @@
 <?php include 'header.php'; ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-.card {
+.panel-custom {
   border: none;
   border-radius: 6px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.card:hover {
+.panel-custom:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.panel-body-icon {
+  background: rgba(67, 97, 238, 0.1);
+  padding: 15px;
+  border-radius: 10px;
 }
 .chart-container {
   position: relative;
   height: 300px;
   width: 100%;
 }
-.alert {
-  margin: 10px;
-  font-size: 14px;
-}
 </style>
 
 <div class="container-fluid">
+  <div class="row" style="background: #fff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px;">
+    <div class="col-sm-6">
+      <div class="header-icon"><i class="fa fa-chart-line"></i></div>
+      <h3 style="display: inline-block; font-weight: bold; vertical-align: middle;">Business Dashboard</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <i class="fa fa-bell text-muted"></i>
+      <img src="https://ui-avatars.com/api/?name=Admin+User&background=4361ee&color=fff" width="32" height="32" class="img-circle">
+      <span>Admin User</span>
+    </div>
+  </div>
 
   <!-- Summary Cards -->
   <div class="row">
@@ -167,93 +179,98 @@
   </div>
 </div>
 
-<!-- ✅ แก้ไขส่วน Script เพื่อความเสถียร -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-vD7JJwkWY4Y+93lbX6mOxPAAycVLJReP1OvlYBMQSyWXu8UoMC58KL7rkmXHZsdi" crossorigin="anonymous"></script>
-
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  if (typeof Chart === 'undefined') {
-    console.error("Chart.js didn't load.");
-    displayError('Chart.js failed to load. Please check your internet or script path.');
-    return;
-  }
-
-  const ctx1 = document.getElementById('monthlyOrderChart')?.getContext('2d');
-  const ctx2 = document.getElementById('statusPieChart')?.getContext('2d');
-  const ctx3 = document.getElementById('monthlyRevenueChart')?.getContext('2d');
-
-  if (!ctx1 || !ctx2 || !ctx3) {
-    console.warn("One or more canvas elements not found.");
-    displayError('One or more charts failed to render.');
-    return;
-  }
-
-  new Chart(ctx1, {
+document.addEventListener('DOMContentLoaded', function() {
+  // Monthly Order Status Chart
+  const monthlyOrderCtx = document.getElementById('monthlyOrderChart').getContext('2d');
+  new Chart(monthlyOrderCtx, {
     type: 'line',
     data: {
-      labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'],
+      labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
       datasets: [
         {
           label: 'Processing',
-          data: [12,19,15,8,11,13,7],
+          data: [12, 19, 15, 8, 11, 13, 7],
           borderColor: '#4361ee',
           backgroundColor: 'rgba(67, 97, 238, 0.1)',
-          fill: true,
-          tension: 0.3
+          tension: 0.3,
+          fill: true
         },
         {
           label: 'In Progress',
-          data: [8,12,5,9,7,10,6],
+          data: [8, 12, 5, 9, 7, 10, 6],
           borderColor: '#f72585',
           backgroundColor: 'rgba(247, 37, 133, 0.1)',
-          fill: true,
-          tension: 0.3
+          tension: 0.3,
+          fill: true
         },
         {
           label: 'Completed',
-          data: [25,30,28,32,27,35,40],
+          data: [25, 30, 28, 32, 27, 35, 40],
           borderColor: '#4cc9f0',
           backgroundColor: 'rgba(76, 201, 240, 0.1)',
-          fill: true,
-          tension: 0.3
+          tension: 0.3,
+          fill: true
         },
         {
           label: 'Cancelled',
-          data: [2,3,1,4,2,1,0],
+          data: [2, 3, 1, 4, 2, 1, 0],
           borderColor: '#e63946',
           backgroundColor: 'rgba(230, 57, 70, 0.1)',
-          fill: true,
-          tension: 0.3
+          tension: 0.3,
+          fill: true
         }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { position: 'top' } },
-      scales: { y: { beginAtZero: true } }
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        }
+      }
     }
   });
 
-  new Chart(ctx2, {
+  // Status Pie Chart
+  const statusPieCtx = document.getElementById('statusPieChart').getContext('2d');
+  new Chart(statusPieCtx, {
     type: 'pie',
     data: {
-      labels: ['Processing','In Progress','Completed','Cancelled'],
+      labels: ['Processing', 'In Progress', 'Completed', 'Cancelled'],
       datasets: [{
-        data: [25,20,50,5],
-        backgroundColor: ['#4361ee','#f72585','#4cc9f0','#e63946'],
-        borderWidth: 2,
-        borderColor: '#fff'
+        data: [25, 20, 50, 5],
+        backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#e63946'],
+        borderColor: '#fff',
+        borderWidth: 2
       }]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top' },
+        legend: {
+          position: 'top'
+        },
         tooltip: {
           callbacks: {
             label: function(context) {
-              return context.label + ': ' + context.parsed + '%';
+              let label = context.label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += context.parsed + '%';
+              return label;
             }
           }
         }
@@ -261,13 +278,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  new Chart(ctx3, {
+  // Monthly Revenue Chart
+  const monthlyRevenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
+  new Chart(monthlyRevenueCtx, {
     type: 'bar',
     data: {
-      labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'],
+      labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
       datasets: [{
         label: 'Revenue ($)',
-        data: [1500,2200,1800,2500,2000,2300,2700],
+        data: [1500, 2200, 1800, 2500, 2000, 2300, 2700],
         backgroundColor: '#4361ee',
         borderColor: '#4361ee',
         borderWidth: 1
@@ -275,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         y: {
           beginAtZero: true,
@@ -286,26 +306,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       },
       plugins: {
-        legend: { position: 'top' },
+        legend: {
+          position: 'top'
+        },
         tooltip: {
           callbacks: {
             label: function(context) {
-              return context.dataset.label + ': $' + context.parsed.y;
+              let label = context.dataset.label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += '$' + context.parsed.y;
+              return label;
             }
           }
         }
       }
     }
   });
-
-  function displayError(msg) {
-    document.querySelectorAll('.chart-container').forEach(container => {
-      const div = document.createElement('div');
-      div.className = 'alert alert-danger text-center';
-      div.textContent = msg;
-      container.appendChild(div);
-    });
-  }
 });
 </script>
 
