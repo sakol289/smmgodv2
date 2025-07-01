@@ -25,8 +25,8 @@
 <div class="container-fluid">
   <div class="row" style="background: #fff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px;">
     <div class="col-sm-6">
-      <div class="header-icon pull-left"><i class="fa fa-chart-line"></i></div>
-      <h3 class="pull-left" style="margin: 8px 0 0 10px; font-weight: bold;">Business Dashboard</h3>
+      <div class="header-icon"><i class="fa fa-chart-line"></i></div>
+      <h3 style="display: inline-block; font-weight: bold; vertical-align: middle;">Business Dashboard</h3>
     </div>
     <div class="col-sm-6 text-right">
       <i class="fa fa-bell text-muted"></i>
@@ -37,16 +37,14 @@
 
   <!-- Summary Cards -->
   <div class="row">
+    <!-- Card Template -->
     <div class="col-md-3">
       <div class="panel panel-default panel-custom">
-        <div class="panel-body clearfix">
-          <div class="pull-left">
-            <small class="text-muted">Total Customers</small>
-            <h3>2,842</h3>
-            <span class="text-success"><i class="fa fa-arrow-up"></i> 12.5%</span>
-            <small>vs last month</small>
-          </div>
-          <div class="pull-right panel-body-icon">
+        <div class="panel-body">
+          <small class="text-muted">Total Customers</small>
+          <h3><strong>2,842</strong></h3>
+          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 12.5%</span> <small>vs last month</small></p>
+          <div class="text-right">
             <i class="fa fa-users fa-2x text-primary"></i>
           </div>
         </div>
@@ -54,14 +52,11 @@
     </div>
     <div class="col-md-3">
       <div class="panel panel-default panel-custom">
-        <div class="panel-body clearfix">
-          <div class="pull-left">
-            <small class="text-muted">Total Balance</small>
-            <h3>$24,318</h3>
-            <span class="text-success"><i class="fa fa-arrow-up"></i> 8.2%</span>
-            <small>vs last month</small>
-          </div>
-          <div class="pull-right panel-body-icon">
+        <div class="panel-body">
+          <small class="text-muted">Total Balance</small>
+          <h3><strong>$24,318</strong></h3>
+          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 8.2%</span> <small>vs last month</small></p>
+          <div class="text-right">
             <i class="fa fa-wallet fa-2x text-success"></i>
           </div>
         </div>
@@ -69,14 +64,11 @@
     </div>
     <div class="col-md-3">
       <div class="panel panel-default panel-custom">
-        <div class="panel-body clearfix">
-          <div class="pull-left">
-            <small class="text-muted">Total Orders</small>
-            <h3>1,284</h3>
-            <span class="text-success"><i class="fa fa-arrow-up"></i> 5.3%</span>
-            <small>vs last month</small>
-          </div>
-          <div class="pull-right panel-body-icon">
+        <div class="panel-body">
+          <small class="text-muted">Total Orders</small>
+          <h3><strong>1,284</strong></h3>
+          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 5.3%</span> <small>vs last month</small></p>
+          <div class="text-right">
             <i class="fa fa-shopping-cart fa-2x text-primary"></i>
           </div>
         </div>
@@ -84,14 +76,11 @@
     </div>
     <div class="col-md-3">
       <div class="panel panel-default panel-custom">
-        <div class="panel-body clearfix">
-          <div class="pull-left">
-            <small class="text-muted">Total Sales (30 days)</small>
-            <h3>$48,950</h3>
-            <span class="text-success"><i class="fa fa-arrow-up"></i> 15.7%</span>
-            <small>vs last month</small>
-          </div>
-          <div class="pull-right panel-body-icon">
+        <div class="panel-body">
+          <small class="text-muted">Total Sales (30 days)</small>
+          <h3><strong>$48,950</strong></h3>
+          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 15.7%</span> <small>vs last month</small></p>
+          <div class="text-right">
             <i class="fa fa-chart-bar fa-2x text-warning"></i>
           </div>
         </div>
@@ -108,12 +97,38 @@
       </div>
     </div>
   </div>
+
+  <!-- Latest Orders -->
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Latest Orders</strong> <a href="#" class="pull-right">View All</a></div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>John Smith</td><td>Oct 12, 2023</td><td>$125.00</td><td><span class="label label-primary">Processing</span></td></tr>
+            <tr><td>Sarah Johnson</td><td>Oct 12, 2023</td><td>$89.50</td><td><span class="label label-warning">In Progress</span></td></tr>
+            <tr><td>Michael Brown</td><td>Oct 11, 2023</td><td>$245.75</td><td><span class="label label-success">Completed</span></td></tr>
+            <tr><td>Emily Davis</td><td>Oct 11, 2023</td><td>$56.90</td><td><span class="label label-danger">Cancelled</span></td></tr>
+            <tr><td>Robert Wilson</td><td>Oct 10, 2023</td><td>$189.00</td><td><span class="label label-success">Completed</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  $(function () {
     const ctx = document.getElementById('monthlyOrderChart').getContext('2d');
-    const monthlyOrderChart = new Chart(ctx, {
+    new Chart(ctx, {
       type: 'line',
       data: {
         labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
@@ -157,15 +172,7 @@
         maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true,
-            grid: {
-              color: 'rgba(0, 0, 0, 0.05)'
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            }
+            beginAtZero: true
           }
         },
         plugins: {
@@ -181,5 +188,6 @@
     });
   });
 </script>
+
 
 <?php include 'footer.php'; ?>
