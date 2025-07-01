@@ -26,17 +26,6 @@
 </style>
 
 <div class="container-fluid">
-  <div class="row" style="background: #fff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px;">
-    <div class="col-sm-6">
-      <div class="header-icon"><i class="fa fa-chart-line"></i></div>
-      <h3 style="display: inline-block; font-weight: bold; vertical-align: middle;">Business Dashboard</h3>
-    </div>
-    <div class="col-sm-6 text-right">
-      <i class="fa fa-bell text-muted"></i>
-      <img src="https://ui-avatars.com/api/?name=Admin+User&background=4361ee&color=fff" width="32" height="32" class="img-circle">
-      <span>Admin User</span>
-    </div>
-  </div>
 
   <!-- Summary Cards -->
   <div class="row">
