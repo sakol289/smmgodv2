@@ -187,6 +187,33 @@ foreach ($order_statuses as $status => $th_label) {
 }
 
 // var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
+
+$top_services = $conn->query("
+  SELECT s.service_name, s.category, COUNT(o.order_id) as orders, SUM(o.order_amount) as revenue
+  FROM orders o
+  JOIN services s ON o.service_id = s.service_id
+  WHERE o.order_status IN ('completed','partial')
+  GROUP BY o.service_id
+  ORDER BY orders DESC
+  LIMIT 5
+")->fetchAll(PDO::FETCH_ASSOC);
+
+$latest_orders = $conn->query("
+  SELECT o.*, c.username
+  FROM orders o
+  JOIN clients c ON o.client_id = c.client_id
+  ORDER BY o.order_create DESC
+  LIMIT 10
+")->fetchAll(PDO::FETCH_ASSOC);
+
+$status_labels = [
+  'pending' => 'รอดำเนินการ',
+  'inprogress' => 'กำลังทำ',
+  'completed' => 'เสร็จสิ้น',
+  'partial' => 'สำเร็จบางส่วน',
+  'processing' => 'กำลังตรวจสอบ',
+  'canceled' => 'ยกเลิก'
+];
 ?>
 
 <div class="container-fluid">
@@ -305,11 +332,14 @@ foreach ($order_statuses as $status => $th_label) {
             </tr>
           </thead>
           <tbody>
-            <tr><td>Premium Consultation</td><td>245</td><td>$12,250</td><td>Consulting</td></tr>
-            <tr><td>Web Development</td><td>189</td><td>$9,450</td><td>Development</td></tr>
-            <tr><td>Marketing Package</td><td>156</td><td>$7,800</td><td>Marketing</td></tr>
-            <tr><td>SEO Optimization</td><td>123</td><td>$6,150</td><td>SEO</td></tr>
-            <tr><td>Graphic Design</td><td>98</td><td>$4,900</td><td>Design</td></tr>
+            <?php foreach($top_services as $row): ?>
+              <tr>
+                <td><?=htmlspecialchars($row['service_name'])?></td>
+                <td><?=number_format($row['orders'])?></td>
+                <td>฿<?=number_format($row['revenue'],2)?></td>
+                <td><?=htmlspecialchars($row['category'])?></td>
+              </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
@@ -318,7 +348,7 @@ foreach ($order_statuses as $status => $th_label) {
 
   <!-- Latest Orders -->
   <div class="card mb-4">
-    <div class="card-header"><strong>Latest Orders</strong> <a href="#" class="float-end">View All</a></div>
+    <div class="card-header"><strong>Latest Orders</strong> <a href="<?=site_url('admin/orders')?>" class="float-end">ดูทั้งหมด</a></div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-hover">
@@ -331,11 +361,14 @@ foreach ($order_statuses as $status => $th_label) {
             </tr>
           </thead>
           <tbody>
-            <tr><td>John Smith</td><td>Oct 12, 2023</td><td>$125.00</td><td><span class="badge bg-primary">Processing</span></td></tr>
-            <tr><td>Sarah Johnson</td><td>Oct 12, 2023</td><td>$89.50</td><td><span class="badge bg-warning">In Progress</span></td></tr>
-            <tr><td>Michael Brown</td><td>Oct 11, 2023</td><td>$245.75</td><td><span class="badge bg-success">Completed</span></td></tr>
-            <tr><td>Emily Davis</td><td>Oct 11, 2023</td><td>$56.90</td><td><span class="badge bg-danger">Cancelled</span></td></tr>
-            <tr><td>Robert Wilson</td><td>Oct 10, 2023</td><td>$189.00</td><td><span class="badge bg-success">Completed</span></td></tr>
+            <?php foreach($latest_orders as $row): ?>
+              <tr>
+                <td><?=htmlspecialchars($row['username'])?></td>
+                <td><?=thai_date_short($row['order_create'])?></td>
+                <td>฿<?=number_format($row['order_amount'],2)?></td>
+                <td><span class="badge bg-primary"><?= $status_labels[$row['order_status']] ?? $row['order_status'] ?></span></td>
+              </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
