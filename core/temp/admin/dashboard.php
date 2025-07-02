@@ -113,6 +113,10 @@
 </style>
 
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // ดึงข้อมูลจาก DB
 $total_customers = $conn->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 $new_customers_today = $conn->query("SELECT COUNT(*) FROM clients WHERE DATE(created_at) = CURDATE()")->fetchColumn();
@@ -143,6 +147,8 @@ function thai_date($date) {
     return "$d $m $y";
 }
 $today_th = thai_date(date('Y-m-d'));
+
+var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
 ?>
 
 <div class="container-fluid">
