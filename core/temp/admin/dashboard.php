@@ -337,35 +337,35 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
       new Chart(canvases.monthlyOrder.getContext('2d'), {
         type: 'line',
         data: {
-          labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+          labels: <?=json_encode($days)?>,
           datasets: [
             {
-              label: 'Processing',
-              data: [12, 19, 15, 8, 11, 13, 7],
+              label: 'กำลังดำเนินการ',
+              data: <?=json_encode($order_data['processing'])?>,
               borderColor: '#4361ee',
               backgroundColor: 'rgba(67, 97, 238, 0.1)',
               tension: 0.3,
               fill: true
             },
             {
-              label: 'In Progress',
-              data: [8, 12, 5, 9, 7, 10, 6],
+              label: 'กำลังทำ',
+              data: <?=json_encode($order_data['in_progress'])?>,
               borderColor: '#f72585',
               backgroundColor: 'rgba(247, 37, 133, 0.1)',
               tension: 0.3,
               fill: true
             },
             {
-              label: 'Completed',
-              data: [25, 30, 28, 32, 27, 35, 40],
+              label: 'เสร็จสิ้น',
+              data: <?=json_encode($order_data['completed'])?>,
               borderColor: '#4cc9f0',
               backgroundColor: 'rgba(76, 201, 240, 0.1)',
               tension: 0.3,
               fill: true
             },
             {
-              label: 'Cancelled',
-              data: [2, 3, 1, 4, 2, 1, 0],
+              label: 'ยกเลิก',
+              data: <?=json_encode($order_data['cancelled'])?>,
               borderColor: '#e63946',
               backgroundColor: 'rgba(230, 57, 70, 0.1)',
               tension: 0.3,
@@ -388,9 +388,9 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
       new Chart(canvases.statusPie.getContext('2d'), {
         type: 'pie',
         data: {
-          labels: ['Processing', 'In Progress', 'Completed', 'Cancelled'],
+          labels: <?=json_encode(array_values($order_statuses))?>,
           datasets: [{
-            data: [25, 20, 50, 5],
+            data: <?=json_encode($order_status_pie)?>,
             backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#e63946'],
             borderColor: '#fff',
             borderWidth: 2
