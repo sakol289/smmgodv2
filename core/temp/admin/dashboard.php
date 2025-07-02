@@ -398,8 +398,10 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
               callbacks: {
                 label: function(context) {
                   let label = context.label || '';
-                  if (label) label += ': ';
-                  return label + context.parsed + ' รายการ';
+                  let value = context.parsed;
+                  let total = context.chart._metasets[0].total || context.dataset.data.reduce((a, b) => a + b, 0);
+                  let percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                  return label + ': ' + percent + '%';
                 }
               }
             }
