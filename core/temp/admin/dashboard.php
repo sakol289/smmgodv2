@@ -188,8 +188,9 @@ foreach ($order_statuses as $status => $th_label) {
 
 // var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
 
+// Top 5 Best-Selling Services (by order count)
 $top_services = $conn->query("
-  SELECT s.service_name, s.category_id, COUNT(o.order_id) as orders, SUM(o.order_amount) as revenue
+  SELECT s.service_name, s.category_id, COUNT(o.order_id) as orders
   FROM orders o
   JOIN services s ON o.service_id = s.service_id
   WHERE o.order_status IN ('completed','partial')
@@ -198,6 +199,7 @@ $top_services = $conn->query("
   LIMIT 5
 ")->fetchAll(PDO::FETCH_ASSOC);
 
+// Latest Orders
 $latest_orders = $conn->query("
   SELECT o.*, c.username
   FROM orders o
@@ -336,7 +338,7 @@ $status_labels = [
               <tr>
                 <td><?=htmlspecialchars($row['service_name'])?></td>
                 <td><?=number_format($row['orders'])?></td>
-                <td>฿<?=number_format($row['revenue'],2)?></td>
+                <td>-</td>
                 <td><?=htmlspecialchars($row['category'])?></td>
               </tr>
             <?php endforeach; ?>
@@ -365,7 +367,7 @@ $status_labels = [
               <tr>
                 <td><?=htmlspecialchars($row['username'])?></td>
                 <td><?=thai_date_short($row['order_create'])?></td>
-                <td>฿<?=number_format($row['order_amount'],2)?></td>
+                <td>-</td>
                 <td><span class="badge bg-primary"><?= $status_labels[$row['order_status']] ?? $row['order_status'] ?></span></td>
               </tr>
             <?php endforeach; ?>
