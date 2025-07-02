@@ -122,8 +122,8 @@ $total_customers = $conn->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 $new_customers_today = $conn->query("SELECT COUNT(*) FROM clients WHERE DATE(register_date) = CURDATE()")->fetchColumn();
 $total_balance = $conn->query("SELECT SUM(balance) FROM clients")->fetchColumn();
 $total_orders = $conn->query("SELECT COUNT(*) FROM orders")->fetchColumn();
-$orders_today = $conn->query("SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE()")->fetchColumn();
-$revenue_today = $conn->query("SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE(created_at) = CURDATE()")->fetchColumn();
+$orders_today = $conn->query("SELECT COUNT(*) FROM orders WHERE DATE(order_create) = CURDATE()")->fetchColumn();
+$revenue_today = $conn->query("SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE(payment_create_date) = CURDATE()")->fetchColumn();
 
 // รายได้แต่ละเดือน 12 เดือนล่าสุด
 $monthly_revenue = [];
