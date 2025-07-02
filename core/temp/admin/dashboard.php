@@ -190,7 +190,7 @@ foreach ($order_statuses as $status => $th_label) {
 
 // Top 5 Best-Selling Services (by order count)
 $top_services = $conn->query("
-  SELECT s.service_name, c.category_name, COUNT(o.order_id) as orders, SUM(o.charge) as revenue
+  SELECT s.service_name, c.category_name, COUNT(o.order_id) as orders, SUM(o.order_charge) as revenue
   FROM orders o
   JOIN services s ON o.service_id = s.service_id
   JOIN categories c ON s.category_id = c.category_id
