@@ -6,7 +6,7 @@ https://testv2.new-like.com/crons
 
 เทสผู้ใช้ทั้งระบบ
 
-ทำdashbord admin
+ทำdashbord admin เสร็จ
 
 
 ระบบsnow

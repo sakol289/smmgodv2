@@ -113,9 +113,9 @@
 </style>
 
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // ดึงข้อมูลจาก DB
 $total_customers = $conn->query("SELECT COUNT(*) FROM clients")->fetchColumn();
@@ -186,7 +186,7 @@ foreach ($order_statuses as $status => $th_label) {
   $order_status_pie[] = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status' AND DATE(order_create) = CURDATE()")->fetchColumn();
 }
 
-var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
+// var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
 ?>
 
 <div class="container-fluid">
