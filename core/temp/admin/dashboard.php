@@ -189,7 +189,7 @@ foreach ($order_statuses as $status => $th_label) {
 // var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
 
 $top_services = $conn->query("
-  SELECT s.service_name, s.category, COUNT(o.order_id) as orders, SUM(o.order_amount) as revenue
+  SELECT s.service_name, s.category_id, COUNT(o.order_id) as orders, SUM(o.order_amount) as revenue
   FROM orders o
   JOIN services s ON o.service_id = s.service_id
   WHERE o.order_status IN ('completed','partial')
