@@ -21,56 +21,115 @@
   margin: 10px;
   font-size: 14px;
 }
+/* Card summary styles for both themes */
+.summary-card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.08);
+  background: linear-gradient(135deg, #f8fafc 60%, #e9ecef 100%);
+  padding: 24px 20px 20px 20px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.3s, background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.summary-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.12);
+  background: linear-gradient(135deg, #f1f3f7 60%, #e2e6ea 100%);
+}
+.summary-card .summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0e7ff 60%, #c7d2fe 100%);
+  box-shadow: 0 2px 8px rgba(67,97,238,0.10);
+  font-size: 2.2rem;
+  color: #4361ee;
+  margin-right: 18px;
+  flex-shrink: 0;
+}
+.summary-card .summary-content {
+  flex: 1;
+}
+.summary-card .summary-title {
+  font-size: 13px;
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.summary-card .summary-value {
+  font-size: 2.1rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 4px;
+}
+.summary-card .summary-change {
+  font-size: 14px;
+  font-weight: 400;
+}
+/* Theme: dark mode */
+.dark-mode .summary-card {
+  background: linear-gradient(135deg, #23272f 60%, #181a20 100%);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.40), 0 1.5px 4px rgba(0,0,0,0.18);
+}
+.dark-mode .summary-card:hover {
+  background: linear-gradient(135deg, #23272f 60%, #23272f 100%);
+}
+.dark-mode .summary-card .summary-title {
+  color: #b0b8c1;
+}
+.dark-mode .summary-card .summary-value {
+  color: #fff;
+}
+.dark-mode .summary-card .summary-icon {
+  background: linear-gradient(135deg, #2d3a5a 60%, #1e2746 100%);
+  color: #7da0fa;
+}
 </style>
 
 <div class="container-fluid">
   <!-- Summary Cards -->
   <div class="row">
     <div class="col-md-3 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <small class="text-muted">Total Customers</small>
-          <h3><strong>2,842</strong></h3>
-          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 12.5%</span> <small>vs last month</small></p>
-          <div class="text-end">
-            <i class="fa fa-users fa-2x text-primary"></i>
-          </div>
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon"><i class="fa fa-users"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">Total Customers</div>
+          <div class="summary-value">2,842</div>
+          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 12.5% <small>vs last month</small></div>
         </div>
       </div>
     </div>
     <div class="col-md-3 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <small class="text-muted">Total Balance</small>
-          <h3><strong>$24,318</strong></h3>
-          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 8.2%</span> <small>vs last month</small></p>
-          <div class="text-end">
-            <i class="fa fa-wallet fa-2x text-success"></i>
-          </div>
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon" style="background:linear-gradient(135deg,#d1fae5 60%,#a7f3d0 100%);color:#10b981;"><i class="fa fa-wallet"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">Total Balance</div>
+          <div class="summary-value">$24,318</div>
+          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 8.2% <small>vs last month</small></div>
         </div>
       </div>
     </div>
     <div class="col-md-3 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <small class="text-muted">Total Orders</small>
-          <h3><strong>1,284</strong></h3>
-          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 5.3%</span> <small>vs last month</small></p>
-          <div class="text-end">
-            <i class="fa fa-shopping-cart fa-2x text-primary"></i>
-          </div>
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon" style="background:linear-gradient(135deg,#fef9c3 60%,#fde68a 100%);color:#f59e42;"><i class="fa fa-shopping-cart"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">Total Orders</div>
+          <div class="summary-value">1,284</div>
+          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 5.3% <small>vs last month</small></div>
         </div>
       </div>
     </div>
     <div class="col-md-3 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <small class="text-muted">Total Sales (30 days)</small>
-          <h3><strong>$48,950</strong></h3>
-          <p><span class="text-success"><i class="fa fa-arrow-up"></i> 15.7%</span> <small>vs last month</small></p>
-          <div class="text-end">
-            <i class="fa fa-chart-bar fa-2x text-warning"></i>
-          </div>
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon" style="background:linear-gradient(135deg,#fbc2eb 60%,#a6c1ee 100%);color:#f72585;"><i class="fa fa-chart-bar"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">Total Sales (30 days)</div>
+          <div class="summary-value">$48,950</div>
+          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 15.7% <small>vs last month</small></div>
         </div>
       </div>
     </div>
