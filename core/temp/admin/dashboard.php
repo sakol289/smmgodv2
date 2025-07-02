@@ -79,7 +79,7 @@
   <!-- Charts Row -->
   <div class="row">
     <!-- Monthly Order Status -->
-    <div class="col-md-6 mb-4">
+    <div class="col-md-8 mb-4">
       <div class="card">
         <div class="card-header"><strong>Monthly Order Status</strong></div>
         <div class="card-body">
@@ -90,7 +90,7 @@
       </div>
     </div>
     <!-- Order Status Distribution -->
-    <div class="col-md-6 mb-4">
+    <div class="col-md-4 mb-4">
       <div class="card">
         <div class="card-header"><strong>Order Status Distribution</strong></div>
         <div class="card-body">
