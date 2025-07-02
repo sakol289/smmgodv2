@@ -1,5 +1,5 @@
 <?php include 'header.php'; ?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" onerror="console.warn('Bootstrap CDN failed. Some styling may be missing.');">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-5sAR7xN1Nv6AKZb1r1lQF8V1p5l9yy+1Q1Zt1Q1Zt1Q1Zt1Q1Zt1Q1Zt1Q1Zt1Q1" crossorigin="anonymous" onerror="console.warn('Bootstrap CDN failed. Some styling may be missing.');">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="console.warn('Font Awesome CDN failed. Icons may be missing.');">
 <style>
 .card {
@@ -165,14 +165,14 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha256-+6Qn4QnQn4QnQn4QnQnQnQnQnQnQnQnQnQnQnQnQnQnQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
 (function() {
   try {
     // Check if Chart.js is loaded
     if (typeof Chart === 'undefined') {
       console.error('Chart.js is not available.');
-      displayError('Chart.js is not available. Please check the CDN link.');
+      displayError('ไม่สามารถโหลด Chart.js ได้ กรุณาตรวจสอบการเชื่อมต่อ CDN หรืออินเทอร์เน็ต');
       return;
     }
 
