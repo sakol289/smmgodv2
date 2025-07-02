@@ -88,12 +88,34 @@
   background: linear-gradient(135deg, #2d3a5a 60%, #1e2746 100%);
   color: #7da0fa;
 }
+.summary-row {
+  margin-left: -10px;
+  margin-right: -10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.summary-col {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .summary-col { width: 33.3333%; }
+}
+@media (min-width: 1200px) {
+  .summary-col { width: 16.6666%; }
+}
+@media (max-width: 767px) {
+  .summary-row { flex-direction: column; }
+  .summary-col { width: 100%; }
+}
 </style>
 
 <div class="container-fluid">
   <!-- Summary Cards -->
-  <div class="row">
-    <div class="col-md-3 mb-4">
+  <div class="summary-row">
+    <div class="summary-col">
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon"><i class="fa fa-users"></i></div>
         <div class="summary-content">
@@ -103,7 +125,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="summary-col">
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#d1fae5 60%,#a7f3d0 100%);color:#10b981;"><i class="fa fa-wallet"></i></div>
         <div class="summary-content">
@@ -113,7 +135,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="summary-col">
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#fef9c3 60%,#fde68a 100%);color:#f59e42;"><i class="fa fa-shopping-cart"></i></div>
         <div class="summary-content">
@@ -123,13 +145,33 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="summary-col">
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#fbc2eb 60%,#a6c1ee 100%);color:#f72585;"><i class="fa fa-chart-bar"></i></div>
         <div class="summary-content">
           <div class="summary-title">Total Sales (30 days)</div>
           <div class="summary-value">$48,950</div>
           <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 15.7% <small>vs last month</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="summary-col">
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon" style="background:linear-gradient(135deg,#c7d2fe 60%,#818cf8 100%);color:#3730a3;"><i class="fa fa-user-plus"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">New Customers Today</div>
+          <div class="summary-value">12</div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> Today</div>
+        </div>
+      </div>
+    </div>
+    <div class="summary-col">
+      <div class="summary-card d-flex align-items-center">
+        <div class="summary-icon" style="background:linear-gradient(135deg,#bbf7d0 60%,#22d3ee 100%);color:#0e7490;"><i class="fa fa-dollar-sign"></i></div>
+        <div class="summary-content">
+          <div class="summary-title">Revenue Today</div>
+          <div class="summary-value">$1,250</div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> Today</div>
         </div>
       </div>
     </div>
@@ -161,9 +203,9 @@
     </div>
   </div>
 
-  <!-- Monthly Revenue -->
-  <div class="card mb-4">
-    <div class="card-header"><strong>Monthly Revenue</strong></div>
+  <!-- Monthly Revenue (Line Chart) -->
+  <div class="card mb-4" style="margin-top:30px;">
+    <div class="card-header"><strong>Monthly Revenue (Last 12 Months)</strong></div>
     <div class="card-body">
       <div class="chart-container">
         <canvas id="monthlyRevenueChart"></canvas>
@@ -333,18 +375,26 @@
         }
       });
 
-      // Monthly Revenue Chart
-      new Chart(canvases.monthlyRevenue.getContext('2d'), {
-        type: 'bar',
+      // Monthly Revenue Chart (Line)
+      var monthlyRevenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
+      new Chart(monthlyRevenueCtx, {
+        type: 'line',
         data: {
-          labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-          datasets: [{
-            label: 'Revenue ($)',
-            data: [1500, 2200, 1800, 2500, 2000, 2300, 2700],
-            backgroundColor: '#4361ee',
-            borderColor: '#4361ee',
-            borderWidth: 1
-          }]
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [
+            {
+              label: 'Revenue',
+              data: [12000, 15000, 11000, 17000, 14000, 18000, 21000, 19000, 22000, 25000, 23000, 27000],
+              borderColor: '#4361ee',
+              backgroundColor: 'rgba(67, 97, 238, 0.08)',
+              tension: 0.3,
+              fill: true,
+              pointRadius: 4,
+              pointBackgroundColor: '#4361ee',
+              pointBorderColor: '#fff',
+              pointHoverRadius: 6
+            }
+          ]
         },
         options: {
           responsive: true,
