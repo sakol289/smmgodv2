@@ -112,6 +112,39 @@
 }
 </style>
 
+<?php
+// ดึงข้อมูลจาก DB
+$total_customers = $conn->query("SELECT COUNT(*) FROM clients")->fetchColumn();
+$new_customers_today = $conn->query("SELECT COUNT(*) FROM clients WHERE DATE(created_at) = CURDATE()")->fetchColumn();
+$total_balance = $conn->query("SELECT SUM(balance) FROM clients")->fetchColumn();
+$total_orders = $conn->query("SELECT COUNT(*) FROM orders")->fetchColumn();
+$orders_today = $conn->query("SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE()")->fetchColumn();
+$revenue_today = $conn->query("SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE(created_at) = CURDATE()")->fetchColumn();
+
+// รายได้แต่ละเดือน 12 เดือนล่าสุด
+$monthly_revenue = [];
+$thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+$monthly_labels = [];
+$monthly_data = [];
+for($i=11;$i>=0;$i--) {
+    $month = date('Y-m', strtotime("-$i months"));
+    $label = $thai_months[(int)date('m', strtotime($month))-1];
+    $monthly_labels[] = $label;
+    $sum = $conn->query("SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE_FORMAT(created_at, '%Y-%m') = '$month'")->fetchColumn();
+    $monthly_data[] = floatval($sum);
+}
+
+// วันที่วันนี้ (ภาษาไทย)
+function thai_date($date) {
+    $thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    $d = date('j', strtotime($date));
+    $m = $thai_months[(int)date('m', strtotime($date))-1];
+    $y = date('Y', strtotime($date)) + 543;
+    return "$d $m $y";
+}
+$today_th = thai_date(date('Y-m-d'));
+?>
+
 <div class="container-fluid">
   <!-- Summary Cards -->
   <div class="summary-row">
@@ -119,9 +152,9 @@
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon"><i class="fa fa-users"></i></div>
         <div class="summary-content">
-          <div class="summary-title">Total Customers</div>
-          <div class="summary-value">2,842</div>
-          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 12.5% <small>vs last month</small></div>
+          <div class="summary-title">ลูกค้าทั้งหมด</div>
+          <div class="summary-value"><?=number_format($total_customers)?></div>
+          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> <?=number_format($new_customers_today)?> <small>ลูกค้าใหม่วันนี้</small></div>
         </div>
       </div>
     </div>
@@ -129,9 +162,9 @@
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#d1fae5 60%,#a7f3d0 100%);color:#10b981;"><i class="fa fa-wallet"></i></div>
         <div class="summary-content">
-          <div class="summary-title">Total Balance</div>
-          <div class="summary-value">$24,318</div>
-          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 8.2% <small>vs last month</small></div>
+          <div class="summary-title">ยอดเงินรวม</div>
+          <div class="summary-value">฿<?=number_format($total_balance,2)?></div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
       </div>
     </div>
@@ -139,9 +172,9 @@
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#fef9c3 60%,#fde68a 100%);color:#f59e42;"><i class="fa fa-shopping-cart"></i></div>
         <div class="summary-content">
-          <div class="summary-title">Total Orders</div>
-          <div class="summary-value">1,284</div>
-          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 5.3% <small>vs last month</small></div>
+          <div class="summary-title">ออเดอร์ทั้งหมด</div>
+          <div class="summary-value"><?=number_format($total_orders)?></div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
       </div>
     </div>
@@ -149,9 +182,9 @@
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#fbc2eb 60%,#a6c1ee 100%);color:#f72585;"><i class="fa fa-chart-bar"></i></div>
         <div class="summary-content">
-          <div class="summary-title">Total Sales (30 days)</div>
-          <div class="summary-value">$48,950</div>
-          <div class="summary-change text-success"><i class="fa fa-arrow-up"></i> 15.7% <small>vs last month</small></div>
+          <div class="summary-title">รายได้วันนี้</div>
+          <div class="summary-value">฿<?=number_format($revenue_today,2)?></div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
       </div>
     </div>
@@ -159,19 +192,19 @@
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#c7d2fe 60%,#818cf8 100%);color:#3730a3;"><i class="fa fa-user-plus"></i></div>
         <div class="summary-content">
-          <div class="summary-title">New Customers Today</div>
-          <div class="summary-value">12</div>
-          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> Today</div>
+          <div class="summary-title">ลูกค้าใหม่วันนี้</div>
+          <div class="summary-value"><?=number_format($new_customers_today)?></div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
       </div>
     </div>
     <div class="summary-col">
       <div class="summary-card d-flex align-items-center">
-        <div class="summary-icon" style="background:linear-gradient(135deg,#bbf7d0 60%,#22d3ee 100%);color:#0e7490;"><i class="fa fa-dollar-sign"></i></div>
+        <div class="summary-icon" style="background:linear-gradient(135deg,#fca5a5 60%,#f87171 100%);color:#b91c1c;"><i class="fa fa-receipt"></i></div>
         <div class="summary-content">
-          <div class="summary-title">Revenue Today</div>
-          <div class="summary-value">$1,250</div>
-          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> Today</div>
+          <div class="summary-title">ออเดอร์วันนี้</div>
+          <div class="summary-value"><?=number_format($orders_today)?></div>
+          <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
       </div>
     </div>
@@ -205,7 +238,7 @@
 
   <!-- Monthly Revenue (Line Chart) -->
   <div class="card mb-4" style="margin-top:30px;">
-    <div class="card-header"><strong>Monthly Revenue (Last 12 Months)</strong></div>
+    <div class="card-header"><strong>รายได้รายเดือน (12 เดือนล่าสุด)</strong></div>
     <div class="card-body">
       <div class="chart-container">
         <canvas id="monthlyRevenueChart"></canvas>
@@ -380,11 +413,11 @@
       new Chart(monthlyRevenueCtx, {
         type: 'line',
         data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: <?=json_encode($monthly_labels)?>,
           datasets: [
             {
-              label: 'Revenue',
-              data: [12000, 15000, 11000, 17000, 14000, 18000, 21000, 19000, 22000, 25000, 23000, 27000],
+              label: 'รายได้',
+              data: <?=json_encode($monthly_data)?>,
               borderColor: '#4361ee',
               backgroundColor: 'rgba(67, 97, 238, 0.08)',
               tension: 0.3,
@@ -402,14 +435,14 @@
           scales: {
             y: {
               beginAtZero: true,
-              ticks: { callback: value => '$' + value }
+              ticks: { callback: value => '฿' + value }
             }
           },
           plugins: {
             legend: { position: 'top' },
             tooltip: {
               callbacks: {
-                label: context => context.dataset.label + ': $' + context.parsed.y
+                label: context => context.dataset.label + ': ฿' + context.parsed.y
               }
             }
           }
