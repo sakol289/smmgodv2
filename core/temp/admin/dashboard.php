@@ -138,6 +138,13 @@ for($i=11;$i>=0;$i--) {
     $monthly_data[] = floatval($sum);
 }
 
+// ฟังก์ชันแปลงวันที่เป็นไทยแบบสั้น
+function thai_date_short($date) {
+  $thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  $d = date('j', strtotime($date));
+  $m = $thai_months[(int)date('m', strtotime($date))-1];
+  return "$d $m";
+}
 // วันที่วันนี้ (ภาษาไทย)
 function thai_date($date) {
     $thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -147,6 +154,37 @@ function thai_date($date) {
     return "$d $m $y";
 }
 $today_th = thai_date(date('Y-m-d'));
+
+// สถานะทั้งหมดและ label ภาษาไทย
+$order_statuses = [
+  'pending' => 'รอดำเนินการ',
+  'inprogress' => 'กำลังทำ',
+  'completed' => 'เสร็จสิ้น',
+  'partial' => 'สำเร็จบางส่วน',
+  'processing' => 'กำลังตรวจสอบ',
+  'canceled' => 'ยกเลิก'
+];
+
+// กราฟเส้น: Order Status 7 วันล่าสุด
+$days = [];
+$order_data = [];
+foreach ($order_statuses as $status => $th_label) {
+  $order_data[$status] = [];
+}
+for($i=6;$i>=0;$i--) {
+  $date = date('Y-m-d', strtotime("-$i days"));
+  $days[] = thai_date_short($date);
+  foreach ($order_statuses as $status => $th_label) {
+    $count = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status' AND DATE(order_create) = '$date'")->fetchColumn();
+    $order_data[$status][] = intval($count);
+  }
+}
+
+// Pie Chart: Order Status Distribution วันนี้
+$order_status_pie = [];
+foreach ($order_statuses as $status => $th_label) {
+  $order_status_pie[] = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status' AND DATE(order_create) = CURDATE()")->fetchColumn();
+}
 
 var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
 ?>
@@ -309,68 +347,23 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
 <script>
 (function() {
   try {
-    // Check if Chart.js is loaded
     if (typeof Chart === 'undefined') {
       console.error('Chart.js is not available.');
       displayError('ไม่สามารถโหลด Chart.js ได้ กรุณาตรวจสอบการเชื่อมต่อ CDN หรืออินเทอร์เน็ต');
       return;
     }
-
-    // Wait for DOM to be fully loaded
     document.addEventListener('DOMContentLoaded', function() {
-      // Verify canvas elements
-      const canvases = {
-        monthlyOrder: document.getElementById('monthlyOrderChart'),
-        statusPie: document.getElementById('statusPieChart'),
-        monthlyRevenue: document.getElementById('monthlyRevenueChart')
-      };
-
-      for (const [key, canvas] of Object.entries(canvases)) {
-        if (!canvas) {
-          console.error(`Canvas element for ${key} not found.`);
-          displayError(`Canvas for ${key} is missing. Check the HTML structure.`);
-          return;
-        }
-      }
-
-      // Monthly Order Status Chart
-      new Chart(canvases.monthlyOrder.getContext('2d'), {
+      // Monthly Order Status Chart (7 วันล่าสุด)
+      var monthlyOrderCtx = document.getElementById('monthlyOrderChart').getContext('2d');
+      new Chart(monthlyOrderCtx, {
         type: 'line',
         data: {
           labels: <?=json_encode($days)?>,
           datasets: [
-            {
-              label: 'กำลังดำเนินการ',
-              data: <?=json_encode($order_data['processing'])?>,
-              borderColor: '#4361ee',
-              backgroundColor: 'rgba(67, 97, 238, 0.1)',
-              tension: 0.3,
-              fill: true
-            },
-            {
-              label: 'กำลังทำ',
-              data: <?=json_encode($order_data['in_progress'])?>,
-              borderColor: '#f72585',
-              backgroundColor: 'rgba(247, 37, 133, 0.1)',
-              tension: 0.3,
-              fill: true
-            },
-            {
-              label: 'เสร็จสิ้น',
-              data: <?=json_encode($order_data['completed'])?>,
-              borderColor: '#4cc9f0',
-              backgroundColor: 'rgba(76, 201, 240, 0.1)',
-              tension: 0.3,
-              fill: true
-            },
-            {
-              label: 'ยกเลิก',
-              data: <?=json_encode($order_data['cancelled'])?>,
-              borderColor: '#e63946',
-              backgroundColor: 'rgba(230, 57, 70, 0.1)',
-              tension: 0.3,
-              fill: true
-            }
+            <?php $colors = ['#4361ee','#f72585','#4cc9f0','#fbbf24','#6366f1','#e63946']; $i=0; $ds = []; foreach($order_statuses as $status => $th_label){
+              $ds[] = "{\n              label: '$th_label',\n              data: ".json_encode($order_data[$status]).",\n              borderColor: '{$colors[$i%count($colors)]}',\n              backgroundColor: '{$colors[$i%count($colors)]}22',\n              tension: 0.3,\n              fill: true\n            }";
+              $i++;
+            } echo implode(",\n", $ds); ?>
           ]
         },
         options: {
@@ -383,15 +376,15 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
           }
         }
       });
-
-      // Status Pie Chart
-      new Chart(canvases.statusPie.getContext('2d'), {
+      // Order Status Pie Chart (วันนี้)
+      var statusPieCtx = document.getElementById('statusPieChart').getContext('2d');
+      new Chart(statusPieCtx, {
         type: 'pie',
         data: {
           labels: <?=json_encode(array_values($order_statuses))?>,
           datasets: [{
             data: <?=json_encode($order_status_pie)?>,
-            backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#e63946'],
+            backgroundColor: ['#4361ee','#f72585','#4cc9f0','#fbbf24','#6366f1','#e63946'],
             borderColor: '#fff',
             borderWidth: 2
           }]
@@ -406,15 +399,14 @@ var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, 
                 label: function(context) {
                   let label = context.label || '';
                   if (label) label += ': ';
-                  return label + context.parsed + '%';
+                  return label + context.parsed + ' รายการ';
                 }
               }
             }
           }
         }
       });
-
-      // Monthly Revenue Chart (Line)
+      // Monthly Revenue Chart (เดิม)
       var monthlyRevenueCtx = document.getElementById('monthlyRevenueChart').getContext('2d');
       new Chart(monthlyRevenueCtx, {
         type: 'line',
