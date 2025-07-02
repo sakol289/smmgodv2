@@ -16,14 +16,16 @@ if (isset($_GET["theme"]) && ($_GET["theme"] == 1 || $_GET["theme"] == 2)) {
 
 // ถ้าไม่มี refer และไม่ใช่หน้า dashboard แล้วให้ redirect ไปตามสิทธิ์
 if (empty($_GET["refer"]) && basename($_SERVER['REQUEST_URI']) !== 'dashboard') {
-    if (!empty($user["access"]["users"])) {
-        header("Location:" . site_url("admin/clients"));
+    if (!empty($user["access"]["dashboard"])) {
+        header("Location:" . site_url("admin/dashboard"));
         exit;
     } elseif (!empty($user["access"]["orders"])) {
         header("Location:" . site_url("admin/orders"));
         exit;
-    } elseif (!empty($user["access"]["dashboard"])) {
-        header("Location:" . site_url("admin/dashboard"));
+    } elseif (!empty($user["access"]["users"])) {
+
+        header("Location:" . site_url("admin/clients"));
+
         exit;
     } elseif (!empty($user["access"]["subscriptions"])) {
         header("Location:" . site_url("admin/subscriptions"));
