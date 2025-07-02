@@ -190,9 +190,10 @@ foreach ($order_statuses as $status => $th_label) {
 
 // Top 5 Best-Selling Services (by order count)
 $top_services = $conn->query("
-  SELECT s.service_name, s.category_id, COUNT(o.order_id) as orders
+  SELECT s.service_name, c.category_name, COUNT(o.order_id) as orders, SUM(o.charge) as revenue
   FROM orders o
   JOIN services s ON o.service_id = s.service_id
+  JOIN categories c ON s.category_id = c.category_id
   WHERE o.order_status IN ('completed','partial')
   GROUP BY o.service_id
   ORDER BY orders DESC
@@ -338,8 +339,8 @@ $status_labels = [
               <tr>
                 <td><?=htmlspecialchars($row['service_name'])?></td>
                 <td><?=number_format($row['orders'])?></td>
-                <td>-</td>
-                <td><?=htmlspecialchars($row['category'])?></td>
+                <td>฿<?=number_format($row['revenue'],2)?></td>
+                <td><?=htmlspecialchars($row['category_name'])?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
