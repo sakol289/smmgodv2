@@ -134,7 +134,7 @@ for($i=11;$i>=0;$i--) {
     $month = date('Y-m', strtotime("-$i months"));
     $label = $thai_months[(int)date('m', strtotime($month))-1];
     $monthly_labels[] = $label;
-    $sum = $conn->query("SELECT SUM(amount) FROM payments WHERE status='completed' AND DATE_FORMAT(created_at, '%Y-%m') = '$month'")->fetchColumn();
+    $sum = $conn->query("SELECT SUM(payment_amount) FROM payments WHERE payment_status='3' AND DATE_FORMAT(payment_create_date, '%Y-%m') = '$month'")->fetchColumn();
     $monthly_data[] = floatval($sum);
 }
 
