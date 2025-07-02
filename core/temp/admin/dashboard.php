@@ -368,7 +368,7 @@ $status_labels = [
               <tr>
                 <td><?=htmlspecialchars($row['username'])?></td>
                 <td><?=thai_date_short($row['order_create'])?></td>
-                <td>-</td>
+                <td>฿<?=number_format($row['order_charge'],2)?></td>
                 <td><span class="badge bg-primary"><?= $status_labels[$row['order_status']] ?? $row['order_status'] ?></span></td>
               </tr>
             <?php endforeach; ?>
