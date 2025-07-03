@@ -186,7 +186,7 @@ for($i=6;$i>=0;$i--) {
 // Pie Chart: Order Status Distribution วันนี้
 $order_status_pie = [];
 foreach ($order_statuses as $status => $th_label) {
-  $order_status_pie[] = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status' AND DATE(order_create) = CURDATE()")->fetchColumn();
+  $order_status_pie[] = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status'")->fetchColumn();
 }
 
 // var_dump($total_customers, $new_customers_today, $total_balance, $total_orders, $orders_today, $revenue_today);
