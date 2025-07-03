@@ -138,7 +138,7 @@
       <div class="service-block__body-scroll">
             <div style="width: 100%; height: 0px;"></div>
             <form action="<?php echo site_url("admin/services/multi-action") ?>" method="post" id="changebulkForm">
-            <div style="" class="category-sortable">
+            <div class="category-sortable">
               <?php $c=0;foreach($serviceList as $category => $services ): $c++; ?>
                 <div class="categories" data-id="<?=$services[0]["category_id"]?>">
                   <div class="<?php if( $services[0]["category_type"] == 1 ): echo 'grey'; endif;?>  service-block__category ">
