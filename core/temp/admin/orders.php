@@ -1,4 +1,82 @@
 <?php include 'header.php'; ?>
+
+<style>
+@media (max-width: 767px) {
+  .table-responsive {
+    border: 0;
+  }
+  .order-table thead {
+    display: none;
+  }
+  .order-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    padding: 10px;
+  }
+  .order-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 15px;
+    word-break: break-all;
+  }
+  .order-table td:last-child {
+    border-bottom: none;
+  }
+  .order-table td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+    flex: 1;
+    min-width: 120px;
+    margin-right: 10px;
+  }
+  .nav-tabs.p-b {
+    flex-wrap: wrap;
+    display: flex;
+  }
+  .nav-tabs.p-b > li {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .custom-search {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .form-inline,
+  .form-inline .input-group,
+  .form-inline .form-control,
+  .form-inline .input-group-btn,
+  .form-inline .btn,
+  .form-inline .search-select-wrap {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+    margin-bottom: 8px;
+  }
+  .form-inline .input-group {
+    flex-direction: column;
+  }
+  .form-inline .input-group-btn,
+  .form-inline .search-select-wrap {
+    margin-top: 8px;
+  }
+  .pagination {
+    flex-wrap: wrap;
+  }
+  .pagination-counters {
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+</style>
+
 <div class="container-fluid">
             <?php if( $success ): ?>
           <div class="alert alert-success "><?php echo $successText; ?></div>
@@ -58,7 +136,7 @@
                                  <?php if( $status  ==  "pending" || $status  ==  "inprogress"  || $status  ==  "processing" ||  $status  ==  "fail" ): ?>
                                  <a class="bulkorder" data-type="completed">Completed</a>
                                  <?php endif; ?>
-                                 <?php if( $status  ==  "all" ||status  ==  "pending" || $status  ==  "inprogress"  || $status  ==  "completed"  || $status  ==  "processing" || $status  ==  "partial" || $status  ==  "fail" ): ?>
+                                 <?php if( $status  ==  "all" || $status  ==  "pending" || $status  ==  "inprogress"  || $status  ==  "completed"  || $status  ==  "processing" || $status  ==  "partial" || $status  ==  "fail" ): ?>
                                  <a class="bulkorder" data-type="canceled">Cancel and Refund</a>
                                  <?php endif; ?>
                                  <?php if( $status  ==  "fail" ): ?>
@@ -110,34 +188,34 @@
         <tbody>
           <?php foreach( $orders as $order ): ?>
               <tr>
-                 <td><input type="checkbox" <?php if( $status == "canceled" ): echo "disabled"; else: echo 'class="selectOrder"'; endif; ?> name="order[<?php echo $order["order_id"] ?>]" value="1" style="border:1px solid #fff"></td>
-                 <td class="p-l">
+                 <td data-label="Select"><input type="checkbox" <?php if( $status == "canceled" ): echo "disabled"; else: echo 'class="selectOrder"'; endif; ?> name="order[<?php echo $order["order_id"] ?>]" value="1" style="border:1px solid #fff"></td>
+                 <td class="p-l" data-label="ID">
                   <?php echo $order["order_id"] ?>
                   <?php if( $order["api_orderid"] != 0 ): echo '<div class="service-block__provider-value">'.$order["api_orderid"].'</div>'; endif; ?>
                 </td>
-                 <td><?php echo $order["username"]; if( $order["order_where"] == "api" ): echo ' <span class="label label-api">API</span>'; endif; ?> </td>
-                 <td class="service-block__minorder">
+                 <td data-label="Username"><?php echo $order["username"]; if( $order["order_where"] == "api" ): echo ' <span class="label label-api">API</span>'; endif; ?> </td>
+                 <td class="service-block__minorder" data-label="Fee">
                    <div>
                      <?php echo conrate($order["order_charge"]); ?>
                    </div>
                    <?php if( $order["service_api"] != 0 ): echo '<div class="service-block__provider-value">'.$order["order_profit"].'</div>'; endif; ?>
 
                  </td>
-                 <td><?php echo $order["order_url"]; 
+                 <td data-label="Link"><?php echo $order["order_url"];
             if(empty($order["order_extras"]) || $order["order_extras"] == "[]"){ }else{
-                        echo' <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalDiv" data-action="order_comment" data-id="'.$order["order_id"].'">Comments</a>'; 
+                        echo' <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalDiv" data-action="order_comment" data-id="'.$order["order_id"].'">Comments</a>';
                         
                     }
                     ?>
                  </td>
-                 <td><?php echo $order["order_start"]; ?></td>
-                 <td><?php echo $order["order_quantity"]; ?></td>
-                 <td><?php if( $order["service_id"]): ?> <span class="label-id"><?php echo $order["service_id"]; ?></span><?php endif; echo $order["service_name"]; ?></td>
-                 <td><?php echo  orderStatu($order["order_status"],$order["order_error"],$order["order_detail"]); ?></td>
-                 <td><?php if( $order["order_status"] == "completed" && substr($order["order_remains"], 0,1) == "-" ): echo "+".substr($order["order_remains"], 1);  else: echo $order["order_remains"]; endif; ?></td>
-                 <td><?php echo $order["order_create"]; ?></td>
-                 <td><?php if( $order["api_service"] == 0 ): echo "Manuel"; else: echo "Automatic"; endif; ?></td>
-                 <td class="service-block__action">
+                 <td data-label="Start count"><?php echo $order["order_start"]; ?></td>
+                 <td data-label="Quantity"><?php echo $order["order_quantity"]; ?></td>
+                 <td data-label="Service"><?php if( $order["service_id"]): ?> <span class="label-id"><?php echo $order["service_id"]; ?></span><?php endif; echo $order["service_name"]; ?></td>
+                 <td data-label="Order status"><?php echo  orderStatu($order["order_status"],$order["order_error"],$order["order_detail"]); ?></td>
+                 <td data-label="Remains"><?php if( $order["order_status"] == "completed" && substr($order["order_remains"], 0,1) == "-" ): echo "+".substr($order["order_remains"], 1);  else: echo $order["order_remains"]; endif; ?></td>
+                 <td data-label="Order date"><?php echo $order["order_create"]; ?></td>
+                 <td data-label="Mode"><?php if( $order["api_service"] == 0 ): echo "Manuel"; else: echo "Automatic"; endif; ?></td>
+                 <td class="service-block__action" data-label="Action">
                    <div class="dropdown pull-right">
                      <button type="button" class="btn btn-default btn-xs dropdown-toggle btn-xs-caret" data-toggle="dropdown">Options<span class="caret"></span></button>
                      <ul class="dropdown-menu">
