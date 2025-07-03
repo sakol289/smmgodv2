@@ -58,6 +58,15 @@
       .g-recaptcha {
         margin-bottom: 16px;
       }
+      @media (max-width: 767px) {
+        .login-card {
+          padding: 20px 8px 16px 8px;
+          max-width: 98vw;
+        }
+        .login-card .logo span {
+          font-size: 1.1em;
+        }
+      }
     </style>
   </head>
   <body>

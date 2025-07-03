@@ -109,6 +109,9 @@
 @media (max-width: 767px) {
   .summary-row { flex-direction: column; }
   .summary-col { width: 100%; }
+  .card, .summary-card { padding: 16px 8px 12px 8px; }
+  .chart-container { height: 200px; }
+  .table-responsive, .table { width: 100%; overflow-x: auto; }
 }
 </style>
 
