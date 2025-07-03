@@ -1,4 +1,61 @@
 <?php include 'header.php'; ?>
+<style>
+@media (max-width: 767px) {
+  .table-responsive {
+    border: 0;
+  }
+  .table thead {
+    display: none;
+  }
+  .table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    padding: 10px;
+  }
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 15px;
+    word-break: break-all;
+  }
+  .table td:last-child {
+    border-bottom: none;
+  }
+  .table td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #555;
+    flex: 1;
+    min-width: 120px;
+    margin-right: 10px;
+  }
+  .form-inline,
+  .form-inline .input-group,
+  .form-inline .form-control,
+  .form-inline .input-group-btn,
+  .form-inline .btn,
+  .form-inline .search-select-wrap {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+    margin-bottom: 8px;
+  }
+  .form-inline .input-group {
+    flex-direction: column;
+  }
+  .form-inline .input-group-btn,
+  .form-inline .search-select-wrap {
+    margin-top: 8px;
+  }
+}
+</style>
 
 
 <div class="container-fluid">
