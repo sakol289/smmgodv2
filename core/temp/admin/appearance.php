@@ -1,4 +1,20 @@
 <?php include 'header.php'; ?>
+<style>
+@media (max-width: 767px) {
+  .container-fluid, .container {
+    padding: 8px !important;
+  }
+  .form-group, .form-control, .btn {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+  .row, .col-sm-6, .col-md-6, .col-xs-12 {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+</style>
 
 
 <div class="container">

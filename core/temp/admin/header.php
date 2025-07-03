@@ -49,7 +49,7 @@
 <div class='collapse navbar-collapse' data-nav='navbar-priority' id='bs-navbar-collapse'>
 <ul id='navResponsive' class='nav navbar-nav navbar-left-block'>
 <?php if( $user['access']['admin_access']  && $_SESSION['neira_adminlogin']  ): ?>
-  <li class='<?php if( route(1) == 'dashboard' ): echo 'active'; endif; ?>'><a href='<?php echo site_url('admin/dashboard') ?>'>dashboard</a></li>
+  <li class='<?php if( route(1) == 'dashboard' ): echo 'active'; endif; ?>'><a href='<?php echo site_url('admin/dashboard') ?>'>Dashboard</a></li>
 <?php if( $user['access']['users'] ): ?>
 <li class='<?php if( route(1) == 'clients' ): echo 'active'; endif; ?>'><a href='<?php echo site_url('admin/clients') ?>'>Users</a></li>
 <?php endif; ?>  
