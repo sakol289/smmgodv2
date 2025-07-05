@@ -12,6 +12,7 @@ if ($_SESSION["client"]["data"]):
   unset($_SESSION["client"]);
 endif;
 
+$menuList = ["Pages" => "pages", "News" => "news", "Blog" => "blog", "Menu" => "menu", "Themes" => "themes", "Language" => "language", "Files" => "files", "New Year" => "new_year"];
 
 if (!array_search(route(2), $menuList)):
   header("Location:" . site_url("admin/appearance"));
