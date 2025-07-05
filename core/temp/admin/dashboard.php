@@ -168,13 +168,13 @@ $order_statuses = [
   'canceled' => 'ยกเลิก'
 ];
 
-// กราฟเส้น: Order Status 7 วันล่าสุด
+// กราฟเส้น: Order Status 30 วันล่าสุด (1 เดือน)
 $days = [];
 $order_data = [];
 foreach ($order_statuses as $status => $th_label) {
   $order_data[$status] = [];
 }
-for($i=6;$i>=0;$i--) {
+for($i=29;$i>=0;$i--) {
   $date = date('Y-m-d', strtotime("-$i days"));
   $days[] = thai_date_short($date);
   foreach ($order_statuses as $status => $th_label) {
@@ -292,7 +292,7 @@ $status_labels = [
     <!-- Monthly Order Status -->
     <div class="col-md-8 mb-4">
       <div class="card">
-        <div class="card-header"><strong>Monthly Order Status</strong></div>
+        <div class="card-header"><strong>Order Status - 30 วันล่าสุด (1 เดือน)</strong></div>
         <div class="card-body">
           <div class="chart-container">
             <canvas id="monthlyOrderChart"></canvas>
