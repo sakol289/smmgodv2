@@ -168,6 +168,8 @@
                         echo "<!-- DEBUG: File exists: " . (file_exists($fn) ? 'YES' : 'NO') . " -->\n";
                         echo "<!-- DEBUG: File readable: " . (is_readable($fn) ? 'YES' : 'NO') . " -->\n";
                         
+                        $fn = "core/temp/client/" . $theme["theme_dirname"] . "/" . $lyt;
+                        echo "<!-- DEBUG: \$fn = $fn -->\n";
                         if (!file_exists($fn)) {
                             echo "<!-- DEBUG ERROR: File does not exist! -->\n";
                             $text = "<!-- File not found: " . $fn . " -->";
