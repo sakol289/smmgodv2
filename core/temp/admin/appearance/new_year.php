@@ -558,7 +558,7 @@
 					}
 				</style>
 
-				<div class="new_year">
+				<div class="">
 
 
 
