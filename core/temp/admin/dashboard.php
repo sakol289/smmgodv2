@@ -180,15 +180,15 @@ $order_statuses = [
   'canceled' => 'ยกเลิก'
 ];
 
-// กราฟเส้น: Order Status 30 วันล่าสุด (1 เดือน)
+// กราฟเส้น: Order Status เดือนปัจจุบัน
 $days = [];
 $order_data = [];
 foreach ($order_statuses as $status => $th_label) {
   $order_data[$status] = [];
 }
-for($i=29;$i>=0;$i--) {
-  $date = date('Y-m-d', strtotime("-$i days"));
-  $days[] = thai_date_short($date);
+for($day=1;$day<=$current_month_days;$day++) {
+  $date = sprintf('%s-%02d', $current_month, $day);
+  $days[] = $day; // ใช้เลขวันที่แทน
   foreach ($order_statuses as $status => $th_label) {
     $count = $conn->query("SELECT COUNT(*) FROM orders WHERE order_status='$status' AND DATE(order_create) = '$date'")->fetchColumn();
     $order_data[$status][] = intval($count);
@@ -304,7 +304,7 @@ $status_labels = [
     <!-- Monthly Order Status -->
     <div class="col-md-8 mb-4">
       <div class="card">
-        <div class="card-header"><strong>Order Status - 30 วันล่าสุด (1 เดือน)</strong></div>
+        <div class="card-header"><strong>Order Status - เดือนปัจจุบัน (<?=date('F Y')?>)</strong></div>
         <div class="card-body">
           <div class="chart-container">
             <canvas id="monthlyOrderChart"></canvas>
@@ -414,7 +414,7 @@ $status_labels = [
       return;
     }
     document.addEventListener('DOMContentLoaded', function() {
-      // Monthly Order Status Chart (7 วันล่าสุด)
+      // Monthly Order Status Chart (เดือนปัจจุบัน)
       var monthlyOrderCtx = document.getElementById('monthlyOrderChart').getContext('2d');
       new Chart(monthlyOrderCtx, {
         type: 'line',
@@ -430,10 +430,30 @@ $status_labels = [
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          scales: { y: { beginAtZero: true } },
+          scales: { 
+            y: { 
+              beginAtZero: true,
+              ticks: { font: { size: 12 } }
+            },
+            x: {
+              ticks: { 
+                font: { size: 12 },
+                maxTicksLimit: 31
+              }
+            }
+          },
           plugins: {
-            legend: { position: 'top' },
-            tooltip: { mode: 'index', intersect: false }
+            legend: { 
+              position: 'top',
+              labels: { font: { size: 14 } }
+            },
+            tooltip: { 
+              mode: 'index', 
+              intersect: false,
+              callbacks: {
+                title: context => 'วันที่ ' + context[0].label + ' ' + '<?=date('F Y')?>'
+              }
+            }
           }
         }
       });
