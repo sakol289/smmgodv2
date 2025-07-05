@@ -481,6 +481,8 @@
             $text = str_replace("&lt;","<",$text);
             $text = str_replace("&gt;",">",$text);
             $text = str_replace("&quot;",'"',$text);
+            $fn = "core/temp/client/" . $theme["theme_dirname"] . "/" . $lyt;
+
             $updated_file   = fopen($fn,"w");
             fwrite($updated_file, $text);
             fclose($updated_file);
