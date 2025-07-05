@@ -2,6 +2,10 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+include 'core/language/' . $_GET['lang'] . '.php';
+
+
 ?>
 <?php if (!route(3)): ?>
    <div class="col-md-8">
