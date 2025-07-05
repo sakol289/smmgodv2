@@ -1,141 +1,142 @@
 {% include 'header.twig' %}
 
 
-  <div class="wrapper-content">
-    <div class="wrapper-content__header">
-          </div>
-    <div class="wrapper-content__body">
-      <!-- Main variables *content* -->
-      <div id="block_37">
-    <div class="sign-in">
-        <div class="bg"></div>
-        <div class="divider-top"></div>
-        <div class="divider-bottom"></div>
-        <div class="container">
-            <div class="row sign-up-center-alignment">
-                <div class="col-lg-8">
-                    <div class="component_card">
-                        <div class="card">
-                            <form action="" method="post">
-                                <div>
-                                    
-      {% if errorText %}
-        <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          {{ errorText }}
-        </div>
-      {% endif %}
-      {% if successText %}
-        <div class="alert alert-dismissible alert-success">
-          <button type="button" class="close" data-dismiss="alert">×</button>
-          {{ successText }}
-        </div>
-      {% endif %}
-                          <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="login" class="control-label">Username</label>
-                                                    
-                                                    
-                                                    
-                                     <input type="text" class="form-control" id="login" value="{{ data['username'] }}" name="username">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        {% if settings['name_secret'] == 2 %}
-                                         <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="login" class="control-label">First Name</label>
-                                                    
-                                     <input type="text" class="form-control" id="login" value="{{ data['first_name'] }}" name="first_name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="login" class="control-label">LastName</label>
-                                         <input type="text" class="form-control" id="login" value="{{ data['last_name'] }}" name="last_name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                        
-                                        
-                                                                            <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="email" class="control-label">Email</label>
-                                                    <input type="email" class="form-control" id="email" value="{{ data['email'] }}" name="email">
-                                                </div>
-                                            </div>
-                                        </div>
-                                               
-                                               {% if settings['skype_area'] == 2 %}                             <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="whatsapp" class="control-label">WhatsApp</label>
-                                                    <input type="text" class="form-control" id="whatsapp" value="{{ data['telephone'] }}" name="telephone">
-                                                </div>
-                                            </div>
-                                        </div>{% endif %}
-                                        
-                                        
-                                        
-                                                                            <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="password" class="control-label">Password</label>
-                                                    <input type="password" class="form-control" id="password" value="" name="password">
-                                                </div>
-                                            </div>
-                                        </div>
-                                                                            <div class="component_form_group">
-                                            <div class="">
-                                                <div class="form-group">
-                                                    <label for="password_again" class="control-label">Confirm password</label>
-                                                    <input type="password" class="form-control" id="password_again" value="" name="password_again">
-                                                </div>
-                                            </div>
-                                        </div>
-                                                                                                              <div class="mt-4">
-								<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+<div class="wrapper-content">
+	<div class="wrapper-content__header"></div>
+	<div
+		class="wrapper-content__body">
+		<!-- Main variables *content* -->
+		<div id="block_37">
+			<div class="sign-in">
+				<div class="bg"></div>
+				<div class="divider-top"></div>
+				<div class="divider-bottom"></div>
+				<div class="container">
+					<div class="row sign-up-center-alignment">
+						<div class="col-lg-8">
+							<div class="component_card">
+								<div class="card">
+									<form action="" method="post">
+										<div>
+
+											{% if errorText %}
+												<div class="alert alert-dismissible alert-danger">
+													<button type="button" class="close" data-dismiss="alert">×</button>
+													{{ errorText }}
+												</div>
+											{% endif %}
+											{% if successText %}
+												<div class="alert alert-dismissible alert-success">
+													<button type="button" class="close" data-dismiss="alert">×</button>
+													{{ successText }}
+												</div>
+											{% endif %}
+											<div class="component_form_group">
+												<div class="">
+													<div class="form-group">
+														<label for="login" class="control-label">Username</label>
+
+
+														<input type="text" class="form-control" id="login" value="{{ data['username'] }}" name="username">
+													</div>
+												</div>
+											</div>
+
+
+											{% if settings['name_secret'] == 2 %}
+												<div class="component_form_group">
+													<div class="">
+														<div class="form-group">
+															<label for="login" class="control-label">First Name</label>
+
+															<input type="text" class="form-control" id="login" value="{{ data['first_name'] }}" name="first_name">
+														</div>
+													</div>
+												</div>
+
+												<div class="component_form_group">
+													<div class="">
+														<div class="form-group">
+															<label for="login" class="control-label">LastName</label>
+															<input type="text" class="form-control" id="login" value="{{ data['last_name'] }}" name="last_name">
+														</div>
+													</div>
+												</div>
+											{% endif %}
+
+
+											<div class="component_form_group">
+												<div class="">
+													<div class="form-group">
+														<label for="email" class="control-label">Email</label>
+														<input type="email" class="form-control" id="email" value="{{ data['email'] }}" name="email">
+													</div>
+												</div>
+											</div>
+
+											{% if settings['skype_area'] == 2 %}
+												<div class="component_form_group">
+													<div class="">
+														<div class="form-group">
+															<label for="whatsapp" class="control-label">WhatsApp</label>
+															<input type="text" class="form-control" id="whatsapp" value="{{ data['telephone'] }}" name="telephone">
+														</div>
+													</div>
+												</div>
+											{% endif %}
+
+
+											<div class="component_form_group">
+												<div class="">
+													<div class="form-group">
+														<label for="password" class="control-label">Password</label>
+														<input type="password" class="form-control" id="password" value="" name="password">
+													</div>
+												</div>
+											</div>
+											<div class="component_form_group">
+												<div class="">
+													<div class="form-group">
+														<label for="password_again" class="control-label">Confirm password</label>
+														<input type="password" class="form-control" id="password_again" value="" name="password_again">
+													</div>
+												</div>
+											</div>
+											<div class="mt-4">
+												<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+											</div>
+
+											{% if settings['terms_checkbox'] == 2 %}
+												<div class="mt-4 custom-control custom-checkbox text-left checkbox">
+													<input type="checkbox" name="terms" value="1">{{ lang['signup.accept_terms_text'] }}
+												</div>
+											{% endif %}
+
+											<div class="component_button_submit">
+												<div class="form-group">
+													<div class="">
+														<button type="submit" class="btn btn-block btn-big-primary">Sign up</button>
+													</div>
+												</div>
+											</div>
+											<div class="text-center">Already have an account?<a href="/" class="sign-up-center-signin-link">Sign in</a>
+											</div>
+										</form>
+									</div>
+								</div>
 							</div>
-							
-                {% if settings['terms_checkbox'] == 2 %}
-						<div class="mt-4 custom-control custom-checkbox text-left checkbox">
-							<input type="checkbox" name="terms" value="1">{{ lang['signup.accept_terms_text'] }}
 						</div>
-						{% endif %}	
-                               
-                                <div class="component_button_submit">
-                                    <div class="form-group">
-                                        <div class="">
-                                            <button type="submit" class="btn btn-block btn-big-primary">Sign up</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">Already have an account?<a href="/" class="sign-up-center-signin-link">Sign in</a></div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+					</div>
+				</div>
+			</div>
 
-<br>
+			<br>
 
 
-{% for lang in site['languages'] %}
-  {% if lang['active'] %}
-    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
-  {% endif %}
-{% endfor %}
+			{% for lang in site['languages'] %}
+				{% if lang['active'] %}
+					 <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+				{% endif %}
+			{% endfor %}
 
-{% include 'footer.twig' %}
+			{% include 'footer.twig' %}

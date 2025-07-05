@@ -178,7 +178,7 @@
         </style>
         
     <div class="fixed-footer">
-            <h4 style="color:#000">Choose Theme: 
+            <h4 style="color:#000">{{ lang['demo.choose_theme'] ?? 'Choose Theme' }}: 
                 
                    {% for thm in site['themes'] %}
 <a href="/select-theme/{{thm['dirname']}}" style="color:blue;margin:0 10px;font-size:16px">[ {{thm['name']}} ]</a>
@@ -534,6 +534,14 @@
                                 </button>
                             </div>
 
+                        {% elseif custom_lang == "th" %}
+                        
+                            <div class="col-auto">
+                                <button class="btn ahbtn bs-2" onclick="changeLang('en')">
+                                    <img src="https://cdn.discordapp.com/attachments/713221384402108527/965260232211189900/unknown.png" width="60%"> 
+                                </button>
+                            </div>
+
                         {% else %}
                         
                             <div class="col-auto">
@@ -570,7 +578,7 @@
                         </li>
                         <li class="ms-0 ms-lg-5">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#login" class="menu-link">
-                                <div class="mb-text">sign in</div>
+                                <div class="mb-text">{{ lang['signin.title'] }}</div>
                             </a>
                         </li>
                       {% endif %}
