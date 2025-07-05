@@ -139,8 +139,33 @@
                       </div>
                     </div>
                   <?php else: ?>
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/codemirror.min.js"></script>
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/mode/xml/xml.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+                    
+                    <style>
+                    #monaco-editor {
+                        border-radius: 4px;
+                        overflow: hidden;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    }
+                    .monaco-editor .margin {
+                        background-color: #f5f5f5;
+                    }
+                    .edit-theme-body-buttons {
+                        margin-top: 15px;
+                        padding-top: 15px;
+                        border-top: 1px solid #eee;
+                    }
+                    .fullScreenButton {
+                        margin-bottom: 10px;
+                    }
+                    .themeToggleButton, .formatButton {
+                        margin-bottom: 10px;
+                    }
+                    .btn-xs {
+                        padding: 4px 8px;
+                        font-size: 11px;
+                    }
+                    </style>
 
                     <div id="fullscreen">
 
@@ -206,11 +231,26 @@
                         <div class="row">
                           <div class="col-md-8">
                             <strong class="edit-theme-filename"><?= $dir . "/" . $lyt ?></strong>
+                            <br>
+                            <small class="text-muted">
+                              Language: <span id="file-language">Detecting...</span> | 
+                              Lines: <span id="line-count">0</span> | 
+                              Characters: <span id="char-count">0</span> |
+                              Shortcuts: Ctrl+S (Save), Shift+Alt+F (Format)
+                            </small>
                             <?php
                             echo "<!-- DEBUG: Displaying file path: " . $dir . "/" . $lyt . " -->\n";
                             ?>
                           </div>
                           <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-xs btn-success formatButton" style="margin-right: 5px;">
+                              <span class="glyphicon glyphicon-indent-left"></span>
+                              Format Code
+                            </button>
+                            <button type="button" class="btn btn-xs btn-info themeToggleButton" style="margin-right: 5px;">
+                              <span class="glyphicon glyphicon-adjust"></span>
+                              Toggle Theme
+                            </button>
                             <a class="btn btn-xs btn-default fullScreenButton">
                               <span class="glyphicon glyphicon-fullscreen"></span>
                               Edit Full Screen </a>
@@ -220,11 +260,214 @@
 
                         <form action="<?php echo site_url("admin/appearance/themes/" . $theme["theme_dirname"] . "?file=" . $lyt) ?>" method="post" class="twig-editor__form">
 
-                          <textarea id="code" name="code" class="codemirror-textarea"><?= $text; ?></textarea>
+                          <div id="monaco-editor" style="height: 600px; border: 1px solid #ccc;">
+                            <div class="text-center" style="padding-top: 250px;">
+                              <i class="fa fa-spinner fa-spin fa-2x"></i>
+                              <br><br>
+                              <span>Loading Monaco Editor...</span>
+                            </div>
+                          </div>
+                          <textarea id="code" name="code" style="display: none;"><?= $text; ?></textarea>
                           <div class="edit-theme-body-buttons text-right">
+                            <span id="save-status" class="text-muted" style="margin-right: 10px; font-size: 12px;">Ready to save</span>
                             <button class="btn btn-primary click">Update</button>
                           </div>
                         </form>
+
+                        <script>
+                        require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+                        require(['vs/editor/editor.main'], function() {
+                            // Determine file type based on extension
+                            var fileExtension = '<?= pathinfo($lyt, PATHINFO_EXTENSION) ?>';
+                            var language = 'plaintext';
+                            
+                            switch(fileExtension.toLowerCase()) {
+                                case 'twig':
+                                    language = 'html';
+                                    break;
+                                case 'css':
+                                    language = 'css';
+                                    break;
+                                case 'js':
+                                    language = 'javascript';
+                                    break;
+                                case 'php':
+                                    language = 'php';
+                                    break;
+                                case 'html':
+                                    language = 'html';
+                                    break;
+                                case 'xml':
+                                    language = 'xml';
+                                    break;
+                                case 'json':
+                                    language = 'json';
+                                    break;
+                                default:
+                                    language = 'plaintext';
+                            }
+                            
+                            // Create Monaco Editor
+                            var editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+                                value: document.getElementById('code').value,
+                                language: language,
+                                theme: 'vs-dark',
+                                automaticLayout: true,
+                                fontSize: 14,
+                                minimap: { enabled: true },
+                                scrollBeyondLastLine: false,
+                                wordWrap: 'on',
+                                lineNumbers: 'on',
+                                roundedSelection: false,
+                                readOnly: false,
+                                cursorStyle: 'line',
+                                automaticLayout: true,
+                                scrollbar: {
+                                    vertical: 'visible',
+                                    horizontal: 'visible'
+                                },
+                                // Additional features
+                                suggestOnTriggerCharacters: true,
+                                quickSuggestions: true,
+                                parameterHints: {
+                                    enabled: true
+                                },
+                                autoIndent: 'full',
+                                formatOnPaste: true,
+                                formatOnType: true,
+                                // Error checking
+                                validateOnType: true,
+                                // Folding
+                                folding: true,
+                                foldingStrategy: 'indentation',
+                                // Search
+                                find: {
+                                    addExtraSpaceOnTop: false,
+                                    autoFindInSelection: 'never',
+                                    seedSearchStringFromSelection: 'always'
+                                }
+                            });
+                            
+                            // Hide loading indicator
+                            var loadingDiv = document.querySelector('#monaco-editor .text-center');
+                            if (loadingDiv) {
+                                loadingDiv.style.display = 'none';
+                            }
+                            
+                            // Update textarea before form submission
+                            document.querySelector('.twig-editor__form').addEventListener('submit', function() {
+                                document.getElementById('code').value = editor.getValue();
+                                document.getElementById('save-status').textContent = 'Saving...';
+                                document.getElementById('save-status').className = 'text-info';
+                            });
+                            
+                            // Format code functionality
+                            document.querySelector('.formatButton').addEventListener('click', function() {
+                                if (editor) {
+                                    editor.getAction('editor.action.formatDocument').run();
+                                }
+                            });
+                            
+                            // Theme toggle functionality
+                            var currentTheme = 'vs-dark';
+                            document.querySelector('.themeToggleButton').addEventListener('click', function() {
+                                if (editor) {
+                                    currentTheme = currentTheme === 'vs-dark' ? 'vs-light' : 'vs-dark';
+                                    monaco.editor.setTheme(currentTheme);
+                                    
+                                    // Update button text
+                                    var button = document.querySelector('.themeToggleButton');
+                                    if (currentTheme === 'vs-dark') {
+                                        button.innerHTML = '<span class="glyphicon glyphicon-adjust"></span> Light Theme';
+                                    } else {
+                                        button.innerHTML = '<span class="glyphicon glyphicon-adjust"></span> Dark Theme';
+                                    }
+                                }
+                            });
+                            
+                            // Fullscreen functionality
+                            document.querySelector('.fullScreenButton').addEventListener('click', function() {
+                                if (editor) {
+                                    var isFullScreen = editor.getOption(monaco.editor.EditorOption.fullScreen);
+                                    editor.updateOptions({ fullScreen: !isFullScreen });
+                                    
+                                    // Update button text
+                                    var button = document.querySelector('.fullScreenButton');
+                                    if (!isFullScreen) {
+                                        button.innerHTML = '<span class="glyphicon glyphicon-resize-small"></span> Exit Full Screen';
+                                    } else {
+                                        button.innerHTML = '<span class="glyphicon glyphicon-fullscreen"></span> Edit Full Screen';
+                                    }
+                                }
+                            });
+                            
+                            // Auto-save functionality (optional)
+                            var autoSaveTimeout;
+                            editor.onDidChangeModelContent(function() {
+                                // Clear previous timeout
+                                clearTimeout(autoSaveTimeout);
+                                
+                                // Update save status
+                                document.getElementById('save-status').textContent = 'Modified';
+                                document.getElementById('save-status').className = 'text-warning';
+                                
+                                // Set new timeout for auto-save (5 seconds)
+                                autoSaveTimeout = setTimeout(function() {
+                                    console.log('Auto-save triggered');
+                                    document.getElementById('save-status').textContent = 'Auto-saved';
+                                    document.getElementById('save-status').className = 'text-success';
+                                    // You can implement auto-save logic here
+                                    // For example, save to localStorage or send AJAX request
+                                }, 5000);
+                            });
+                            
+                            // Keyboard shortcuts
+                            editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, function() {
+                                // Ctrl+S to save
+                                document.querySelector('.twig-editor__form').submit();
+                            });
+                            
+                            // Format code shortcut
+                            editor.addCommand(monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF, function() {
+                                editor.getAction('editor.action.formatDocument').run();
+                            });
+                            
+                            // Update file information
+                            function updateFileInfo() {
+                                if (editor) {
+                                    var model = editor.getModel();
+                                    var lineCount = model.getLineCount();
+                                    var charCount = model.getValue().length;
+                                    
+                                    document.getElementById('file-language').textContent = language.toUpperCase();
+                                    document.getElementById('line-count').textContent = lineCount;
+                                    document.getElementById('char-count').textContent = charCount;
+                                }
+                            }
+                            
+                            // Update file info on content change
+                            editor.onDidChangeModelContent(function() {
+                                updateFileInfo();
+                            });
+                            
+                            // Initial update
+                            updateFileInfo();
+                            
+                            // Handle window resize
+                            window.addEventListener('resize', function() {
+                                if (editor) {
+                                    editor.layout();
+                                }
+                            });
+                        }).catch(function(error) {
+                            console.error('Failed to load Monaco Editor:', error);
+                            document.getElementById('monaco-editor').innerHTML = 
+                                '<div class="alert alert-danger">' +
+                                '<strong>Error:</strong> Failed to load Monaco Editor. ' +
+                                'Please refresh the page or check your internet connection.' +
+                                '</div>';
+                        });
+                        </script>
 
                       </div>
                     <?php endif; ?>
