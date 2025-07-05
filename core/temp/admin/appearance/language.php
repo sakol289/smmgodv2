@@ -146,12 +146,16 @@ error_reporting(E_ALL);
                   </select>
                </div>
                <hr>
-               <?php foreach ($languageArray as $key => $val): ?>
-                  <div class="form-group">
-                     <label class="control-label"><?php echo $key; ?></label>
-                     <input type="text" class="form-control" name="Language[<?php echo $key; ?>]" value="<?php echo $val; ?>">
-                  </div>
-               <?php endforeach; ?>
+               <?php if (isset($languageArray) && is_array($languageArray)): ?>
+                  <?php foreach ($languageArray as $key => $val): ?>
+                     <div class="form-group">
+                        <label class="control-label"><?php echo $key; ?></label>
+                        <input type="text" class="form-control" name="Language[<?php echo $key; ?>]" value="<?php echo $val; ?>">
+                     </div>
+                  <?php endforeach; ?>
+               <?php else: ?>
+                  <div class="alert alert-warning">No language data available. Please check the language file.</div>
+               <?php endif; ?>
             </div>
             <div class="language-editor__container-footer">
                <div class="row">
@@ -209,15 +213,26 @@ error_reporting(E_ALL);
                </div>
                <hr>
                <div id="myUL">
-                  <?php include 'core/language/' . route(3) . '.php'; ?>
-                  <?php foreach ($languageArray as $key => $val): ?>
-                     <eg><a>
-                           <div class="form-group">
-                              <label class="control-label"><?php echo $key; ?></label>
-                              <input type="text" class="form-control" name="Language[<?php echo $key; ?>]" value="<?php echo $val; ?>">
-                           </div>
-                        </a></eg>
-                  <?php endforeach; ?>
+                  <?php 
+                  $languageFile = 'core/language/' . route(3) . '.php';
+                  if (file_exists($languageFile)) {
+                    include $languageFile;
+                  } else {
+                    $languageArray = array();
+                  }
+                  ?>
+                  <?php if (isset($languageArray) && is_array($languageArray)): ?>
+                     <?php foreach ($languageArray as $key => $val): ?>
+                        <eg><a>
+                              <div class="form-group">
+                                 <label class="control-label"><?php echo $key; ?></label>
+                                 <input type="text" class="form-control" name="Language[<?php echo $key; ?>]" value="<?php echo $val; ?>">
+                              </div>
+                           </a></eg>
+                     <?php endforeach; ?>
+                  <?php else: ?>
+                     <div class="alert alert-warning">No language data available. Please check the language file.</div>
+                  <?php endif; ?>
                </div>
          </div>
          <div class="language-editor__container-footer">

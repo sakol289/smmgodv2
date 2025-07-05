@@ -596,13 +596,21 @@ elseif (route(2) == "language"):
     if (route(3) && route(3) != "new" && !countRow(["table" => "languages", "where" => ["language_code" => route(3)]])):
       header("Location:" . site_url("admin/appearance/language"));
     elseif (route(3) == "new"):
-      include 'language/default.php';
+      include 'core/language/default.php';
     else:
       if (route(3)) {
         $language = $conn->prepare("SELECT * FROM languages WHERE language_code=:code");
         $language->execute(array("code" => route(3)));
         $language = $language->fetch(PDO::FETCH_ASSOC);
-        include 'language/' . route(3) . '.php';
+        
+        // Check if language file exists and include it
+        $languageFile = 'core/language/' . route(3) . '.php';
+        if (file_exists($languageFile)) {
+          include $languageFile;
+        } else {
+          // If file doesn't exist, set default empty array
+          $languageArray = array();
+        }
       }
     endif;
     if ($_POST && route(3) != "new" && countRow(["table" => "languages", "where" => ["language_code" => route(3)]])):
@@ -621,7 +629,13 @@ elseif (route(2) == "language"):
         $html .= ' "' . $key . '" => "' . $value . '", ' . PHP_EOL;
       endforeach;
       $html .=  '];';
-      file_put_contents('language/' . route(3) . '.php', $html);
+      $languageFile = 'core/language/' . route(3) . '.php';
+      if (file_exists($languageFile)) {
+        include $languageFile;
+      } else {
+        $languageArray = array();
+      }
+      file_put_contents('core/language/' . route(3) . '.php', $html);
       header("Location:" . site_url("admin/appearance/language/" . route(3)));
     elseif (route(3) == "new" && $_POST):
       $name = $_POST["language"];
@@ -641,7 +655,13 @@ elseif (route(2) == "language"):
             $html .= ' "' . $key . '" => "' . $value . '", ' . PHP_EOL;
           endforeach;
           $html .=  '];';
-          file_put_contents('language/' . $code . '.php', $html);
+          $languageFile = 'core/language/' . $code . '.php';
+          if (file_exists($languageFile)) {
+            include $languageFile;
+          } else {
+            $languageArray = array();
+          }
+          file_put_contents('core/language/' . $code . '.php', $html);
           header("Location:" . site_url("admin/appearance/language/"));
         endif;
       endif;
