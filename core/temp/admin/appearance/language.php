@@ -3,7 +3,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include 'core/language/' . $_GET['lang'] . '.php';
 
 
 ?>
@@ -210,6 +209,7 @@ include 'core/language/' . $_GET['lang'] . '.php';
                </div>
                <hr>
                <div id="myUL">
+                  <?php include 'core/language/' . route(3) . '.php'; ?>
                   <?php foreach ($languageArray as $key => $val): ?>
                      <eg><a>
                            <div class="form-group">
