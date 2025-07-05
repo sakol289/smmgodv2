@@ -141,6 +141,18 @@ for($i=11;$i>=0;$i--) {
     $monthly_data[] = floatval($sum);
 }
 
+// รายได้รายวันในเดือนปัจจุบัน
+$current_month = date('Y-m');
+$current_month_days = date('t'); // จำนวนวันในเดือนปัจจุบัน
+$daily_revenue_labels = [];
+$daily_revenue_data = [];
+for($day=1;$day<=$current_month_days;$day++) {
+    $date = sprintf('%s-%02d', $current_month, $day);
+    $daily_revenue_labels[] = $day;
+    $sum = $conn->query("SELECT SUM(payment_amount) FROM payments WHERE payment_status='3' AND DATE(payment_create_date) = '$date'")->fetchColumn();
+    $daily_revenue_data[] = floatval($sum);
+}
+
 // ฟังก์ชันแปลงวันที่เป็นไทยแบบสั้น
 function thai_date_short($date) {
   $thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
@@ -323,6 +335,16 @@ $status_labels = [
     </div>
   </div>
 
+  <!-- Daily Revenue (Line Chart) -->
+  <div class="card mb-4">
+    <div class="card-header"><strong>รายได้รายวันในเดือนปัจจุบัน (<?=date('F Y')?>)</strong></div>
+    <div class="card-body">
+      <div class="chart-container">
+        <canvas id="dailyRevenueChart"></canvas>
+      </div>
+    </div>
+  </div>
+
   <!-- Top 5 Services -->
   <div class="card mb-4">
     <div class="card-header"><strong>Top 5 Best-Selling Services</strong></div>
@@ -482,6 +504,57 @@ $status_labels = [
             tooltip: {
               callbacks: {
                 label: context => context.dataset.label + ': ฿' + context.parsed.y
+              }
+            }
+          }
+        }
+      });
+
+      // Daily Revenue Chart (รายได้รายวันในเดือนปัจจุบัน)
+      var dailyRevenueCtx = document.getElementById('dailyRevenueChart').getContext('2d');
+      new Chart(dailyRevenueCtx, {
+        type: 'bar',
+        data: {
+          labels: <?=json_encode($daily_revenue_labels)?>,
+          datasets: [
+            {
+              label: 'รายได้รายวัน',
+              data: <?=json_encode($daily_revenue_data)?>,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16, 185, 129, 0.2)',
+              borderWidth: 2,
+              borderRadius: 4,
+              borderSkipped: false,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { 
+                callback: value => '฿' + value.toLocaleString(),
+                font: { size: 12 }
+              }
+            },
+            x: {
+              ticks: { 
+                font: { size: 12 },
+                maxTicksLimit: 31
+              }
+            }
+          },
+          plugins: {
+            legend: { 
+              position: 'top',
+              labels: { font: { size: 14 } }
+            },
+            tooltip: {
+              callbacks: {
+                title: context => 'วันที่ ' + context[0].label,
+                label: context => 'รายได้: ฿' + context.parsed.y.toLocaleString()
               }
             }
           }
