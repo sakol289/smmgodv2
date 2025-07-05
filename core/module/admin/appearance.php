@@ -12,6 +12,7 @@ if ($_SESSION["client"]["data"]):
   unset($_SESSION["client"]);
 endif;
 
+$menuList = ["Pages" => "pages", "News" => "news", "Blog" => "blog", "Menu" => "menu", "Themes" => "themes", "Language" => "language", "Files" => "files", "New Year" => "new_year"];
 
 if (!array_search(route(2), $menuList)):
   header("Location:" . site_url("admin/appearance"));
@@ -898,7 +899,7 @@ elseif (route(2) == "files"):
 
 
   if (route(2) == "new_year"):
-    $access = $admin["access"]["pages"];
+    $access = $user["access"]["themes"];
 
     if ($access):
       if ($_POST):
