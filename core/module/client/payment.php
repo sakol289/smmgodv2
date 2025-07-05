@@ -2357,7 +2357,7 @@ elseif ($method_name == "paymentv2"):
                     unset($_SESSION['cybersafepayment']);
                     unset($_SESSION['cybersafepayment_privatecode']);
                     // echo "[ERROR] Duplicate slip<br>";
-                    header("Location: /paymentv2/status.php?date=$date&?error=Duplicate slip.");
+                    header("Location: /paymentv2/status.php?date=$date&error=Duplicate slip.");
                 }
             } else {
                 unset($_SESSION['cybersafepayment']);
@@ -2365,13 +2365,13 @@ elseif ($method_name == "paymentv2"):
                 // echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
                 $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                 $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
-                header("Location: /paymentv2/status.php?date=$date&?error=โอนเงินไม่ตรงเวลาที่กำหนด");
+                header("Location: /paymentv2/status.php?date=$date&error=โอนเงินไม่ตรงเวลาที่กำหนด");
             }
         } else {
             unset($_SESSION['cybersafepayment']);
             unset($_SESSION['cybersafepayment_privatecode']);
             // echo "[ERROR] status : error angpao";
-            header("Location: /paymentv2/status.php?date=$date&?error=error angpao");
+            header("Location: /paymentv2/status.php?date=$date&error=error angpao");
 
         }
     } else if ($_POST["paymentType"] == "qr") {
@@ -2534,20 +2534,20 @@ elseif ($method_name == "paymentv2"):
                                 // echo "[SUCCESS] Payment success and committed.<br>";
                                 unset($_SESSION['cybersafepayment']);
                                 unset($_SESSION['cybersafepayment_privatecode']);
-                                header("Location: /paymentv2/status.php?date=$date&?status=success&amount=$amount");
+                                header("Location: /paymentv2/status.php?date=$date&status=success&amount=$amount");
                             } else {
                                 $conn->rollBack();
                                 unset($_SESSION['cybersafepayment']);
                                 unset($_SESSION['cybersafepayment_privatecode']);
                                 // echo "[FAIL] Database error, transaction rolled back.<br>";
-                            header("Location: /paymentv2/status.php?date=$date&?error=Database error, transaction rolled back.");
+                            header("Location: /paymentv2/status.php?date=$date&error=Database error, transaction rolled back.");
 
                             }
                         } else {
                             unset($_SESSION['cybersafepayment']);
                             unset($_SESSION['cybersafepayment_privatecode']);
                             // echo "[ERROR] Duplicate slip<br>";
-                            header("Location: /paymentv2/status.php?date=$date&?error=Duplicate slip.");
+                            header("Location: /paymentv2/status.php?date=$date&error=Duplicate slip.");
                         }
                     } else {
                         unset($_SESSION['cybersafepayment']);
@@ -2561,19 +2561,19 @@ elseif ($method_name == "paymentv2"):
                     unset($_SESSION['cybersafepayment']);
                     unset($_SESSION['cybersafepayment_privatecode']);
                     // echo "[ERROR] Proxy does not match account bank.<br>";
-                    header("Location: /paymentv2/status.php?date=$date&?error=สลิปไม่ตรงกับบัญชีในระบบ");
+                    header("Location: /paymentv2/status.php?date=$date&error=สลิปไม่ตรงกับบัญชีในระบบ");
                 }
             } else {
                 unset($_SESSION['cybersafepayment']);
                 unset($_SESSION['cybersafepayment_privatecode']);
                 // echo "[ERROR] Invalid or empty response from API.<br>";
-                header("Location: /paymentv2/status.php?date=$date&?error=Invalid response from payment gateway.");
+                header("Location: /paymentv2/status.php?date=$date&error=Invalid response from payment gateway.");
                 exit;
             }
         }
     } else {
         // echo "paymentType noy found";
-        header("Location: /paymentv2/status.php?date=$date&?error=paymentType noy found.");
+        header("Location: /paymentv2/status.php?date=$date&error=paymentType noy found.");
     }
 
 
