@@ -65,117 +65,121 @@
 									<h4>Create an account</h4>
 									<small>Create an account by fill up this form.</small>
 
-									           	 {% if errorText %}
-								<div class="alert alert-dismissible alert-danger">
-								  {{ errorText }}
-								</div>
-							  {% endif %}
-							  {% if successText %}
-								<div class="alert alert-dismissible alert-success">
-								  {{ successText }}
-								</div>
-							  {% endif %}								<form action="/signup" method="post">
-									<div class="login-form mt-5 py-3">
+									{% if errorText %}
+										<div class="alert alert-dismissible alert-danger">
+											{{ errorText }}
+										</div>
+									{% endif %}
+									{% if successText %}
+										<div class="alert alert-dismissible alert-success">
+											{{ successText }}
+										</div>
+									{% endif %}
+									<form action="/signup" method="post">
+										<div class="login-form mt-5 py-3">
 
-											
+
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-user"></i>
+												</div>
+
+
+												<input type="text" class="fg-control" id="login" value="" name="username" placeholder="Username">
+											</div>
+
+
+											<!-- start -->
+
+											{% if settings['name_secret'] == 2 %}
+
+
 												<div class="fg fg-light mb-4">
 													<div class="fg-icon">
-																													<i class="far fa-user"></i>
-																											</div>
-																											
-																										
-													<input type="text" class="fg-control" id="login" value="" name="username" placeholder="Username">
+														<i class="far fa-user"></i>
+													</div>
+													<input type="text" class="fg-control" id="firstname" value="{{ data['first_name'] }}" name="first_name" placeholder="First Name">
 												</div>
-											
-											
-											
-											
-											<!-- start -->
-											
-											 {% if settings['name_secret'] == 2 %}
-										
-										
-										<div class="fg fg-light mb-4">
-                                                <div class="fg-icon"><i class="far fa-user"></i></div>
-                                                <input type="text" class="fg-control" id="firstname" value="{{ data['first_name'] }}" name="first_name" placeholder="First Name">
-                                            </div>
-                                            
-                                            <div class="fg fg-light mb-4">
-                                                <div class="fg-icon"><i class="far fa-user"></i></div>
-                                                <input type="text" class="fg-control" id="lastname" value="{{ data['last_name'] }}" name="last_name" placeholder="Last Name">
-                                            </div>							
-                                            
-                                         
-                                            
-                                            {% endif %}
-											
-											<!-- start -->
-											
-												{% if settings['skype_area'] == 2 %}
+
 												<div class="fg fg-light mb-4">
 													<div class="fg-icon">
-																												<!--	<i class="far fa-envelope"></i> -->
-																													<i class="far fa-phone"></i>
-																											</div>
-																			
-																		<input type="text" class="fg-control" id="email" value="{{ data['telephone'] }}" name="telephone" placeholder="WhatsApp Number">										
-													
+														<i class="far fa-user"></i>
+													</div>
+													<input type="text" class="fg-control" id="lastname" value="{{ data['last_name'] }}" name="last_name" placeholder="Last Name">
 												</div>
-												{% endif %}
-											
-											
-											
+
+
+											{% endif %}
+
+											<!-- start -->
+
+											{% if settings['skype_area'] == 2 %}
+												<div class="fg fg-light mb-4">
+													<div
+														class="fg-icon">
+														<!--	<i class="far fa-envelope"></i> -->
+														<i class="far fa-phone"></i>
+													</div>
+
+													<input type="text" class="fg-control" id="email" value="{{ data['telephone'] }}" name="telephone" placeholder="WhatsApp Number">
+
+												</div>
+											{% endif %}
+
+
 											<!-- end -->
-											
-												<div class="fg fg-light mb-4">
-													<div class="fg-icon">
-																													<i class="far fa-envelope"></i>
-																											</div>
-																			
-																		<input type="email" class="fg-control" id="email" value="{{ data['email'] }}" name="email" placeholder="Email">										
-													
+
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-envelope"></i>
 												</div>
-											
-												<div class="fg fg-light mb-4">
-													<div class="fg-icon">
-																													<i class="far fa-unlock-alt"></i>
-																											</div>
-																											
-																	<input type="password" class="fg-control" id="password" name="password" placeholder="Password">										
+
+												<input type="email" class="fg-control" id="email" value="{{ data['email'] }}" name="email" placeholder="Email">
+
+											</div>
+
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-unlock-alt"></i>
 												</div>
-											
-												<div class="fg fg-light mb-4">
-													<div class="fg-icon">
-																													<i class="far fa-unlock-alt"></i>
-																											</div>
-																											<input type="password" class="fg-control" id="confirm" name="password_again" placeholder="Confirm Password">
-																											
-												
+
+												<input type="password" class="fg-control" id="password" name="password" placeholder="Password">
+											</div>
+
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-unlock-alt"></i>
 												</div>
-																						<!-- start-->
-											            									
-          								
-          								{% if settings['terms_checkbox'] == 2 %}
-								<div class="form-group">
-								  <div class="checkbox">
-									<label>
-									  <input type="checkbox" class="terms-accept-checkbox" value="1" id="customCheck1" name="terms"> {{ lang['signup.accept_terms_text'] }} <a href="/terms" target="_blank">{{ lang['terms.terms_of_service'] }}</a>
-									</label>
-								  </div>
-								</div>
-								{% endif %}		
-								
-								
-									{% if captcha %}
-							 <div class="mt-4">
-                        <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
-                    </div>
-								{% endif %}
-								
-								<!-- end -->
+												<input type="password" class="fg-control" id="confirm" name="password_again" placeholder="Confirm Password">
+
+
+											</div>
+											<!-- start-->
+
+
+											{% if settings['terms_checkbox'] == 2 %}
+												<div class="form-group">
+													<div class="checkbox">
+														<label>
+															<input type="checkbox" class="terms-accept-checkbox" value="1" id="customCheck1" name="terms">
+															{{ lang['signup.accept_terms_text'] }}
+															<a href="/terms" target="_blank">{{ lang['terms.terms_of_service'] }}</a>
+														</label>
+													</div>
+												</div>
+											{% endif %}
+
+
+											{% if captcha %}
+												<div class="mt-4">
+													<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+												</div>
+											{% endif %}
+
+											<!-- end -->
 											<div class="row mt-4">
 												<div class="col-md-12 mb-5 mb-md-0">
-												
+
 													<button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
 												</div>
 											</div>
@@ -223,11 +227,10 @@
 </section>
 
 
-
 {% for lang in site['languages'] %}
-  {% if lang['active'] %}
-    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
-  {% endif %}
+	{% if lang['active'] %}
+		 <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+	{% endif %}
 {% endfor %}
 
 
