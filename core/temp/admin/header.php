@@ -30,6 +30,7 @@
   border: none;
   box-shadow: 0 2px 20px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
+  margin-bottom: 80px; /* Add margin to prevent content overlap */
 }
 
 .navbar-modern .navbar-brand {
@@ -193,6 +194,10 @@
     margin: 5px 0;
     text-align: center;
   }
+  
+  .navbar-modern {
+    margin-bottom: 60px; /* Smaller margin for mobile */
+  }
 }
 
 /* Notification styles */
@@ -235,6 +240,40 @@
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* Theme toggle button styles */
+.theme-toggle-btn {
+  background: rgba(255,255,255,0.1);
+  border-radius: 25px;
+  padding: 8px 15px;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+  color: #fff;
+  text-decoration: none;
+}
+
+.theme-toggle-btn:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Content spacing */
+body {
+  padding-top: 20px; /* Add top padding to body */
+}
+
+.container, .container-fluid {
+  margin-top: 20px; /* Add top margin to containers */
 }
 </style>
 
@@ -470,9 +509,9 @@ $a5 = countRow(['table'=>'services','where'=>['service_package'=>15]]);?>
     <?php 
     $e = route(1);
     if( $user['admin_theme'] == 2 ):
-      echo "<a href='/admin?theme=1&refer=".$e."' class='user-menu-modern'><i class='fa fa-sun'></i></a>";
+      echo "<a href='/admin?theme=1&refer=".$e."' class='theme-toggle-btn'><i class='fa fa-sun'></i></a>";
     else:
-      echo "<a href='/admin?theme=2&refer=".$e."' class='user-menu-modern'><i class='fa fa-moon'></i></a>";
+      echo "<a href='/admin?theme=2&refer=".$e."' class='theme-toggle-btn'><i class='fa fa-moon'></i></a>";
     endif;
     ?>
   </li>
