@@ -162,7 +162,7 @@
                         echo "<!-- DEBUG: Directory exists: " . (isset($fn) ? (is_dir(dirname($fn)) ? 'YES' : 'NO') : 'N/A') . " -->\n";
                         echo "<!-- DEBUG: Directory path: " . (isset($fn) ? dirname($fn) : 'N/A') . " -->\n";
                         echo "<!-- DEBUG: File permissions: " . (isset($fn) && file_exists($fn) ? substr(sprintf('%o', fileperms($fn)), -4) : 'N/A') . " -->\n";
-                        ?>
+
                         echo "<!-- DEBUG: Starting file operations -->\n";
                         echo "<!-- DEBUG: File path: " . $fn . " -->\n";
                         echo "<!-- DEBUG: File exists: " . (file_exists($fn) ? 'YES' : 'NO') . " -->\n";
