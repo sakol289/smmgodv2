@@ -31,16 +31,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">        
         <li class="nav-item border-end">
-          <a class="nav-link <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'manager-active'; endif; ?>" href="/admin/manager">Güncellemeler</a>
+          <a class="nav-link <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'manager-active'; endif; ?>" href="/admin/manager">Updates</a>
         </li>
         <li class="nav-item border-end">
-          <a class="nav-link <?php if( route(2) == 'guard' ): echo 'manager-active'; endif; ?>" href="/admin/manager/guard">Koruma Ayarları</a>
+          <a class="nav-link <?php if( route(2) == 'guard' ): echo 'manager-active'; endif; ?>" href="/admin/manager/guard">Koruma Settings</a>
         </li>
         <li class="nav-item border-end">
           <a class="nav-link <?php if( route(2) == 'details' ): echo 'manager-active'; endif; ?>" href="/admin/manager/details">Detaylar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?php if( route(2) == 'info' ): echo 'manager-active'; endif; ?>" href="/admin/manager/info">Panel Hakkında</a>
+          <a class="nav-link <?php if( route(2) == 'info' ): echo 'manager-active'; endif; ?>" href="/admin/manager/info">Panel About</a>
         </li>
       </ul>
     </div>
@@ -69,7 +69,7 @@
                     <div class="dropdown-content dropdown-box absolute w-56 top-0 right-0 z-20">
                         <div class="dropdown-box__content box">
                             <div class="dropdown-content__footer p-2 border-t">
-                                <a href="/admin/manager/logout" class="flex items-center block p-2 transition duration-300 ease-in-out rounded-md"> <i data-feather="log-out" class="w-4 h-4 mr-2"></i> Manger'ı Sonlandır</a>
+                                <a href="/admin/manager/logout" class="flex items-center block p-2 transition duration-300 ease-in-out rounded-md"> <i data-feather="log-out" class="w-4 h-4 mr-2"></i> Manger'I Terminate</a>
                             </div>
                         </div>
                     </div>
@@ -79,10 +79,10 @@
        
         <div class="side-menu hidden md:block top-0 left-0 fixed w-16 h-screen">
             <div class="side-menu__content -intro-x border-r w-full h-full pt-16 flex flex-col justify-center overflow-hidden">
-                <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/update" data-side="right" title="Güncellemeler" data-content="chats"> <i data-feather="download-cloud" class="w-5 h-5 mx-auto"></i> </a>
-                <a class="-intro-x side-menu__content__link relative tooltip py-5  <?php if( route(2) == 'guard' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/guard" data-side="right" title="Koruma Ayarları"> <i data-feather="shield" class="w-5 h-5 mx-auto"></i> </a>          
+                <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/update" data-side="right" title="Updates" data-content="chats"> <i data-feather="download-cloud" class="w-5 h-5 mx-auto"></i> </a>
+                <a class="-intro-x side-menu__content__link relative tooltip py-5  <?php if( route(2) == 'guard' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/guard" data-side="right" title="Koruma Settings"> <i data-feather="shield" class="w-5 h-5 mx-auto"></i> </a>          
                 <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if( route(2) == 'details' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/details" data-side="right" title="Detaylar"> <i data-feather="bar-chart" class="w-5 h-5 mx-auto"></i> </a>
-                <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if( route(2) == 'info' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/info" data-side="right" title="Panel Hakkında"> <i data-feather="info" class="w-5 h-5 mx-auto"></i> </a>
+                <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if( route(2) == 'info' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/info" data-side="right" title="Panel About"> <i data-feather="info" class="w-5 h-5 mx-auto"></i> </a>
             </div>
         </div>
         -->

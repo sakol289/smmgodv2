@@ -66,11 +66,11 @@
          <form action="<?php echo site_url('admin/appearance/language/new') ?>" method="post" enctype="multipart/form-data">
             <div class="language-editor__container" style="max-height: 680px;">
                <div class="form-group">
-                  <label class="control-label">Dil Adı</label>
+                  <label class="control-label">Language Name</label>
                   <input type="text" class="form-control" name="language">
                </div>
                <div class="form-group">
-                  <label class="control-label">Dil Kodu</label>
+                  <label class="control-label">Language Code</label>
                   <select class="form-control" name="languagecode">
                      <option value="ar">ar (Arabic)</option>
                      <option value="af">af (Afrikaans)</option>

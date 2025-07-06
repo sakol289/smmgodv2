@@ -293,7 +293,7 @@ if( $_POST ):
                     SMSUser($settings["admin_telephone"],"your website #".$last_id." idli a new order is available.");
                   endif;
                   if( $sendmail ):
-                    sendMail(["subject"=>"Bir sipariş.","body"=>"your website #".$last_id." idli a new order is available.","mail"=>$settings["admin_mail"]]);
+                    sendMail(["subject"=>"An order.","body"=>"your website #".$last_id." idli a new order is available.","mail"=>$settings["admin_mail"]]);
                   endif;
                 endif;
             else:

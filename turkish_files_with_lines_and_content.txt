@@ -46,6 +46,7 @@
 บรรทัด 405: $errorText= "Paket Süresi boş olamaz";
 บรรทัด 432: $errorText= "İşlem başarılı";
 บรรทัด 438: $errorText= "İşlem başarısız";
+บรรทัด 452: // ismi değiştirdiği alan servicslerden
 บรรทัด 461: $errorText= "Ürün adı boş olamaz";
 บรรทัด 465: $errorText= "Ürün kategori boş olamaz";
 บรรทัด 469: $errorText= "Servis sağlayıcı boş olamaz";
@@ -58,6 +59,7 @@
 บรรทัด 496: $errorText= "Gönderi miktarı boş olamaz";
 บรรทัด 500: $errorText= "Sipariş miktarı boş olamaz";
 บรรทัด 504: $errorText= "Paket Süresi boş olamaz";
+บรรทัด 526: // abone update işlem yeri
 บรรทัด 554: $errorText= "İşlem başarılı";
 บรรทัด 560: $errorText= "İşlem başarısız";
 บรรทัด 573: $_SESSION["client"]["data"]["successText"]= "İşlem başarılı";
@@ -78,125 +80,7 @@
 บรรทัด 1067: echo json_encode(["t"=>"error","m"=>"Lütfen eklemek istediğiniz en az 1 servisi seçin","s"=>"error"]);
 
 
-ไฟล์: D:\web\20Themessmm\web\core\module\client\kupon.php
-บรรทัด 34: $errorText= "Lütfen tüm alanları doldurun.";
-บรรทัด 60: $errorText= "Bu kuponu zaten kullandınız.";
-บรรทัด 90: $successText= "Kupon karşılığı bakiyenize eklenmiştir. Teşekkürler.";
-บรรทัด 98: $errorText= "Bu kupon tükenmiştir.";
-บรรทัด 105: $errorText= "Kupon bulunamadı.";
-
-
-ไฟล์: D:\web\20Themessmm\web\core\module\client\neworder.php
-บรรทัด 296: sendMail(["subject"=>"Bir sipariş.","body"=>"your website #".$last_id." idli a new order is available.","mail"=>$settings["admin_mail"]]);
-
-
 
 ไฟล์: D:\web\20Themessmm\web\core\module\client\cron\balance_alert.php
 บรรทัด 19: SMSUser($settings["admin_telephone"],$api_detail["api_name"]." adlı API'nizdeki mevcut bakiye:".$balance->balance.$balance->currency);
-บรรทัด 22: sendMail(["subject"=>"Sağlayıcı bakiye bilgilendirmesi.","body"=>$api_detail["api_name"]." adlı API'nizdeki mevcut bakiye:".$balance->balance.$balance->currency,"mail"=>$settings["admin_mail"]]);
-
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\manager.header.php
-บรรทัด 34: <a class="nav-link <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'manager-active'; endif; ?>" href="/admin/manager">Güncellemeler</a>
-บรรทัด 37: <a class="nav-link <?php if( route(2) == 'guard' ): echo 'manager-active'; endif; ?>" href="/admin/manager/guard">Koruma Ayarları</a>
-บรรทัด 43: <a class="nav-link <?php if( route(2) == 'info' ): echo 'manager-active'; endif; ?>" href="/admin/manager/info">Panel Hakkında</a>
-บรรทัด 72: <a href="/admin/manager/logout" class="flex items-center block p-2 transition duration-300 ease-in-out rounded-md"> <i data-feather="log-out" class="w-4 h-4 mr-2"></i> Manger'ı Sonlandır</a>
-บรรทัด 82: <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if(!route(2)){ $landing = true;} if( route(2) == 'update' || $landing): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/update" data-side="right" title="Güncellemeler" data-content="chats"> <i data-feather="download-cloud" class="w-5 h-5 mx-auto"></i> </a>
-บรรทัด 83: <a class="-intro-x side-menu__content__link relative tooltip py-5  <?php if( route(2) == 'guard' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/guard" data-side="right" title="Koruma Ayarları"> <i data-feather="shield" class="w-5 h-5 mx-auto"></i> </a>
-บรรทัด 85: <a class="-intro-x side-menu__content__link relative tooltip py-5 <?php if( route(2) == 'info' ): echo 'side-menu__content__link--active'; endif; ?>" href="/admin/manager/info" data-side="right" title="Panel Hakkında"> <i data-feather="info" class="w-5 h-5 mx-auto"></i> </a>
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\manager.php
-บรรทัด 10: <title>Giriş - Glycon Manager</title>
-บรรทัด 148: <div class="intro-y auth__title text-2xl font-medium text-center mt-16">Glycon Manager - Giriş</div>
-บรรทัด 155: <button class="intro-y button button--lg button--primary w-full xl:mr-3">Giriş Yap</button>
-บรรทัด 253: <div class="intro-y text-xl font-medium fs-2">Güncellemeler</div>
-บรรทัด 278: Devam etmeden önce tam bir yedek aldığınızdan emin olun. <br> Eğer yedek almadan güncelleme yaparsanız herhangi bir hata veya veri kaybı ile karşılaştığınızda sorumlusu siz olursunuz. <p> <br>
-บรรทัด 281: * Tüm scriptler web tabanlıdır. Her şeyi kontrol etme gücüne sahip değil. <br>
-บรรทัด 282: * Sunucunuzun internet bağlantısında bir kesinti olduğunda, otomatik güncelleme işlevleri devam edemez. Bu durumda dosyalar eksik olarak aktarılır. <br>
-บรรทัด 283: * Zaman aşımı süreleri çok sınırlıdır, Bu nedenle timeout verebilir. <br><br>
-บรรทัด 284: ** Bu etkenler scriptten kaynaklanan bir durum değildir.  <br>
-บรรทัด 285: ** Hosting sağlayıcınızın koyduğu limitlerden kaynaklıdır. <br>
-บรรทัด 288: Yukarıdaki bilgilendirmeleri okudum ve onaylıyorum.
-บรรทัด 294: <button type="submit" class="button button--primary w-full mt-3">Güncelle</button>
-บรรทัด 300: <p>Şu an v1 için en güncel sürümü kullanmaktasınız.</p>
-บรรทัด 391: <div class="intro-y text-xl font-medium fs-2">Koruma Ayarları</div>
-บรรทัด 396: <h4>İşlem Başarılı!</h4>
-บรรทัด 416: <label>Servis Silme Koruması</label>
-บรรทัด 424: <label>Eğer Servis Silerse</label>
-บรรทัด 426: <option value="2"  <?php if( $settings["guard_services_type"] == 2 ): echo "selected"; endif; ?>>Tüm Yetkilerini Al</option>
-บรรทัด 427: <option value="1"  <?php if( $settings["guard_services_type"] == 1 ): echo "selected"; endif; ?>>Oturumunu Sonlandır</option>
-บรรทัด 433: <label>Toplu Bildirim Koruması</label>
-บรรทัด 441: <label>Eğer Toplu Bildirim Gönderilirse</label>
-บรรทัด 443: <option value="2"  <?php if( $settings["guard_notify_type"] == 2 ): echo "selected"; endif; ?>>Tüm Yetkilerini Al</option>
-บรรทัด 444: <option value="1"  <?php if( $settings["guard_notify_type"] == 1 ): echo "selected"; endif; ?>>Oturumunu Sonlandır</option>
-บรรทัด 450: <label>Yetki Koruması</label>
-บรรทัด 458: <label>Eğer Yetki Düzenlenirse</label>
-บรรทัด 460: <option value="2"  <?php if( $settings["guard_roles_type"] == 2 ): echo "selected"; endif; ?>>Tüm Yetkilerini Al</option>
-บรรทัด 461: <option value="1"  <?php if( $settings["guard_roles_type"] == 1 ): echo "selected"; endif; ?>>Oturumunu Sonlandır</option>
-บรรทัด 467: <label>API Key Görüntüleme <small>(6 farklı şekilde şifrelenir ve kırılması imkansızdır.)</small></label>
-บรรทัด 469: <option value="2"  <?php if( $settings["guard_apikey_type"] == 2 ): echo "selected"; endif; ?>>Şifreli olarak göster</option>
-บรรทัด 470: <option value="1"  <?php if( $settings["guard_apikey_type"] == 1 ): echo "selected"; endif; ?>>Direkt göster</option>
-บรรทัด 474: <button type="submit" class="btn btn-success mt-3">Güncelle</button>
-บรรทัด 484: <div class="intro-y text-xl font-medium fs-2">Panel Hakkında</div>
-บรรทัด 488: Kullandığınız Sürüm; <?=$updateDetails['current']?><br><br>
-บรรทัด 489: Güncel Sürüm; <?=$updateDetails['last']?>
-บรรทัด 495: ** BİZİM ADIMIZA SİZE YAZAN KİŞİLERE İTİBAR ETMEYİNİZ HİÇBİR ZAMAN SİZDEN BİLGİLERİNİZİ VEYA DOSYALARINIZI İSTEMEYİZ!! <br><br>
-บรรทัด 496: * Script " GLYCON " dışında hiç bir yerde kişi/kuruluşlar tarafından iznimiz dışında satışı yapılamaz. <br> <br>
-บรรทัด 497: * Scripti satın alan kişiler 2. bir kişi ile paylaşırsa yada dağıtırsa sistem tarafından otomatik olarak tespit edilmektedir lisansları iptal edilir ve "ÜCRET İADESİ" yapılmaz.
-บรรทัด 519: Toplam Üye; <?php echo countRow(["table"=>"clients"]); ?><br><br>
-บรรทัด 520: Yükleme Yapan Üyeler; <?=$count9?> <br><br>
-บรรทัด 521: Bu Ayki Üyeler; <?=$count?> <br><br>
-บรรทัด 522: Bugünkü Üyeler; <?=$count2?>
-บรรทัด 527: Toplam Ödeme; <?php echo round($query['SUM(payment_amount)']); ?><br><br>
-บรรทัด 529: Bugünkü Kazanç; <?=$kazanc2['SUM(payment_amount)'];?> <br><br>
-บรรทัด 530: Bu Ayki Kazanç; <?=$kazanc['SUM(payment_amount)'];?>
-บรรทัด 535: Toplam Sipariş; <?php echo countRow(["table"=>"orders"]); ?><br><br>
-บรรทัด 536: API İle Gelen Sipariş; <?php echo countRow(["table"=>"orders","where"=>["order_where"=>"api"]]); ?><br><br>
-บรรทัด 537: Bu Ayki Sipariş; <?=$count3?> <br><br>
-บรรทัด 538: Bugünkü Sipariş; <?=$count4?>
-บรรทัด 544: Toplam Çözümlenen; <?php echo countRow(["table"=>"tickets","where"=>["status"=>"closed"]]); ?>  <br><br>
-บรรทัด 545: Bugünkü Destek Talepleri; <?=$count6?> <br><br>
-บรรทัด 552: Toplam Etkileşim; <?php echo countRow(["table"=>"client_report"]); ?> <br><br>
-บรรทัด 553: Bugünkü Etkileşim; <?=$count8?> <br><br>
-บรรทัด 554: Bu Ayki Etkileşim; <?=$count7?> <br><br>
-บรรทัด 555: Sipariş Sıklığı; N/A
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\payments_bank.php
-บรรทัด 134: <button type="button" class="btn btn-default btn-xs dropdown-toggle btn-xs-caret" data-toggle="dropdown">İşlemler <span class="caret"></span></button>
-บรรทัด 136: <li><a href="#"  data-toggle="modal" data-target="#modalDiv" data-action="payment_bankedit" data-id="<?php echo $payment["payment_id"] ?>">Düzenle</a></li>
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\reports.php
-บรรทัด 81: <select class="selectpicker" data-actions-box="true" data-live-search="true" name="methods[]" multiple="" data-max-options="100" data-size="10" title="Ödeme Yöntemleri" tabindex="-98">
-บรรทัด 104: <select class="selectpicker" name="statuses[]" multiple="" data-max-options="100" data-size="10" title="Sipariş Durumu" tabindex="-98">
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\appearance\blog.php
-บรรทัด 121: <p class="help-block">800 x 450px önerilen boyutlardır</p>
-บรรทัด 137: <label for="" class="control-label">Blog Adı</label>
-บรรทัด 142: <label class="control-label">Blog İçeriği</label>
-บรรทัด 146: <button type="submit" class="btn btn-primary">Güncelle</button>
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\appearance\language.php
-บรรทัด 69: <label class="control-label">Dil Adı</label>
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\settings\alert.php
-บรรทัด 313: <small>En sağlıklı bildirim şekli SMS'tir.</small>
-
-ไฟล์: D:\web\20Themessmm\web\core\temp\admin\settings\payment-bonuses.php
-บรรทัด 45: <button type="button" class="btn btn-default btn-xs pull-right edit-payment-method" data-toggle="modal" data-target="#modalDiv" data-action="edit_paymentbonus" data-id="<?php echo $bonus["bonus_id"]; ?>">Düzenle</button>
-
-ไฟล์: D:\web\20Themessmm\web\int\scriptFunc\controller.php
-บรรทัด 145: return "<html> <!doctype html><head> <meta charset=\"UTF-8\"> <meta content=\"True\" name=\"HandheldFriendly\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n      <meta name=\"robots\" content=\"noindex, nofollow, noarchive\" />\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, user-scalable=0\" /> <title lang=\"tr\">Güvenli Ödeme Sayfası</title><body><head>\n      <form action=\"https://www.shopier.com/ShowProduct/api_pay4.php\" method=\"post\" id=\"shopier_payment_form\" style=\"display: none\">" . implode("", $args_array) . "<script>setInterval(function(){document.getElementById(\"shopier_payment_form\").submit();},2000)</script></form></body></html>";
-บรรทัด 349: $statu = "Yükleniyor";
-บรรทัด 352: $statu = "Tamamlandı";
-บรรทัด 355: $statu = "Kısmi tamamlandı";
-บรรทัด 361: $statu = "İptal";
-บรรทัด 374: $statu = "İptal";
-บรรทัด 377: $statu = "Tamamlandı";
-บรรทัด 387: $statu = "Kapalı";
-บรรทัด 390: $statu = "Yanıtlanmış";
-บรรทัด 406: $statu = "İptal";
-บรรทัด 409: $statu = "Tamamlanmış";
-บรรทัด 412: $statu = "Durdurulmuş";
-บรรทัด 415: $statu = "Süresi dolmuş";
-บรรทัด 418: $statu = "Gönderimde";
-บรรทัด 741: $convertLang = ["tr" => ["index" => "Anasayfa", "clients" => "Kullanıcılar", "orders" => "Siparişler", "dripfeeds" => "Drip-feeds", "tasks" => "Tasks", "subscriptions" => "Abonelikler", "services" => "Servisler", "payments" => ["online" => "Ödemeler", "bank" => "Banka Ödemeleri"], "tickets" => "Destek", "reports" => "İstatistikler", "appearance" => ["pages" => "Sayfalar", "blog" => "Blog", "menu" => "Menü", "themes" => "Tema Ayarları", "language" => "Dil Ayarları"], "settings" => ["general" => "Genel", "providers" => "Sağlayıcılar", "payment-methods" => "Ödeme Yöntemleri", "bank-accounts" => "Banka Hesapları", "modules" => "Modüller", "integrations" => "Entegrasyonlar", "subject" => "Destek Modülü", "alert" => "Bildirimler", "payment-bonuses" => "Bonuslar"], "child-panels" => "Child Panels", "logs" => "Loglar", "provider_logs" => "Sağlayıcı Logları", "guard_logs" => "Koruma Logları", "account" => "Hesabım"], "en" => ["index" => "Home"]];
+บรรทัด 22: sendMail(["subject"=>"Sağlayıcı bakiye bilgilendirmesi.","body"=>$api_detail["api_name"]." Current balance in your API:".$balance->balance.$balance->currency,"mail"=>$settings["admin_mail"]]);

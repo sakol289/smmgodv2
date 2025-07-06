@@ -131,9 +131,9 @@
                  <td nowrap=""><?php echo $payment["payment_update_date"] ?></td>
                  <td class="service-block__action">
                    <div class="dropdown pull-right">
-                     <button type="button" class="btn btn-default btn-xs dropdown-toggle btn-xs-caret" data-toggle="dropdown">İşlemler <span class="caret"></span></button>
+                     <button type="button" class="btn btn-default btn-xs dropdown-toggle btn-xs-caret" data-toggle="dropdown">Transactions <span class="caret"></span></button>
                      <ul class="dropdown-menu">
-                       <li><a href="#"  data-toggle="modal" data-target="#modalDiv" data-action="payment_bankedit" data-id="<?php echo $payment["payment_id"] ?>">Düzenle</a></li>
+                       <li><a href="#"  data-toggle="modal" data-target="#modalDiv" data-action="payment_bankedit" data-id="<?php echo $payment["payment_id"] ?>">Edit</a></li>
                      </ul>
                    </div>
                  </td>

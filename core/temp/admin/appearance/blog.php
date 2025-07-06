@@ -118,7 +118,7 @@ else if ( document.getElementById(blockId).style.display == '' ) {
             <div class="col-md-10">
               <label for="preferenceLogo" class="control-label">Blog Resmi</label>
               <input type="file" name="logo" id="preferenceLogo">
-                        <p class="help-block">800 x 450px önerilen boyutlardır</p>
+                        <p class="help-block">800 x 450px are recommended sizes</p>
             </div>
             <div class="col-md-2">
               <?php if( $post["blog_image"] ):  ?>
@@ -134,16 +134,16 @@ else if ( document.getElementById(blockId).style.display == '' ) {
         </div>
              
         <div class="form-group ">
-          <label for="" class="control-label">Blog Adı</label>
+          <label for="" class="control-label">Blog Ordinary</label>
           <input type="text" class="form-control" name="name" value="<?=$post["blog_title"]?>">
         </div>
 
             <div class="form-group">
-               <label class="control-label">Blog İçeriği</label>
+               <label class="control-label">Blog Contents</label>
                <textarea class="form-control" id="summernote" rows="5" name="content" placeholder=""><?php echo $post["blog_content"]; ?></textarea>
             </div>	  
 
-            <button type="submit" class="btn btn-primary">Güncelle</button>
+            <button type="submit" class="btn btn-primary">Update</button>
                 <a href="/admin/appearance/blog" class="btn btn-default">Geri</a>
          </form>
 

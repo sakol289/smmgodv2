@@ -42,7 +42,7 @@
               %<?php echo $bonus["bonus_amount"]; ?>
             </td>
             <td class="p-r">
-               <button type="button" class="btn btn-default btn-xs pull-right edit-payment-method" data-toggle="modal" data-target="#modalDiv" data-action="edit_paymentbonus" data-id="<?php echo $bonus["bonus_id"]; ?>">Düzenle</button>
+               <button type="button" class="btn btn-default btn-xs pull-right edit-payment-method" data-toggle="modal" data-target="#modalDiv" data-action="edit_paymentbonus" data-id="<?php echo $bonus["bonus_id"]; ?>">Edit</button>
             </td>
          </tr>
          <?php endforeach; ?>

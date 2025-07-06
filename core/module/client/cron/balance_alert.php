@@ -16,10 +16,10 @@ foreach( $api_details as $api_detail ):
     if( $settings["alert_type"] == 3 ):   $sendmail = 1; $sendsms  = 1; elseif( $settings["alert_type"] == 2 ): $sendmail = 1; $sendsms=0; elseif( $settings["alert_type"] == 2 ): $sendmail=0; $sendsms  = 1; endif;
     echo $sendsms;
     if( $sendsms ):
-      SMSUser($settings["admin_telephone"],$api_detail["api_name"]." adlı API'nizdeki mevcut bakiye:".$balance->balance.$balance->currency);
+      SMSUser($settings["admin_telephone"],$api_detail["api_name"]." Current balance in your API:".$balance->balance.$balance->currency);
     endif;
     if( $sendmail ):
-      sendMail(["subject"=>"Sağlayıcı bakiye bilgilendirmesi.","body"=>$api_detail["api_name"]." adlı API'nizdeki mevcut bakiye:".$balance->balance.$balance->currency,"mail"=>$settings["admin_mail"]]);
+      sendMail(["subject"=>"Provider balance notification.","body"=>$api_detail["api_name"]." Current balance in your API:".$balance->balance.$balance->currency,"mail"=>$settings["admin_mail"]]);
     endif;
     $update = $conn->prepare("UPDATE service_api SET api_alert=:alert WHERE id=:id ");
     $update->execute(array("id"=>$api_detail["id"],"alert"=>1));

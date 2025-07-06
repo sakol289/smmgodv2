@@ -310,7 +310,7 @@ if($settings["alert_newticket"] == 2 ){
           </div>   
 
           <div class="col-md-12 help-block">
-         <small>En sağlıklı bildirim şekli SMS'tir.</small>
+         <small>The most reliable form of notification is SMS.</small>
         </div>
         </div>
         <hr>

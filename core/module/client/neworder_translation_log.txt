@@ -1,0 +1,114 @@
+บรรทัดที่แปลจากภาษาตุรกีเป็นภาษาอังกฤษ:
+
+บรรทัด 95:
+ต้นฉบับ: $ip               = GetIP(); // Uye ıp
+แปล: $ ip = get and (); // UYE IP
+
+บรรทัด 96:
+ต้นฉบับ: $service          = htmlspecialchars($_POST["services"]);// Ürün id
+แปล: $ service = htmlspecialchars ($ _ post ["Services"]); // product id
+
+บรรทัด 97:
+ต้นฉบับ: $quantity         = htmlspecialchars($_POST["quantity"]); // Sipariş miktarı
+แปล: $ quantity = htmlspecialchars ($ _ post ["quantity"]); // order quantity
+
+บรรทัด 104:
+ต้นฉบับ: $link             = htmlspecialchars($_POST["link"]); // Sipariş link
+แปล: $ link = htmlspecialchars ($ _ post ["link"]); // order link
+
+บรรทัด 106:
+ต้นฉบับ: $username         = htmlspecialchars($_POST["username"]); // abonelik, hangi kullanıcıya olacak
+แปล: $ username = htmlspecialchars ($ _ post ["username"]); // subscription, which user will be
+
+บรรทัด 107:
+ต้นฉบับ: $posts            = htmlspecialchars($_POST["posts"]); // abonelik, kaç gönderiye gitsin
+แปล: $ posts = htmlspecialchars ($ _ post ["posts"]); // Subscription, how many posts
+
+บรรทัด 108:
+ต้นฉบับ: $delay            = htmlspecialchars($_POST["delay"]); // Abonelik, gecikme süresi
+แปล: $ delay = htmlspecialchars ($ _ post ["delay"]); // subscription, delay time
+
+บรรทัด 113:
+ต้นฉบับ: $runs             = htmlspecialchars($_POST["runs"]); // dripfeed kaç kez gitsin
+แปล: $ runs = htmlspecialchars ($ _ post ["runs"]); // DRIPFEED How many times
+
+บรรทัด 118:
+ต้นฉบับ: $interval         = htmlspecialchars($_POST["interval"]); // dripfeed gecikme süresi
+แปล: $ interval = htmlspecialchars ($ _ post ["interval"]); // DRIPFEED delay time
+
+บรรทัด 153:
+ต้นฉบับ: $quantity         = $otoMin."-".$otoMax; // Sipariş miktarı
+แปล: $ quantity = $ automation. "-". $ automax; // order quantity
+
+บรรทัด 154:
+ต้นฉบับ: $link             = $username; // Sipariş link
+แปล: $ link = $ username; // order link
+
+บรรทัด 162:
+ต้นฉบับ: $link             = $username; // Sipariş link
+แปล: $ link = $ username; // order link
+
+บรรทัด 193:
+ต้นฉบับ: $dripfeed_totalquantity = $quantity*$runs; //dripfeed toplam gönderim miktarı
+แปล: $ dripfeed_totalquantity = $ quantity*$ runs; // DRIPFEED Total shipping amount
+
+บรรทัด 194:
+ต้นฉบับ: $dripfeed_totalcharges  = service_price($service_detail["service_id"])*$dripfeed_totalquantity/1000; //dripfeed toplam gönderim ücreti
+แปล: $ dripfeed_totalcharges = service_price ($ service_detail ["service_id"])*$ dripfeed_totalquantity/1000; // DRIPFEED Total shipping fee
+
+บรรทัด 195:
+ต้นฉบับ: $price                  = service_price($service_detail["service_id"])*$dripfeed_totalquantity/1000; //dripfeed toplam gönderim ücreti
+แปล: $ price = service_price ($ service_detail ["service_id"])*$ dripfeed_totalquantity/1000; // DRIPFEED Total shipping fee
+
+บรรทัด 267:
+ต้นฉบับ: /* Sipariş ver - başla */
+แปล: / * Order - Start */
+
+บรรทัด 269:
+ต้นฉบับ: /* manuel sipariş - başla */
+แปล: / * Manual order - Start */
+
+บรรทัด 296:
+ต้นฉบับ: sendMail(["subject"=>"Bir sipariş.","body"=>"your website #".$last_id." idli a new order is available.","mail"=>$settings["admin_mail"]]);
+แปล: Sendmail (["Subject" => "An order.", "Body" => "Your website #".
+
+บรรทัด 304:
+ต้นฉบับ: /* manuel sipariş - bitir */
+แปล: / * Manual order - finish */
+
+บรรทัด 307:
+ต้นฉบับ: /* api ile sipariş - başla */
+แปล: / * Order with api - Start */
+
+บรรทัด 310:
+ต้นฉบับ: /* API SİPARİŞİ GEÇ BAŞLA */
+แปล: / * API order late start */
+
+บรรทัด 311:
+ต้นฉบับ: ## Standart api başla ##
+แปล: ## Start Standard Api ##
+
+บรรทัด 313:
+ต้นฉบับ: ## Standart başla ##
+แปล: ## Start standard ##
+
+บรรทัด 337:
+ต้นฉบับ: ## Custom comments başla ##
+แปล: ## Custom Comments Start ##
+
+บรรทัด 361:
+ต้นฉบับ: ## oto başla ##
+แปล: ## Start Auto ##
+
+บรรทัด 371:
+ต้นฉบับ: /* API SİPARİŞ GEÇ BİTTİ */
+แปล: / * API order late */
+
+บรรทัด 428:
+ต้นฉบับ: /* api ile sipariş - bitir */
+แปล: / * Order with api - finish */
+
+บรรทัด 430:
+ต้นฉบับ: /* Sipariş ver - bitir */
+แปล: / * Order - finish */
+

@@ -78,7 +78,7 @@
 
        <?php if( $action == "payments" ): ?>
 <li class="pull-right">
-           <select class="selectpicker" data-actions-box="true" data-live-search="true" name="methods[]" multiple="" data-max-options="100" data-size="10" title="Ödeme Yöntemleri" tabindex="-98">
+           <select class="selectpicker" data-actions-box="true" data-live-search="true" name="methods[]" multiple="" data-max-options="100" data-size="10" title="Payment Methods" tabindex="-98">
              <?php foreach($methods as $method ): ?>
                 <option value="<?php echo $method["id"]; ?>" <?php if( $_POST ): if( in_array($method["id"],$_POST["methods"]) ): echo 'selected'; endif; else: echo 'selected'; endif; ?>> <?php echo $method["method_name"] ?> </option>
               <?php endforeach; ?>
@@ -101,7 +101,7 @@
           </select>
 </li>
          <li class="pull-right">
-           <select class="selectpicker" name="statuses[]" multiple="" data-max-options="100" data-size="10" title="Sipariş Durumu" tabindex="-98">
+           <select class="selectpicker" name="statuses[]" multiple="" data-max-options="100" data-size="10" title="Order Status" tabindex="-98">
              <option value="cron" <?php if( $_POST ): if( in_array("cron",$_POST["statuses"]) ): echo 'selected'; endif; else: echo 'selected'; endif; ?>>Waiting for cron</option>
              <option value="fail"  <?php if( $_POST ): if( in_array("fail",$_POST["statuses"]) ): echo 'selected'; endif; else: echo 'selected'; endif; ?>>Fail</option>
              <option value="pending"  <?php if( $_POST ): if( in_array("pending",$_POST["statuses"]) ): echo 'selected'; endif; else: echo 'selected'; endif; ?>>Your order has been taken</option>

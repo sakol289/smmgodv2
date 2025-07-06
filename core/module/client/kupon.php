@@ -31,7 +31,7 @@ if( !route(1) ){
 	
       if( empty($kuponadi) ){
         $error    = 1;
-        $errorText= "Lütfen tüm alanları doldurun.";
+        $errorText= "Please all fields doldurun.";
       }else{
 		  
 		  
@@ -57,7 +57,7 @@ if( !route(1) ){
 			if($kullanmismi>0){
 				
 				 $error    = 1;
-				$errorText= "Bu kuponu zaten kullandınız.";
+				$errorText= "Bu kuponu zaten You used it.";
 		  
 			}else{
 				
@@ -87,7 +87,7 @@ if( !route(1) ){
 				
 				
 				$success    = 1;
-				$successText= "Kupon karşılığı bakiyenize eklenmiştir. Teşekkürler.";
+				$successText= "Kupon equivalent bakiyenize added. Thanks.";
 				
 				
 			}
@@ -95,14 +95,14 @@ if( !route(1) ){
 				
 			}else{
 				 $error    = 1;
-				$errorText= "Bu kupon tükenmiştir.";
+				$errorText= "Bu kupon exhausted.";
 			}
 			
 			
 			
 		}else{
 		  $error    = 1;
-          $errorText= "Kupon bulunamadı.";
+          $errorText= "Kupon not found.";
 		}
 		
 		
