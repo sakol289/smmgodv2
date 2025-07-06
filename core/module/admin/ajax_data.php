@@ -322,8 +322,81 @@ if ($action == "providers_list") {
                                         }
                                         $return .= "</select>\r\n                </div>\r\n              </div>\r\n              <div id=\"provider_service\">\r\n              </div>\r\n              <div class=\"service-mode__block\">\r\n                <div class=\"form-group\">\r\n                <label>Dripfeed</label>\r\n                  <select class=\"form-control\" name=\"dripfeed\">\r\n                    <option value=\"1\">Passive</option>\r\n                    <option value=\"2\">Active</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">1000 Quantity Fee</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"price\" value=\"\">\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6 form-group\">\r\n              <label class=\"form-group__service-name\">Minimum</label>\r\n              <input type=\"text\" class=\"form-control\" name=\"min\" value=\"\">\r\n            </div>\r\n\r\n            <div class=\"col-md-6 form-group\">\r\n              <label class=\"form-group__service-name\">Maximum</label>\r\n              <input type=\"text\" class=\"form-control\" name=\"max\" value=\"\">\r\n            </div>\r\n          </div>\r\n<hr>\r\n          <div class=\"row\">\r\n          <div class=\"form-group col-md-6\">\r\n          <label>Cancel button</label>\r\n            <select class=\"form-control\" name=\"cancel_type\">\r\n                <option value=\"2\">Active</option>\r\n                <option value=\"1\" selected>Passive</option>\r\n            </select>\r\n          </div>\r\n          \r\n          \r\n          <div class=\"form-group col-md-6\">\r\n          <label>Refill button</label>\r\n            <select id=\"refill\" class=\"form-control\" name=\"refill_type\">\r\n                <option value=\"2\">Active</option>\r\n                <option value=\"1\" selected>Passive</option>\r\n            </select>\r\n          </div>\r\n          </div>\r\n          \r\n          <div id=\"refill_day\" class=\"form-group\">\r\n          <label>Refill Maximum Day <small>(If lifetime, write 0)</small></label>\r\n            <input type=\"number\" class=\"form-control\" name=\"refill_time\">\r\n          </div>\r\n       \r\n\r\n          <hr>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Order Link<small>(Shown on the new order page)</small></label>\r\n              <select class=\"form-control\" name=\"want_username\">\r\n                  <option value=\"1\">Link</option>\r\n                  <option value=\"2\">Username</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Personal Service <small>(Only the people you choose can see it)</small></label>\r\n              <select class=\"form-control\" name=\"secret\">\r\n                  <option value=\"2\">No</option>\r\n                  <option value=\"1\">Yes</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Service Speed <small>(Displayed as symbol and color in the service list)</small></label>\r\n              <select class=\"form-control\" name=\"speed\">\r\n                  <option value=\"1\">Slow</option>\r\n                  <option value=\"2\">Sometimes Slow</option>\r\n                  <option value=\"3\">Normal</option>\r\n                  <option value=\"4\">Fast</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Add new service</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>\r\n          <script src=\"";
                                         $return .= site_url("js/admin/");
-                                        $return .= "script.js\"></script>\r\n          <script>\r\n\r\n          var type = \$(\"#refill\").val();\r\n\r\n          if( type == 1 ){\r\n\r\n            \$(\"#refill_day\").hide();\r\n\r\n          } else{\r\n\r\n            \$(\"#refill_day\").show();\r\n\r\n          }\r\n\r\n          \$(\"#refill\").change(function(){\r\n\r\n            var type = \$(this).val();\r\n\r\n              if( type == 1 ){\r\n\r\n                \$(\"#refill_day\").hide();\r\n\r\n              } else{\r\n\r\n                \$(\"#refill_day\").show();\r\n\r\n              }\r\n\r\n          });\r\n\r\n          \$(\".other_services\").click(function(){\r\n            var control = \$(\"#translationsList\");\r\n            if( control.attr(\"class\") == \"hidden\" ){\r\n              control.removeClass(\"hidden\");\r\n            } else{\r\n              control.addClass(\"hidden\");\r\n            }\r\n          });\r\n\r\n          // ควบคุมการแสดง/ซ่อน autoMode\r\n          \$(\"#serviceMode\").change(function(){\r\n            var mode = \$(this).val();\r\n            if( mode == \"2\" ){\r\n              \$(\"#autoMode\").show();\r\n            } else {\r\n              \$(\"#autoMode\").hide();\r\n            }\r\n          });\r\n\r\n          // ตั้งค่าสถานะเริ่มต้นเมื่อโหลดหน้า\r\n          \$(document).ready(function(){\r\n            var mode = \$(\"#serviceMode\").val();\r\n            if( mode == \"2\" ){\r\n              \$(\"#autoMode\").show();\r\n            } else {\r\n              \$(\"#autoMode\").hide();\r\n            }\r\n          });\r\n          </script>\r\n          ";                                        echo json_encode(["content" => $return, "title" => "Add new service"]);
-                                        
+                                        $return .= "script.js\"></script>\r\n          <script>\r\n\r\n          var type = \$(\"#refill\").val();\r\n\r\n          if( type == 1 ){\r\n\r\n            \$(\"#refill_day\").hide();\r\n\r\n          } else{\r\n\r\n            \$(\"#refill_day\").show();\r\n\r\n          }\r\n\r\n          \$(\"#refill\").change(function(){\r\n\r\n            var type = \$(this).val();\r\n\r\n              if( type == 1 ){\r\n\r\n                \$(\"#refill_day\").hide();\r\n\r\n              } else{\r\n\r\n                \$(\"#refill_day\").show();\r\n\r\n              }\r\n\r\n          });\r\n\r\n          \$(\".other_services\").click(function(){\r\n            var control = \$(\"#translationsList\");\r\n            if( control.attr(\"class\") == \"hidden\" ){\r\n              control.removeClass(\"hidden\");\r\n            } else{\r\n              control.addClass(\"hidden\");\r\n            }\r\n          });\r\n\r\n          // ควบคุมการแสดง/ซ่อน autoMode\r\n          \$(\"#serviceMode\").change(function(){\r\n            var mode = \$(this).val();\r\n            if( mode == \"2\" ){\r\n              \$(\"#autoMode\").show();\r\n            } else {\r\n              \$(\"#autoMode\").hide();\r\n            }\r\n          });\r\n\r\n          // ตั้งค่าสถานะเริ่มต้นเมื่อโหลดหน้า\r\n          \$(document).ready(function(){\r\n            var mode = \$(\"#serviceMode\").val();\r\n            if( mode == \"2\" ){\r\n              \$(\"#autoMode\").show();\r\n            } else {\r\n              \$(\"#autoMode\").hide();\r\n            }\r\n          });\r\n          </script>\r\n          ";
+                                        echo json_encode(["content" => $return, "title" => "Add new service"]);
+                                        $return .= '              <script type="text/javascript">
+              $(".other_services").click(function(){
+                var control = $("#translationsList");
+                if( control.attr("class") == "hidden" ){
+                  control.removeClass("hidden");
+                } else{
+                  control.addClass("hidden");
+                }
+              });
+              var site_url  = $("head base").attr("href");
+                $("#provider").change(function(){
+                  var provider = $(this).val();
+                  getProviderServices(provider,site_url);
+                });
+
+                getProvider();
+                $("#serviceMode").change(function(){
+                  getProvider();
+                });
+
+                getSalePrice();
+                $("#saleprice_cal").change(function(){
+                  getSalePrice();
+                });
+
+                getSubscription();
+                $("#subscription_package").change(function(){
+                  getSubscription();
+                });
+                function getProviderServices(provider,site_url){
+                  if( provider == 0 ){
+                    $("#provider_service").hide();
+                  }else{
+                    $.post(site_url+"admin/ajax_data",{action:"providers_list",provider:provider}).done(function( data ) {
+                      $("#provider_service").show();
+                      $("#provider_service").html(data);
+                    }).fail(function(){
+                      alert("Hata oluştu!");
+                    });
+                  }
+                }
+
+                function getProvider(){
+                  var mode = $("#serviceMode").val();
+                    if( mode == 1 ){
+                      $("#autoMode").hide();
+                    }else{
+                      $("#autoMode").show();
+                    }
+                }
+
+                function getSalePrice(){
+                  var type = $("#saleprice_cal").val();
+                    if( type == "normal" ){
+                      $("#saleprice").hide();
+                      $("#servicePrice").show();
+                    }else{
+                      $("#saleprice").show();
+                      $("#servicePrice").hide();
+                    }
+                }
+
+                function getSubscription(){
+                  var type = $("#subscription_package").val();
+                    if( type == "11" || type == "12" ){
+                      $("#unlimited").show();
+                      $("#limited").hide();
+                    }else{
+                      $("#unlimited").hide();
+                      $("#limited").show();
+                    }
+                }
+              </script>';
                                     } else {
                                         if ($action == "edit_service") {
                                             $id = $_POST["id"];
