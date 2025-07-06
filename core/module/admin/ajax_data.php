@@ -286,48 +286,48 @@ if ($action == "providers_list") {
                                     $return = "<form class=\"form\" action=\"" . site_url("admin/clients/alert") . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"service-mode__block\">\r\n\r\n            <div class=\"form-group\">\r\n\r\n            <label>Member to Notify</label>\r\n\r\n              <select class=\"form-control\" id=\"user_type\" name=\"user_type\">\r\n\r\n                    <option value=\"all\">All members</option>\r\n\r\n                    <option value=\"secret\">Exclusive</option>\r\n\r\n                </select>\r\n\r\n            </div>\r\n\r\n          </div>\r\n          \r\n          <div class=\"form-group\" id=\"username\">\r\n\r\n            <label>Username</label>\r\n\r\n            <input type=\"text\" name=\"username\" class=\"form-control\" value=\"\">\r\n\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n\r\n            <div class=\"form-group\">\r\n\r\n            <label>Notification Type</label>\r\n\r\n              <select class=\"form-control\" id=\"alert_type\" name=\"alert_type\">\r\n\r\n                    <option value=\"email\">E-mail</option>\r\n\r\n                    <option value=\"sms\">SMS</option>\r\n\r\n                </select>\r\n\r\n            </div>\r\n\r\n          </div>\r\n\r\n\r\n\r\n          <div id=\"email\">\r\n\r\n            <div class=\"form-group\">\r\n\r\n              <label>Email Header</label>\r\n\r\n              <input type=\"text\" name=\"subject\" class=\"form-control\" value=\"\">\r\n\r\n            </div>\r\n\r\n          </div>\r\n\r\n\r\n\r\n          <div class=\"form-group\" id=\"username\">\r\n\r\n            <label>Notification Message</label>\r\n\r\n            <textarea type=\"text\" name=\"message\" class=\"form-control\" rows=\"5\"></textarea>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <script type=\"text/javascript\">\r\n\r\n          \$(\"#username\").hide();\r\n\r\n          \$(\"#user_type\").change(function(){\r\n\r\n            var type = \$(this).val();\r\n\r\n            if( type == \"secret\" ){\r\n\r\n              \$(\"#username\").show();\r\n\r\n            } else{\r\n\r\n              \$(\"#username\").hide();\r\n\r\n            }\r\n\r\n          });\r\n          \$(\"#alert_type\").change(function(){\r\n            var type = \$(this).val();\r\n            if( type == \"email\" ){\r\n              \$(\"#email\").show();\r\n            } else{\r\n\r\n              \$(\"#email\").hide();\r\n            }\r\n          });\r\n        </script>\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Notify users</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>";
                                     echo json_encode(["content" => $return, "title" => "Notification to users"]);
                                 } else {
-                                                                         if ($action == "new_servicev2") {
-                                         $categories = $conn->prepare("SELECT * FROM categories ORDER BY category_line ");
-                                         $categories->execute(array());
-                                         $categories = $categories->fetchAll(PDO::FETCH_ASSOC);
-                                         $providers = $conn->prepare("SELECT * FROM service_api");
-                                         $providers->execute(array());
-                                         $providers = $providers->fetchAll(PDO::FETCH_ASSOC);
-                                         $return = '<form class="form" action="' . site_url("admin/services/new-service") . '" method="post" data-xhr="true">
+                                    if ($action == "new_servicev2") {
+                                        $categories = $conn->prepare("SELECT * FROM categories ORDER BY category_line ");
+                                        $categories->execute(array());
+                                        $categories = $categories->fetchAll(PDO::FETCH_ASSOC);
+                                        $providers = $conn->prepare("SELECT * FROM service_api");
+                                        $providers->execute(array());
+                                        $providers = $providers->fetchAll(PDO::FETCH_ASSOC);
+                                        $return = '<form class="form" action="' . site_url("admin/services/new-service") . '" method="post" data-xhr="true">
                                                <div class="modal-body">';
-                                         if (count($languages) > 1):
-                                             $translationList = '<a class="other_services"> Translations (' . (count($languages) - 1) . ') </a>';
-                                         else:
-                                             $translationList = '';
-                                         endif;
-                                         foreach ($languages as $language):
-                                             if ($language["default_language"]):
-                                                 $return .= '<div class="form-group">
+                                        if (count($languages) > 1):
+                                            $translationList = '<a class="other_services"> Translations (' . (count($languages) - 1) . ') </a>';
+                                        else:
+                                            $translationList = '';
+                                        endif;
+                                        foreach ($languages as $language):
+                                            if ($language["default_language"]):
+                                                $return .= '<div class="form-group">
                                                      <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> ' . $translationList . ' </label>
                                                      <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
                                                    </div>';
-                                                 if (count($languages) > 1):
-                                                     $return .= '<div class="hidden" id="translationsList">';
-                                                 endif;
-                                             else:
-                                                 $return .= '<div class="form-group">
+                                                if (count($languages) > 1):
+                                                    $return .= '<div class="hidden" id="translationsList">';
+                                                endif;
+                                            else:
+                                                $return .= '<div class="form-group">
                                                      <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> </label>
                                                      <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
                                                    </div>';
-                                             endif;
-                                         endforeach;
-                                         if (count($languages) > 1):
-                                             $return .= '</div>';
-                                         endif;
-                                         $return .= '<div class="service-mode__block">
+                                            endif;
+                                        endforeach;
+                                        if (count($languages) > 1):
+                                            $return .= '</div>';
+                                        endif;
+                                        $return .= '<div class="service-mode__block">
                                                    <div class="form-group">
                                                    <label>Service Category</label>
                                                      <select class="form-control" name="category">
                                                            <option value="0">Please select a category..</option>';
-                                         foreach ($categories as $category):
-                                             $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
-                                         endforeach;
-                                         $return .= '</select>
+                                        foreach ($categories as $category):
+                                            $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
+                                        endforeach;
+                                        $return .= '</select>
                                                    </div>
                                                  </div>
                                        
@@ -359,10 +359,10 @@ if ($action == "providers_list") {
                                                        <label>Service Provider</label>
                                                          <select class="form-control" name="provider" id="provider">
                                                                <option value="0">Select service provider...</option>';
-                                         foreach ($providers as $provider):
-                                             $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
-                                         endforeach;
-                                         $return .= '</select>
+                                        foreach ($providers as $provider):
+                                            $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
+                                        endforeach;
+                                        $return .= '</select>
                                                        </div>
                                                      </div>
                                                      <div id="provider_service">
@@ -491,32 +491,32 @@ if ($action == "providers_list") {
                                         foreach ($languages as $language):
                                             if ($language["default_language"]):
                                                 $return .= '<div class="form-group">
-                                                                <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> ' . $translationList . ' </label>
-                                                                <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                                </div>';
-                                                                                                    if (count($languages) > 1):
-                                                                                                        $return .= '<div class="hidden" id="translationsList">';
-                                                                                                    endif;
-                                                                                                else:
-                                                                                                    $return .= '<div class="form-group">
-                                                                <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> </label>
-                                                                <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                                </div>';
-                                                                                                endif;
-                                                                                            endforeach;
-                                                                                            if (count($languages) > 1):
-                                                                                                $return .= '</div>';
-                                                                                            endif;
+                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> ' . $translationList . ' </label>
+                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
+                                                   </div>';
+                                                if (count($languages) > 1):
+                                                    $return .= '<div class="hidden" id="translationsList">';
+                                                endif;
+                                            else:
+                                                $return .= '<div class="form-group">
+                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> </label>
+                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
+                                                   </div>';
+                                            endif;
+                                        endforeach;
+                                        if (count($languages) > 1):
+                                            $return .= '</div>';
+                                        endif;
 
-                                                                                                    $return .= '<div class="service-mode__block">
+                                        $return .= '<div class="service-mode__block">
                                                                         <div class="form-group">
                                                                         <label>Service Category</label>
                                                                         <select class="form-control" name="category">
                                                                                 <option value="0">Please select a category..</option>';
-                                                                                                    foreach ($categories as $category):
-                                                                                                        $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
-                                                                                                    endforeach;
-                                                                                                    $return .= '</select>
+                                        foreach ($categories as $category):
+                                            $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
+                                        endforeach;
+                                        $return .= '</select>
                                                                         </div>
                                                                     </div>
 
@@ -548,10 +548,10 @@ if ($action == "providers_list") {
                                                                             <label>Service Provider</label>
                                                                             <select class="form-control" name="provider" id="provider">
                                                                                     <option value="0">Select service provider...</option>';
-                                                                                                    foreach ($providers as $provider):
-                                                                                                        $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
-                                                                                                    endforeach;
-                                                                                                    $return .= '</select>
+                                        foreach ($providers as $provider):
+                                            $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
+                                        endforeach;
+                                        $return .= '</select>
                                                                             </div>
                                                                         </div>
                                                                         <div id="provider_service">
@@ -708,8 +708,8 @@ if ($action == "providers_list") {
                                                                     </div>
                                                                     </form>
                                                                     <script src="';
-                                                                                                                                                                                                         $return .= site_url('js/admin/');
-                                                                                                    $return .= 'script.js"></script>
+                                        $return .= site_url('js/admin/');
+                                        $return .= 'script.js"></script>
                                                                     <script>
                                                                     $(".other_services").click(function(){
                                                                         var control = $("#translationsList");
@@ -2493,7 +2493,7 @@ if ($action == "providers_list") {
                                                                                                                                                             $services = $conn->prepare("SELECT * FROM services WHERE service_api=:api");
                                                                                                                                                             $services->execute(["api" => $id]);
                                                                                                                                                             if ($settings["guard_apikey_type"] == 2 && $settings["guard_system_status"] == 2) {
-                                                                                                                                                                                                                                                                                                                                 $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))), 'salt');
+                                                                                                                                                                $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))), 'salt');
                                                                                                                                                             } else {
                                                                                                                                                                 $key = $provider["api_key"];
                                                                                                                                                             }
