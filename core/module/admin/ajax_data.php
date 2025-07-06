@@ -4,9 +4,11 @@ $action = $_POST["action"];
 $languages = $conn->prepare("SELECT * FROM languages WHERE language_type=:type");
 $languages->execute(["type" => 2]);
 $languages = $languages->fetchAll(PDO::FETCH_ASSOC);
-if (!KEY) {
-    $return = "<div class=\"modal-body\"><center><h1>VOID PHP VERSION<h1></center></div>";
+// Check if KEY constant is defined and valid
+if (!defined('KEY') || empty(KEY)) {
+    $return = "<div class=\"modal-body\"><center><h1>VOID PHP VERSION</h1></center></div>";
     echo json_encode(["content" => $return, "title" => "Error"]);
+    exit;
 }
 if ($action == "providers_list") {
     $smmapi = new SMMApi();
@@ -2096,10 +2098,10 @@ if ($action == "providers_list") {
                                                                                                                                                             $services = $conn->prepare("SELECT * FROM services WHERE service_api=:api");
                                                                                                                                                             $services->execute(["api" => $id]);
                                                                                                                                                             if ($settings["guard_apikey_type"] == 2 && $settings["guard_system_status"] == 2) {
-                                                                                                                                                                $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))));
-                                                                                                                                                            } else {
-                                                                                                                                                                $key = $provider["api_key"];
-                                                                                                                                                            }
+    $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))), '$2y$10$' . substr(md5(uniqid()), 0, 22));
+} else {
+    $key = $provider["api_key"];
+}
                                                                                                                                                             $return = "<form class=\"form\" action=\"" . site_url("admin/settings/providers/edit/" . $id) . "\" method=\"post\" data-xhr=\"true\">\r\n\r\n        <div class=\"modal-body\">\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Provider Name</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"name\" value=\"" . $provider["api_name"] . "\">\r\n          </div>\r\n<hr>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">API URL</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"url\" value=\"" . $provider["api_url"] . "\">\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">API Key</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"apikey\" value=\"" . $key . "\">\r\n          </div>\r\n<hr>\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">Balance Limit <small>(You will receive a notification if your balance drops below this amount)</small></label>\r\n            <input type=\"text\" class=\"form-control\" name=\"limit\" value=\"" . $provider["api_limit"] . "\">\r\n          </div>\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n         <button type=\"submit\" class=\"btn btn-primary\">Update</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>";
                                                                                                                                                             if (!$services->rowCount()) {
                                                                                                                                                                 $return .= " <a id=\"delete-row\" data-url=\"" . site_url("admin/settings/providers/delete/" . $provider["id"]) . "\" class=\"btn btn-link pull-right deactivate-integration-btn\">Delete Provider</a>";
