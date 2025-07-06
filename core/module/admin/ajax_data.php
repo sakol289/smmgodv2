@@ -1,13 +1,13 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $action = $_POST["action"];
 $languages = $conn->prepare("SELECT * FROM languages WHERE language_type=:type");
 $languages->execute(["type" => 2]);
 $languages = $languages->fetchAll(PDO::FETCH_ASSOC);
-
+if (!KEY) {
+    $return = "<div class=\"modal-body\"><center><h1>VOID PHP VERSION<h1></center></div>";
+    echo json_encode(["content" => $return, "title" => "Error"]);
+}
 if ($action == "providers_list") {
     $smmapi = new SMMApi();
     $provider = $_POST["provider"];
@@ -288,439 +288,42 @@ if ($action == "providers_list") {
                                 } else {
                                     if ($action == "new_service") {
                                         $categories = $conn->prepare("SELECT * FROM categories ORDER BY category_line ");
-                                        $categories->execute(array());
+                                        $categories->execute([]);
                                         $categories = $categories->fetchAll(PDO::FETCH_ASSOC);
                                         $providers = $conn->prepare("SELECT * FROM service_api");
-                                        $providers->execute(array());
+                                        $providers->execute([]);
                                         $providers = $providers->fetchAll(PDO::FETCH_ASSOC);
-                                        $return = '<form class="form" action="' . site_url("admin/services/new-service") . '" method="post" data-xhr="true">
-                                               <div class="modal-body">';
-                                        if (count($languages) > 1):
-                                            $translationList = '<a class="other_services"> Translations (' . (count($languages) - 1) . ') </a>';
-                                        else:
-                                            $translationList = '';
-                                        endif;
-                                        foreach ($languages as $language):
-                                            if ($language["default_language"]):
-                                                $return .= '<div class="form-group">
-                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> ' . $translationList . ' </label>
-                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                   </div>';
-                                                if (count($languages) > 1):
-                                                    $return .= '<div class="hidden" id="translationsList">';
-                                                endif;
-                                            else:
-                                                $return .= '<div class="form-group">
-                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> </label>
-                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                   </div>';
-                                            endif;
-                                        endforeach;
-                                        if (count($languages) > 1):
-                                            $return .= '</div>';
-                                        endif;
-                                        $return .= '<div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Service Category</label>
-                                                     <select class="form-control" name="category">
-                                                           <option value="0">Please select a category..</option>';
-                                        foreach ($categories as $category):
-                                            $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
-                                        endforeach;
-                                        $return .= '</select>
-                                                   </div>
-                                                 </div>
-                                       
-                                                 <div class="service-mode__wrapper">
-                                                   <div class="service-mode__block">
-                                                     <div class="form-group">
-                                                     <label>Service Type</label>
-                                                       <select class="form-control" name="package">
-                                                             <option value="1">Service</option>
-                                                             <option value="2">Package</option>
-                                                             <option value="3">Special Comment</option>
-                                                             <option value="4">Package Comment</option>
-                                                         </select>
-                                                     </div>
-                                                   </div>
-                                                   <div class="service-mode__block">
-                                                     <div class="form-group">
-                                                     <label>Mode</label>
-                                                       <select class="form-control" name="mode" id="serviceMode">
-                                                             <option value="1">Manual</option>
-                                                             <option value="2">Auto (API)</option>
-                                                         </select>
-                                                     </div>
-                                                   </div>
-                                       
-                                                   <div id="autoMode" style="display: none">
-                                                     <div class="service-mode__block">
-                                                       <div class="form-group">
-                                                       <label>Service Provider</label>
-                                                         <select class="form-control" name="provider" id="provider">
-                                                               <option value="0">Select service provider...</option>';
-                                        foreach ($providers as $provider):
-                                            $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
-                                        endforeach;
-                                        $return .= '</select>
-                                                       </div>
-                                                     </div>
-                                                     <div id="provider_service">
-                                                     </div>
-                                                     <div class="service-mode__block">
-                                                       <div class="form-group">
-                                                       <label>Dripfeed</label>
-                                                         <select class="form-control" name="dripfeed">
-                                                           <option value="1">Inactive</option>
-                                                           <option value="2">Active</option>
-                                                         </select>
-                                                       </div>
-                                                     </div>
-                                                   </div>
-                                                 </div>
-                                       
-                                                 <div class="form-group">
-                                                   <label class="form-group__service-name">Service price (1000 pieces) <span class="badge badge-secondary">' . $settings["site_base_currency"] . '</span></label>
-                                                   <input type="text" class="form-control" name="price" value="">
-                                                 </div>
-                                       
-                                                 <div class="row">
-                                                   <div class="col-md-6 form-group">
-                                                     <label class="form-group__service-name">Minimum order</label>
-                                                     <input type="text" class="form-control" name="min" value="">
-                                                   </div>
-                                       
-                                                   <div class="col-md-6 form-group">
-                                                     <label class="form-group__service-name">Maximum order</label>
-                                                     <input type="text" class="form-control" name="max" value="">
-                                                   </div>
-                                                 </div>
-                                       <hr>
-                                       <div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Refill Button</label>
-                                                     <select class="form-control" name="show_refill">
-                                                         <option value="false">Off</option>
-                                                         <option value="true">On</option>
-                                                     </select>
-                                                   </div>
-                                                 </div>
-                                       <div class="row" id="refill">
-                                                   <div class="col-md-6 form-group">
-                                                     <label class="form-group__service-name">Refill days</label>
-                                                     <input type="text" class="form-control" name="refill_days" value="">
-                                                   </div>
-                                       
-                                                   <div class="col-md-6 form-group">
-                                                     <label class="form-group__service-name">Refill Display (in hours)</label>
-                                                     <input type="text" class="form-control" name="refill_hours" value="">
-                                                   </div>
-                                                 </div>
-                                       <div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Cancel Button</label>
-                                                     <select class="form-control" name="cancelbutton">
-                                                         <option value="2">Off</option>
-                                                         <option value="1">On</option>
-                                                     </select>
-                                                   </div>
-                                                 </div>
-                                       
-                                                 <hr>
-                                                  
-                                                     
-                                                 <div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Order Link</label>
-                                                     <select class="form-control" name="want_username">
-                                                         <option value="1">Link</option>
-                                                         <option value="2">Username</option>
-                                                     </select>
-                                                   </div>
-                                                 </div>
-                                       
-                                                 <div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Personalized Service</label>
-                                                     <select class="form-control" name="secret">
-                                                         <option value="2">No</option>
-                                                         <option value="1">Yes</option>
-                                                     </select>
-                                                   </div>
-                                                 </div>
-                                       
-                                                 <div class="service-mode__block">
-                                                   <div class="form-group">
-                                                   <label>Service Speed</label>
-                                                     <select class="form-control" name="speed">
-                                                         <option value="1">Slow</option>
-                                                         <option value="2">Sometimes Slow</option>
-                                                         <option value="3">Normal</option>
-                                                         <option value="4">Fast</option>
-                                                     </select>
-                                                   </div>
-                                                 </div>
-                                       
-                                               </div>
-                                       
-                                                 <div class="modal-footer">
-                                                   <button type="submit" class="btn btn-primary">Add new service</button>
-                                                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                                 </div>
-                                                 </form>
-                                                 <script src="';
+                                        $return = "<form class=\"form\" action=\"" . site_url("admin/services/new-service") . "\" method=\"post\" data-xhr=\"true\">\r\n        <div class=\"modal-body\">";
+                                        if (1 < count($languages)) {
+                                            $translationList = "<a class=\"other_services\"> Translations (" . (count($languages) - 1) . ") </a>";
+                                        } else {
+                                            $translationList = "";
+                                        }
+                                        foreach ($languages as $language) {
+                                            if ($language["default_language"]) {
+                                                $return .= "<div class=\"form-group\">\r\n              <label class=\"form-group__service-name\">Service name <span class=\"badge\">" . $language["language_name"] . "</span> " . $translationList . " </label>\r\n              <input type=\"text\" class=\"form-control\" name=\"name[" . $language["language_code"] . "]\" value=\"" . $multiName[$language["language_code"]] . "\">\r\n            </div>";
+                                                if (1 < count($languages)) {
+                                                    $return .= "<div class=\"hidden\" id=\"translationsList\">";
+                                                }
+                                            } else {
+                                                $return .= "<div class=\"form-group\">\r\n              <label class=\"form-group__service-name\">Service name <span class=\"badge\">" . $language["language_name"] . "</span> </label>\r\n              <input type=\"text\" class=\"form-control\" name=\"name[" . $language["language_code"] . "]\" value=\"" . $multiName[$language["language_code"]] . "\">\r\n            </div>";
+                                            }
+                                        }
+                                        if (1 < count($languages)) {
+                                            $return .= "</div>";
+                                        }
+                                        $return .= "<div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Service Category</label>\r\n              <select class=\"form-control\" name=\"category\">\r\n                    <option value=\"0\">Please select category..</option>";
+                                        foreach ($categories as $category) {
+                                            $return .= "<option value=\"" . $category["category_id"] . "\">" . $category["category_name"] . "</option>";
+                                        }
+                                        $return .= "</select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"service-mode__wrapper\">\r\n            <div class=\"service-mode__block\">\r\n              <div class=\"form-group\">\r\n              <label>Service Type</label>\r\n                <select class=\"form-control\" name=\"package\">\r\n                      <option value=\"1\">Service</option>\r\n                      <option value=\"2\">Package</option>\r\n                      <option value=\"3\">Special Comment</option>\r\n                      <option value=\"4\">Package Comment</option>\r\n                  </select>\r\n              </div>\r\n            </div>\r\n            <div class=\"service-mode__block\">\r\n              <div class=\"form-group\">\r\n              <label>Mode</label>\r\n                <select class=\"form-control\" name=\"mode\" id=\"serviceMode\">\r\n                      <option value=\"1\">Manuel</option>\r\n                      <option value=\"2\">Automatic (API)</option>\r\n                  </select>\r\n              </div>\r\n            </div>\r\n\r\n            <div id=\"autoMode\" style=\"display: none\">\r\n              <div class=\"service-mode__block\">\r\n                <div class=\"form-group\">\r\n                <label>Service Provider</label>\r\n                  <select class=\"form-control\" name=\"provider\" id=\"provider\">\r\n                        <option value=\"0\">Select service provider...</option>";
+                                        foreach ($providers as $provider) {
+                                            $return .= "<option value=\"" . $provider["id"] . "\">" . $provider["api_name"] . "</option>";
+                                        }
+                                        $return .= "</select>\r\n                </div>\r\n              </div>\r\n              <div id=\"provider_service\">\r\n              </div>\r\n              <div class=\"service-mode__block\">\r\n                <div class=\"form-group\">\r\n                <label>Dripfeed</label>\r\n                  <select class=\"form-control\" name=\"dripfeed\">\r\n                    <option value=\"1\">Passive</option>\r\n                    <option value=\"2\">Active</option>\r\n                  </select>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"form-group\">\r\n            <label class=\"form-group__service-name\">1000 Quantity Fee</label>\r\n            <input type=\"text\" class=\"form-control\" name=\"price\" value=\"\">\r\n          </div>\r\n\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6 form-group\">\r\n              <label class=\"form-group__service-name\">Minimum</label>\r\n              <input type=\"text\" class=\"form-control\" name=\"min\" value=\"\">\r\n            </div>\r\n\r\n            <div class=\"col-md-6 form-group\">\r\n              <label class=\"form-group__service-name\">Maximum</label>\r\n              <input type=\"text\" class=\"form-control\" name=\"max\" value=\"\">\r\n            </div>\r\n          </div>\r\n<hr>\r\n          <div class=\"row\">\r\n          <div class=\"form-group col-md-6\">\r\n          <label>Cancel button</label>\r\n            <select class=\"form-control\" name=\"cancel_type\">\r\n                <option value=\"2\">Active</option>\r\n                <option value=\"1\" selected>Passive</option>\r\n            </select>\r\n          </div>\r\n          \r\n          \r\n          <div class=\"form-group col-md-6\">\r\n          <label>Refill button</label>\r\n            <select id=\"refill\" class=\"form-control\" name=\"refill_type\">\r\n                <option value=\"2\">Active</option>\r\n                <option value=\"1\" selected>Passive</option>\r\n            </select>\r\n          </div>\r\n          </div>\r\n          \r\n          <div id=\"refill_day\" class=\"form-group\">\r\n          <label>Refill Maximum Day <small>(If lifetime, write 0)</small></label>\r\n            <input type=\"number\" class=\"form-control\" name=\"refill_time\">\r\n          </div>\r\n       \r\n\r\n          <hr>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Order Link<small>(Shown on the new order page)</small></label>\r\n              <select class=\"form-control\" name=\"want_username\">\r\n                  <option value=\"1\">Link</option>\r\n                  <option value=\"2\">Username</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Personal Service <small>(Only the people you choose can see it)</small></label>\r\n              <select class=\"form-control\" name=\"secret\">\r\n                  <option value=\"2\">No</option>\r\n                  <option value=\"1\">Yes</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n          <div class=\"service-mode__block\">\r\n            <div class=\"form-group\">\r\n            <label>Service Speed <small>(Displayed as symbol and color in the service list)</small></label>\r\n              <select class=\"form-control\" name=\"speed\">\r\n                  <option value=\"1\">Slow</option>\r\n                  <option value=\"2\">Sometimes Slow</option>\r\n                  <option value=\"3\">Normal</option>\r\n                  <option value=\"4\">Fast</option>\r\n              </select>\r\n            </div>\r\n          </div>\r\n\r\n        </div>\r\n\r\n          <div class=\"modal-footer\">\r\n            <button type=\"submit\" class=\"btn btn-primary\">Add new service</button>\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n          </div>\r\n          </form>\r\n          <script src=\"";
                                         $return .= site_url("js/admin/");
                                         $return .= "script.js\"></script>\r\n          <script>\r\n\r\n          var type = \$(\"#refill\").val();\r\n\r\n          if( type == 1 ){\r\n\r\n            \$(\"#refill_day\").hide();\r\n\r\n          } else{\r\n\r\n            \$(\"#refill_day\").show();\r\n\r\n          }\r\n\r\n          \$(\"#refill\").change(function(){\r\n\r\n            var type = \$(this).val();\r\n\r\n              if( type == 1 ){\r\n\r\n                \$(\"#refill_day\").hide();\r\n\r\n              } else{\r\n\r\n                \$(\"#refill_day\").show();\r\n\r\n              }\r\n\r\n          });\r\n\r\n          \$(\".other_services\").click(function(){\r\n            var control = \$(\"#translationsList\");\r\n            if( control.attr(\"class\") == \"hidden\" ){\r\n              control.removeClass(\"hidden\");\r\n            } else{\r\n              control.addClass(\"hidden\");\r\n            }\r\n          });\r\n          </script>\r\n          ";
                                         echo json_encode(["content" => $return, "title" => "Add new service"]);
-                                    }
-                                    if ($action == "new_servicev3") {
-                                        $categories = $conn->prepare("SELECT * FROM categories ORDER BY category_line ");
-                                        $categories->execute(array());
-                                        $categories = $categories->fetchAll(PDO::FETCH_ASSOC);
-                                        $providers  = $conn->prepare("SELECT * FROM service_api");
-                                        $providers->execute(array());
-                                        $providers  = $providers->fetchAll(PDO::FETCH_ASSOC);
-                                        $return = '<form class="form" action="' . site_url("admin/services/new-service") . '" method="post" data-xhr="true">
-                                                    <div class="modal-body">';
-
-                                        if (count($languages) > 1):
-                                            $translationList = '<a class="other_services"> Translations (' . (count($languages) - 1) . ') </a>';
-                                        else:
-                                            $translationList  = '';
-                                        endif;
-                                        foreach ($languages as $language):
-                                            if ($language["default_language"]):
-                                                $return .= '<div class="form-group">
-                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> ' . $translationList . ' </label>
-                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                   </div>';
-                                                if (count($languages) > 1):
-                                                    $return .= '<div class="hidden" id="translationsList">';
-                                                endif;
-                                            else:
-                                                $return .= '<div class="form-group">
-                                                     <label class="form-group__service-name">Service name <span class="badge">' . $language["language_name"] . '</span> </label>
-                                                     <input type="text" class="form-control" name="name[' . $language["language_code"] . ']" value="' . $multiName[$language["language_code"]] . '">
-                                                   </div>';
-                                            endif;
-                                        endforeach;
-                                        if (count($languages) > 1):
-                                            $return .= '</div>';
-                                        endif;
-
-                                        $return .= '<div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Service Category</label>
-                                                                        <select class="form-control" name="category">
-                                                                                <option value="0">Please select a category..</option>';
-                                        foreach ($categories as $category):
-                                            $return .= '<option value="' . $category["category_id"] . '">' . $category["category_name"] . '</option>';
-                                        endforeach;
-                                        $return .= '</select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="service-mode__wrapper">
-                                                                        <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Service Type</label>
-                                                                            <select class="form-control" name="package">
-                                                                                <option value="1">Service</option>
-                                                                                <option value="2">Package</option>
-                                                                                <option value="3">Special Comment</option>
-                                                                                <option value="4">Package Comment</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        </div>
-                                                                        <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Mode</label>
-                                                                            <select class="form-control" name="mode" id="serviceMode">
-                                                                                <option value="1">Manual</option>
-                                                                                <option value="2">Auto (API)</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        </div>
-
-                                                                        <div id="autoMode" style="display: none">
-                                                                        <div class="service-mode__block">
-                                                                            <div class="form-group">
-                                                                            <label>Service Provider</label>
-                                                                            <select class="form-control" name="provider" id="provider">
-                                                                                    <option value="0">Select service provider...</option>';
-                                        foreach ($providers as $provider):
-                                            $return .= '<option value="' . $provider["id"] . '">' . $provider["api_name"] . '</option>';
-                                        endforeach;
-                                        $return .= '</select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div id="provider_service">
-                                                                        </div>
-                                                                        <div class="service-mode__block"  style="display: none">
-                                                                            <div class="form-group">
-                                                                            <label>Price Over the Purchase Price</label>
-                                                                                                                                                         <select class="form-control" name="saleprice_cal" id="saleprice_cal">
-                                                                                  <option value="normal">No</option>
-                                                                                  <option value="percent">Add % to your purchase price </option>
-                                                                                  <option value="amount">Add amount to your purchase price </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="form-group" style="display: none">
-                                                                            <label class="form-group__service-name">Price</label>
-                                                                            <input type="text" class="form-control" name="saleprice" value="">
-                                                                        </div>
-                                                                        <div class="service-mode__block">
-                                                                            <div class="form-group">
-                                                                            <label>Dripfeed</label>
-                                                                            <select class="form-control" name="dripfeed">
-                                                                                <option value="1">Inactive</option>
-                                                                                <option value="2">Active</option>
-                                                                            </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="service-mode__wrapper">
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 service-mode__block ">
-                                                                            <div class="form-group">
-                                                                            <label>Check Instagram profile privacy?</label>
-                                                                                <select class="form-control" name="instagram_private">
-                                                                                    <option value="1">No</option>
-                                                                                    <option value="2">Yes</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            </div>
-                                                                            <div class="col-md-6 service-mode__block ">
-                                                                            <div class="form-group">
-                                                                            <label>Starting number</label>
-                                                                                <select class="form-control" name="start_count">
-                                                                                    <option value="none">Do not retreat</option>
-                                                                                    <option value="instagram_follower">Number of Instagram followers</option>
-                                                                                    <option value="instagram_photo">Instagram photo likes</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="col-md-6 service-mode__block ">
-                                                                            <div class="form-group">
-                                                                            <label>Enter the 2nd order on the same link?</label>
-                                                                                <select class="form-control" name="instagram_second">
-                                                                                    <option value="2">Yes</option>
-                                                                                    <option value="1">No</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                    
-                                                                    <div class="form-group">
-                                                                                                                                                 <label class="form-group__service-name">Service price (1000 pieces) <span class="badge badge-secondary">' . $settings["site_base_currency"] . '</span></label>
-                                                                        <input type="text" class="form-control" name="price" value="">
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-md-6 form-group">
-                                                                        <label class="form-group__service-name">Minimum order</label>
-                                                                        <input type="text" class="form-control" name="min" value="">
-                                                                        </div>
-
-                                                                        <div class="col-md-6 form-group">
-                                                                        <label class="form-group__service-name">Maximum order</label>
-                                                                        <input type="text" class="form-control" name="max" value="">
-                                                                        </div>
-                                                                    </div>
-                                                            <hr>
-                                                            <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Refill Button</label>
-                                                                        <select class="form-control" name="show_refill">
-                                                                            <option value="false">Off</option>
-                                                                            <option value="true">On</option>
-                                                                        </select>
-                                                                        </div>
-                                                                    </div>
-                                                            <div class="row" id="refill">
-                                                                        <div class="col-md-6 form-group">
-                                                                        <label class="form-group__service-name">Refill days</label>
-                                                                        <input type="text" class="form-control" name="refill_days" value="">
-                                                                        </div>
-
-                                                                        <div class="col-md-6 form-group">
-                                                                        <label class="form-group__service-name">Refill Display (in hours)</label>
-                                                                        <input type="text" class="form-control" name="refill_hours" value="">
-                                                                        </div>
-                                                                    </div>
-                                                            <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Cancel Button</label>
-                                                                        <select class="form-control" name="cancelbutton">
-                                                                            <option value="2">Off</option>
-                                                                            <option value="1">On</option>
-                                                                        </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <hr>
-                                                                    
-                                                                        
-                                                                    <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Order Link</label>
-                                                                        <select class="form-control" name="want_username">
-                                                                            <option value="1">Link</option>
-                                                                            <option value="2">Username</option>
-                                                                        </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Personalized Service</label>
-                                                                        <select class="form-control" name="secret">
-                                                                            <option value="2">No</option>
-                                                                            <option value="1">Yes</option>
-                                                                        </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="service-mode__block">
-                                                                        <div class="form-group">
-                                                                        <label>Service Speed</label>
-                                                                        <select class="form-control" name="speed">
-                                                                            <option value="1">Slow</option>
-                                                                            <option value="2">Sometimes Slow</option>
-                                                                            <option value="3">Normal</option>
-                                                                            <option value="4">Fast</option>
-                                                                        </select>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    </div>
-
-                                                                    <div class="modal-footer">
-                                                                        <button type="submit" class="btn btn-primary">Add new service</button>
-                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                                                    </div>
-                                                                    </form>
-                                                                    <script src="';
-                                        $return .= site_url('js/admin/');
-                                        $return .= 'script.js"></script>
-                                                                    <script>
-                                                                    $(".other_services").click(function(){
-                                                                        var control = $("#translationsList");
-                                                                        if( control.attr("class") == "hidden" ){
-                                                                        control.removeClass("hidden");
-                                                                        } else{
-                                                                        control.addClass("hidden");
-                                                                        }
-                                                                    });
-                                                                    </script>
-                                                                    ';
                                     } else {
                                         if ($action == "edit_service") {
                                             $id = $_POST["id"];
@@ -2493,7 +2096,7 @@ if ($action == "providers_list") {
                                                                                                                                                             $services = $conn->prepare("SELECT * FROM services WHERE service_api=:api");
                                                                                                                                                             $services->execute(["api" => $id]);
                                                                                                                                                             if ($settings["guard_apikey_type"] == 2 && $settings["guard_system_status"] == 2) {
-                                                                                                                                                                $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))), 'salt');
+                                                                                                                                                                $key = crypt(crc32(md5(sha1(str_rot13(base64_encode($provider["api_key"]))))));
                                                                                                                                                             } else {
                                                                                                                                                                 $key = $provider["api_key"];
                                                                                                                                                             }
