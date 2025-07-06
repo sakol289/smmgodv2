@@ -9,11 +9,7 @@ $languages = $conn->prepare("SELECT * FROM languages WHERE language_type=:type")
 $languages->execute(["type" => 2]);
 $languages = $languages->fetchAll(PDO::FETCH_ASSOC);
 // Check if KEY constant is defined and valid
-if (!defined('KEY')) {
-    $return = "<div class=\"modal-body\"><center><h1>VOID PHP VERSION<h1></center></div>";
-    echo json_encode(["content" => $return, "title" => "Error"]);
-    exit;
-}
+
 if ($action == "providers_list") {
     $smmapi = new SMMApi();
     $provider = $_POST["provider"];
