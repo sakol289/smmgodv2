@@ -56,9 +56,9 @@ header('Content-Type: application/json');
   if ( empty( $action ) || empty( $key ) ):
     $output    = array('error'=>'Incorrect request');
   elseif ( !$client->rowCount() ):
-    $output    = array('error'=>'API key hatalı','status'=>"102");
+    $output    = array('error'=>'API key is incorrect','status'=>"102");
   elseif ( $clientDetail["client_type"] == 1 ):
-    $output    = array('error'=>'Hesabınız pasif','status'=>"103");
+    $output    = array('error'=>'Your account is inactive','status'=>"103");
   else:
     ## actionlar başla ##
       if( $action == "balance" ):
@@ -77,7 +77,7 @@ header('Content-Type: application/json');
 
           endif;
         else:
-          $output    = array('error'=>'Sipariş bulunamadı.','status'=>"104");
+          $output    = array('error'=>'Order not found.','status'=>"104");
         endif;
       elseif( $action == "services" ):
         $servicesRows = $conn->prepare("SELECT *, services.name_lang as name_lang FROM services INNER JOIN categories ON categories.category_id=services.category_id WHERE categories.category_type=:type2 && services.service_type=:type  ORDER BY categories.category_line,services.service_line ASC ");

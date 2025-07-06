@@ -50,7 +50,7 @@ $currencies = $conn->prepare("SELECT * FROM currency WHERE nouse=:code");
                 $fv_newname = "";
             endif;
             if (empty($name)):
-                $errorText = "Panel adı boş olamaz";
+                $errorText = "Panel name cannot be empty";
                 $error = 1;
             else:
                 echo $timezone;
@@ -1288,7 +1288,7 @@ elseif (route(2) == "integrations"):
 
                     if (empty($subject)):
                         $error = 1;
-                        $errorText = "Lütfen başlık yazınız.";
+                        $errorText = "Please write a title.";
                         $icon = "error";
                     else:
                         $update = $conn->prepare("UPDATE ticket_subjects SET subject=:subject, content=:content, auto_reply=:auto_reply WHERE subject_id=:id ");
@@ -1327,7 +1327,7 @@ elseif (route(2) == "integrations"):
 
                     if (empty($subject)):
                         $error = 1;
-                        $errorText = "Lütfen başlık yazınız.";
+                        $errorText = "Please write a title.";
                         $icon = "error";
                     else:
 

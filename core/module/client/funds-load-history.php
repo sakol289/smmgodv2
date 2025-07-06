@@ -114,10 +114,10 @@ if( $_POST && $_POST["payment_bank"] ):
             if( $settings["alert_newbankpayment"] == 2 ):
                 if( $settings["alert_type"] == 3 ):   $sendmail = 1; $sendsms  = 1; elseif( $settings["alert_type"] == 2 ): $sendmail = 1; $sendsms=0; elseif( $settings["alert_type"] == 1 ): $sendmail=0; $sendsms  = 1; endif;
                 if( $sendsms ):
-                    SMSUser($settings["admin_telephone"],"Websitenizde #".$conn->lastInsertId()." idli yeni bir ödeme talebi mevcut.");
+                    SMSUser($settings["admin_telephone"],"On Your Website #".$conn->lastInsertId()." idli yeni bir ödeme talebi mevcut.");
                 endif;
                 if( $sendmail ):
-                    sendMail(["subject"=>"Yeni ödeme talebi mevcut.","body"=>"Websitenizde #".$conn->lastInsertId()." idli yeni bir ödeme talebi mevcut.","mail"=>$settings["admin_mail"]]);
+                    sendMail(["subject"=>"Yeni ödeme talebi mevcut.","body"=>"On Your Website #".$conn->lastInsertId()." idli yeni bir ödeme talebi mevcut.","mail"=>$settings["admin_mail"]]);
                 endif;
             endif;
         }else{
@@ -173,7 +173,7 @@ elseif( $_POST && $_POST["payment_type"] ):
             $payment_amount   = $amount_fee * 100;
             $merchant_oid     = $paymentCode;
             $user_name        = $user["first_name"];
-            $user_address     = "Belirtilmemiş";
+            $user_address     = "Unspecified";
             $user_phone       = $user["telephone"];
             $payment_type     = "eft";
             $user_ip          = GetIP();
@@ -232,7 +232,7 @@ elseif( $_POST && $_POST["payment_type"] ):
             $payment_amount   = $amount_fee * 100;
             $merchant_oid     = $paymentCode;
             $user_name        = $user["first_name"];
-            $user_address     = "Belirtilmemiş";
+            $user_address     = "Unspecified";
             $user_phone       = $user["telephone"];
             $currency         = "TL";
             $merchant_ok_url  = URL;

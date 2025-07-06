@@ -108,7 +108,7 @@ $titleAdmin = "Subscriptions";
           $statu  = "Canceled";
         break;
         case 'processing':
-          $statu  = "Gönderim Sırasında";
+          $statu  = "During Submission";
         break;
         case 'expired':
           $statu  = "Expired";

@@ -37,7 +37,7 @@ header("Location:".site_url(@$_GET['url'] =='neworder' ? '' : $_GET['url']));
 if( route(1) == "newapikey" ){
     $conn->beginTransaction();
     $insert= $conn->prepare("INSERT INTO client_report SET client_id=:c_id, action=:action, report_ip=:ip, report_date=:date ");
-    $insert= $insert->execute(array("c_id"=>$user["client_id"],"action"=>"API Key değiştirildi","ip"=>GetIP(),"date"=>date("Y-m-d H:i:s") ));
+    $insert= $insert->execute(array("c_id"=>$user["client_id"],"action"=>"API Key changed","ip"=>GetIP(),"date"=>date("Y-m-d H:i:s") ));
     $apikey = CreateApiKey(["email"=>$user["email"],"username"=>$user["username"]]);
     $update = $conn->prepare("UPDATE clients SET apikey=:key WHERE client_id=:id ");
     $update = $update->execute(array("id"=>$user["client_id"],"key"=>$apikey ));

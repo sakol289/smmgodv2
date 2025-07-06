@@ -83,7 +83,8 @@
 
       if($count>0):
         $error    = 1;
-        $errorText= "Bu kupon adı mevcut";
+        // $errorText= "Bu kupon adı mevcut";
+        $errorText= "This coupon name is available";
         $icon     = "error";
       else:
           $conn->beginTransaction();

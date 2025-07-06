@@ -124,10 +124,10 @@ if ($_POST && $_POST["payment_bank"]):
                     $sendsms  = 1;
                 endif;
                 if ($sendsms):
-                    SMSUser($settings["admin_telephone"], "Websitenizde #" . $conn->lastInsertId() . " idli yeni bir ödeme talebi mevcut.");
+                    SMSUser($settings["admin_telephone"], "On Your Website #" . $conn->lastInsertId() . " There is a new payment request in idli.");
                 endif;
                 if ($sendmail):
-                    sendMail(["subject" => "Yeni ödeme talebi mevcut.", "body" => "Websitenizde #" . $conn->lastInsertId() . " idli yeni bir ödeme talebi mevcut.", "mail" => $settings["admin_mail"]]);
+                    sendMail(["subject" => "There is a new payment request.", "body" => "On Your Website #" . $conn->lastInsertId() . " There is a new payment request in idli.", "mail" => $settings["admin_mail"]]);
                 endif;
             endif;
         } else {
@@ -183,7 +183,7 @@ elseif ($_POST && $_POST["payment_type"]):
             $payment_amount   = $amount_fee * 100;
             $merchant_oid     = $paymentCode;
             $user_name        = $user["first_name"];
-            $user_address     = "Belirtilmemiş";
+            $user_address     = "Unspecified";
             $user_phone       = $user["telephone"];
             $payment_type     = "eft";
             $user_ip          = GetIP();
@@ -321,7 +321,7 @@ elseif ($_POST && $_POST["payment_type"]):
                 'userID' => $user["client_id"],
                 'proApi' => TRUE,
                 'productData' => [
-                    "name" =>  $amount . " TL Tutarında Bakiye (" . $paymentCode . ")",
+                    "name" =>  $amount . " Balance in TL (" . $paymentCode . ")",
                     "amount" => $amount_fee * 100,
                     "extraData" => $paymentCode,
                     "paymentChannel" => $payment_types, // 1 Mobil Ödeme, 2 Kredi Kartı,3 Banka Havale/Eft/Atm,4 Türk Telekom Ödeme (TTNET),5 Mikrocard,6 CashU

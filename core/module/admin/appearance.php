@@ -661,7 +661,8 @@ elseif (route(2) == "language"):
       $code = $_POST["languagecode"];
       if (countRow(["table" => "languages", "where" => ["language_code" => $code]])):
         $error      = 1;
-        $errorText  = "Bu dil kodu zaten kullanılıyor.";
+        // $errorText  = "Bu dil kodu zaten kullanılıyor.";
+        $errorText  = "This language code is already in use.";
       else:
         $insert = $conn->prepare("INSERT INTO languages SET language_name=:name, language_code=:code ");
         $insert->execute(array("name" => $name, "code" => $code));
