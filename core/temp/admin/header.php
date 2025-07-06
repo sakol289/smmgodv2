@@ -251,3 +251,146 @@ endif;
     </div>
 </div>
 <?php endif; ?>  
+
+
+<script>
+
+var type = $("#refill").val();
+
+if( type == 1 ){
+
+  $("#refill_day").hide();
+
+} else{
+
+  $("#refill_day").show();
+
+}
+
+$("#refill").change(function(){
+
+  var type = $(this).val();
+
+    if( type == 1 ){
+
+      $("#refill_day").hide();
+
+    } else{
+
+      $("#refill_day").show();
+
+    }
+
+});
+
+/* It is a minprice checkbox event. When it is clicked, the minpriceinput is readonly. When it is checked, the input remains open when it is not.*/
+ $("#minPriceCheckbox").click(function(){
+      var minPriceInput = $("#minPriceInput");  
+      var minText = $("#minText");
+     if(!this.checked){
+      minPriceInput.removeAttr("readonly","readonly");
+     }else{
+      minPriceInput.attr("readonly","readonly");
+      minPriceInput.val(minText.text());
+     }
+  });
+
+
+/* Maxprice is a checkbox event. When it is clicked, the minpriceinput is readonly. When it is checked, the input remains open when it is not checked. */
+ $("#maxPriceCheckbox").click(function(){
+      var maxPriceInput = $("#maxPriceInput");  
+      var maxText = $("#maxText");
+     if(!this.checked){
+      maxPriceInput.removeAttr("readonly","readonly");
+     }else{
+      maxPriceInput.attr("readonly","readonly");
+      maxPriceInput.val(maxText.text());
+     }
+  });
+
+
+/* Maxprice is a checkbox event. When it is clicked, the minpriceinput is readonly. When it is checked, the input remains open when it is not checked. */
+ $("#priceCheckbox").click(function(){
+      var priceInput = $("#priceInput");  
+      var priceThree = $("#priceThreeInput");
+     if(this.checked){
+          priceInput.css("display","none");
+          priceThree.css("display","block");
+     }else{
+          priceThree.css("display","none");
+          priceInput.css("display","block");
+     }
+  });
+  
+ $(".other_services").click(function(){
+   var control = $("#translationsList");
+   if( control.attr("class") == "hidden" ){
+     control.removeClass("hidden");
+   } else{
+     control.addClass("hidden");
+   }
+ });
+var site_url  = $("head base").attr("href");
+  $("#provider").change(function(){
+    var provider = $(this).val();
+    getProviderServices(provider,site_url);
+  });
+
+  getProvider();
+  $("#serviceMode").change(function(){
+    getProvider();
+  });
+
+  getSalePrice();
+  $("#saleprice_cal").change(function(){
+    getSalePrice();
+  });
+
+  getSubscription();
+  $("#subscription_package").change(function(){
+    getSubscription();
+  });
+  function getProviderServices(provider,site_url){
+    if( provider == 0 ){
+      $("#provider_service").hide();
+    }else{
+      $.post(site_url+"admin/ajax_data",{action:"providers_list",provider:provider}).done(function( data ) {
+        $("#provider_service").show();
+        $("#provider_service").html(data);
+      }).fail(function(){
+        alert("An error occurred!");
+      });
+    }
+  }
+
+  function getProvider(){
+    var mode = $("#serviceMode").val();
+      if( mode == 1 ){
+        $("#autoMode").hide();
+      }else{
+        $("#autoMode").show();
+      }
+  }
+
+  function getSalePrice(){
+    var type = $("#saleprice_cal").val();
+      if( type == "normal" ){
+        $("#saleprice").hide();
+        $("#servicePrice").show();
+      }else{
+        $("#saleprice").show();
+        $("#servicePrice").hide();
+      }
+  }
+
+  function getSubscription(){
+    var type = $("#subscription_package").val();
+      if( type == "11" || type == "12" ){
+        $("#unlimited").show();
+        $("#limited").hide();
+      }else{
+        $("#unlimited").hide();
+        $("#limited").show();
+      }
+  }
+</script>
