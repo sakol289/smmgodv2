@@ -38,70 +38,6 @@
 			color: #ffffff !important;
 			text-decoration: underline;
 		}
-		
-		/* Mobile responsive table styles */
-		@media (max-width: 768px) {
-			#serv-table {
-				width: 100% !important;
-				min-width: 100% !important;
-				margin: 0 !important;
-				padding: 0 !important;
-			}
-			
-			#serv-table thead {
-				display: none;
-			}
-			
-			#serv-table tbody tr {
-				display: block;
-				margin-bottom: 15px;
-				border: 1px solid #ddd;
-				border-radius: 8px;
-				padding: 15px;
-				background: #fff;
-				box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-			}
-			
-			#serv-table tbody td {
-				display: block;
-				text-align: left;
-				padding: 8px 0;
-				border: none;
-				position: relative;
-				padding-left: 50%;
-			}
-			
-			#serv-table tbody td:before {
-				content: attr(data-title) ": ";
-				position: absolute;
-				left: 0;
-				width: 45%;
-				font-weight: bold;
-				color: #333;
-			}
-			
-			.cate-row {
-				background: #f8f9fa !important;
-				border-left: 4px solid #007bff !important;
-				margin-bottom: 10px;
-			}
-			
-			.cate-row td {
-				padding: 10px 15px !important;
-				font-weight: bold;
-				font-size: 16px;
-				color: #333;
-			}
-			
-			.cate-row td:before {
-				display: none;
-			}
-			
-			.desc-btn {
-				display: inline-block;
-				margin: 5px;
-			}
-		}
 	</style>
 	<div class="container-fluid">
 
@@ -198,7 +134,7 @@
 							<!-- category_name -->
 
 							<div class="dash-list mt-4">
-								<table id="serv-table" class="app-mtable table results table-mobile-cards w-100">
+								<table id="serv-table" class="app-mtable table results table-mobile-cards">
 
 									<thead>
 										<tr></tr>
