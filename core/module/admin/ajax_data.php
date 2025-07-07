@@ -17,18 +17,20 @@ if ($action == "providers_list") {
     if ($api["api_type"] == 3) {
         echo "<div class=\"service-mode__block\">\r\n\r\n          <div class=\"form-group\">\r\n\r\n            <label>Service</label>\r\n\r\n            <input class=\"form-control\" name=\"service\" placeholder=\"Enter Service ID\">\r\n\r\n          </div>\r\n\r\n        </div>";
     } else {
-        if ($api["api_type"] == 1) {
-            $services = $smmapi->action(["key" => $api["api_key"], "action" => "services"], $api["api_url"]);
-            echo "<div class=\"service-mode__block\">\r\n\r\n          <div class=\"form-group\">\r\n\r\n          <label>Service</label>\r\n\r\n            <select class=\"form-control\" name=\"service\">";
-            foreach ($services as $service) {
-                echo "<option value=\"" . $service->service . "\"";
-                if ($_SESSION["data"]["service"] == $service->service) {
-                    echo "selected";
-                }
-                echo ">" . $service->service . " - " . $service->name . " - " . priceFormat($service->rate) . "</option>";
-            }
-            echo "</select>\r\n\r\n          </div>\r\n\r\n        </div>";
-        }
+        // if ($api["api_type"] == 1) {
+        //     $services = $smmapi->action(["key" => $api["api_key"], "action" => "services"], $api["api_url"]);
+        //     echo "<div class=\"service-mode__block\">\r\n\r\n          <div class=\"form-group\">\r\n\r\n          <label>Service</label>\r\n\r\n            <select class=\"form-control\" name=\"service\">";
+        //     foreach ($services as $service) {
+        //         echo "<option value=\"" . $service->service . "\"";
+        //         if ($_SESSION["data"]["service"] == $service->service) {
+        //             echo "selected";
+        //         }
+        //         echo ">" . $service->service . " - " . $service->name . " - " . priceFormat($service->rate) . "</option>";
+        //     }
+        //     echo "</select>\r\n\r\n          </div>\r\n\r\n        </div>";
+        // }
+        echo "<div class=\"service-mode__block\">\r\n\r\n          <div class=\"form-group\">\r\n\r\n            <label>Service</label>\r\n\r\n            <input class=\"form-control\" name=\"service\" placeholder=\"Enter Service ID\">\r\n\r\n          </div>\r\n\r\n        </div>";
+
     }
     unset($_SESSION["data"]);
 } else {
