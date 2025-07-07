@@ -2544,7 +2544,6 @@ ul.app-news li .icon.discord {
     border-radius: 10px;
     border-bottom: 2px solid #ac4006;
     word-break: break-all;
-    border-bottom: 2px solid rgb(172, 64, 6) !important;
   }
   .table td {
     border: none;

@@ -30,6 +30,27 @@
 {% endif %}
 
 
+<style>
+	.serviceData {
+		width: 150px;
+		height: 150px;
+		margin: 10px;
+		display: inline-block;
+		border-radius: 10px;
+	}
+
+	/* กล่องเลขคี่ (1, 3, 5...) */
+	.serviceData:nth-child(odd) {
+		background-color: #e91e63; /* ชมพู */
+	}
+
+	/* กล่องเลขคู่ (2, 4, 6...) */
+	.serviceData:nth-child(even) {
+		background-color: #ff9800; /* ส้ม */
+	}
+</style>
+
+
 <!-- Main variables *content* -->
 
 <div class="app-content">
@@ -39,10 +60,10 @@
 			text-decoration: underline;
 		}
 	</style>
-	<script>
-		const style = document.querySelector('.app-mtable');
-	style.style.display = ''; // ล้าง inline style
-	/</script>
+	 <script>
+			const style = document.querySelector('.app-mtable');
+		style.style.display = ''; // ล้าง inline style
+		/</script>
 	<div class="container-fluid">
 
 
@@ -172,10 +193,7 @@
 
 
 											{% for service in category['services'] %}
-												<tr
-													{# class="serviceData" data-category="{{ category["category_name"] }}"> #}
-													<tr class="table-mobile-card serviceData" data-category="{{ category["category_name"] }}">
-													<td data-title="ID">{{ service["service_id"] }}</td>
+												<tr{{service["service_id"]}}</td {# class="serviceData" data-category="{{ category["category_name"] }}"> #} <tr class="table-mobile-card serviceData" data-category="{{ category["category_name"] }}"> <td data-title="ID">>
 													<td data-title="Services" class="pm-ikon">{{ service["service_name"] }}</td>
 
 
@@ -252,184 +270,184 @@
 
 
 	 <script>
-			
-			
-			function ikon(opt) {
-			    var ikon = "";
-			    if (opt.indexOf("Instagram") >= 0) {
-			        ikon = "<span class=\"fs-ig\"><i class=\"fab fa-instagram\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("YouTube") >= 0) {
-			        ikon = "<span class=\"fs-yt\"><i class=\"fab fa-youtube\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Facebook") >= 0) {
-			        ikon = "<span class=\"fs-fb\"><i class=\"fab fa-facebook-square\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Youtube") >= 0) {
-			        ikon = "<span class=\"fs-yt\"><i class=\"fab fa-youtube\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Twitter") >= 0) {
-			        ikon = "<span class=\"fs-tw\"><i class=\"fab fa-twitter\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Google") >= 0) {
-			        ikon = "<span class=\"fs-gp\"><i class=\"fab fa-google-plus\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Swarm") >= 0) {
-			        ikon = "<span class=\"fs-fsq\"><i class=\"fab fa-forumbee\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Dailymotion") >= 0) {
-			        ikon = "<span class=\"fs-dm\"><i class=\"fab fa-hospital-o\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Periscope") >= 0) {
-			        ikon = "<span class=\"fs-pc\"><i class=\"fab fa-map-marker\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Soundcloud") >= 0) {
-			        ikon = "<span class=\"fs-sc\"><i class=\"fab fa-soundcloud\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Vine") >= 0) {
-			        ikon = "<span class=\"fs-vn\"><i class=\"fab fa-vine\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Spotify") >= 0) {
-			        ikon = "<span class=\"fs-sp\"><i class=\"fab fa-spotify\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Snapchat") >= 0) {
-			        ikon = "<span class=\"fs-snap\"><i class=\"fab fa-snapchat-square\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Pinterest") >= 0) {
-			        ikon = "<span class=\"fs-pt\"><i class=\"fab fa-pinterest-p\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("iTunes") >= 0) {
-			        ikon = "<span class=\"fs-apple\"><i class=\"fab fa-apple\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Müzik") >= 0) {
-			        ikon = "<span class=\"fs-music\"><i class=\"fab fa-music\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Vimeo") >= 0) {
-			        ikon = "<span class=\"fs-videmo\"><i class=\"fab fa-vimeo\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Ekşi") >= 0) {
-			        ikon = "<span class=\"fs-eksi\"><i class=\"fab fa-tint\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Telegram") >= 0) {
-			        ikon = "<span class=\"fs-telegram\"><i class=\"fab fa-telegram\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Twitch") >= 0) {
-			        ikon = "<span class=\"fs-twc\"><i class=\"fab fa-twitch\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("Zomato") >= 0) {
-			        ikon = "<span class=\"fs-zom\"><i class=\"fab fa-cutlery\" aria-hidden=\"true\"></i> </span>";
-				} else if (opt.indexOf("Amazon") >= 0) {
-			        ikon = "<span class=\"fs-amaz\"><i class=\"fab fa-amazon\" aria-hidden=\"true\"></i> </span>";
-				} else if (opt.indexOf("Tumblr") >= 0) {
-			        ikon = "<span class=\"fs-tumb\"><i class=\"fab fa-tumblr-square\" aria-hidden=\"true\"></i> </span>";
-				} else if (opt.indexOf("Yandex") >= 0) {
-			        ikon = "<span class=\"fs-yndx\"><i class=\"fab fa-yoast\" aria-hidden=\"true\"></i> </span>";
-				} else if (opt.indexOf("Linkedin") >= 0) {
-			        ikon = "<span class=\"fs-lnk\"><i class=\"fab fa-linkedin\" aria-hidden=\"true\"></i> </span>";
-				} else if (opt.indexOf("Yahoo") >= 0) {
-			        ikon = "<span class=\"fs-yahoo\"><i class=\"fab fa-yahoo\" aria-hidden=\"true\"></i> </span>";
-			    } else if (opt.indexOf("TikTok") >= 0) {
-			        ikon = "<span class=\"fs-tiktok\"><i class=\"fa fa-music\" aria-hidden=\"true\"></i> </span>";
-			    } else {
-			        ikon = "<span class=\"\"><i class=\"far fa-star\" aria-hidden=\"true\"></i> </span>  ";
-			    }
-			    return ikon;
-			}
-			  
-			$(document).ready(function() {
-			
-				$(".pm-ikon").each(function() {
-							var ico = ikon($(this).text());
-							$(this).html(ico + $(this).text() );
-							console.log($(this).text());
-					});	
-			});
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			 var categories = {{categories|json_encode()}};
-			  
-			  
-			  
-			  
-			setTimeout(function () {
-			                $('#neworder_services').trigger('change');
-			                $('.btn_cat_filter').on('click', function() {
-			                  
-			                    category = $(this).data('id');
-			                    
-			                     var category_2 = null;
-			                    if(category == 'instagram'){
-			                            category_2 = "انستغرام";
-			                    }
-			                    if(category == 'facebook'){
-			                            category_2 = "فايسبوك";
-			                    }
-			                    if(category == 'youtube'){
-			                            category_2 = "يوتيوب";
-			                    }
-			                    if(category == 'twitter'){
-			                            category_2 = "تويتر";
-			                    }
-			                    if(category == 'tiktok'){
-			                            category_2 = "تيك توك";
-			                    }
-			                    if(category == 'telegram'){
-			                            category_2 = "تلغرام";
-			                    }
-			                    
-			                    
-			                    $('#neworder_category').html("");
-			                    categories.forEach(element => {
-			                        if (category == "everything") {
-			                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
-			                        } else if (category == "other") {
-			                            if (!element.category_name.toLowerCase().includes("instagram") &&
-			                                !element.category_name.toLowerCase().includes("facebook") &&
-			                                !element.category_name.toLowerCase().includes("youtube") &&
-			                                !element.category_name.toLowerCase().includes("twitter") &&
-			                                !element.category_name.toLowerCase().includes("tiktok") &&
-			                                !element.category_name.toLowerCase().includes("telegram")) {
-			                                $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
-			                            }
-			                        } else if (element.category_name.toLowerCase().includes(category) || element.category_name.toLowerCase().includes(category_2)) {
-			                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
-			                        }
-			                    });
-			                    $('#neworder_category').trigger('change');
-			                    setTimeout(function(){
-			                        $(".smmspot-sb-dd-item").each(function() {
-			                            var ico = ikon($(this).text());
-			                            $(this).html(ico + $(this).text() );
-			                            console.log($(this).text());
-			                        });
-			                    }, 500);
-			                    setTimeout(function(){
-			                        $(".smmspot-sb-selected").each(function() {
-			                            var ico = ikon($(this).text());
-			                            $(this).html(ico + $(this).text() );
-			                            console.log($(this).text());
-			                        });
-			                    }, 500);
-			                });
-			            
-			        }, 400);
-			
-			
-			
-			
-			</script>
+				
+				
+				function ikon(opt) {
+				    var ikon = "";
+				    if (opt.indexOf("Instagram") >= 0) {
+				        ikon = "<span class=\"fs-ig\"><i class=\"fab fa-instagram\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("YouTube") >= 0) {
+				        ikon = "<span class=\"fs-yt\"><i class=\"fab fa-youtube\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Facebook") >= 0) {
+				        ikon = "<span class=\"fs-fb\"><i class=\"fab fa-facebook-square\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Youtube") >= 0) {
+				        ikon = "<span class=\"fs-yt\"><i class=\"fab fa-youtube\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Twitter") >= 0) {
+				        ikon = "<span class=\"fs-tw\"><i class=\"fab fa-twitter\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Google") >= 0) {
+				        ikon = "<span class=\"fs-gp\"><i class=\"fab fa-google-plus\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Swarm") >= 0) {
+				        ikon = "<span class=\"fs-fsq\"><i class=\"fab fa-forumbee\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Dailymotion") >= 0) {
+				        ikon = "<span class=\"fs-dm\"><i class=\"fab fa-hospital-o\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Periscope") >= 0) {
+				        ikon = "<span class=\"fs-pc\"><i class=\"fab fa-map-marker\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Soundcloud") >= 0) {
+				        ikon = "<span class=\"fs-sc\"><i class=\"fab fa-soundcloud\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Vine") >= 0) {
+				        ikon = "<span class=\"fs-vn\"><i class=\"fab fa-vine\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Spotify") >= 0) {
+				        ikon = "<span class=\"fs-sp\"><i class=\"fab fa-spotify\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Snapchat") >= 0) {
+				        ikon = "<span class=\"fs-snap\"><i class=\"fab fa-snapchat-square\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Pinterest") >= 0) {
+				        ikon = "<span class=\"fs-pt\"><i class=\"fab fa-pinterest-p\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("iTunes") >= 0) {
+				        ikon = "<span class=\"fs-apple\"><i class=\"fab fa-apple\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Müzik") >= 0) {
+				        ikon = "<span class=\"fs-music\"><i class=\"fab fa-music\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Vimeo") >= 0) {
+				        ikon = "<span class=\"fs-videmo\"><i class=\"fab fa-vimeo\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Ekşi") >= 0) {
+				        ikon = "<span class=\"fs-eksi\"><i class=\"fab fa-tint\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Telegram") >= 0) {
+				        ikon = "<span class=\"fs-telegram\"><i class=\"fab fa-telegram\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Twitch") >= 0) {
+				        ikon = "<span class=\"fs-twc\"><i class=\"fab fa-twitch\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("Zomato") >= 0) {
+				        ikon = "<span class=\"fs-zom\"><i class=\"fab fa-cutlery\" aria-hidden=\"true\"></i> </span>";
+					} else if (opt.indexOf("Amazon") >= 0) {
+				        ikon = "<span class=\"fs-amaz\"><i class=\"fab fa-amazon\" aria-hidden=\"true\"></i> </span>";
+					} else if (opt.indexOf("Tumblr") >= 0) {
+				        ikon = "<span class=\"fs-tumb\"><i class=\"fab fa-tumblr-square\" aria-hidden=\"true\"></i> </span>";
+					} else if (opt.indexOf("Yandex") >= 0) {
+				        ikon = "<span class=\"fs-yndx\"><i class=\"fab fa-yoast\" aria-hidden=\"true\"></i> </span>";
+					} else if (opt.indexOf("Linkedin") >= 0) {
+				        ikon = "<span class=\"fs-lnk\"><i class=\"fab fa-linkedin\" aria-hidden=\"true\"></i> </span>";
+					} else if (opt.indexOf("Yahoo") >= 0) {
+				        ikon = "<span class=\"fs-yahoo\"><i class=\"fab fa-yahoo\" aria-hidden=\"true\"></i> </span>";
+				    } else if (opt.indexOf("TikTok") >= 0) {
+				        ikon = "<span class=\"fs-tiktok\"><i class=\"fa fa-music\" aria-hidden=\"true\"></i> </span>";
+				    } else {
+				        ikon = "<span class=\"\"><i class=\"far fa-star\" aria-hidden=\"true\"></i> </span>  ";
+				    }
+				    return ikon;
+				}
+				  
+				$(document).ready(function() {
+				
+					$(".pm-ikon").each(function() {
+								var ico = ikon($(this).text());
+								$(this).html(ico + $(this).text() );
+								console.log($(this).text());
+						});	
+				});
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				 var categories = {{categories|json_encode()}};
+				  
+				  
+				  
+				  
+				setTimeout(function () {
+				                $('#neworder_services').trigger('change');
+				                $('.btn_cat_filter').on('click', function() {
+				                  
+				                    category = $(this).data('id');
+				                    
+				                     var category_2 = null;
+				                    if(category == 'instagram'){
+				                            category_2 = "انستغرام";
+				                    }
+				                    if(category == 'facebook'){
+				                            category_2 = "فايسبوك";
+				                    }
+				                    if(category == 'youtube'){
+				                            category_2 = "يوتيوب";
+				                    }
+				                    if(category == 'twitter'){
+				                            category_2 = "تويتر";
+				                    }
+				                    if(category == 'tiktok'){
+				                            category_2 = "تيك توك";
+				                    }
+				                    if(category == 'telegram'){
+				                            category_2 = "تلغرام";
+				                    }
+				                    
+				                    
+				                    $('#neworder_category').html("");
+				                    categories.forEach(element => {
+				                        if (category == "everything") {
+				                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+				                        } else if (category == "other") {
+				                            if (!element.category_name.toLowerCase().includes("instagram") &&
+				                                !element.category_name.toLowerCase().includes("facebook") &&
+				                                !element.category_name.toLowerCase().includes("youtube") &&
+				                                !element.category_name.toLowerCase().includes("twitter") &&
+				                                !element.category_name.toLowerCase().includes("tiktok") &&
+				                                !element.category_name.toLowerCase().includes("telegram")) {
+				                                $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+				                            }
+				                        } else if (element.category_name.toLowerCase().includes(category) || element.category_name.toLowerCase().includes(category_2)) {
+				                            $('#neworder_category').append("<option value='" + element.category_id + "'>" + element.category_name + "</option>");
+				                        }
+				                    });
+				                    $('#neworder_category').trigger('change');
+				                    setTimeout(function(){
+				                        $(".smmspot-sb-dd-item").each(function() {
+				                            var ico = ikon($(this).text());
+				                            $(this).html(ico + $(this).text() );
+				                            console.log($(this).text());
+				                        });
+				                    }, 500);
+				                    setTimeout(function(){
+				                        $(".smmspot-sb-selected").each(function() {
+				                            var ico = ikon($(this).text());
+				                            $(this).html(ico + $(this).text() );
+				                            console.log($(this).text());
+				                        });
+				                    }, 500);
+				                });
+				            
+				        }, 400);
+				
+				
+				
+				
+				</script>
 	 <script>
-			      function filterService(category) {
-			        if (category == 'All')
-			          $('tbody tr.hidden').removeClass('hidden');
-			        else {
-			          $('tbody tr').addClass('hidden');
-			          $('tbody tr[data-category="' + category + '"]').removeClass('hidden');
-			        }
-			        removeEmptyCategory();
-			      }
-			
-			      function removeEmptyCategory() {
-			        $('.services-header').each(function () {
-			            var next = $(this).next();
-			            var services = $(this).nextUntil('.services-header');
-			            var empty = true;
-			            services.each(function() {
-			              if (!$(this).hasClass('hidden')) empty = false;
-			            });
-			            if (empty) $(this).addClass('hidden');
-			        })
-			      }
-			</script>
+				      function filterService(category) {
+				        if (category == 'All')
+				          $('tbody tr.hidden').removeClass('hidden');
+				        else {
+				          $('tbody tr').addClass('hidden');
+				          $('tbody tr[data-category="' + category + '"]').removeClass('hidden');
+				        }
+				        removeEmptyCategory();
+				      }
+				
+				      function removeEmptyCategory() {
+				        $('.services-header').each(function () {
+				            var next = $(this).next();
+				            var services = $(this).nextUntil('.services-header');
+				            var empty = true;
+				            services.each(function() {
+				              if (!$(this).hasClass('hidden')) empty = false;
+				            });
+				            if (empty) $(this).addClass('hidden');
+				        })
+				      }
+				</script>
 
 
 	{% include 'footer.twig' %}
