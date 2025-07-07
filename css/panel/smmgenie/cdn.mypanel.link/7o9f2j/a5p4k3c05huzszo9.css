@@ -2553,7 +2553,7 @@ ul.app-news li .icon.discord {
     border-bottom: 0px;
     border-left: 0px;
     border-right: 0px;
-    display: flex;
+    /* display: flex; */
     align-items: center;
     font-size: 11px;
     padding: 2px 16px;
@@ -2570,7 +2570,7 @@ ul.app-news li .icon.discord {
     /* display: block; */
   }
   .app-mtable .thead-tr {
-    display: none;
+    /* display: none; */
   }
   .catetitle td strong {
     font-size: 14px;
