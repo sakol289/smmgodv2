@@ -33,6 +33,7 @@ if ($user["access"]["providers"]) { ?>
 
 						<?php
 						$balance = $smmapi->action(array('key' => $provider["api_key"], 'action' => 'balance'), $provider["api_url"]);
+						var_dump($balance);
 						$balance1 = $balance->balance;
 						$balance2 = $balance->currency;
 						if ($balance1 == null) {
