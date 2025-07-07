@@ -32,7 +32,8 @@ if ($user["access"]["providers"]) { ?>
 					<?php foreach ($api_details as $provider): ?>
 
 						<?php
-						$balance = $smmapi->action(array('key' => $provider["api_key"], 'action' => 'balance'), $provider["api_url"]);
+						// $response = $api->action($data, $url, [CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0]);
+						$balance = $smmapi->action(array('key' => $provider["api_key"], 'action' => 'balance'), $provider["api_url"],[CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0]);
 						var_dump($balance);
 						$balance1 = $balance->balance;
 						$balance2 = $balance->currency;
