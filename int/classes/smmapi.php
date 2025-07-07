@@ -3,12 +3,12 @@ class SMMApi
 {
     public $api_url = '';
     public $apiKEY = '';
-    public function action($data, $api)
+    public function action($data, $api, $options = [])
     {
         $ch = curl_init($api);
         curl_setopt($ch, CURLOPT_ENCODING, '');
         curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -16,18 +16,23 @@ class SMMApi
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)');
-        curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        if (!empty($options) && is_array($options)) {
+            foreach ($options as $key => $value) {
+                curl_setopt($ch, $key, $value);
+            }
+        }
+
         $result = curl_exec($ch);
         
-       
         if (curl_errno($ch) != 0 && empty($result)) {
             $result = false;
         }
 
         curl_close($ch);
         
-     
         return json_decode($result);
     }
 }
