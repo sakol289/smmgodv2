@@ -2594,6 +2594,9 @@ ul.app-news li .icon.discord {
   .table-mobile-cards tr {
     border: none;
   }
+  .app-mtable .app-block:nth-child(odd) {
+    background: #171733 !important;
+}
   .table-mobile-cards tr.table-mobile-card {
     display: block;
     border-radius: 10px;
