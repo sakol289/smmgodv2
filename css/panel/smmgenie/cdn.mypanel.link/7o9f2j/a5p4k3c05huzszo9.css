@@ -2638,7 +2638,7 @@ ul.app-news li .icon.discord {
     border: none;
   }
 
-  .table-mobile-cards tr.table-mobile-card:nth-child(odd) {
+  .table-mobile-cards tr.table-mobile-card:nth-of-type(odd) {
     background-color: #171733 !important;
   }
 
