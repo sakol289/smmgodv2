@@ -2659,6 +2659,7 @@ ul.app-news li .icon.discord {
     display: block;
     border: none;
     padding: 0px;
+    white-space: nowrap;
   }
 
   .table-mobile-cards tr.table-mobile-card td+td {
