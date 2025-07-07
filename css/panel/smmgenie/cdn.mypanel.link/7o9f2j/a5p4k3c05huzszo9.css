@@ -2599,6 +2599,7 @@ ul.app-news li .icon.discord {
     border-radius: 10px;
     /* border: 1px solid #eee; */
     border-bottom: 2px solid rgb(172, 64, 6);
+    background-color: #151b3d;
     padding: 14px 24px;
     margin-bottom: 24px;
     margin-left: -15px;
