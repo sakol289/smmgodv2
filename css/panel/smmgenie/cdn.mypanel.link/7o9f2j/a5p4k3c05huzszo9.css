@@ -2597,7 +2597,8 @@ ul.app-news li .icon.discord {
   .table-mobile-cards tr.table-mobile-card {
     display: block;
     border-radius: 10px;
-    border: 1px solid #eee;
+    /* border: 1px solid #eee; */
+    border-bottom: 2px solid rgb(172, 64, 6);
     padding: 14px 24px;
     margin-bottom: 24px;
     margin-left: -15px;
