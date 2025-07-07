@@ -2538,7 +2538,7 @@ ul.app-news li .icon.discord {
   }
   .app-mtable .app-block {
     padding: 5px 0;
-    display: block;
+    /* display: block; */
     background: #151b3d;
     margin-bottom: 10px;
     border-radius: 10px;
