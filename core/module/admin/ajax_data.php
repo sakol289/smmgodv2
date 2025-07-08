@@ -30,7 +30,6 @@ if ($action == "providers_list") {
         //     echo "</select>\r\n\r\n          </div>\r\n\r\n        </div>";
         // }
         echo "<div class=\"service-mode__block\">\r\n\r\n          <div class=\"form-group\">\r\n\r\n            <label>Service</label>\r\n\r\n            <input class=\"form-control\" name=\"service\" placeholder=\"Enter Service ID\">\r\n\r\n          </div>\r\n\r\n        </div>";
-
     }
     unset($_SESSION["data"]);
 } else {
@@ -271,7 +270,23 @@ if ($action == "providers_list") {
                                 if ($access["admins"] == 1) {
                                     $return .= "checked";
                                 }
-                                $return .= "  value=\"1\"> Yetki Settings\r\n\r\n                  </label>\r\n\r\n              </div>";
+                                $return .= "  value=\"1\"> Yetki Settings\r\n\r\n                  </label>\r\n\r\n                  <label class=\"checkbox-inline\">\r\n\r\n                    <input type=\"checkbox\" class=\"access\" name=\"access[update-prices]\"";
+                                if ($access["update-prices"] == 1) {
+                                    $return .= "checked";
+                                }
+                                $return .= "  value=\"1\"> Update Prices\r\n\r\n                  </label>\r\n\r\n                  <label class=\"checkbox-inline\">\r\n\r\n                    <input type=\"checkbox\" class=\"access\" name=\"access[crons]\"";
+                                if ($access["crons"] == 1) {
+                                    $return .= "checked";
+                                }
+                                $return .= "  value=\"1\"> Cron Jobs\r\n\r\n                  </label>\r\n\r\n                  <label class=\"checkbox-inline\">\r\n\r\n                    <input type=\"checkbox\" class=\"access\" name=\"access[kuponlar]\"";
+                                if ($access["kuponlar"] == 1) {
+                                    $return .= "checked";
+                                }
+                                $return .= "  value=\"1\"> Coupons\r\n\r\n                  </label>\r\n\r\n                  <label class=\"checkbox-inline\">\r\n\r\n                    <input type=\"checkbox\" class=\"access\" name=\"access[currency_settings]\"";
+                                if ($access["currency_settings"] == 1) {
+                                    $return .= "checked";
+                                }
+                                $return .= "  value=\"1\"> Currency Settings\r\n\r\n                  </label>\r\n\r\n              </div>";
                             }
                             $return .= "</div>\r\n\r\n          </div>\r\n\r\n        </div>\r\n\r\n\r\n\r\n          <div class=\"modal-footer\">\r\n\r\n            <button type=\"submit\" class=\"btn btn-primary\">Update</button>\r\n\r\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\r\n\r\n          </div>\r\n\r\n          </form>\r\n\r\n          <script>\r\n\r\n            var type = \$(\"#debit\").val();\r\n\r\n            if( type == 2 ){\r\n\r\n              \$(\"#debit_limit\").hide();\r\n\r\n            } else{\r\n\r\n              \$(\"#debit_limit\").show();\r\n\r\n            }\r\n\r\n            \$(\"#debit\").change(function(){\r\n\r\n              var type = \$(this).val();\r\n\r\n                if( type == 2 ){\r\n\r\n                  \$(\"#debit_limit\").hide();\r\n\r\n                } else{\r\n\r\n                  \$(\"#debit_limit\").show();\r\n\r\n                }\r\n\r\n            });\r\n\r\n            var type = \$(\"#limit\").val();\r\n\r\n            if( type == 0 ){\r\n\r\n              \$(\"#admin_limit\").hide();\r\n\r\n            } else{\r\n\r\n              \$(\"#admin_limit\").show();\r\n\r\n            }\r\n\r\n            \$(\"#limit\").change(function(){\r\n\r\n              var type = \$(this).val();\r\n\r\n                if( type == 0 ){\r\n\r\n                  \$(\"#admin_limit\").hide();\r\n\r\n                } else{\r\n\r\n                  \$(\"#admin_limit\").show();\r\n\r\n                }\r\n\r\n            });\r\n\r\n          </script>\r\n\r\n          ";
                             echo json_encode(["content" => $return, "title" => "Edit user"]);
