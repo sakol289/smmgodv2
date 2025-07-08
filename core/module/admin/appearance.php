@@ -19,7 +19,7 @@ $menuList = [
   "Menu" => "menu",
   "Themes" => "themes",
   "Language" => "language",
-  "Files" => "files"
+  // "Files" => "files",
   // "New Year" => "new_year"
 ];
 
