@@ -788,354 +788,48 @@ function crypt_chip($action, $string, $salt = "")
 // referralCommission 
 function referralCommission($current_client, $amount, $payment_method_id = 0)
 {
+
     global $conn, $settings;
 
-    // ตรวจสอบว่าระบบอ้างอิงเปิดใช้งานหรือไม่
-    if ($settings['referral'] != 2) {
-        return false;
-    }
+    if ($current_client['referral'] && !empty($current_client['referral']) && $settings['referral'] == 2) {
 
-    // ตรวจสอบว่าผู้ใช้มีรหัสอ้างอิงหรือไม่
-    if (empty($current_client['referral'])) {
-        return false;
-    }
-
-    try {
-        // ค้นหาผู้แนะนำ
-        $referrer = $conn->prepare("SELECT * FROM clients WHERE referral_code = :referral_code");
-        $referrer->execute(array("referral_code" => $current_client['referral']));
-        $referrer = $referrer->fetch(PDO::FETCH_ASSOC);
-
-        if (!$referrer || !$referrer['client_id']) {
-            return false;
-        }
-
-        // คำนวณคอมมิชชัน
-        $commission = $amount * ($settings["ref_bonus"] / 100);
-        
-        // ตรวจสอบขีดจำกัดสูงสุด (ถ้ามี)
-        if ($settings["ref_max"] > 0 && $commission > $settings["ref_max"]) {
-            $commission = $settings["ref_max"];
-        }
-
-        // ตรวจสอบประเภทการอ้างอิง
-        if ($settings["ref_type"] == 1) {
-            // อ้างอิงเฉพาะครั้งแรก - ตรวจสอบว่าผู้ใช้เคยชำระเงินแล้วหรือไม่
-            $existing_payment = $conn->prepare("SELECT COUNT(*) FROM payments WHERE client_id = :client_id AND payment_status = 3");
-            $existing_payment->execute(array("client_id" => $current_client["client_id"]));
-            if ($existing_payment->fetchColumn() > 1) {
-                return false; // ไม่จ่ายคอมมิชชันเพราะไม่ใช่ครั้งแรก
+        try {
+            $client = $conn->prepare("SELECT * FROM clients WHERE referral_code=:referral_code");
+            $client->execute(array("referral_code" => $current_client['referral']));
+            $client  = $client->fetch(PDO::FETCH_ASSOC);
+            if ($client['client_id']) {
+                $commission = $amount * ($settings["ref_bonus"] / 100);
+                $insert = $conn->prepare("INSERT INTO payments SET client_id=:client_id , client_balance=:client_balance , 
+                    payment_amount=:payment_amount , payment_method=:payment_method ,
+                    payment_status=:payment_status , payment_delivery=:payment_delivery , payment_note=:payment_note,
+                    payment_create_date=:payment_create_date ,
+                    payment_update_date=:payment_update_date, 	payment_ip=:payment_ip , 
+                    payment_extra=:payment_extra ");
+                $insert = $insert->execute(array(
+                    "client_id" => $client["client_id"],
+                    "client_balance" => $client["balance"] + $commission,
+                    "payment_amount" => $commission,
+                    "payment_method" => $payment_method_id,
+                    "payment_status" => 3,
+                    "payment_delivery" => 2,
+                    "payment_note" => "Referral Amount of Referred Clinet id : " . $current_client["client_id"],
+                    "payment_create_date" => date("Y-m-d H:i:s"),
+                    "payment_update_date" => date("Y-m-d H:i:s"),
+                    "payment_ip" => GetIP(),
+                    "payment_extra" => "Referral Amount of Referred Clinet id : " . $current_client["client_id"]
+                ));
+                $update = $conn->prepare("UPDATE clients SET balance=:balance, refchar=:refchar, reforder=:reforder WHERE client_id=:id ");
+                $update = $update->execute(array(
+                    "id" => $client["client_id"],
+                    "balance" => $client["balance"] + $commission,
+                    "refchar" => $client["refchar"] + $commission,
+                    "reforder" => $client["reforder"] + 1
+                ));
             }
+        } catch (\Exception $e) {
         }
-
-        // เริ่มธุรกรรม
-        $conn->beginTransaction();
-
-        // เพิ่มรายการชำระเงินสำหรับคอมมิชชัน
-        $insert = $conn->prepare("INSERT INTO payments SET 
-            client_id = :client_id,
-            client_balance = :client_balance,
-            payment_amount = :payment_amount,
-            payment_method = :payment_method,
-            payment_status = :payment_status,
-            payment_delivery = :payment_delivery,
-            payment_note = :payment_note,
-            payment_create_date = :payment_create_date,
-            payment_update_date = :payment_update_date,
-            payment_ip = :payment_ip,
-            payment_extra = :payment_extra
-        ");
-
-        $insert_result = $insert->execute(array(
-            "client_id" => $referrer["client_id"],
-            "client_balance" => $referrer["balance"] + $commission,
-            "payment_amount" => $commission,
-            "payment_method" => $payment_method_id,
-            "payment_status" => 3, // สำเร็จ
-            "payment_delivery" => 2, // จ่ายแล้ว
-            "payment_note" => "คอมมิชชันอ้างอิงจากผู้ใช้ ID: " . $current_client["client_id"] . " (จำนวน: " . number_format($amount, 2) . ")",
-            "payment_create_date" => date("Y-m-d H:i:s"),
-            "payment_update_date" => date("Y-m-d H:i:s"),
-            "payment_ip" => GetIP(),
-            "payment_extra" => json_encode([
-                "type" => "referral_commission",
-                "referred_user_id" => $current_client["client_id"],
-                "referred_user_username" => $current_client["username"],
-                "original_amount" => $amount,
-                "commission_rate" => $settings["ref_bonus"]
-            ])
-        ));
-
-        // อัปเดตยอดเงินของผู้แนะนำ
-        $update_balance = $conn->prepare("UPDATE clients SET 
-            balance = :balance,
-            refchar = :refchar,
-            reforder = :reforder
-            WHERE client_id = :id
-        ");
-
-        $update_result = $update_balance->execute(array(
-            "id" => $referrer["client_id"],
-            "balance" => $referrer["balance"] + $commission,
-            "refchar" => $referrer["refchar"] + $commission,
-            "reforder" => $referrer["reforder"] + 1
-        ));
-
-        // บันทึกรายงาน
-        $insert_report = $conn->prepare("INSERT INTO client_report SET 
-            client_id = :c_id, 
-            action = :action, 
-            report_ip = :ip, 
-            report_date = :date
-        ");
-
-        $report_result = $insert_report->execute(array(
-            "c_id" => $referrer["client_id"],
-            "action" => "ได้รับคอมมิชชันอ้างอิง " . number_format($commission, 2) . " จากผู้ใช้ " . $current_client["username"],
-            "ip" => GetIP(),
-            "date" => date("Y-m-d H:i:s")
-        ));
-
-        if ($insert_result && $update_result && $report_result) {
-            $conn->commit();
-            
-            // ส่งการแจ้งเตือน (ถ้าเปิดใช้งาน)
-            if ($settings["alert_newpayment"] == 2) {
-                // ส่งอีเมลแจ้งเตือนผู้แนะนำ
-                if ($settings["alert_type"] == 2 || $settings["alert_type"] == 3) {
-                    sendMail([
-                        "subject" => "คุณได้รับคอมมิชชันอ้างอิงใหม่!",
-                        "body" => "คุณได้รับคอมมิชชันอ้างอิง " . number_format($commission, 2) . " จากผู้ใช้ " . $current_client["username"] . " ที่ชำระเงิน " . number_format($amount, 2),
-                        "mail" => $referrer["email"]
-                    ]);
-                }
-            }
-            
-            return true;
-        } else {
-            $conn->rollBack();
-            return false;
-        }
-
-    } catch (\Exception $e) {
-        if ($conn->inTransaction()) {
-            $conn->rollBack();
-        }
-        // บันทึกข้อผิดพลาด (ถ้ามีระบบ log)
-        error_log("Referral Commission Error: " . $e->getMessage());
-        return false;
     }
 }
-
-// ฟังก์ชันสำหรับสร้างรหัสอ้างอิงที่ไม่ซ้ำกัน
-function generateUniqueReferralCode($length = 8)
-{
-    global $conn;
-    
-    do {
-        $code = createReferral();
-        // เพิ่มความยาวให้มากขึ้นเพื่อลดโอกาสซ้ำ
-        $code .= substr(md5(uniqid()), 0, $length - 5);
-        
-        $check = $conn->prepare("SELECT COUNT(*) FROM clients WHERE referral_code = :code");
-        $check->execute(array("code" => $code));
-        $exists = $check->fetchColumn();
-    } while ($exists > 0);
-    
-    return $code;
-}
-
-// ฟังก์ชันสำหรับนับจำนวนผู้ใช้ที่แนะนำ
-function getReferralCount($referral_code)
-{
-    global $conn;
-    
-    $count = $conn->prepare("SELECT COUNT(*) FROM clients WHERE referral = :referral_code");
-    $count->execute(array("referral_code" => $referral_code));
-    
-    return $count->fetchColumn();
-}
-
-// ฟังก์ชันสำหรับดึงรายการผู้ใช้ที่แนะนำ
-function getReferralUsers($referral_code, $limit = 10, $offset = 0)
-{
-    global $conn;
-    
-    $users = $conn->prepare("SELECT 
-        client_id, username, email, first_name, last_name, register_date, balance 
-        FROM clients 
-        WHERE referral = :referral_code 
-        ORDER BY register_date DESC 
-        LIMIT :limit OFFSET :offset
-    ");
-    
-    $users->bindValue(":referral_code", $referral_code, PDO::PARAM_STR);
-    $users->bindValue(":limit", $limit, PDO::PARAM_INT);
-    $users->bindValue(":offset", $offset, PDO::PARAM_INT);
-    $users->execute();
-    
-    return $users->fetchAll(PDO::FETCH_ASSOC);
-}
-
-// ฟังก์ชันสำหรับดึงสถิติการอ้างอิง
-function getReferralStats($referral_code)
-{
-    global $conn;
-    
-    $stats = $conn->prepare("SELECT 
-        COUNT(*) as total_referrals,
-        SUM(CASE WHEN register_date >= DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 1 ELSE 0 END) as referrals_30_days,
-        SUM(CASE WHEN register_date >= DATE_SUB(NOW(), INTERVAL 7 DAY) THEN 1 ELSE 0 END) as referrals_7_days,
-        SUM(CASE WHEN register_date >= DATE_SUB(NOW(), INTERVAL 1 DAY) THEN 1 ELSE 0 END) as referrals_today
-        FROM clients 
-        WHERE referral = :referral_code
-    ");
-    
-    $stats->execute(array("referral_code" => $referral_code));
-    
-    return $stats->fetch(PDO::FETCH_ASSOC);
-}
-
-// ฟังก์ชันสำหรับตรวจสอบสิทธิ์การถอนเงินอ้างอิง
-function canWithdrawReferralEarnings($user_id, $amount)
-{
-    global $conn, $settings;
-    
-    $user = $conn->prepare("SELECT refchar FROM clients WHERE client_id = :id");
-    $user->execute(array("id" => $user_id));
-    $user = $user->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$user) {
-        return false;
-    }
-    
-    // ตรวจสอบว่ามีเงินเพียงพอหรือไม่
-    if ($user['refchar'] < $amount) {
-        return false;
-    }
-    
-    // ตรวจสอบขีดจำกัดขั้นต่ำ
-    if ($settings['ref_min'] > 0 && $amount < $settings['ref_min']) {
-        return false;
-    }
-    
-    return true;
-}
-
-// ฟังก์ชันสำหรับถอนเงินอ้างอิง
-function withdrawReferralEarnings($user_id, $amount)
-{
-    global $conn;
-    
-    if (!canWithdrawReferralEarnings($user_id, $amount)) {
-        return false;
-    }
-    
-    try {
-        $conn->beginTransaction();
-        
-        // อัปเดตยอดเงินอ้างอิง
-        $update = $conn->prepare("UPDATE clients SET refchar = refchar - :amount WHERE client_id = :id");
-        $update_result = $update->execute(array(
-            "id" => $user_id,
-            "amount" => $amount
-        ));
-        
-        // เพิ่มรายการถอนเงิน
-        $insert = $conn->prepare("INSERT INTO payments SET 
-            client_id = :client_id,
-            payment_amount = :amount,
-            payment_method = 7, // วิธีชำระเงินแบบแมนนวล
-            payment_status = 3, // สำเร็จ
-            payment_delivery = 2, // จ่ายแล้ว
-            payment_note = :note,
-            payment_create_date = :date,
-            payment_update_date = :date,
-            payment_ip = :ip,
-            payment_extra = :extra
-        ");
-        
-        $insert_result = $insert->execute(array(
-            "client_id" => $user_id,
-            "amount" => $amount,
-            "note" => "ถอนเงินอ้างอิง",
-            "date" => date("Y-m-d H:i:s"),
-            "ip" => GetIP(),
-            "extra" => json_encode(["type" => "referral_withdrawal"])
-        ));
-        
-        // บันทึกรายงาน
-        $report = $conn->prepare("INSERT INTO client_report SET 
-            client_id = :c_id, 
-            action = :action, 
-            report_ip = :ip, 
-            report_date = :date
-        ");
-        
-        $report_result = $report->execute(array(
-            "c_id" => $user_id,
-            "action" => "ถอนเงินอ้างอิง " . number_format($amount, 2),
-            "ip" => GetIP(),
-            "date" => date("Y-m-d H:i:s")
-        ));
-        
-        if ($update_result && $insert_result && $report_result) {
-            $conn->commit();
-            return true;
-        } else {
-            $conn->rollBack();
-            return false;
-        }
-        
-    } catch (\Exception $e) {
-        if ($conn->inTransaction()) {
-            $conn->rollBack();
-        }
-        error_log("Referral Withdrawal Error: " . $e->getMessage());
-        return false;
-    }
-}
-
-// ฟังก์ชันสำหรับตรวจสอบลิงก์อ้างอิง
-function validateReferralLink($referral_code)
-{
-    global $conn;
-    
-    if (empty($referral_code)) {
-        return false;
-    }
-    
-    $check = $conn->prepare("SELECT client_id FROM clients WHERE referral_code = :code AND client_type = 2");
-    $check->execute(array("code" => $referral_code));
-    
-    return $check->rowCount() > 0;
-}
-
-// ฟังก์ชันสำหรับบันทึกการคลิกลิงก์อ้างอิง
-function logReferralClick($referral_code, $ip_address = null)
-{
-    global $conn;
-    
-    if (empty($ip_address)) {
-        $ip_address = GetIP();
-    }
-    
-    try {
-        // อัปเดตจำนวนการคลิก
-        $update = $conn->prepare("UPDATE clients SET total_click = total_click + 1 WHERE referral_code = :code");
-        $update->execute(array("code" => $referral_code));
-        
-        // บันทึกรายละเอียดการคลิก (ถ้ามีตาราง log)
-        // $log = $conn->prepare("INSERT INTO referral_clicks SET referral_code = :code, ip_address = :ip, click_date = :date");
-        // $log->execute(array("code" => $referral_code, "ip" => $ip_address, "date" => date("Y-m-d H:i:s")));
-        
-        return true;
-    } catch (\Exception $e) {
-        error_log("Referral Click Log Error: " . $e->getMessage());
-        return false;
-    }
-}
-
 // referralCommission
 
 
@@ -1239,3 +933,5 @@ function funwithai($id)
 
     return $currencys['api_name'];
 }
+
+?>
