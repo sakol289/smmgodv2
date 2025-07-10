@@ -1,131 +1,277 @@
 {% include 'header.twig' %}
 <div class="app-content">
-			<div class="container-fluid">
+    <div class="container-fluid">
+        <section class="app-affiliates">
+            <!-- แจ้งเตือนการถอนเงิน -->
+            {% if withdraw_success is defined and withdraw_success %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> {{ withdraw_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+            
+            {% if withdraw_error is defined and withdraw_error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle"></i> {{ withdraw_message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
 
+            <div class="row">
+                <!-- ข้อมูลลิงก์อ้างอิง -->
+                <div class="col-lg-6 col-12 mb-3 mb-lg-0">
+                    <div class="d-card mb-3">
+                        <div class="d-card-header">
+                            <h5><i class="fas fa-link"></i> {{ lang['affiliates.url'] }}</h5>
+                        </div>
+                        <div class="d-card-body">
+                            <div class="ref-items ri-sm">
+                                <div class="ref-item">
+                                    <div class="row">
+                                        <div class="col-md-3 col-12 hlight-first align-self-center">
+                                            {{ lang['affiliates.url'] }}
+                                        </div>
+                                        <div class="col-md-8 col-12 hlight-second align-self-center">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" value="{{ site['url'] }}/ref/{{ user['referral_code'] }}" readonly>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" onclick="copyReferralLink()">
+                                                        <i class="fas fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item">
+                                    <div class="row">
+                                        <div class="col-md-3 col-12 hlight-first align-self-center">
+                                            {{ lang['affiliates.bonus'] }}
+                                        </div>
+                                        <div class="col-md-8 col-12 hlight-second align-self-center">
+                                            <span class="badge badge-success">{{ settings["ref_bonus"] }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item">
+                                    <div class="row">
+                                        <div class="col-md-3 col-12 hlight-first align-self-center">
+                                            {{ lang['affiliates.type'] }}
+                                        </div>
+                                        <div class="col-md-8 col-12 hlight-second align-self-center">
+                                            {% if settings["ref_type"] == 1 %}
+                                                <span class="badge badge-info">{{ lang['affiliates.type.first'] }}</span>
+                                            {% else %}
+                                                <span class="badge badge-warning">{{ lang['affiliates.type.all'] }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item">
+                                    <div class="row">
+                                        <div class="col-md-3 col-12 hlight-first align-self-center">
+                                            {{ lang['affiliates.min'] }}
+                                        </div>
+                                        <div class="col-md-8 col-12 hlight-second align-self-center">
+                                            {{ settings['ref_min'] }}{{ site['currency'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<section class="app-affiliates">
-				
-						<div class="row">
-							<div class="col-lg-6 col-12 mb-3 mb-lg-0">
-								<div class="d-card mb-3">
-									<div class="d-card-body">
-										<div class="ref-items ri-sm">
-										   <div class="ref-item">
-											  <div class="row">
-												 <div class="col-md-3 col-12 hlight-first align-self-center">
-													{{ lang['affiliates.url'] }}
-												 </div>
-												 <div class="col-md-8 col-12 hlight-second align-self-center">
-													{{ site['url'] }}/ref/{{ user["referral_code"] }}
-												 </div>
-											  </div>
-										   </div>
-										   <!-- item end -->
-										   <div class="ref-item">
-											  <div class="row">
-												 <div class="col-md-3 col-12 hlight-first align-self-center">
-													{{ lang['affiliates.bonus'] }}
-												 </div>
-												 <div class="col-md-8 col-12 hlight-second align-self-center">
-													{{ settings["ref_bonus"] }}%
-												 </div>
-											  </div>
-										   </div>
-										   <!-- item end -->
-										   <div class="ref-item">
-											  <div class="row">
-												 <div class="col-md-3 col-12 hlight-first align-self-center">
-													{{ lang['affiliates.type'] }}
-												 </div>
-												 <div class="col-md-8 col-12 hlight-second align-self-center">
-													{% if settings["ref_type"] == 1 %}{{ lang['affiliates.type.first'] }}{% else %}{{ lang['affiliates.type.all'] }}{% endif %}
-												 </div>
-											  </div>
-										   </div>
-										   <div class="ref-item">
-											  <div class="row">
-												 <div class="col-md-3 col-12 hlight-first align-self-center">
-													{{ lang['affiliates.min'] }}
-												 </div>
-												 <div class="col-md-8 col-12 hlight-second align-self-center">
-													{{ settings['ref_min'] }}{{ site['currency'] }}
-												 </div>
-											  </div>
-										   </div>
-										   <!-- item end -->
-										</div>
-									</div>
-								</div>
-								</div>
-			
-								<div class="col-lg-6 col-12 mb-3 mb-lg-0">
-								<div class="d-card">
-									<div class="d-card-body">
-										<div class="ref-items ri-sm">
-										   <div class="ref-item d-blue mb-2">
-											  <div class="row">
-												 <div class="col-md-1 col-1 align-self-center icon">
-													<i class="fal fa-mouse-pointer"></i>
-												 </div>
-												 <div class="col-md-9 col-8 align-self-center">
-													{{ lang['affiliates.click'] }}
-												 </div>
-												 <div class="col-md-2 col-2 hlight-second align-self-center text-right">
-													{{ user['total_click'] }}
-												 </div>
-											  </div>
-										   </div>
-										   <div class="ref-item d-blue mb-2">
-											  <div class="row">
-												 <div class="col-md-1 col-1 align-self-center icon">
-													<i class="fal fa-hand-holding-usd"></i>
-												 </div>
-												 <div class="col-md-9 col-8 align-self-center">
-													{{ lang['affiliates.total.user'] }}
-												 </div>
-												 <div class="col-md-2 col-2 hlight-second align-self-center text-right">
-													{{ refCount }}
-												 </div>
-											  </div>
-										   </div>
-										   <div class="ref-item d-blue mb-2">
-											  <div class="row">
-												 <div class="col-md-1 col-1 align-self-center icon">
-													<i class="fal fa-redo-alt"></i>
-												 </div>
-												 <div class="col-md-9 col-8 align-self-center">
-													{{ lang['affiliates.total.payment'] }}
-												 </div>
-												 <div class="col-md-2 col-2 hlight-second align-self-center text-right">
-													{{ user['reforder'] }}{{ site['currency'] }}
-												 </div>
-											  </div>
-										   </div>
-										   <div class="ref-item d-blue mb-2">
-											  <div class="row">
-												 <div class="col-md-1 col-1 align-self-center icon">
-													<i class="fal fa-coins"></i>
-												 </div>
-												 <div class="col-md-9 col-8 align-self-center">
-													{{ lang['affiliates.total.win'] }}
-												 </div>
-												 <div class="col-md-2 col-2 hlight-second align-self-center text-right">
-													{{ user['refchar'] }}{{ site['currency'] }}
-												 </div>
-											  </div>
-										   </div>
-				
-										</div>
-									</div>
-								</div>
-								</div>
-							</div>						
-							
-			
-				</section>
+                <!-- สถิติการอ้างอิง -->
+                <div class="col-lg-6 col-12 mb-3 mb-lg-0">
+                    <div class="d-card">
+                        <div class="d-card-header">
+                            <h5><i class="fas fa-chart-bar"></i> {{ lang['affiliates.stats.title'] }}</h5>
+                        </div>
+                        <div class="d-card-body">
+                            <div class="ref-items ri-sm">
+                                <div class="ref-item d-blue mb-2">
+                                    <div class="row">
+                                        <div class="col-md-1 col-1 align-self-center icon">
+                                            <i class="fal fa-mouse-pointer"></i>
+                                        </div>
+                                        <div class="col-md-9 col-8 align-self-center">
+                                            {{ lang['affiliates.click'] }}
+                                        </div>
+                                        <div class="col-md-2 col-2 hlight-second align-self-center text-right">
+                                            {{ user['total_click'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item d-blue mb-2">
+                                    <div class="row">
+                                        <div class="col-md-1 col-1 align-self-center icon">
+                                            <i class="fal fa-users"></i>
+                                        </div>
+                                        <div class="col-md-9 col-8 align-self-center">
+                                            {{ lang['affiliates.total.user'] }}
+                                        </div>
+                                        <div class="col-md-2 col-2 hlight-second align-self-center text-right">
+                                            {{ refCount }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item d-blue mb-2">
+                                    <div class="row">
+                                        <div class="col-md-1 col-1 align-self-center icon">
+                                            <i class="fal fa-redo-alt"></i>
+                                        </div>
+                                        <div class="col-md-9 col-8 align-self-center">
+                                            {{ lang['affiliates.total.payment'] }}
+                                        </div>
+                                        <div class="col-md-2 col-2 hlight-second align-self-center text-right">
+                                            {{ user['reforder'] }}{{ site['currency'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ref-item d-blue mb-2">
+                                    <div class="row">
+                                        <div class="col-md-1 col-1 align-self-center icon">
+                                            <i class="fal fa-coins"></i>
+                                        </div>
+                                        <div class="col-md-9 col-8 align-self-center">
+                                            {{ lang['affiliates.total.win'] }}
+                                        </div>
+                                        <div class="col-md-2 col-2 hlight-second align-self-center text-right">
+                                            {{ user['refchar'] }}{{ site['currency'] }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			</div>
-		</div>
+            <!-- การถอนเงินอ้างอิง -->
+            {% if user['refchar'] > 0 %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="d-card">
+                        <div class="d-card-header">
+                            <h5><i class="fas fa-money-bill-wave"></i> {{ lang['affiliates.withdraw.title'] }}</h5>
+                        </div>
+                        <div class="d-card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>{{ lang['affiliates.withdraw.available'] }}</strong> {{ user['refchar'] }}{{ site['currency'] }}</p>
+                                    <p><strong>{{ lang['affiliates.withdraw.min'] }}</strong> {{ settings['ref_min'] }}{{ site['currency'] }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <form method="POST" onsubmit="return validateWithdraw()">
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" name="withdraw_amount" 
+                                                   placeholder="{{ lang['affiliates.withdraw.amount'] }}" 
+                                                   min="{{ settings['ref_min'] }}" max="{{ user['refchar'] }}" 
+                                                   step="0.01" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit">
+                                                    <i class="fas fa-download"></i> {{ lang['affiliates.withdraw.button'] }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- รายการผู้ใช้ที่แนะนำ -->
+            {% if referral_users|length > 0 %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="d-card">
+                        <div class="d-card-header">
+                            <h5><i class="fas fa-user-friends"></i> {{ lang['affiliates.users.title'] }}</h5>
+                        </div>
+                        <div class="d-card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ lang['affiliates.users.username'] }}</th>
+                                            <th>{{ lang['affiliates.users.email'] }}</th>
+                                            <th>{{ lang['affiliates.users.date'] }}</th>
+                                            <th>{{ lang['affiliates.users.balance'] }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for user_item in referral_users %}
+                                        <tr>
+                                            <td>{{ user_item.username }}</td>
+                                            <td>{{ user_item.email }}</td>
+                                            <td>{{ user_item.register_date|date('d/m/Y H:i') }}</td>
+                                            <td>{{ user_item.balance }}{{ site['currency'] }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </section>
     </div>
-    </div>
+</div>
+
+<script>
+function copyReferralLink() {
+    const linkInput = document.querySelector('input[readonly]');
+    linkInput.select();
+    linkInput.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+    
+    // แสดงการแจ้งเตือน
+    const button = event.target.closest('button');
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i>';
+    button.classList.remove('btn-outline-secondary');
+    button.classList.add('btn-success');
+    
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.classList.remove('btn-success');
+        button.classList.add('btn-outline-secondary');
+    }, 2000);
+}
+
+function validateWithdraw() {
+    const amount = parseFloat(document.querySelector('input[name="withdraw_amount"]').value);
+    const available = parseFloat('{{ user["refchar"] }}');
+    const minimum = parseFloat('{{ settings["ref_min"] }}');
+    
+    if (amount < minimum) {
+        alert('{{ lang["affiliates.error.minimum"] }}');
+        return false;
+    }
+    
+    if (amount > available) {
+        alert('{{ lang["affiliates.error.insufficient"] }}');
+        return false;
+    }
+    
+    return confirm('คุณต้องการถอนเงินอ้างอิง ' + amount + '{{ site["currency"] }} ใช่หรือไม่?');
+}
+</script>
+
 {% include 'footer.twig' %}
