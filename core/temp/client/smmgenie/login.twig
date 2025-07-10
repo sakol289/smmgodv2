@@ -1,7 +1,7 @@
 {% include 'header.twig' %}
 
- <!-- Main variables *content* -->
-      <!--   <style>
+<!-- Main variables *content* -->
+<!--   <style>
   p, .smmiconss a {
     margin-top: 0%!important;
     margin-bottom: 0rem!important;
@@ -14,179 +14,199 @@
     line-height: 1.2;
 }
 </style> -->
-<div class="main-top">
-    <div class="main-top-bg"></div>
-    <div class="main-top-content">
-       <div class="container" style="position: relative;">
-          <div class="main-top-real-content">
-             <div class="row align-items-center">
-                <div class="col-lg-6 align-self-center">
-                   <div class="head-text sign_pg_title">
-                      <h1> <span class="main-color">{{ site["site_name"] }}</span>
-                         <span class="make_smaller">
-                         <br> We are fame makers <img class="banner-title-inline-images" src="https://cdn.mypanel.link/7o9f2j/64jiohf87y5i5ki5.png"><br> The All-In-One Social Media Marketing tool you will need! 
-                         </span>
-                      </h1>
-                      <div class="row">
-                         <div class="col-lg-6">
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i> Services are updated daily!
-                            </p>
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i>  +100 Secure payment methods!
-                            </p>
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i>  24/7 Tech Support for Any help!
-                            </p>
-                         </div>
-                         <div class="col-lg-6">
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i>  You can resell our services!
-                            </p>
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i>   Real/High quality services!
-                            </p>
-                            <p class="f-14 d-flex align-items-center">
-                               <i class="navbar-icon fas fa-check-circle mr-1"></i>   +6582055 orders until now!
-                            </p>
-                         </div>
-                      </div>
-                      <p style="font-size: 16px!important;">#1 Cheapest SMM services starting at only $0.001/k </p>
-                   </div>
-                   <div class="head-links row mt-5">
-                      <div class="col-auto mb-4 mb-md-0">
-                         <a href="/services" class="btn btn-primary btn-lg">Our Services</a>
-                      </div>
-                      <div class="col-auto">
-                         <a href="/signup" class="btn btn-outline btn-lg">Sign Up Now</a>
-                      </div>
-                   </div>
-                   <div class="main-stats">
-                      <div class="row">
-                         <div class="col-lg-6 col-md-6 mb-4 col-12">
-                            <div class="home-stat br">
-                               <div class="row">
-                                  <div class="col-auto align-self-center">
-                                     <i class="far fa-crown"></i>
-                                  </div>
-                                  <div class="col align-self-center">
-                                     <div class="hstat-text">6582055+</div>
-                                     <div class="hstat-title">Total Orders</div>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                         <div class="col-lg-6 col-md-6 mb-4 col-12">
-                            <div class="home-stat">
-                               <div class="row">
-                                  <div class="col-auto align-self-center">
-                                     <i class="far fa-smile"></i>
-                                  </div>
-                                  <div class="col align-self-center">
-                                     <div class="hstat-text">126839+</div>
-                                     <div class="hstat-title">Active User</div>
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-lg-5 offset-lg-1">
-                   <div class="login-card">
-                      <div class="lc-body">
-                         <div class="lc-title">
-                            <h4>Sign In</h4>
-                            <small>Enter your username and password for login.</small>
-                            <form  method="post" action="">
-                                
-                                
-                                                    {% if errorText %}
-											<div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
-											  <button type="button" class="close" data-dismiss="alert">×</button>
-											  {{ errorText }}
-											</div>
-										  {% endif %}
-
-										  {% if successText %}
-											<div class="alert alert-success alert-dismissible" role="alert">
-											  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-											  {{ successText }}
-											</div>
-										  {% endif %}
-										  
-										  
-										  <div class="login-form mt-5 py-3">
-                               <div class="fg fg-light mb-4">
-                                  <div class="fg-icon"><i class="far fa-user"></i></div>
-                                  <input type="text" class="fg-control" id="username" name="username" placeholder="Username">
-                               </div>
-                               <div class="fg fg-light mb-4">
-                                  <div class="fg-icon"><i class="far fa-unlock-alt"></i></div>
-                                  <input type="password" class="fg-control" id="password" name="password" placeholder="Password">
-                               </div>
-                               <div class="form-row mt-2">
-                                  <div class="col-6 py-2 mb-2">
-                                     <div class="fcheck ms-1 mb-3">
-                                        <input type="checkbox"  name="remember" value="1" id="remember">
-                                        <label for="remember">Remember Me</label>
-                                     </div>
-                                  </div>
-                                  <div class="col-6 text-right">
-                                     <a href="/resetpassword" class="frgpass">Forgot Password?</a>
-                                  </div>
-                               </div>
-                               
-						   
-						  {% if captcha %}
-							<div class="form-group">
-							  <div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+	<div class="main-top"> <div class="main-top-bg"></div>
+	<div class="main-top-content">
+		<div class="container" style="position: relative;">
+			<div class="main-top-real-content">
+				<div class="row align-items-center">
+					<div class="col-lg-6 align-self-center">
+						<div class="head-text sign_pg_title">
+							<h1>
+								<span class="main-color">{{ site["site_name"] }}</span>
+								<span class="make_smaller">
+									<br>
+									บริการเพิ่มยอดการเข้าถึง
+									<img class="banner-title-inline-images" src="https://cdn.mypanel.link/7o9f2j/64jiohf87y5i5ki5.png"><br>
+									ทุกแพลตฟอร์มออนไลน์ ปั้มไลค์ ปั้มติดตาม ปั้มฟอล เพิ่มการมองเห็นต่างๆ
+								</span>
+							</h1>
+							<div class="row">
+								<div class="col-lg-6">
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										อัพเดทบริการทุกวัน
+									</p>
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										รองรับการเติมเงินทั้งพร้อมเพย์ และ วอเล็ต
+									</p>
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										ให้คำแนะนำและปรึกษาได้ 24/7
+									</p>
+								</div>
+								<div class="col-lg-6">
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										ราคาเป็นมิตรสามารถนำไปขายต่อได้
+									</p>
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										บริการคุณภาพจริง/สูง!
+									</p>
+									<p class="f-14 d-flex align-items-center">
+										<i class="navbar-icon fas fa-check-circle mr-1"></i>
+										+6582055 สั่งซื้อได้แล้ววันนี้!
+									</p>
+								</div>
 							</div>
-						  {% endif %}
-		  
-                            <div class="row mt-4">
-                                  <div class="col-md-12 mb-3 mb-md-0">
-                                    
-                                     <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-                                  </div>
-                               </div>
-                               
-                                                  {% if google == 2 %}   
-                               <a href="/google" class="btn btn-primary btn-lg btn-block  mt-3">
-                              
-                                                    Sign in With Google
-                                    </a> {% endif %}
-                    		
-                               
-                               
-                               <div class="btn btn-dark btn-block mt-3">
-                                  Don't have an account? <a href="/signup">Sign up Now!</a>
-                               </div>
-                            </div>
-                            </form>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             <div class="col-lg-12 align-self-center">
-             </div>
-          </div>
-       </div>
-    </div>
- </div>
- 
- 
- <section class="home-bottom">
+							<p style="font-size: 16px!important;">#1 บริการ SMM ราคาถูกที่สุดเริ่มต้นเพียง 0.001/k
+							</p>
+						</div>
+						<div class="head-links row mt-5">
+							<div class="col-auto mb-4 mb-md-0">
+								<a href="/services" class="btn btn-primary btn-lg">Our Services</a>
+							</div>
+							<div class="col-auto">
+								<a href="/signup" class="btn btn-outline btn-lg">Sign Up Now</a>
+							</div>
+						</div>
+						<div class="main-stats">
+							<div class="row">
+								<div class="col-lg-6 col-md-6 mb-4 col-12">
+									<div class="home-stat br">
+										<div class="row">
+											<div class="col-auto align-self-center">
+												<i class="far fa-crown"></i>
+											</div>
+											<div class="col align-self-center">
+												<div class="hstat-text">6582055+</div>
+												<div class="hstat-title">ออเดอร์ทั้งหมด</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6 col-md-6 mb-4 col-12">
+									<div class="home-stat">
+										<div class="row">
+											<div class="col-auto align-self-center">
+												<i class="far fa-smile"></i>
+											</div>
+											<div class="col align-self-center">
+												<div class="hstat-text">126839+</div>
+												<div class="hstat-title">ลูกค้าทั้งหมด</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-5 offset-lg-1">
+						<div class="login-card">
+							<div class="lc-body">
+								<div class="lc-title">
+									<h4>เข้าสู่ระบบ</h4>
+									<small>กรุณากรอกชื่อผู้ใช้และรหัสผ่านเพื่อเข้าสู่ระบบ</small>
+									<form method="post" action="">
+
+
+										{% if errorText %}
+											<div class="alert alert-dismissible alert-danger {% if site['rtl'] %} rtl-alert {% endif %}">
+												<button type="button" class="close" data-dismiss="alert">×</button>
+												{{ errorText }}
+											</div>
+										{% endif %}
+
+										{% if successText %}
+											<div class="alert alert-success alert-dismissible" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">×</span>
+												</button>
+												{{ successText }}
+											</div>
+										{% endif %}
+
+
+										<div class="login-form mt-5 py-3">
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-user"></i>
+												</div>
+												<input type="text" class="fg-control" id="username" name="username" placeholder="Username">
+											</div>
+											<div class="fg fg-light mb-4">
+												<div class="fg-icon">
+													<i class="far fa-unlock-alt"></i>
+												</div>
+												<input type="password" class="fg-control" id="password" name="password" placeholder="Password">
+											</div>
+											<div class="form-row mt-2">
+												<div class="col-6 py-2 mb-2">
+													<div class="fcheck ms-1 mb-3">
+														<input type="checkbox" name="remember" value="1" id="remember">
+														<label for="remember">จดจำฉัน</label>
+													</div>
+												</div>
+												<div class="col-6 text-right">
+													<a href="/resetpassword" class="frgpass">ลืมรหัสผ่าน?</a>
+												</div>
+											</div>
+
+
+											{% if captcha %}
+												<div class="form-group">
+													<div class="g-recaptcha" data-sitekey="{{ captchaKey }}"></div>
+												</div>
+											{% endif %}
+
+											<div class="row mt-4">
+												<div class="col-md-12 mb-3 mb-md-0">
+
+													<button type="submit" class="btn btn-primary btn-lg btn-block">เข้าสู่ระบบ</button>
+												</div>
+											</div>
+
+											{% if google == 2 %}
+												<a href="/google" class="btn btn-primary btn-lg btn-block  mt-3">
+
+												เข้าสู่ระบบด้วย Google
+												</a>
+											{% endif %}
+
+
+											<div class="btn btn-dark btn-block mt-3">
+												ยังไม่มีบัญชี?
+												<a href="/signup">สมัครสมาชิกเลย!</a>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-12 align-self-center"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<section class="home-bottom">
 	<div class="container">
 		<div class="row mb-5">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="section_title_wrap text-center">
-					<h5 class="small_title">How It Works?</h5>
-					<h2 class="sec_title">Our Working Process.</h2>
+					<h5 class="small_title">How does the system work?</h5>
+					<h2 class="sec_title">กระบวนการทำงานของเรา</h2>
 					<p class="sec_des">
-						You can use our smm panel only in three steps! First, you need to have an account for login then you can see the dashboard. Second, you need to deposit funds to your account in &nbsp;{{ site["site_name"] }}. deposit is easy and secure. Third, after your balance appears in your account you can place orders in form.
+						คุณสามารถใช้แผงควบคุม SMM ของเราได้ในสามขั้นตอนเท่านั้น! ขั้นแรก คุณต้องมีบัญชีสำหรับเข้าสู่ระบบ
+						                  จากนั้นคุณจะเห็นแดชบอร์ด ขั้นที่สอง คุณต้องฝากเงินเข้าบัญชีของคุณใน
+						{{ site["site_name"] }}
+						การฝากเงินนั้นง่ายและปลอดภัย
+						                  ขั้นที่สาม เมื่อยอดเงินของคุณปรากฏในบัญชีแล้ว คุณสามารถสั่งซื้อผ่านแบบฟอร์มได้
 					</p>
 				</div>
 			</div>
@@ -203,7 +223,7 @@
 							<h2>
 								Sing Up
 							</h2>
-							<p>Register into our panel, fill up your data and get ready to be famous. We will help to be a famous person on the social media.</p>
+							<p>ลงทะเบียนในแผงควบคุมของเรา กรอกข้อมูลของคุณ และเตรียมพร้อมที่จะโด่งดัง เราจะช่วยให้คุณเป็นคนดังบนโซเชียลมีเดีย</p>
 						</div>
 					</div>
 					<div class="hb-box-img">
@@ -218,8 +238,12 @@
 							<i class="fal fa-wallet"></i>
 						</div>
 						<div class="wpo-features-text">
-							<h2>Add Fund</h2>
-							<p>Add money to your &nbsp;{{ site["site_name"] }} account and be ready to rise like a star and give your business a new height. Just Enjoy Bonus at First Deposit.</p>
+							<h2>การเติมเงิน</h2>
+							<p>เติมเงินเข้าบัญชี
+								{{ site["site_name"] }}
+								ของคุณ
+								                     แล้วเตรียมตัวให้พร้อมสำหรับการเติบโตอย่างก้าวกระโดดและยกระดับธุรกิจของคุณให้สูงขึ้นไปอีกขั้น
+								                     เพียงรับโบนัสจากการฝากเงินครั้งแรก</p>
 						</div>
 					</div>
 					<div class="hb-box-img">
@@ -235,10 +259,10 @@
 						</div>
 						<div class="wpo-features-text">
 							<h2>
-								Place Order
+								การสั่งออเดอร์
 							</h2>
 							<p>
-								Select a service and place an order and get ready to start receiving more and more publicity on Social Media and the Internet.
+								เลือกบริการและสั่งซื้อเพื่อเตรียมพร้อมที่จะเริ่มได้รับการประชาสัมพันธ์มากขึ้นบนโซเชียลมีเดียและอินเทอร์เน็ต
 							</p>
 						</div>
 					</div>
@@ -254,8 +278,8 @@
 							<i class="fal fa-crown"></i>
 						</div>
 						<div class="wpo-features-text">
-							<h2>Enjoy Super Result!</h2>
-							<p>After Sucessfully Place an order. You will Recived Your Needs and you will get notifications at your social media.
+							<h2>เพลิดเพลินไปกับผลลัพธ์สุดยอด!</h2>
+							<p>หลังจากทำการสั่งซื้อสำเร็จ คุณจะได้รับข้อมูลความต้องการของคุณ และได้รับการแจ้งเตือนทางโซเชียลมีเดีย
 							</p>
 						</div>
 					</div>
@@ -273,10 +297,12 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<div class="section_title_wrap text-center">
-					<h5 class="small_title">Why Choose &nbsp;{{ site["site_name"] }}?</h5>
-					<h2 class="sec_title">We have most advance features.</h2>
+					<h5 class="small_title">ทำไมต้องเลือก
+						{{ site["site_name"] }}?</h5>
+					<h2 class="sec_title">เรามีคุณสมบัติที่ล้ำหน้าที่สุด</h2>
 					<p class="sec_des">
-						Numbers show that we are the most used panel with a total of 30100  orders. But let us tell you why we are the first in what we do.
+						ตัวเลขแสดงให้เห็นว่าเราเป็นแผงที่มีการใช้งานมากที่สุด โดยมียอดสั่งซื้อรวม 30,100 รายการ
+						                  แต่เราจะบอกคุณว่าทำไมเราถึงเป็นเจ้าแรกในสิ่งที่เราทำ
 					</p>
 				</div>
 			</div>
@@ -287,7 +313,7 @@
 				<div class="home-phone">
 					<img src="/css/panel/smmgenie/cdn.mypanel.link/08ed14/d1nbsu1sfl6ecqy7.png" class="img-fluid"/>
 					<img src="/img/smmgene/fastsmmbrand.in.png
-" class="img-fluid iphone floating"/>
+						" class="img-fluid iphone floating"/>
 				</div>
 			</div>
 			<div class="col-lg-6">
@@ -298,8 +324,8 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2 class="dt-title">Friendly Dashboard</h2>
-						<p class="dt-text">We have the friendliest dashbord in the SMM World! Updated regularly with the best user friendly features.</p>
+						<h2 class="dt-title">แดชบอร์ดที่ใช้งานง่าย</h2>
+						<p class="dt-text">เรามีแดชบอร์ดที่ใช้งานง่ายที่สุดในโลก SMM! อัปเดตเป็นประจำด้วยฟีเจอร์ที่เป็นมิตรกับผู้ใช้</p>
 					</div>
 				</div>
 				<div class="row detail-box">
@@ -309,8 +335,8 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2 class="dt-title">World Wide services</h2>
-						<p class="dt-text">We always provide world best services as per your demand. Our all services is international Services.</p>
+						<h2 class="dt-title">บริการทั่วโลก</h2>
+						<p class="dt-text">เรามีบริการที่ดีที่สุดในโลกตามความต้องการของคุณ ทุกบริการของเราเป็นบริการระดับสากล</p>
 					</div>
 				</div>
 				<div class="row detail-box">
@@ -320,8 +346,8 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2 class="dt-title">Unbelievable Prices</h2>
-						<p class="dt-text">Our prices are the cheapest in the market, starting at 0.03$.</p>
+						<h2 class="dt-title">ราคาถูกเหลือเชื่อ</h2>
+						<p class="dt-text">ราคาของเราถูกที่สุดในตลาด เริ่มต้นเพียง 0.03$</p>
 					</div>
 				</div>
 				<div class="row detail-box">
@@ -331,8 +357,8 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2 class="dt-title">Delivered Within Minutes</h2>
-						<p class="dt-text">We provide automated services with quick delivery. .</p>
+						<h2 class="dt-title">จัดส่งภายในไม่กี่นาที</h2>
+						<p class="dt-text">เรามีบริการอัตโนมัติที่จัดส่งได้อย่างรวดเร็ว</p>
 					</div>
 				</div>
 				<div class="row detail-box">
@@ -342,123 +368,142 @@
 						</div>
 					</div>
 					<div class="col">
-						<h2 class="dt-title">24/7 Support</h2>
-						<p class="dt-text">We are proud to have the best support in the SMM World, replying to your tickets 24/7.</p>
+						<h2 class="dt-title">บริการช่วยเหลือ 24/7</h2>
+						<p class="dt-text">เราภูมิใจที่มีทีมซัพพอร์ตที่ดีที่สุดในโลก SMM ตอบกลับตั๋วของคุณตลอด 24 ชั่วโมง</p>
 					</div>
 				</div>
 			</div>
 		</div>
-      <div class="row mt-3">
-                                            <div class="col-md-6 grid-margin stretch-card">
-                                                <div class="card card-icon-top comparision">
-                                                    <div class="comparision-us p-3 goodH">
-                                                        <h2 class="nice-title "><i class="far fa-check-circle"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;">{{ site["site_name"] }}</font>
-                                                            </font>
-                                                        </h2>
-                                                    </div>
-                                                    <div class="card-body p-2">
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> We only serve
-                                                                    High Quality products and products that works</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> We bring you the
-                                                                    most competitive prices on the market</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> We have support
-                                                                    working daily to assist any of your issues</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> You can get your
-                                                                    money back for every order you make</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> Daily updating
-                                                                    our services with the latest trends</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> Friendly prices
-                                                                    for sellers with Bulk Orders</font>
-                                                            </font>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 grid-margin stretch-card">
-                                                <div class="card card-icon-top comparision comparision_negative">
-                                                    <div class="comparision-others p-3 badH">
-                                                        <h2 class="nice-title "><i class="far fa-times-circle"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> Others</font>
-                                                            </font>
-                                                        </h2>
-                                                    </div>
-                                                    <div class="card-body pt-2">
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> Low quality
-                                                                    services that never work or work really bad</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> High prices and
-                                                                    Slow delivery time for your orders </font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> The support
-                                                                    never replies to your issues in time</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> No refunds in
-                                                                    case you are unhappy with your order</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> Outdated
-                                                                    services that often doesn't work or broken</font>
-                                                            </font>
-                                                        </p>
-                                                        <hr>
-                                                        <p><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                                            <font style="vertical-align: inherit;">
-                                                                <font style="vertical-align: inherit;"> In the business
-                                                                    for one year or less</font>
-                                                            </font>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-      
+		<div class="row mt-3">
+			<div class="col-md-6 grid-margin stretch-card">
+				<div class="card card-icon-top comparision">
+					<div class="comparision-us p-3 goodH">
+						<h2 class="nice-title ">
+							<i class="far fa-check-circle"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">{{ site["site_name"] }}</font>
+							</font>
+						</h2>
+					</div>
+					<div class="card-body p-2">
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								เราให้บริการเฉพาะสินค้าคุณภาพสูงและสินค้าที่ใช้งานได้จริงเท่านั้น</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								เรานำเสนอราคาที่แข่งขันได้มากที่สุดในตลาด</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								เรามีทีมซัพพอร์ตที่ทำงานทุกวันเพื่อช่วยเหลือปัญหาของคุณ</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								คุณสามารถขอเงินคืนได้สำหรับทุกออเดอร์ที่คุณทำ</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								อัปเดตบริการของเราทุกวันด้วยเทรนด์ล่าสุด</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-up" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								ราคาสุดคุ้มสำหรับผู้ขายที่สั่งซื้อจำนวนมาก</font>
+							</font>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 grid-margin stretch-card">
+				<div class="card card-icon-top comparision comparision_negative">
+					<div class="comparision-others p-3 badH">
+						<h2 class="nice-title ">
+							<i class="far fa-times-circle"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								เจ้าอื่น</font>
+							</font>
+						</h2>
+					</div>
+					<div class="card-body pt-2">
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								บริการคุณภาพต่ำที่ไม่เคยใช้งานได้หรือใช้งานได้แย่มาก</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+								ราคาสูงและจัดส่งช้า</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+									The support
+									                                                                    never replies to your issues in time</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+									No refunds in
+									                                                                    case you are unhappy with your order</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+									Outdated
+									                                                                    services that often doesn't work or broken</font>
+							</font>
+						</p>
+						<hr>
+						<p>
+							<i class="fa fa-thumbs-down" aria-hidden="true"></i>
+							<font style="vertical-align: inherit;">
+								<font style="vertical-align: inherit;">
+									In the business
+									                                                                    for one year or less</font>
+							</font>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </section>
 <!-- Best Section -->
@@ -481,7 +526,9 @@
 							Tired of looking at hundreds of cheap smm panel with services that simple doesnt work? Check our cheapest smm panel major services for social media with the best quality and quicker delivery on the market!
 						</p>
 						<p>
-							Finding the best smm panel or smm panel that fits your agency needs can be a tedious job! Check why you should trust &nbsp;{{ site["site_name"] }} to delivery your social media services with a quick comparision.
+							Finding the best smm panel or smm panel that fits your agency needs can be a tedious job! Check why you should trust
+							{{ site["site_name"] }}
+							to delivery your social media services with a quick comparision.
 						</p>
 
 						<div class="btn_wrapers">
@@ -509,9 +556,9 @@
 				<div class="section_title_wrap text-center mb-3">
 					<h5 class="small_title">Our Clients Testimonials</h5>
 					<h2 class="sec_title">
-						Our Happy Clients Like You .</h2>
+						เสียงตอบรับจากลูกค้าของเรา</h2>
 					<p class="sec_des">
-						It is about us being able to offer help with the branding campaign, product presentation, and advertisement running across social media.
+						เกี่ยวกับการที่เราสามารถช่วยเหลือด้านแคมเปญแบรนด์ การนำเสนอสินค้า และการโฆษณาบนโซเชียลมีเดีย
 					</p>
 				</div>
 			</div>
@@ -521,140 +568,163 @@
 			<div class="col-md-12">
 				<div id="testimonials_wrap">
 					<div>
-					    
-					    
-					   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="/img/smmgene/leakstation.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Shyam </div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>Wow! This is amazing.</b></p>
-                         <p>I have been purchasing Instagram Likes for over a year and never got a delay! &nbsp;{{ site["site_name"] }} did a great job always. Recommended for people looking for cheap smm panel</p>
-                      </div>
-                   </div>
-                </div>
-                <div>
-                   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="https://cdn.mypanel.link/t1bi1n/8kccucs1mbowj2ab.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Solika Redisa</div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>It was great services.</b></p>
-                         <p>Order 10000 Instagram Followers and Got my followers as promised in time! Happy to Purchased from &nbsp;{{ site["site_name"] }}. We will Continue with &nbsp;{{ site["site_name"] }} as smm panel for our future purchase.
-                         </p>
-                      </div>
-                   </div>
-                </div>
-                <div>
-                   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="https://cdn.mypanel.link/t1bi1n/47u43ssc6qfrim8s.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Peter Brown</div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>Great Support and services.</b></p>
-                         <p>I was looking for smm panel and found &nbsp;{{ site["site_name"] }}. Purchased 20000 Facebook Likes for our company and worked indeed! Support is also in time always. Thanks</p>
-                      </div>
-                   </div>
-                </div>
-                <div>
-                   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="https://cdn.mypanel.link/t1bi1n/n9r8i8r4lup103b1.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Elisabeth L. Reed</div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>They are amazing! Congratulations &nbsp;{{ site["site_name"] }}.</b></p>
-                         <p>Best service website for any social network, with great prices, speed, and excellent service. I was working with many panels before and none of them was on the &nbsp;{{ site["site_name"] }} level.</p>
-                      </div>
-                   </div>
-                </div>
-                <div>
-                   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="https://cdn.mypanel.link/t1bi1n/4qed76qbw2uwmeit.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Sandra Raju</div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>Excellent service and &nbsp;{{ site["site_name"] }} is Best.</b></p>
-                         <p>Excellent service and &nbsp;{{ site["site_name"] }} is one of the best and cheapest Social Media Marketing Tool. SMM panel is wonderful website. I am totally satisfied with their service and recommend them. thanks</p>
-                      </div>
-                   </div>
-                </div>
-                <div>
-                   <div class="testimoials_item">
-                      <div class="images">
-                         <img src="https://cdn.mypanel.link/t1bi1n/0ytj06qt9qj6pfas.png" alt="">
-                      </div>
-                      <div class="testi_user_info">
-                         <div class="username">Neidy Florez</div>
-                         <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                         </div>
-                      </div>
-                      <div class="content">
-                         <p><b>I am Definitely Very Statisfied.</b></p>
-                         <p>I am definitely very satisfied with this company, they have excellent customer service and they have promoted my company to me; I'm delighted!</p>
-                      </div>
-                   </div>
-                </div>
-             </div>
-				
-				
-				
-				
-				
+
+
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="/img/smmgene/leakstation.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Shyam
+								</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>Wow! This is amazing.</b>
+								</p>
+								<p>I have been purchasing Instagram Likes for over a year and never got a delay!
+									{{ site["site_name"] }}
+									did a great job always. Recommended for people looking for cheap smm panel</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="https://cdn.mypanel.link/t1bi1n/8kccucs1mbowj2ab.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Solika Redisa</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>It was great services.</b>
+								</p>
+								<p>Order 10000 Instagram Followers and Got my followers as promised in time! Happy to Purchased from
+									{{ site["site_name"] }}. We will Continue with
+									{{ site["site_name"] }}
+									as smm panel for our future purchase.
+								</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="https://cdn.mypanel.link/t1bi1n/47u43ssc6qfrim8s.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Peter Brown</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>Great Support and services.</b>
+								</p>
+								<p>I was looking for smm panel and found
+									{{ site["site_name"] }}. Purchased 20000 Facebook Likes for our company and worked indeed! Support is also in time always. Thanks</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="https://cdn.mypanel.link/t1bi1n/n9r8i8r4lup103b1.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Elisabeth L. Reed</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>They are amazing! Congratulations
+										{{ site["site_name"] }}.</b>
+								</p>
+								<p>Best service website for any social network, with great prices, speed, and excellent service. I was working with many panels before and none of them was on the
+									{{ site["site_name"] }}
+									level.</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="https://cdn.mypanel.link/t1bi1n/4qed76qbw2uwmeit.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Sandra Raju</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>Excellent service and
+										{{ site["site_name"] }}
+										is Best.</b>
+								</p>
+								<p>Excellent service and
+									{{ site["site_name"] }}
+									is one of the best and cheapest Social Media Marketing Tool. SMM panel is wonderful website. I am totally satisfied with their service and recommend them. thanks</p>
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="testimoials_item">
+							<div class="images">
+								<img src="https://cdn.mypanel.link/t1bi1n/0ytj06qt9qj6pfas.png" alt="">
+							</div>
+							<div class="testi_user_info">
+								<div class="username">Neidy Florez</div>
+								<div class="rating">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+								</div>
+							</div>
+							<div class="content">
+								<p>
+									<b>I am Definitely Very Statisfied.</b>
+								</p>
+								<p>I am definitely very satisfied with this company, they have excellent customer service and they have promoted my company to me; I'm delighted!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
@@ -666,11 +736,10 @@
 				<div class="footer-top">
 					<div class="row align-items-center">
 						<div class="col-lg-7">
-							<h1>Sign Up now.
-							</h1>
+							<h1>สมัครสมาชิกเลย.</h1>
 						</div>
 						<div class="col-lg-3 offset-lg-1">
-							<a href="/signup" class="btn btn-outline btn-lg">Sign Up Now!</a>
+							<a href="/signup" class="btn btn-outline btn-lg">สมัครสมาชิกเลย!</a>
 						</div>
 					</div>
 				</div>
@@ -680,11 +749,10 @@
 </section>
 
 
-
 {% for lang in site['languages'] %}
-  {% if lang['active'] %}
-    <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
-  {% endif %}
+	{% if lang['active'] %}
+		 <script src="https://www.google.com/recaptcha/api.js?hl={{ lang['code'] }}"></script>
+	{% endif %}
 {% endfor %}
 
 {% include 'footer.twig' %}
