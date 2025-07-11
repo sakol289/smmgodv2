@@ -2383,7 +2383,10 @@ elseif ($method_name == "paymentv2"):
         $post_payload = ['payload' => $_POST['idkey']];
         // echo "[DEBUG] Payload to API:<br>";
         var_dump($post_payload);
-
+        if($post_payload == "") {
+            exit;
+            header("Location: /paymentv2/status.php?date=$date&?error=system error");
+        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
