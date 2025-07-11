@@ -173,8 +173,8 @@
                         else: $type = "category-deactive";
                         endif; ?>
                         <li><a href="<?php echo site_url("admin/services/" . $type . "/" . $services[0]["category_id"]) ?>"><?php if ($services[0]["category_type"] == 1): echo "Activate Category";
-                                                                                                                      else: echo "Disable Category";
-                                                                                                                      endif; ?></a></li>
+                                                                                                                            else: echo "Disable Category";
+                                                                                                                            endif; ?></a></li>
 
                         <li><a href="<?php echo site_url("admin/services/del_cate/" . $services[0]["category_id"]) ?>">Delete Category</a></li>
 
@@ -197,7 +197,7 @@
                         <div class="serviceSortable" id="Servicecategory-<?= $c ?>" data-id="category-<?= $c ?>">
                           <?php for ($i = 0; $i < count($services); $i++): $api_detail = json_decode($services[$i]["api_detail"], true); ?>
                             <tr id="serviceshowcategory-<?= $c ?>" class="ui-state-default <?php if ($services[$i]["service_type"] == 1): echo "grey";
-                                                                                          endif; ?>" data-category="category-<?= $c ?>" data-id="service-<?php echo $services[$i]["service_id"] ?>" data-service="<?php echo $services[$i]["service_name"] ?>">
+                                                                                            endif; ?>" data-category="category-<?= $c ?>" data-id="service-<?php echo $services[$i]["service_id"] ?>" data-service="<?php echo $services[$i]["service_name"] ?>">
                               <?php if (!empty($services[0]["service_id"])): ?>
                                 <td class="service-block__checker">
                                   <?php if ($services[$i]["api_servicetype"] == 1): echo '<div class="service-block__danger"></div>';
@@ -225,7 +225,7 @@
                                 <td class="service-block__provider"><?php if ($services[$i]["service_api"] != 0): echo $services[$i]["api_name"];
                                                                     else: echo "Manuel";
                                                                     endif;  ?> <?php if ($services[$i]["service_api"] != 0): echo '<div class="service-block__provider-value">' . $services[$i]["api_service"] . '</div>';
-                                                                                                                                                                                    endif; ?></td>
+                                                                                endif; ?></td>
                                 <td class="service-block__rate">
                                   <?php
 
@@ -264,7 +264,7 @@
                                 <td class="service-block__visibility"><?php if ($services[$i]["service_type"] == 1): echo "Passive ";
                                                                       else: echo "Active";
                                                                       endif; ?> <?php if ($services[$i]["api_servicetype"] == 1): echo '<span class="text-danger" title="Service provider has removed the service"><span class="fa fa-exclamation-circle"></span></span>';
-                                                                                                                                                                      endif; ?> </td>
+                                                                                endif; ?> </td>
                                 <td class="service-block__action">
                                   <div class="dropdown pull-right">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle btn-xs-caret" data-toggle="dropdown">Options <span class="caret"></span></button>
@@ -275,8 +275,8 @@
                                       else: $type = "service-deactive";
                                       endif; ?>
                                       <li><a href="<?php echo site_url("admin/services/" . $type . "/" . $services[$i]["service_id"]) ?>"><?php if ($services[$i]["service_type"] == 1): echo "Activate Service";
-                                                                                                                                    else: echo "Disable Service";
-                                                                                                                                    endif; ?></a></li>
+                                                                                                                                          else: echo "Disable Service";
+                                                                                                                                          endif; ?></a></li>
                                       <li><a href="<?php echo site_url("admin/services/del_price/" . $services[$i]["service_id"]) ?>">Reset Discounts</a></li>
                                       <li><a href="#" data-toggle="modal" data-target="#confirmChange" data-href="<?php echo site_url("admin/services/delete/" . $services[$i]["service_id"]) ?>">delete service</a></li>
 

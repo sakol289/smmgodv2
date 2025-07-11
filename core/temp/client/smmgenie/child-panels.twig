@@ -1,378 +1,376 @@
 {% include 'header.twig' %}
-       
-       
-       
-      <div class="app-content">
-   <div class="container-fluid">
-      <div class="d-card dc-dash">
-          <div class="row">
-             <div class="col-lg-6 col-md-8 col-12">
-                <div class="py-3 px-5">
-                   <div class="dch-title">
-                      Child Panel
-                   </div>
-                   <div class="dch-text">
-                      Order Child Panel Start Reselling our services and make per month $10K Profits.
-                   </div>
-                </div>
-             </div>
-          </div>
-      </div>
-      <section class="neworder">
-                           <div class="row">
-            <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-               <div class="d-card">
-                  <div class="d-card-head">
-                     <div class="dch-body">
-                        <i class="icon far fa-hand-point-up me-3"></i>
-                        <span class="ml-3">Order New Child Panel</span>
-                     </div>
-                  </div>
-                  <div class="d-card-body">
-                        
-                         {% if errorText %}
-										<div class="alert alert-dismissible alert-danger">
-										  <button type="button" class="close" data-dismiss="alert">×</button>
-										  {{ errorText }}
+
+
+<div class="app-content">
+	<div class="container-fluid">
+		<div class="d-card dc-dash">
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-12">
+					<div class="py-3 px-5">
+						<div class="dch-title">
+							Child Panel
+						</div>
+						<div class="dch-text">
+							Order Child Panel Start Reselling our services and make per month $10K Profits.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section class="neworder">
+			<div class="row">
+				<div class="col-lg-6 col-12 mb-5 mb-lg-0">
+					<div class="d-card">
+						<div class="d-card-head">
+							<div class="dch-body">
+								<i class="icon far fa-hand-point-up me-3"></i>
+								<span class="ml-3">Order New Child Panel</span>
+							</div>
+						</div>
+						<div class="d-card-body">
+
+							{% if errorText %}
+								<div class="alert alert-dismissible alert-danger">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									{{ errorText }}
+								</div>
+							{% endif %}
+							{% if successText %}
+								<div class="alert alert-dismissible alert-success">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									{{ successText }}
+								</div>
+							{% endif %}
+
+							<form action="/child-panels" method="post">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="form-group">
+											<label for="formDomain">Domain</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-globe"></i>
+												</div>
+
+												<input type="text" class="form-control" id="domain" name="domain" value="" placeholder="Domain">
+											</div>
 										</div>
-									  {% endif %}
-									  {% if successText %}
-										<div class="alert alert-dismissible alert-success">
-										  <button type="button" class="close" data-dismiss="alert">×</button>
-										  {{ successText }}
+										<div class="d-card mb-2 mt-2" style="background: #ff5252; border-radius: 10px;">
+											<div class="d-card-body" style="padding: 18px 15px 18px 15px;">
+												<div class="row">
+													<div class="col-auto mt-md-0 d-none d-md-block align-self-center">
+														<img src="https://cdn.mypanel.link/08ed14/e3s26p1wiju1bdgy.png" alt="" style="width: 40px;">
+													</div>
+													<div class="col align-self-center">
+														<div style="font-size:15px">Please change nameservers to:</div>
+														<div style="font-size: 19px;" class="mt-2">
+															<p class="mb-0" style="color: #fff; font-weight: 600">ns1.dnsco.in</p>
+															<p class="mb-0" style="color: #fff; font-weight: 600">ns2.dnsco.in</p>
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
-									  {% endif %}
-                        
-                        <form action="/child-panels" method="post">
-                                                      <div class="row">
-                              <div class="col-lg-12">
-                                 <div class="form-group">
-                                    <label for="formDomain">Domain</label>
-                                    <div class="input-group">
-                                          <div class="input-group-icon">
-                                             <i class="fas fa-globe"></i>
-                                          </div>
-                                          
-                                          <input type="text" class="form-control" id="domain" name="domain" value="" placeholder="Domain">
-                                    </div>
-                                 </div>
-                                 <div class="d-card mb-2 mt-2" style="background: #ff5252; border-radius: 10px;">
-                                    <div class="d-card-body" style="padding: 18px 15px 18px 15px;">
-                                       <div class="row">
-                                             <div class="col-auto mt-md-0 d-none d-md-block align-self-center">
-                                             <img src="https://cdn.mypanel.link/08ed14/e3s26p1wiju1bdgy.png" alt="" style="width: 40px;">
-                                             </div>
-                                             <div class="col align-self-center">
-                                             <div style="font-size:15px">Please change nameservers to:</div>
-                                             <div style="font-size: 19px;" class="mt-2">
-                                                                                                   <p class="mb-0" style="color: #fff; font-weight: 600">ns1.dnsco.in</p>
-                                                                                                   <p class="mb-0" style="color: #fff; font-weight: 600">ns2.dnsco.in</p>
-                                                                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="formOdemeYontemi">Currency</label>
-                                    <div class="input-group">
-                                       <div class="input-group-icon">
-                                          <i class="fas fa-database"></i>
-                                       </div>
-                                      <select class="form-control" name="panel_currency" aria-required="true">
-                                                {% for curr in site['currencies'] %}
-                                                <option value="{{ curr['name'] }}">{{curr['name']}}</option>
-                                                {% endfor %}
-                                            </select>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="formDomain">Price per month</label>
-                                    <div class="input-group">
-                                       <div class="input-group-icon">
-                                          <i class="fas fa-coins"></i>
-                                       </div>
-                                       
-                                      
-                                       <input type="text" class="form-control" id="price" value=" {{ currency["symbol"]  }} {{ (settings["panel_price"]*currency["value"]) |round(2, 'floor') }}
-                                       " readonly="">
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="formAdminUsername">Admin username</label>
-                                    <div class="input-group">
-                                       <div class="input-group-icon">
-                                          <i class="fas fa-user"></i>
-                                       </div>
-                                       
-                                       <input
-                                        type="text" class="form-control" aria-required="true"
-                                        value="" placeholder="Username">
-                                    </div>
-                                 </div>
-                                 <!-- form-group end -->
-                                 <div class="form-group">
-                                    <label for="formAdminPass">Admin password</label>
-                                    <div class="input-group">
-                                       <div class="input-group-icon">
-                                          <i class="fas fa-lock"></i>
-                                       </div>
-                                       
-                                       
-                                       
-                                       <input type="password" class="form-control" name="password" placeholder="Password" required>
-                                    </div>
-                                 </div>
-                                 <div class="form-group">
-                                    <label for="formAdminPassRe">Confirm password</label>
-                                    <div class="input-group">
-                                       <div class="input-group-icon">
-                                          <i class="fas fa-lock"></i>
-                                       </div>
-                                       <input type="password" class="form-control" name="password_confirm" placeholder="Confirm Password" required>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           
-                           <button type="submit" class="btn btn-primary btn-block mt-3">Submit order</button>
-                        </form>
-                  </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                <div class="d-card">
-                   <div class="d-card-head">
-                      <div class="dch-body">
-                         <i class="icon fas fa-question me-3"></i>
-                         <span class="ml-3">Child Panel FAQ's</span>
-                      </div>
-                   </div>
-                   <div class="d-card-body">
-                      <div class="dash-sss">
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>- How can I resell your services ?</h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>We provide you a panel and its own website exactly identical to our site in terms of features and additions and of course it works automatically.
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>- How will it work?</h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>You will buy services from our site automatically by linking the two sites to each other, and sell to your customer at a higher price and of course you can change it easily from your admin page/Dashboard.
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>- What is the mechanism of the website?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>When your customer purchases from your website, you automatically buy the same service that the customer requested from our website with the registered user we have. All things are done automatically without any interference from you. Where the two websites are linked via API, You copy the API code in your account here on our website and put it in the Providers box of your website Then all things will be automatic.
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>
-                                        - What are the features?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  When you get the website, you will get many Features:
-                                  <br>
-                                  <br>
-                                  1 - The website is fully programmed and ready for immediate use.
-                                  <br>
-                                  2 - You can add, delete and edit all services on our website, and of course, change their prices.
-                                  <br>
-                                  3- The website has several designs for you to choose from.
-                                  <br>
-                                  4 - All languages are available.
-                                  <br>
-                                  5 - Almost all payment methods are available: Paypal, Visa,MasterCard, Skrill, Perfect Money, WebMoney etc.
-                                  <br>
-                                  6 - You will also be given a special control panel for addicts to follow up on requests and payments, make any adjustments to the site and respond to tickets and other.
-                                  <br>
-                                  7 - The ability to modify a user  in terms of prices, possibility of charging, Banning, and others.
-                                  <br>
-                                  8 - You can add more than one user to the site to enter the control page if you have employees.
-                                  <br>
-                                  9 - Multiple pages in the main interface of the site with the ability to delete and add any new page.
-                                  <br>
-                                  10 - You can add services with an infinite number.
-                                  <br>
-                                  11 - You can place orders for your clients in an infinite number on your site every month.
-                                  <br>
-                                  12 - All account features are available: from Editing the password, time and any other settings.
-                                  <br>
-                                  13 - You can also control orders manually if the need that.
-                                  <br>
-                                  14 - A special page for statistics, requests, amounts and tickets with a filtering system.
-                                  <br>
-                                  15 - The site is 100% safe and free from all loopholes and problems with programming.
-                                  <br> 
-                                  <br>
-                                  These are not all features, of course, and there are also many that you will discover while using the site.
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>
-                                        - What are the costs?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  You do not have any costs other than the monthly subscription $25 USD
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>- Do I have to have a domain and hosting ?</h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  You should get a domain only and without hosting.
-                                  <br>
-                                  To purchase a domain, use <a href="https://namecheap.pxf.io/NgNr1" target="_blank">www.namecheap.com        </a>
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>
-                                        - How is it obtained?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  In the domain field: put your domain or that was purchased 
-                                  <br>
-                                  In the Currency field: Put the currency in which you want your website prices to be, and preferably the currency in us dollars, as it is easier to deal with.
-                                  <br>
-                                  In the username box: put a specific user, where you will use it to enter your admin page to track all the website’s settings.
-                                  <br>
-                                  In the Password field: Put a password to enter the admin page and make it strong for protection, then confirm it with the box below it.
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>
-                                        - How long is installation and delivery?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  The website will be delivered to you within a maximum of 12-24 hours 
-                                  <br>
-                                  Of course, it can be delivered in a shorter time, depending on the pressure on the website's support
-                                  <br>
-                                  If you encounter any other inquiries, do not hesitate to Message us on the tickets section.
-                                  <br> 
-                               </p>
-                            </div>
-                         </div>
-                         <div class="sss-tab">
-                            <div class="sss-htab">
-                               <div class="row">
-                                  <div class="col">
-                                     <h5>
-                                        - How can I collect money from my users ?
-                                     </h5>
-                                  </div>
-                                  <div class="col-auto align-self-center right-p">
-                                     <i class="far fa-chevron-double-up"></i>
-                                     <i class="far fa-chevron-double-down"></i>
-                                  </div>
-                               </div>
-                            </div>
-                            <div class="ss-tab-content">
-                               <p>
-                                  Your users will pay to your own payment gateway account, they are not paying to us. Set up your own payment gateway and collect payment from your users directly. And the orders will go through as long as you add funds to our panel.
-                               </p>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
-                </div>
-            </div>
-         </div>
-               </section>
-   </div>
+										<div class="form-group">
+											<label for="formOdemeYontemi">Currency</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-database"></i>
+												</div>
+												<select class="form-control" name="panel_currency" aria-required="true">
+													{% for curr in site['currencies'] %}
+														<option value="{{ curr['name'] }}">{{curr['name']}}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="formDomain">Price per month</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-coins"></i>
+												</div>
+
+
+												<input type="text" class="form-control" id="price" value=" {{ currency[" symbol"]  }} {{ (settings[" panel_price"]*currency[" value"]) |round(2, 'floor') }}
+													                                       " readonly="">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="formAdminUsername">Admin username</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-user"></i>
+												</div>
+
+												<input type="text" class="form-control" aria-required="true" value="" placeholder="Username">
+											</div>
+										</div>
+										<!-- form-group end -->
+										<div class="form-group">
+											<label for="formAdminPass">Admin password</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-lock"></i>
+												</div>
+
+
+												<input type="password" class="form-control" name="password" placeholder="Password" required>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="formAdminPassRe">Confirm password</label>
+											<div class="input-group">
+												<div class="input-group-icon">
+													<i class="fas fa-lock"></i>
+												</div>
+												<input type="password" class="form-control" name="password_confirm" placeholder="Confirm Password" required>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-primary btn-block mt-3">Submit order</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-12 mb-5 mb-lg-0">
+					<div class="d-card">
+						<div class="d-card-head">
+							<div class="dch-body">
+								<i class="icon fas fa-question me-3"></i>
+								<span class="ml-3">Child Panel FAQ's</span>
+							</div>
+						</div>
+						<div class="d-card-body">
+							<div class="dash-sss">
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- How can I resell your services ?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>We provide you a panel and its own website exactly identical to our site in terms of features and additions and of course it works automatically.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- How will it work?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>You will buy services from our site automatically by linking the two sites to each other, and sell to your customer at a higher price and of course you can change it easily from your admin page/Dashboard.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- What is the mechanism of the website?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>When your customer purchases from your website, you automatically buy the same service that the customer requested from our website with the registered user we have. All things are done automatically without any interference from you. Where the two websites are linked via API, You copy the API code in your account here on our website and put it in the Providers box of your website Then all things will be automatic.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- What are the features?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											When you get the website, you will get many Features:
+											<br>
+											<br>
+											1 - The website is fully programmed and ready for immediate use.
+											<br>
+											2 - You can add, delete and edit all services on our website, and of course, change their prices.
+											<br>
+											3- The website has several designs for you to choose from.
+											<br>
+											4 - All languages are available.
+											<br>
+											5 - Almost all payment methods are available: Paypal, Visa,MasterCard, Skrill, Perfect Money, WebMoney etc.
+											<br>
+											6 - You will also be given a special control panel for addicts to follow up on requests and payments, make any adjustments to the site and respond to tickets and other.
+											<br>
+											7 - The ability to modify a user  in terms of prices, possibility of charging, Banning, and others.
+											<br>
+											8 - You can add more than one user to the site to enter the control page if you have employees.
+											<br>
+											9 - Multiple pages in the main interface of the site with the ability to delete and add any new page.
+											<br>
+											10 - You can add services with an infinite number.
+											<br>
+											11 - You can place orders for your clients in an infinite number on your site every month.
+											<br>
+											12 - All account features are available: from Editing the password, time and any other settings.
+											<br>
+											13 - You can also control orders manually if the need that.
+											<br>
+											14 - A special page for statistics, requests, amounts and tickets with a filtering system.
+											<br>
+											15 - The site is 100% safe and free from all loopholes and problems with programming.
+											<br>
+											<br>
+											These are not all features, of course, and there are also many that you will discover while using the site.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- What are the costs?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											You do not have any costs other than the monthly subscription $25 USD
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>- Do I have to have a domain and hosting ?</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											You should get a domain only and without hosting.
+											<br>
+											To purchase a domain, use
+											<a href="https://namecheap.pxf.io/NgNr1" target="_blank">www.namecheap.com
+											</a>
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- How is it obtained?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											In the domain field: put your domain or that was purchased
+											<br>
+											In the Currency field: Put the currency in which you want your website prices to be, and preferably the currency in us dollars, as it is easier to deal with.
+											<br>
+											In the username box: put a specific user, where you will use it to enter your admin page to track all the website’s settings.
+											<br>
+											In the Password field: Put a password to enter the admin page and make it strong for protection, then confirm it with the box below it.
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- How long is installation and delivery?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											The website will be delivered to you within a maximum of 12-24 hours
+											<br>
+											Of course, it can be delivered in a shorter time, depending on the pressure on the website's support
+											<br>
+											If you encounter any other inquiries, do not hesitate to Message us on the tickets section.
+											<br>
+										</p>
+									</div>
+								</div>
+								<div class="sss-tab">
+									<div class="sss-htab">
+										<div class="row">
+											<div class="col">
+												<h5>
+													- How can I collect money from my users ?
+												</h5>
+											</div>
+											<div class="col-auto align-self-center right-p">
+												<i class="far fa-chevron-double-up"></i>
+												<i class="far fa-chevron-double-down"></i>
+											</div>
+										</div>
+									</div>
+									<div class="ss-tab-content">
+										<p>
+											Your users will pay to your own payment gateway account, they are not paying to us. Set up your own payment gateway and collect payment from your users directly. And the orders will go through as long as you add funds to our panel.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 </div>
 
 
