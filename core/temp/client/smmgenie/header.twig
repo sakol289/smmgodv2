@@ -585,6 +585,7 @@
 														<li><a href="/api">{{ lang['api.title'] }}</a></li>
 													</ul>
 												</div>
+
 											</div>
 											<div class="col-auto align-self-center mmff">
 												<a href="/signup" class="menu-btn">
@@ -660,92 +661,70 @@
 						@include media-breakpoint-down(md) {
 							bottom: 0;
 							left: 0;
-							right: 0;
-							border-radius: 0;
-
-							> div:first-child {
-								width: auto;
-							}
-						}
+				t: 0;
+							border-radius: 				> div:fild {
+					h: auto;
 					}
-				</style>
+									}
+				</style> 
+  
 
 
-				 <script>
+			 <scri    			    
 				    
-				    
-				      $('.langs-btn').hover(function(){
-				    $('.langs-btn-content').toggle();
-				  });
+		    $('.langs-btn').  function(){
+			  ('.langs-btn-  t').toggle();
+				   			  
+				    $(  ency-btn').hover(fun  ){
+				    $('.cur  btn-content').toggle();   });
 				  
-				    $('.currency-btn').hover(function(){
-				    $('.currency-btn-content').toggle();
-				  });
-				  
-				   $('.theme-btn').hover(function(){
-				    $('.theme-btn-content').toggle();
-				  });
-				  
-				$(document).on('ready', function() {
-				  if (document.cookie.indexOf("accepted_cookies=") < 0) {
-				    $('.cookie-overlay').removeClass('d-none').addClass('d-block');
-				  }
+	px		px	   $('.theme-btn').hover(fun  ){
+				    $('.theme-    tent').toggle()    });   
+			    ment).on('ready', function()     if   ent.cookie.indexOf    ted_cookies=") < 0  		     ookie-overlay').removeClass('d-none').    s('d-block')     }
 				
-				  $('.accept-cookies').on('click', function() {
-				    document.cookie = "accepted_cookies=yes;"
-				    $('.cookie-overlay').removeClass('d-block').addClass('d-none');
-				  })
+		    .accept-coo    on('click', function(    	    document.cookie       ted_cookies=ye    	    coover).removeClass(ock').addC('d-no;
 				
-				  // expand depending on your needs
-				  $('.close-cookies').on('click', function() {
-				    $('.cookie-overlay').removeClass('d-block').addClass('d-none');
+				
+				  // expand depending on your n
+				  $('.close-cookies').on('click', tion() 		  '.cookie-overlay').removeClass('d-block').lass('d-none');
 				  })
 				  
-				  
-				  
-				  
-				})
-				</script>
-
-
-			 <script src="https://unpkg.com/wavesurfer.js"></script>
-
-				 <script>
 				
-				
-				 $('.langs-btn').hover(function(){
-				    $('.langs-btn-content').toggle();
+				 		  
+		
+			cript>
+
+
+			 <script src="https://unpkm/wavesurfer.js"></script>
+
+				 <scrip			
+					 $angs-btn').hover(function(){
+				    $angs-btn-content').toggle();
 				  });
 				  
-				    $('.currency-btn').hover(function(){
-				    $('.currency-btn-content').toggle();
-				  });
-				  
+				    $('.cncy-btn').hover(function(){
+				    $('.currency-btn-content').toggle				 
+	 
 				  
 				 function changeLang(newLang){
-				        $.ajax
+				    $.ajax
 				        ({ 
-				            url: '/account/change_lang/',
+				            url: count/change_lang/',
 				            data: {lang: newLang},
-				            type: 'post',
-				            success: function(result)
+				        typpo
+				            success: function(re)
 				            {
 				                
-				               location.href  = "";
+				           location.href  = "";
 				            }
 				        });
-				    }
-				    
-				    var wavesurfer = WaveSurfer.create({
-				    container: '#waveform',
+				  				  			 aresur= Warferate({
+				    ciner: '#waveform',
 				    waveColor: 'violet',
-				    progressColor: 'purple',
-				    mediaControls:true
+				    proColor: 'pu',	 ediaControls:true
 				});
-				wavesurfer.load('{{settings['music_url']}}');
-				
-				wavesurfer.on('ready', wavesurfer.play.bind(wavesurfer));
-				
-				
+				wavesu.load('{{settings['music_url']}}');
+					wavesr.onady', wavesurfer.play.bind(wavesurfer));
+					
 				</script>
 			</body>
