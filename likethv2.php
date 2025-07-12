@@ -1,11 +1,71 @@
 <?php
+/*
+================================================================================
+                    PHP API SERVER - ใช้งานได้ทุกแบบ
+================================================================================
+
+📋 วิธีการเรียกใช้ API ทั้งหมด:
+
+1. GET Request (Query Parameters):
+   https://yourdomain.com/server.php/api/v2?action=services&key=your_key
+   https://yourdomain.com/server.php/api/v2?action=balance&key=your_key
+   https://yourdomain.com/server.php/api/v2?action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key
+   https://yourdomain.com/server.php/api/v2?action=status&order=12345&key=your_key
+
+2. POST Request (Form Data):
+   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=services&key=your_key"
+   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=balance&key=your_key"
+   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key"
+   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=status&order=12345&key=your_key"
+
+3. POST Request (JSON Data):
+   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"services","key":"your_key"}'
+   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"balance","key":"your_key"}'
+   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"add","service":"1","quantity":"10","link":"https://facebook.com/post","key":"your_key"}'
+   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"status","order":"12345","key":"your_key"}'
+
+📋 API Endpoints:
+- /server.php/api/v2 - สำหรับ likes/emojis (PRICESV2)
+- /server.php/api/v3 - สำหรับ comments (PRICES)
+
+📋 Actions ที่รองรับ:
+- services - ส่งคืนรายการบริการ
+- balance - ดึงข้อมูลยอดเงิน
+- add - สร้างคำสั่งซื้อใหม่
+- status - ตรวจสอบสถานะคำสั่งซื้อ
+
+📋 ตัวอย่างการใช้งาน JavaScript:
+fetch('https://yourdomain.com/server.php/api/v2', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+        action: 'services',
+        key: 'your_key'
+    })
+})
+
+📋 ตัวอย่างการใช้งาน PHP:
+$data = [
+    'action' => 'services',
+    'key' => 'your_key'
+];
+$ch = curl_init('https://yourdomain.com/server.php/api/v2');
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+curl_close($ch);
+
+================================================================================
+*/
+
 // Configuration - แก้ไขค่าต่างๆ ตรงนี้
 $CONFIG = [
-    'apikeynewlike' => 'your_api_key_here', // ใส่ API key ของคุณตรงนี้
-    'likeapi' => 'https://your-like-api-url.com/api', // ใส่ URL ของ like API
-    'likeapikey' => 'your_like_api_key_here', // ใส่ API key ของ like service
-    'commentapi' => 'https://your-comment-api-url.com/api', // ใส่ URL ของ comment API
-    'commentapikey' => 'your_comment_api_key_here' // ใส่ API key ของ comment service
+    'apikeynewlike' => 'c0aab25d03bf2ec12df7860e682a655d', // ใส่ API key ของคุณตรงนี้
+    'likeapi' => 'https://v2.sc24shop.store/api/v2', // ใส่ URL ของ like API
+    'likeapikey' => 'e09a1689839c30520e2aa66ac423c46e', // ใส่ API key ของ like service
+    'commentapi' => 'https://ปั้มไลค์ฟรี.com/api/v2', // ใส่ URL ของ comment API
+    'commentapikey' => '78ad1084ba9af8309a04c5e1c8194c95' // ใส่ API key ของ comment service
 ];
 
 // Set content type to JSON
