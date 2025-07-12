@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 
 $symbol = $currency['symbol'];
 $currency_value = $currency['value'];
 $action = $_POST["action"];
-$percent = $user["coustm_rate"]/100;
+$percent = $user["coustm_rate"] / 100;
 if ($action == "services_list"):
     $category = $_POST["category"];
 
@@ -20,8 +20,8 @@ if ($action == "services_list"):
     foreach ($services as $service) {
         $search = $conn->prepare("SELECT * FROM clients_service WHERE service_id=:service && client_id=:c_id ");
         $search->execute(array("service" => $service["service_id"], "c_id" => $user["client_id"]));
-        
-         if ($service["service_secret"] == 2 || $search->rowCount()):
+
+        if ($service["service_secret"] == 2 || $search->rowCount()):
             $multiName = json_decode($service["name_lang"], true);
             if ($multiName[$user["lang"]]):
                 $name = $multiName[$user["lang"]];
@@ -32,17 +32,14 @@ if ($action == "services_list"):
             if ($_SESSION["data"]["services"] == $service['service_id']):
                 $serviceList .= "selected";
             endif;
-            
-            
-        $roundedPrice = round(service_price($service["service_id"]) * $currency['value'], 3);
-$serviceList .= "<option>" . $service["service_id"] . " - " . $name . " - " . priceFormat($roundedPrice) . $currency['symbol'] . "</option>";
-        
+
+
+            $roundedPrice = round(service_price($service["service_id"]) * $currency['value'], 3);
+            $serviceList .= "<option>" . $service["service_id"] . " - " . $name . " - " . priceFormat($roundedPrice) . $currency['symbol'] . "</option>";
+
         endif;
-        
-        
-        
     }
-    
+
     echo json_encode(['services' => $serviceList]);
 elseif ($action == "service_detail"):
     $s_id = $_POST["service"];
@@ -53,7 +50,7 @@ elseif ($action == "service_detail"):
     $serviceDetails = "";
     if ($service["service_description"]):
         $description = str_replace("\n", "<br />", $service["service_description"]);
-        $serviceDetails.= '<div class="form-group fields" id="description">
+        $serviceDetails .= '<div class="form-group fields" id="description">
               <label for="service_description" class="control-label">Description</label>
               <div class="panel-body border-solid border-rounded" id="service_description">
               ' . $description . '
@@ -61,71 +58,71 @@ elseif ($action == "service_detail"):
             </div>';
     endif;
 
-$s_id = $_POST["service"];
+    $s_id = $_POST["service"];
     $service = $conn->prepare("SELECT * FROM services WHERE service_id=:s_id");
     $service->execute(array('s_id' => $s_id));
     $service = $service->fetch(PDO::FETCH_ASSOC);
     $service["service_price"] = service_price($service["service_id"]);
-        
-      $multiDesc  =  json_decode($service["description_lang"],true);
-        if( $multiDesc[$user["lang"]] ):
-          $desc = $multiDesc[$user["lang"]];
-        else:
-          $desc = $service["service_description"];
-        endif;
 
-        
-          
-                $avarageTime = true;
-               
-                $orders = $conn->prepare("SELECT * FROM orders  WHERE service_id='$s_id' && order_status='completed' order by order_id DESC LIMIT 10");
-                $orders->execute(array());
-                
-                if($orders->rowCount() < 9) { 
-                	$callback = 'Not calculated yet';
-                }
-            
-                foreach($orders as $order) {
-                    $basla = strtotime($order["order_create"]);
-                    $bitis = strtotime($order["last_check"]);
-                    $bitissil = $bitis-900;
-                    $ortalama= ($bitissil-$basla) ;
-                    $orta = $ortalama/60;
-                    $ortalama1 = round(abs($basla - $bitissil));
-                    
-                    $callback = $ortalama1.",";
-                }
+    $multiDesc  =  json_decode($service["description_lang"], true);
+    if ($multiDesc[$user["lang"]]):
+        $desc = $multiDesc[$user["lang"]];
+    else:
+        $desc = $service["service_description"];
+    endif;
 
-                $parcala = explode(",",$callback);
-    
-                $dizi = array($parcala["0"],$parcala["2"],$parcala["3"],$parcala["4"],$parcala["5"],$parcala["6"],$parcala["7"],$parcala["8"],$parcala["9"],$parcala["1"]);
-                $ortalamamiz = explode(".",ortalama($dizi));
-                
-                if($ortalamamiz[0] == "NaN") {
-                  $veri = 'Not calculated yet';
-                } else {
-                  $veri = convertSecToStr($ortalamamiz[0]); 
-                }  
-                
-				$s["service_speed"] = $veri;
-    
-    
-       $description    = str_replace("\n","<br />",$service["service_description"]);
-        $fsptime    = str_replace("\n","<br />",$s["service_speed"]);
-        $serviceDetails.= '<div class="form-group fields" id="description">
+
+
+    $avarageTime = true;
+
+    $orders = $conn->prepare("SELECT * FROM orders  WHERE service_id='$s_id' && order_status='completed' order by order_id DESC LIMIT 10");
+    $orders->execute(array());
+
+    if ($orders->rowCount() < 9) {
+        $callback = 'Not calculated yet';
+    }
+
+    foreach ($orders as $order) {
+        $basla = strtotime($order["order_create"]);
+        $bitis = strtotime($order["last_check"]);
+        $bitissil = $bitis - 900;
+        $ortalama = ($bitissil - $basla);
+        $orta = $ortalama / 60;
+        $ortalama1 = round(abs($basla - $bitissil));
+
+        $callback = $ortalama1 . ",";
+    }
+
+    $parcala = explode(",", $callback);
+
+    $dizi = array($parcala["0"], $parcala["2"], $parcala["3"], $parcala["4"], $parcala["5"], $parcala["6"], $parcala["7"], $parcala["8"], $parcala["9"], $parcala["1"]);
+    $ortalamamiz = explode(".", ortalama($dizi));
+
+    if ($ortalamamiz[0] == "NaN") {
+        $veri = 'Not calculated yet';
+    } else {
+        $veri = convertSecToStr($ortalamamiz[0]);
+    }
+
+    $s["service_speed"] = $veri;
+
+
+    $description    = str_replace("\n", "<br />", $service["service_description"]);
+    $fsptime    = str_replace("\n", "<br />", $s["service_speed"]);
+    $serviceDetails .= '<div class="form-group fields" id="description">
               
 			  <label class="control-label"  for="service_description" class="control-label"><span>Average time</span>
                                                     <span class="ml-1 mr-1 fa fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="The average time is based on 10 latest completed orders per 1000 quantity."></span>
                                                </label>
 			  <div class="panel-body border-solid border-rounded" id="service_description">
-              '.$fsptime.'
+              ' . $fsptime . '
               </div>
 </div>
             </div>';
- 
-   
 
-      
+
+
+
 
 
     if ($service["service_package"] == 1 || $service["service_package"] == 2 || $service["service_package"] == 3 || $service["service_package"] == 4):
@@ -134,13 +131,13 @@ $s_id = $_POST["service"];
         else:
             $link_type = 'Link';
         endif;
-        $serviceDetails.= '<div class="form-group fields" id="order_link">
+        $serviceDetails .= '<div class="form-group fields" id="order_link">
                 <label class="control-label" for="field-orderform-fields-link">' . $link_type . '</label>
                 <input class="form-control" name="link" value="' . $_SESSION["data"]["link"] . '" type="text" id="field-orderform-fields-link">
               </div>';
     endif;
     if ($service["service_package"] == 1):
-        $serviceDetails.= '<div class="form-group fields" id="order_quantity">
+        $serviceDetails .= '<div class="form-group fields" id="order_quantity">
                   <label class="control-label" for="field-orderform-fields-quantity">Quantity</label>
                   <input class="form-control" name="quantity" value="' . $_SESSION["data"]["quantity"] . '" type="text" id="neworder_quantity">
               </div>
@@ -148,13 +145,13 @@ $s_id = $_POST["service"];
               ';
     endif;
     if ($service["service_package"] == 11 || $service["service_package"] == 12 || $service["service_package"] == 13 || $service["service_package"] == 14 || $service["service_package"] == 15):
-        $serviceDetails.= '<div class="form-group fields" id="order_link">
+        $serviceDetails .= '<div class="form-group fields" id="order_link">
                 <label class="control-label" for="field-orderform-fields-link">Username</label>
                 <input class="form-control" name="username" value="' . $_SESSION["data"]["username"] . '" type="text" id="field-orderform-fields-link">
               </div>';
     endif;
     if ($service["service_package"] == 3):
-        $serviceDetails.= '<div class="form-group fields" id="order_quantity">
+        $serviceDetails .= '<div class="form-group fields" id="order_quantity">
               <label class="control-label" for="field-orderform-fields-quantity">Quantity</label>
               <input class="form-control" name="quantity" value="" type="text" id="neworder_quantity" disabled="">
           </div>
@@ -162,11 +159,11 @@ $s_id = $_POST["service"];
           ';
     endif;
     if ($service["service_package"] == 11 || $service["service_package"] == 12 || $service["service_package"] == 13):
-        $serviceDetails.= '<div class="form-group fields" id="order_link">
+        $serviceDetails .= '<div class="form-group fields" id="order_link">
                 <label class="control-label" for="field-orderform-fields-link">How many posts limit would you like?</label>
                 <input class="form-control" name="posts" value="' . $_SESSION["data"]["posts"] . '" type="text" id="field-orderform-fields-link">
               </div>';
-        $serviceDetails.= '<div class="form-group fields" id="order_min">
+        $serviceDetails .= '<div class="form-group fields" id="order_min">
               <label class="control-label" for="order_count">Quantity</label>
               <div class="row">
                   <div class="col-xs-6">
@@ -185,39 +182,39 @@ $s_id = $_POST["service"];
                       <select class="form-control" name="delay" id="field-orderform-fields-delay">
                           <option value="0" ';
         if ($_SESSION["data"]["delay"] == 0):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>No delay</option>
+        $serviceDetails .= '>No delay</option>
                           <option value="300" ';
         if ($_SESSION["data"]["delay"] == 300):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>5 minutes</option>
+        $serviceDetails .= '>5 minutes</option>
                           <option value="600" ';
         if ($_SESSION["data"]["delay"] == 600):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>10 minutes</option>
+        $serviceDetails .= '>10 minutes</option>
                           <option value="900" ';
         if ($_SESSION["data"]["delay"] == 900):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>15 minutes</option>
+        $serviceDetails .= '>15 minutes</option>
                           <option value="1800" ';
         if ($_SESSION["data"]["delay"] == 1800):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>30 minutes</option>
+        $serviceDetails .= '>30 minutes</option>
                           <option value="3600" ';
         if ($_SESSION["data"]["delay"] == 3600):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>60 minutes</option>
+        $serviceDetails .= '>60 minutes</option>
                           <option value="5400" ';
         if ($_SESSION["data"]["delay"] == 5400):
-            $serviceDetails.= ' selected';
+            $serviceDetails .= ' selected';
         endif;
-        $serviceDetails.= '>90 minutes</option>
+        $serviceDetails .= '>90 minutes</option>
                       </select>
                   </div>
                   <div class="col-xs-6">
@@ -233,7 +230,7 @@ $s_id = $_POST["service"];
           </div>';
     endif;
     if ($service["service_package"] == 3 || $service["service_package"] == 4):
-        $serviceDetails.= '<div class="form-group fields" id="order_comment">
+        $serviceDetails .= '<div class="form-group fields" id="order_comment">
               <label class="control-label">Comments</label>
               <textarea class="form-control counter" name="comments" id="neworder_comment" cols="30" rows="10" data-related="quantity">' . $_SESSION["data"]["comments"] . '</textarea>
           </div>';
@@ -242,7 +239,7 @@ $s_id = $_POST["service"];
         if ($_SESSION["data"]["check"]):
             $check = "checked";
         endif;
-        $serviceDetails.= '<div id="dripfeed">
+        $serviceDetails .= '<div id="dripfeed">
                 <div class="form-group fields" id="order_check">
                     <label class="control-label has-depends " for="dripfeedcheckbox">
                         <input name="check" value="1" type="checkbox" ' . $check . ' id="dripfeedcheckbox">
@@ -276,15 +273,15 @@ $s_id = $_POST["service"];
     $quantity = $_POST["quantity"];
     if ($s_id != 0 && $dripfeed == "bos"):
         $price = $quantity * $service["service_price"] / 1000;
-        $data = ['details' => $serviceDetails, 'price' => priceFormat($price*$currency_value) . '' . $currency['symbol']];
+        $data = ['details' => $serviceDetails, 'price' => priceFormat($price * $currency_value) . '' . $currency['symbol']];
     elseif ($s_id != 0 && $dripfeed == "var"):
         $price = $runs * $quantity * $service["service_price"] / 1000;
-        $data = ['details' => $serviceDetails, 'price' => priceFormat($price*$currency_value) . '' . $currency['symbol']];
+        $data = ['details' => $serviceDetails, 'price' => priceFormat($price * $currency_value) . '' . $currency['symbol']];
     elseif ($s_id != 0 && !isset($dripfeed)):
         $price = $service["service_price"];
-$price1 = $price*$percent;
-$price = $price-$price1;
-        $data = ['details' => $serviceDetails, 'price' => priceFormat($price*$currency_value) . '' . $currency['symbol']];
+        $price1 = $price * $percent;
+        $price = $price - $price1;
+        $data = ['details' => $serviceDetails, 'price' => priceFormat($price * $currency_value) . '' . $currency['symbol']];
     else:
         $data = ['empty' => 1];
     endif;
@@ -302,7 +299,7 @@ elseif ($action == "service_price"):
     if (!$runs):
         $runs = 1;
     endif;
-    $price = service_price($service) / 1000 ;
+    $price = service_price($service) / 1000;
 
 
 
@@ -311,21 +308,20 @@ elseif ($action == "service_price"):
     endif;
 
     if ($quantity == 0) {
-        $totalPrice = service_price($service)*0 . $symbol;
-
+        $totalPrice = service_price($service) * 0 . $symbol;
     } elseif ($dripfeed == "var") {
-        $totalPri = priceFormat(($price * $quantity * $runs)*$currency_value);
+        $totalPri = priceFormat(($price * $quantity * $runs) * $currency_value);
 
-$totalPric = $totalPri*$percent;
-$totalPrice = $totalPri-$totalPric;
-        $totalPrice.= ''. $currency['symbol'];
+        $totalPric = $totalPri * $percent;
+        $totalPrice = $totalPri - $totalPric;
+        $totalPrice .= '' . $currency['symbol'];
     } else {
-        $totalPri = priceFormat(($price * $quantity)*$currency_value);
+        $totalPri = priceFormat(($price * $quantity) * $currency_value);
 
-$totalPric = $totalPri*$percent;
-$totalPrice = $totalPri-$totalPric;
-        $totalPrice.= ''. $currency["symbol"];
+        $totalPric = $totalPri * $percent;
+        $totalPrice = $totalPri - $totalPric;
+        $totalPrice .= '' . $currency["symbol"];
     }
     echo json_encode(['price' => $totalPrice, 'commentsCount' => $quantity, 'totalQuantity' => $runs * $quantity]);
- 
+
 endif;
