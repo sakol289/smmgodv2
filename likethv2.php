@@ -276,15 +276,17 @@ function makeRequest($url, $data = null, $method = 'POST') {
     // Set headers
     $headers = [
         'User-Agent: PHP/1.0',
-        'Accept: application/json, text/plain, */*'
+        'Accept: application/json'
     ];
     
     if ($method === 'POST') {
         curl_setopt($ch, CURLOPT_POST, true);
         if ($data) {
-            // Always send as form data to avoid content type issues
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+            // Send as JSON
+            $jsonData = json_encode($data);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+            $headers[] = 'Content-Type: application/json';
+            error_log("Sending JSON data: " . $jsonData);
         }
     } else {
         curl_setopt($ch, CURLOPT_HTTPGET, true);
@@ -315,10 +317,22 @@ function makeRequest($url, $data = null, $method = 'POST') {
         throw new Exception('HTTP error: ' . $httpCode . ' - ' . $response);
     }
     
-    return [
-        'data' => $response,
-        'status' => $httpCode
-    ];
+    // Try to decode JSON response
+    $decodedResponse = json_decode($response, true);
+    if (json_last_error() === JSON_ERROR_NONE) {
+        error_log("Response is valid JSON");
+        return [
+            'data' => $response,
+            'status' => $httpCode,
+            'json' => $decodedResponse
+        ];
+    } else {
+        error_log("Response is not JSON: " . json_last_error_msg());
+        return [
+            'data' => $response,
+            'status' => $httpCode
+        ];
+    }
 }
 
 // API key verification
