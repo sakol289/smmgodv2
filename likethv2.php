@@ -239,10 +239,20 @@ function getRequestData() {
     
     if ($method === 'POST') {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        
+        // Handle JSON content type
         if (strpos($contentType, 'application/json') !== false) {
             $input = file_get_contents('php://input');
             return json_decode($input, true) ?: [];
-        } else {
+        }
+        // Handle form-urlencoded content type
+        elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
+            $input = file_get_contents('php://input');
+            parse_str($input, $parsed);
+            return $parsed;
+        }
+        // Handle multipart/form-data or other form types
+        else {
             return $_POST; // Form data
         }
     } else {
