@@ -138,7 +138,7 @@ elseif ($action == "service_detail"):
     endif;
     if ($service["service_package"] == 1):
         $serviceDetails .= '<div class="form-group fields" id="order_quantity">
-                  <label class="control-label" for="field-orderform-fields-quantity">Quantity</label>
+                  <label class="control-label" for="field-orderform-fields-quantity">{{ neworder.quantity }}</label>
                   <input class="form-control" name="quantity" value="' . $_SESSION["data"]["quantity"] . '" type="text" id="neworder_quantity">
               </div>
               <small class="help-block min-max">Min: ' . $service["service_min"] . ' - Max: ' . $service["service_max"] . '</small>
