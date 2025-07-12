@@ -27,8 +27,7 @@ class SMMApi
 
         curl_close($ch);
         
-        var_dump($result);
-
+     
         return json_decode($result);
     }
 }
