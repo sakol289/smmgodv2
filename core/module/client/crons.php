@@ -1,5 +1,5 @@
 <?php
-echo "TESTstartv1";
+echo "TESTstartv2";
 
 foreach ( glob(__DIR__.'/cron/*.php') as $cron ) {
   require $cron;
@@ -7,7 +7,7 @@ foreach ( glob(__DIR__.'/cron/*.php') as $cron ) {
 
 
 // $curl = curl_init();
-echo "TESTendv2";
+echo "TESTendv3";
 // curl_setopt_array($curl, array(
 //   CURLOPT_URL => 'https://discord.com/api/webhooks/1393636682451914874/XdbNOC4Dq-Z11GpKdA0Ahe6JIH0HsbB8LWxy7CNNvconqeDL_qKaES4MYpqA5Oc2JOP6',
 //   CURLOPT_RETURNTRANSFER => true,
@@ -30,4 +30,4 @@ echo "TESTendv2";
 
 // curl_close($curl);
 // echo $response;
-echo "TESTendv3";
+echo "TESTendv4";
