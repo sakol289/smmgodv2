@@ -111,7 +111,7 @@ elseif ($action == "service_detail"):
     $fsptime    = str_replace("\n", "<br />", $s["service_speed"]);
     $serviceDetails .= '<div class="form-group fields" id="description">
               
-			  <label class="control-label"  for="service_description" class="control-label"><span>Average time</span>
+			  <label class="control-label"  for="service_description" class="control-label"><span>'.$languageArray["services.avarage"].'</span>
                                                     <span class="ml-1 mr-1 fa fa-exclamation-circle" data-toggle="tooltip" data-placement="top" title="The average time is based on 10 latest completed orders per 1000 quantity."></span>
                                                </label>
 			  <div class="panel-body border-solid border-rounded" id="service_description">
