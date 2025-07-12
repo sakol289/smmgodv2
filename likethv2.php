@@ -7,54 +7,32 @@
 📋 วิธีการเรียกใช้ API ทั้งหมด:
 
 1. GET Request (Query Parameters):
-   https://yourdomain.com/server.php/api/v2?action=services&key=your_key
-   https://yourdomain.com/server.php/api/v2?action=balance&key=your_key
-   https://yourdomain.com/server.php/api/v2?action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key
-   https://yourdomain.com/server.php/api/v2?action=status&order=12345&key=your_key
+   https://yourdomain.com/likethv2.php?action=services&key=your_key
+   https://yourdomain.com/likethv2.php?action=balance&key=your_key
+   https://yourdomain.com/likethv2.php?action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key
+   https://yourdomain.com/likethv2.php?action=status&order=12345&key=your_key
 
 2. POST Request (Form Data):
-   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=services&key=your_key"
-   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=balance&key=your_key"
-   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key"
-   curl -X POST https://yourdomain.com/server.php/api/v2 -d "action=status&order=12345&key=your_key"
+   curl -X POST https://yourdomain.com/likethv2.php -d "action=services&key=your_key"
+   curl -X POST https://yourdomain.com/likethv2.php -d "action=balance&key=your_key"
+   curl -X POST https://yourdomain.com/likethv2.php -d "action=add&service=1&quantity=10&link=https://facebook.com/post&key=your_key"
+   curl -X POST https://yourdomain.com/likethv2.php -d "action=status&order=12345&key=your_key"
 
 3. POST Request (JSON Data):
-   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"services","key":"your_key"}'
-   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"balance","key":"your_key"}'
-   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"add","service":"1","quantity":"10","link":"https://facebook.com/post","key":"your_key"}'
-   curl -X POST https://yourdomain.com/server.php/api/v2 -H "Content-Type: application/json" -d '{"action":"status","order":"12345","key":"your_key"}'
+   curl -X POST https://yourdomain.com/likethv2.php -H "Content-Type: application/json" -d '{"action":"services","key":"your_key"}'
+   curl -X POST https://yourdomain.com/likethv2.php -H "Content-Type: application/json" -d '{"action":"balance","key":"your_key"}'
+   curl -X POST https://yourdomain.com/likethv2.php -H "Content-Type: application/json" -d '{"action":"add","service":"1","quantity":"10","link":"https://facebook.com/post","key":"your_key"}'
+   curl -X POST https://yourdomain.com/likethv2.php -H "Content-Type: application/json" -d '{"action":"status","order":"12345","key":"your_key"}'
 
 📋 API Endpoints:
-- /server.php/api/v2 - สำหรับ likes/emojis (PRICESV2)
-- /server.php/api/v3 - สำหรับ comments (PRICES)
+- /likethv2.php - สำหรับ likes/emojis (PRICESV2)
+- /likethv2.php - สำหรับ comments (PRICES)
 
 📋 Actions ที่รองรับ:
 - services - ส่งคืนรายการบริการ
 - balance - ดึงข้อมูลยอดเงิน
 - add - สร้างคำสั่งซื้อใหม่
 - status - ตรวจสอบสถานะคำสั่งซื้อ
-
-📋 ตัวอย่างการใช้งาน JavaScript:
-fetch('https://yourdomain.com/server.php/api/v2', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-        action: 'services',
-        key: 'your_key'
-    })
-})
-
-📋 ตัวอย่างการใช้งาน PHP:
-$data = [
-    'action' => 'services',
-    'key' => 'your_key'
-];
-$ch = curl_init('https://yourdomain.com/server.php/api/v2');
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($ch);
-curl_close($ch);
 
 ================================================================================
 */
@@ -69,12 +47,12 @@ $CONFIG = [
 ];
 
 // Set content type to JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 // Enable CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -197,11 +175,58 @@ $PRICES = [
     ]
 ];
 
-// Helper function to make HTTP requests
-function makeRequest($url, $data = null, $method = 'POST', $contentType = 'form') {
+// Helper function to get request data with proper content type handling
+function getRequestData() {
+    $method = $_SERVER['REQUEST_METHOD'];
+    $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+    
+    // Debug logging
+    error_log("=== REQUEST DEBUG ===");
+    error_log("Method: " . $method);
+    error_log("Content-Type: " . $contentType);
+    error_log("=====================");
+    
+    if ($method === 'POST') {
+        // Handle JSON content type
+        if (strpos($contentType, 'application/json') !== false) {
+            $input = file_get_contents('php://input');
+            error_log("Raw JSON input: " . $input);
+            $result = json_decode($input, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                error_log("JSON decode error: " . json_last_error_msg());
+                return [];
+            }
+            error_log("Parsed JSON: " . json_encode($result));
+            return $result ?: [];
+        }
+        // Handle form-urlencoded content type
+        elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
+            $input = file_get_contents('php://input');
+            error_log("Raw form input: " . $input);
+            parse_str($input, $parsed);
+            error_log("Parsed form: " . json_encode($parsed));
+            return $parsed;
+        }
+        // Handle multipart/form-data
+        elseif (strpos($contentType, 'multipart/form-data') !== false) {
+            error_log("Using $_POST data for multipart/form-data");
+            return $_POST;
+        }
+        // Default fallback - try to get data from $_POST
+        else {
+            error_log("Unknown content type, using $_POST data");
+            return $_POST;
+        }
+    } else {
+        error_log("Using $_GET data for GET request");
+        return $_GET;
+    }
+}
+
+// Helper function to make HTTP requests with proper error handling
+function makeRequest($url, $data = null, $method = 'POST') {
     // Prevent self-referencing
     $currentHost = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? '';
-    $currentScript = $_SERVER['SCRIPT_NAME'] ?? '';
     $urlHost = parse_url($url, PHP_URL_HOST);
     
     error_log("Making request to: " . $url);
@@ -240,93 +265,60 @@ function makeRequest($url, $data = null, $method = 'POST', $contentType = 'form'
     
     $ch = curl_init();
     
-    if ($method === 'POST') {
-        curl_setopt($ch, CURLOPT_POST, true);
-        if ($data) {
-            if ($contentType === 'json') {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-                $headers = [
-                    'Content-Type: application/json',
-                    'User-Agent: PHP/1.0'
-                ];
-            } else {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-                $headers = [
-                    'Content-Type: application/x-www-form-urlencoded',
-                    'User-Agent: PHP/1.0'
-                ];
-            }
-        } else {
-            $headers = [
-                'User-Agent: PHP/1.0'
-            ];
-        }
-    } else {
-        curl_setopt($ch, CURLOPT_HTTPGET, true);
-        $headers = [
-            'User-Agent: PHP/1.0'
-        ];
-    }
-    
+    // Set basic cURL options
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+    
+    // Set headers
+    $headers = [
+        'User-Agent: PHP/1.0',
+        'Accept: application/json, text/plain, */*'
+    ];
+    
+    if ($method === 'POST') {
+        curl_setopt($ch, CURLOPT_POST, true);
+        if ($data) {
+            // Always send as form data to avoid content type issues
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+        }
+    } else {
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+    }
+    
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     
+    // Execute request
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlError = curl_error($ch);
+    $curlInfo = curl_getinfo($ch);
+    
     curl_close($ch);
+    
+    // Log response details
+    error_log("Response status: " . $httpCode);
+    error_log("Response data: " . $response);
+    error_log("cURL info: " . json_encode($curlInfo));
     
     if ($response === false) {
         throw new Exception('cURL error: ' . $curlError);
+    }
+    
+    // Handle HTTP errors
+    if ($httpCode >= 400) {
+        error_log("HTTP error: " . $httpCode);
+        throw new Exception('HTTP error: ' . $httpCode . ' - ' . $response);
     }
     
     return [
         'data' => $response,
         'status' => $httpCode
     ];
-}
-
-// Helper function to get request data
-function getRequestData() {
-    $method = $_SERVER['REQUEST_METHOD'];
-    
-    // Debug logging
-    error_log("Request method: " . $method);
-    error_log("Content-Type: " . ($_SERVER['CONTENT_TYPE'] ?? 'not set'));
-    error_log("POST data: " . json_encode($_POST));
-    error_log("GET data: " . json_encode($_GET));
-    
-    if ($method === 'POST') {
-        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
-        
-        // Handle JSON content type
-        if (strpos($contentType, 'application/json') !== false) {
-            $input = file_get_contents('php://input');
-            error_log("Raw JSON input: " . $input);
-            $result = json_decode($input, true) ?: [];
-            error_log("Parsed JSON: " . json_encode($result));
-            return $result;
-        }
-        // Handle form-urlencoded content type
-        elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
-            $input = file_get_contents('php://input');
-            error_log("Raw form input: " . $input);
-            parse_str($input, $parsed);
-            error_log("Parsed form: " . json_encode($parsed));
-            return $parsed;
-        }
-        // Handle multipart/form-data or other form types
-        else {
-            error_log("Using $_POST data");
-            return $_POST; // Form data
-        }
-    } else {
-        error_log("Using $_GET data");
-        return $_GET; // Query parameters
-    }
 }
 
 // API key verification
@@ -350,52 +342,37 @@ function verifyApiKey($data) {
 // Main request handler
 function handleRequest() {
     global $CONFIG;
-    $method = $_SERVER['REQUEST_METHOD'];
-    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $data = getRequestData();
     
-    // Debug: Log request details
-    error_log("=== REQUEST DEBUG ===");
-    error_log("Method: " . $method);
-    error_log("Path: " . $path);
-    error_log("Request URI: " . $_SERVER['REQUEST_URI']);
-    error_log("Data: " . json_encode($data));
-    error_log("=====================");
-    
-    // Verify API key
-    if (!verifyApiKey($data)) {
-        // Uncomment the line below to enable API key validation
-        // http_response_code(401);
-        // echo json_encode(['error' => 'Invalid API key']);
-        // return;
-    }
-    
-    $action = $data['action'] ?? null;
-    
-    if (!$action) {
-        error_log("Missing action field");
-        echo json_encode(['error' => 'Missing action field']);
-        return;
-    }
-    
-    // Determine API version from path - รองรับหลายรูปแบบ URL
-    if (strpos($path, '/v2') !== false || strpos($path, 'v2') !== false) {
-        handleV2API($action, $data);
-    } elseif (strpos($path, '/v3') !== false || strpos($path, 'v3') !== false) {
-        handleV3API($action, $data);
-    } else {
-        // ถ้าไม่เจอ version ให้ใช้ v2 เป็น default
-        handleV2API($action, $data);
-    }
-}
-
-// V2 API handler (for likes/emojis)
-function handleV2API($action, $data) {
-    global $CONFIG, $PRICESV2;
     try {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $data = getRequestData();
+        
+        error_log("=== MAIN REQUEST HANDLER ===");
+        error_log("Method: " . $method);
+        error_log("Data: " . json_encode($data));
+        error_log("============================");
+        
+        // Verify API key
+        if (!verifyApiKey($data)) {
+            // Uncomment the line below to enable API key validation
+            // http_response_code(401);
+            // echo json_encode(['error' => 'Invalid API key']);
+            // return;
+        }
+        
+        $action = $data['action'] ?? null;
+        
+        if (!$action) {
+            error_log("Missing action field");
+            echo json_encode(['error' => 'Missing action field']);
+            return;
+        }
+        
+        // Handle all actions
         switch ($action) {
             case 'services':
                 error_log("Returning services data");
+                global $PRICESV2;
                 echo json_encode($PRICESV2);
                 break;
                 
@@ -406,8 +383,6 @@ function handleV2API($action, $data) {
                         'key' => $CONFIG['likeapikey'],
                         'action' => 'balance'
                     ]);
-                    error_log("Balance response status: " . $balanceResponse['status']);
-                    error_log("Balance response data: " . $balanceResponse['data']);
                     echo $balanceResponse['data'];
                 } catch (Exception $e) {
                     error_log("Balance error: " . $e->getMessage());
@@ -428,7 +403,7 @@ function handleV2API($action, $data) {
                     return;
                 }
                 
-                error_log("Submitting order to like API...");
+                error_log("Submitting order...");
                 try {
                     $addResponse = makeRequest("https://v2.sc24shop.store/api/v3/emojithai/normal", [
                         'key' => $CONFIG['likeapikey'],
@@ -436,8 +411,6 @@ function handleV2API($action, $data) {
                         'link' => $link,
                         'amount' => $quantity
                     ]);
-                    error_log("Add order response status: " . $addResponse['status']);
-                    error_log("Add order response data: " . $addResponse['data']);
                     echo $addResponse['data'];
                 } catch (Exception $e) {
                     error_log("Add order error: " . $e->getMessage());
@@ -460,8 +433,6 @@ function handleV2API($action, $data) {
                     error_log("Checking order status...");
                     try {
                         $statusResponse = makeRequest($CONFIG['likeapi'], $payload);
-                        error_log("Status response status: " . $statusResponse['status']);
-                        error_log("Status response data: " . $statusResponse['data']);
                         echo $statusResponse['data'];
                     } catch (Exception $e) {
                         error_log("Status error: " . $e->getMessage());
@@ -491,7 +462,7 @@ function handleV2API($action, $data) {
                 } else {
                     error_log("Invalid status request, missing order/orders fields");
                     http_response_code(400);
-                    echo json_encode(['error' => 'Internal error']);
+                    echo json_encode(['error' => 'Missing order or orders parameter']);
                 }
                 break;
                 
@@ -501,137 +472,11 @@ function handleV2API($action, $data) {
                 echo json_encode(['error' => 'Invalid action']);
                 break;
         }
+        
     } catch (Exception $e) {
-        error_log("Error in processing request: " . $e->getMessage());
+        error_log("General error: " . $e->getMessage());
         http_response_code(500);
-        echo json_encode(['error' => $e->getMessage()]);
-    }
-}
-
-// V3 API handler (for comments)
-function handleV3API($action, $data) {
-    global $CONFIG, $PRICES;
-    try {
-        switch ($action) {
-            case 'services':
-                error_log("Returning services data");
-                echo json_encode($PRICES);
-                break;
-                
-            case 'balance':
-                error_log("Fetching balance...");
-                try {
-                    $balanceResponse = makeRequest($CONFIG['commentapi'], [
-                        'key' => $CONFIG['commentapikey'],
-                        'action' => 'balance'
-                    ]);
-                    error_log("V3 Balance response status: " . $balanceResponse['status']);
-                    error_log("V3 Balance response data: " . $balanceResponse['data']);
-                    echo $balanceResponse['data'];
-                } catch (Exception $e) {
-                    error_log("V3 Balance error: " . $e->getMessage());
-                    http_response_code(500);
-                    echo json_encode(['error' => 'Failed to fetch balance: ' . $e->getMessage()]);
-                }
-                break;
-                
-            case 'add':
-                $service = $data['service'] ?? null;
-                $quantity = $data['quantity'] ?? null;
-                $link = $data['link'] ?? null;
-                
-                if (!$service || !$quantity || !$link) {
-                    error_log("Missing required fields: " . json_encode($data));
-                    http_response_code(400);
-                    echo json_encode(['error' => 'Missing required fields']);
-                    return;
-                }
-                
-                $linkParts = explode('|', $link);
-                if (count($linkParts) !== 2) {
-                    error_log("Invalid link format");
-                    http_response_code(400);
-                    echo json_encode(['error' => 'Invalid link format']);
-                    return;
-                }
-                
-                $pastebinUrl = $linkParts[0];
-                $fbUrl = $linkParts[1];
-                
-                if (strpos($pastebinUrl, 'pastebin') === false) {
-                    error_log("Invalid Pastebin link: " . $pastebinUrl);
-                    http_response_code(400);
-                    echo json_encode(['error' => 'neworder.error.link.pastebin']);
-                    return;
-                }
-                
-                error_log("Fetching comments from Pastebin...");
-                $pastebinResponse = makeRequest($pastebinUrl, null, 'GET');
-                $lines = explode("\n", $pastebinResponse['data']);
-                $comments = implode("\n", array_slice($lines, 0, intval($quantity)));
-                
-                error_log("Submitting order to comment API...");
-                try {
-                    $addResponse = makeRequest($CONFIG['commentapi'], [
-                        'key' => $CONFIG['commentapikey'],
-                        'action' => 'add',
-                        'service' => $service,
-                        'link' => $fbUrl,
-                        'comments' => $comments
-                    ]);
-                    error_log("V3 Add order response status: " . $addResponse['status']);
-                    error_log("V3 Add order response data: " . $addResponse['data']);
-                    echo $addResponse['data'];
-                } catch (Exception $e) {
-                    error_log("V3 Add order error: " . $e->getMessage());
-                    http_response_code(500);
-                    echo json_encode(['error' => 'Failed to submit order: ' . $e->getMessage()]);
-                }
-                break;
-                
-            case 'status':
-                $order = $data['order'] ?? null;
-                $orders = $data['orders'] ?? null;
-                
-                $payload = [
-                    'key' => $CONFIG['commentapikey'],
-                    'action' => 'status'
-                ];
-                
-                if ($order) {
-                    $payload['order'] = $order;
-                } elseif ($orders) {
-                    $payload['orders'] = $orders;
-                } else {
-                    error_log("Invalid status request, missing order/orders fields");
-                    http_response_code(400);
-                    echo json_encode(['error' => 'Internal error']);
-                    return;
-                }
-                
-                error_log("Checking order status...");
-                try {
-                    $statusResponse = makeRequest($CONFIG['commentapi'], $payload);
-                    error_log("V3 Status response status: " . $statusResponse['status']);
-                    error_log("V3 Status response data: " . $statusResponse['data']);
-                    echo $statusResponse['data'];
-                } catch (Exception $e) {
-                    error_log("V3 Status error: " . $e->getMessage());
-                    http_response_code(500);
-                    echo json_encode(['error' => 'Failed to check status: ' . $e->getMessage()]);
-                }
-                break;
-                
-            default:
-                error_log("Invalid action: " . $action);
-                http_response_code(400);
-                echo json_encode(['error' => 'Invalid action']);
-                break;
-        }
-    } catch (Exception $e) {
-        error_log("Error in processing request: " . $e->getMessage());
-        http_response_code(500);
-        echo json_encode(['error' => $e->getMessage()]);
+        echo json_encode(['error' => 'Internal server error: ' . $e->getMessage()]);
     }
 }
 
