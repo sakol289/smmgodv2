@@ -51,7 +51,7 @@ elseif ($action == "service_detail"):
     if ($service["service_description"]):
         $description = str_replace("\n", "<br />", $service["service_description"]);
         $serviceDetails .= '<div class="form-group fields" id="description">
-              <label for="service_description" class="control-label">'.$languageArray["neworder.quantity"].'</label>
+              <label for="service_description" class="control-label">Description</label>
               <div class="panel-body border-solid border-rounded" id="service_description">
               ' . $description . '
               </div>
@@ -138,7 +138,7 @@ elseif ($action == "service_detail"):
     endif;
     if ($service["service_package"] == 1):
         $serviceDetails .= '<div class="form-group fields" id="order_quantity">
-                  <label class="control-label" for="field-orderform-fields-quantity">Quantity</label>
+                  <label class="control-label" for="field-orderform-fields-quantity">'.$languageArray["neworder.quantity"].'</label>
                   <input class="form-control" name="quantity" value="' . $_SESSION["data"]["quantity"] . '" type="text" id="neworder_quantity">
               </div>
               <small class="help-block min-max">Min: ' . $service["service_min"] . ' - Max: ' . $service["service_max"] . '</small>
