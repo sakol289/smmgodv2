@@ -198,33 +198,50 @@ $PRICES = [
 ];
 
 // Helper function to make HTTP requests
-function makeRequest($url, $data = null, $method = 'POST') {
+function makeRequest($url, $data = null, $method = 'POST', $contentType = 'form') {
     $ch = curl_init();
     
     if ($method === 'POST') {
         curl_setopt($ch, CURLOPT_POST, true);
         if ($data) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            if ($contentType === 'json') {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                $headers = [
+                    'Content-Type: application/json',
+                    'User-Agent: PHP/1.0'
+                ];
+            } else {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                $headers = [
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'User-Agent: PHP/1.0'
+                ];
+            }
+        } else {
+            $headers = [
+                'User-Agent: PHP/1.0'
+            ];
         }
     } else {
         curl_setopt($ch, CURLOPT_HTTPGET, true);
+        $headers = [
+            'User-Agent: PHP/1.0'
+        ];
     }
     
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/x-www-form-urlencoded',
-        'User-Agent: PHP/1.0'
-    ]);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
     curl_close($ch);
     
     if ($response === false) {
-        throw new Exception('cURL error: ' . curl_error($ch));
+        throw new Exception('cURL error: ' . $curlError);
     }
     
     return [
@@ -237,25 +254,38 @@ function makeRequest($url, $data = null, $method = 'POST') {
 function getRequestData() {
     $method = $_SERVER['REQUEST_METHOD'];
     
+    // Debug logging
+    error_log("Request method: " . $method);
+    error_log("Content-Type: " . ($_SERVER['CONTENT_TYPE'] ?? 'not set'));
+    error_log("POST data: " . json_encode($_POST));
+    error_log("GET data: " . json_encode($_GET));
+    
     if ($method === 'POST') {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
         
         // Handle JSON content type
         if (strpos($contentType, 'application/json') !== false) {
             $input = file_get_contents('php://input');
-            return json_decode($input, true) ?: [];
+            error_log("Raw JSON input: " . $input);
+            $result = json_decode($input, true) ?: [];
+            error_log("Parsed JSON: " . json_encode($result));
+            return $result;
         }
         // Handle form-urlencoded content type
         elseif (strpos($contentType, 'application/x-www-form-urlencoded') !== false) {
             $input = file_get_contents('php://input');
+            error_log("Raw form input: " . $input);
             parse_str($input, $parsed);
+            error_log("Parsed form: " . json_encode($parsed));
             return $parsed;
         }
         // Handle multipart/form-data or other form types
         else {
+            error_log("Using $_POST data");
             return $_POST; // Form data
         }
     } else {
+        error_log("Using $_GET data");
         return $_GET; // Query parameters
     }
 }
@@ -324,12 +354,19 @@ function handleV2API($action, $data) {
                 
             case 'balance':
                 error_log("Fetching balance...");
-                $balanceResponse = makeRequest($CONFIG['likeapi'], [
-                    'key' => $CONFIG['likeapikey'],
-                    'action' => 'balance'
-                ]);
-                error_log("Balance fetched successfully");
-                echo $balanceResponse['data'];
+                try {
+                    $balanceResponse = makeRequest($CONFIG['likeapi'], [
+                        'key' => $CONFIG['likeapikey'],
+                        'action' => 'balance'
+                    ]);
+                    error_log("Balance response status: " . $balanceResponse['status']);
+                    error_log("Balance response data: " . $balanceResponse['data']);
+                    echo $balanceResponse['data'];
+                } catch (Exception $e) {
+                    error_log("Balance error: " . $e->getMessage());
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Failed to fetch balance: ' . $e->getMessage()]);
+                }
                 break;
                 
             case 'add':
@@ -345,15 +382,21 @@ function handleV2API($action, $data) {
                 }
                 
                 error_log("Submitting order to like API...");
-                $addResponse = makeRequest("https://v2.sc24shop.store/api/v3/emojithai/normal", [
-                    'key' => $CONFIG['likeapikey'],
-                    'id' => $service,
-                    'link' => $link,
-                    'amount' => $quantity
-                ]);
-                
-                error_log("Order submitted successfully");
-                echo $addResponse['data'];
+                try {
+                    $addResponse = makeRequest("https://v2.sc24shop.store/api/v3/emojithai/normal", [
+                        'key' => $CONFIG['likeapikey'],
+                        'id' => $service,
+                        'link' => $link,
+                        'amount' => $quantity
+                    ]);
+                    error_log("Add order response status: " . $addResponse['status']);
+                    error_log("Add order response data: " . $addResponse['data']);
+                    echo $addResponse['data'];
+                } catch (Exception $e) {
+                    error_log("Add order error: " . $e->getMessage());
+                    http_response_code(500);
+                    echo json_encode(['error' => 'Failed to submit order: ' . $e->getMessage()]);
+                }
                 break;
                 
             case 'status':
@@ -368,9 +411,16 @@ function handleV2API($action, $data) {
                     ];
                     
                     error_log("Checking order status...");
-                    $statusResponse = makeRequest($CONFIG['likeapi'], $payload);
-                    error_log("Order status checked successfully");
-                    echo $statusResponse['data'];
+                    try {
+                        $statusResponse = makeRequest($CONFIG['likeapi'], $payload);
+                        error_log("Status response status: " . $statusResponse['status']);
+                        error_log("Status response data: " . $statusResponse['data']);
+                        echo $statusResponse['data'];
+                    } catch (Exception $e) {
+                        error_log("Status error: " . $e->getMessage());
+                        http_response_code(500);
+                        echo json_encode(['error' => 'Failed to check status: ' . $e->getMessage()]);
+                    }
                     
                 } elseif ($orders) {
                     $orderList = array_map('trim', explode(',', $orders));
