@@ -1,0 +1,453 @@
+<?php
+// Configuration - แก้ไขค่าต่างๆ ตรงนี้
+$CONFIG = [
+    'apikeynewlike' => 'your_api_key_here', // ใส่ API key ของคุณตรงนี้
+    'likeapi' => 'https://your-like-api-url.com/api', // ใส่ URL ของ like API
+    'likeapikey' => 'your_like_api_key_here', // ใส่ API key ของ like service
+    'commentapi' => 'https://your-comment-api-url.com/api', // ใส่ URL ของ comment API
+    'commentapikey' => 'your_comment_api_key_here' // ใส่ API key ของ comment service
+];
+
+// Set content type to JSON
+header('Content-Type: application/json');
+
+// Enable CORS
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Handle preflight requests
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+// Data structures
+$PRICESV2 = [
+    [
+        'service' => 1,
+        'name' => "👍 ไลค์",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ],
+    [
+        'service' => 2,
+        'name' => "❤️ หัวใจ",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ],
+    [
+        'service' => 3,
+        'name' => "😮 ว้าว",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ],
+    [
+        'service' => 4,
+        'name' => "😆 ขำ",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ],
+    [
+        'service' => 7,
+        'name' => "😥 เศร้า",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ],
+    [
+        'service' => 8,
+        'name' => "😡 โกรธ",
+        'type' => "Default",
+        'rate' => "100.00",
+        'min' => "10",
+        'max' => "500",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มไลค์ไทยsv1"
+    ]
+];
+
+$PRICES = [
+    [
+        'service' => "1",
+        'name' => "คอมเม้นท์ Facebook |🌎ต่างชาติ  |🔰 กำหนดเอง | ⭐Premium⭐| ทำงาน1-5นาที |",
+        'type' => "Custom Comments",
+        'rate' => "1000.00",
+        'min' => "5",
+        'max' => "3000",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มคอมเม้น"
+    ],
+    [
+        'service' => "210",
+        'name' => "คอมเม้นท์ Facebook | 🇹🇭 คนไทย |🔰 กำหนดเอง | ⭐Premium⭐| ทำงาน1-5นาที |",
+        'type' => "Custom Comments",
+        'rate' => "2000.00",
+        'min' => "5",
+        'max' => "1000",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มคอมเม้น"
+    ],
+    [
+        'service' => "301",
+        'name' => "คอมเม้นท์ Facebook | 🇹🇭 คนไทยแท้ มีตัวตน |🔰 กำหนดเอง | บริการระดับ ⭐⭐⭐⭐⭐| ทำงาน1-5นาที |",
+        'type' => "Custom Comments",
+        'rate' => "2000.00",
+        'min' => "5",
+        'max' => "400",
+        'dripfeed' => false,
+        'refill' => false,
+        'cancel' => false,
+        'category' => "ปั้มคอมเม้น"
+    ]
+];
+
+// Helper function to make HTTP requests
+function makeRequest($url, $data = null, $method = 'POST') {
+    $ch = curl_init();
+    
+    if ($method === 'POST') {
+        curl_setopt($ch, CURLOPT_POST, true);
+        if ($data) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        }
+    } else {
+        curl_setopt($ch, CURLOPT_HTTPGET, true);
+    }
+    
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/x-www-form-urlencoded',
+        'User-Agent: PHP/1.0'
+    ]);
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    if ($response === false) {
+        throw new Exception('cURL error: ' . curl_error($ch));
+    }
+    
+    return [
+        'data' => $response,
+        'status' => $httpCode
+    ];
+}
+
+// Helper function to get request data
+function getRequestData() {
+    $method = $_SERVER['REQUEST_METHOD'];
+    
+    if ($method === 'POST') {
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        if (strpos($contentType, 'application/json') !== false) {
+            $input = file_get_contents('php://input');
+            return json_decode($input, true) ?: [];
+        } else {
+            return $_POST; // Form data
+        }
+    } else {
+        return $_GET; // Query parameters
+    }
+}
+
+// API key verification
+function verifyApiKey($data) {
+    global $CONFIG;
+    $apiKey = $data['key'] ?? null;
+    $envApiKey = $CONFIG['apikeynewlike'];
+    
+    error_log("API Key check: " . $envApiKey);
+    error_log("Request key: " . $apiKey);
+    
+    if ($apiKey != $envApiKey) {
+        error_log("Invalid API key: " . $apiKey);
+        return false;
+    }
+    
+    error_log("API key validated successfully");
+    return true;
+}
+
+// Main request handler
+function handleRequest() {
+    global $CONFIG;
+    $method = $_SERVER['REQUEST_METHOD'];
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $data = getRequestData();
+    
+    // Verify API key
+    if (!verifyApiKey($data)) {
+        // Uncomment the line below to enable API key validation
+        // http_response_code(401);
+        // echo json_encode(['error' => 'Invalid API key']);
+        // return;
+    }
+    
+    $action = $data['action'] ?? null;
+    
+    if (!$action) {
+        error_log("Missing action field");
+        echo json_encode(['error' => 'Missing action field']);
+        return;
+    }
+    
+    // Determine API version from path
+    if (strpos($path, '/api/v2') !== false) {
+        handleV2API($action, $data);
+    } elseif (strpos($path, '/api/v3') !== false) {
+        handleV3API($action, $data);
+    } else {
+        http_response_code(404);
+        echo json_encode(['error' => 'API endpoint not found']);
+    }
+}
+
+// V2 API handler (for likes/emojis)
+function handleV2API($action, $data) {
+    global $CONFIG, $PRICESV2;
+    try {
+        switch ($action) {
+            case 'services':
+                error_log("Returning services data");
+                echo json_encode($PRICESV2);
+                break;
+                
+            case 'balance':
+                error_log("Fetching balance...");
+                $balanceResponse = makeRequest($CONFIG['likeapi'], [
+                    'key' => $CONFIG['likeapikey'],
+                    'action' => 'balance'
+                ]);
+                error_log("Balance fetched successfully");
+                echo $balanceResponse['data'];
+                break;
+                
+            case 'add':
+                $service = $data['service'] ?? null;
+                $quantity = $data['quantity'] ?? null;
+                $link = $data['link'] ?? null;
+                
+                if (!$service || !$quantity || !$link) {
+                    error_log("Missing required fields: " . json_encode($data));
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Missing required fields']);
+                    return;
+                }
+                
+                error_log("Submitting order to like API...");
+                $addResponse = makeRequest("https://v2.sc24shop.store/api/v3/emojithai/normal", [
+                    'key' => $CONFIG['likeapikey'],
+                    'id' => $service,
+                    'link' => $link,
+                    'amount' => $quantity
+                ]);
+                
+                error_log("Order submitted successfully");
+                echo $addResponse['data'];
+                break;
+                
+            case 'status':
+                $order = $data['order'] ?? null;
+                $orders = $data['orders'] ?? null;
+                
+                if ($order) {
+                    $payload = [
+                        'key' => $CONFIG['likeapikey'],
+                        'action' => 'status',
+                        'order' => $order
+                    ];
+                    
+                    error_log("Checking order status...");
+                    $statusResponse = makeRequest($CONFIG['likeapi'], $payload);
+                    error_log("Order status checked successfully");
+                    echo $statusResponse['data'];
+                    
+                } elseif ($orders) {
+                    $orderList = array_map('trim', explode(',', $orders));
+                    $results = [];
+                    
+                    foreach ($orderList as $ord) {
+                        try {
+                            $response = makeRequest($CONFIG['likeapi'], [
+                                'key' => $CONFIG['likeapikey'],
+                                'action' => 'status',
+                                'order' => $ord
+                            ]);
+                            $results[$ord] = json_decode($response['data'], true);
+                        } catch (Exception $e) {
+                            $results[$ord] = ['error' => 'Incorrect order ID'];
+                        }
+                    }
+                    
+                    echo json_encode($results);
+                    
+                } else {
+                    error_log("Invalid status request, missing order/orders fields");
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Internal error']);
+                }
+                break;
+                
+            default:
+                error_log("Invalid action: " . $action);
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid action']);
+                break;
+        }
+    } catch (Exception $e) {
+        error_log("Error in processing request: " . $e->getMessage());
+        http_response_code(500);
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+// V3 API handler (for comments)
+function handleV3API($action, $data) {
+    global $CONFIG, $PRICES;
+    try {
+        switch ($action) {
+            case 'services':
+                error_log("Returning services data");
+                echo json_encode($PRICES);
+                break;
+                
+            case 'balance':
+                error_log("Fetching balance...");
+                $balanceResponse = makeRequest($CONFIG['commentapi'], [
+                    'key' => $CONFIG['commentapikey'],
+                    'action' => 'balance'
+                ]);
+                error_log("Balance fetched successfully");
+                echo $balanceResponse['data'];
+                break;
+                
+            case 'add':
+                $service = $data['service'] ?? null;
+                $quantity = $data['quantity'] ?? null;
+                $link = $data['link'] ?? null;
+                
+                if (!$service || !$quantity || !$link) {
+                    error_log("Missing required fields: " . json_encode($data));
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Missing required fields']);
+                    return;
+                }
+                
+                $linkParts = explode('|', $link);
+                if (count($linkParts) !== 2) {
+                    error_log("Invalid link format");
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Invalid link format']);
+                    return;
+                }
+                
+                $pastebinUrl = $linkParts[0];
+                $fbUrl = $linkParts[1];
+                
+                if (strpos($pastebinUrl, 'pastebin') === false) {
+                    error_log("Invalid Pastebin link: " . $pastebinUrl);
+                    http_response_code(400);
+                    echo json_encode(['error' => 'neworder.error.link.pastebin']);
+                    return;
+                }
+                
+                error_log("Fetching comments from Pastebin...");
+                $pastebinResponse = makeRequest($pastebinUrl, null, 'GET');
+                $lines = explode("\n", $pastebinResponse['data']);
+                $comments = implode("\n", array_slice($lines, 0, intval($quantity)));
+                
+                error_log("Submitting order to comment API...");
+                $addResponse = makeRequest($CONFIG['commentapi'], [
+                    'key' => $CONFIG['commentapikey'],
+                    'action' => 'add',
+                    'service' => $service,
+                    'link' => $fbUrl,
+                    'comments' => $comments
+                ]);
+                
+                error_log("Order submitted successfully");
+                echo $addResponse['data'];
+                break;
+                
+            case 'status':
+                $order = $data['order'] ?? null;
+                $orders = $data['orders'] ?? null;
+                
+                $payload = [
+                    'key' => $CONFIG['commentapikey'],
+                    'action' => 'status'
+                ];
+                
+                if ($order) {
+                    $payload['order'] = $order;
+                } elseif ($orders) {
+                    $payload['orders'] = $orders;
+                } else {
+                    error_log("Invalid status request, missing order/orders fields");
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Internal error']);
+                    return;
+                }
+                
+                error_log("Checking order status...");
+                $statusResponse = makeRequest($CONFIG['commentapi'], $payload);
+                error_log("Order status checked successfully");
+                echo $statusResponse['data'];
+                break;
+                
+            default:
+                error_log("Invalid action: " . $action);
+                http_response_code(400);
+                echo json_encode(['error' => 'Invalid action']);
+                break;
+        }
+    } catch (Exception $e) {
+        error_log("Error in processing request: " . $e->getMessage());
+        http_response_code(500);
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+}
+
+// Handle the request
+handleRequest();
+?> 
