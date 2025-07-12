@@ -291,14 +291,14 @@ function handleRequest() {
         return;
     }
     
-    // Determine API version from path
-    if (strpos($path, '/api/v2') !== false) {
+    // Determine API version from path - รองรับหลายรูปแบบ URL
+    if (strpos($path, '/v2') !== false || strpos($path, 'v2') !== false) {
         handleV2API($action, $data);
-    } elseif (strpos($path, '/api/v3') !== false) {
+    } elseif (strpos($path, '/v3') !== false || strpos($path, 'v3') !== false) {
         handleV3API($action, $data);
     } else {
-        http_response_code(404);
-        echo json_encode(['error' => 'API endpoint not found']);
+        // ถ้าไม่เจอ version ให้ใช้ v2 เป็น default
+        handleV2API($action, $data);
     }
 }
 
