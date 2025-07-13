@@ -4,9 +4,48 @@ echo "=== CRON DEBUG START ===\n";
 echo "Time: " . date('Y-m-d H:i:s') . "\n";
 echo "Memory usage: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n\n";
 
+// Include necessary files first
+echo "📁 Including necessary files...\n";
+
+// Try to include common files that cron files might need
+$includeFiles = [
+    __DIR__ . '/../../../int/config.php',
+    __DIR__ . '/../../../int/int.php',
+    __DIR__ . '/../../../core/lib/autoload.php',
+    __DIR__ . '/../../../int/classes/smmapi.php'
+];
+
+foreach ($includeFiles as $includeFile) {
+    if (file_exists($includeFile)) {
+        try {
+            require_once $includeFile;
+            echo "✅ Included: " . basename($includeFile) . "\n";
+        } catch (Exception $e) {
+            echo "⚠️  Warning including " . basename($includeFile) . ": " . $e->getMessage() . "\n";
+        }
+    } else {
+        echo "⚠️  File not found: " . basename($includeFile) . "\n";
+    }
+}
+
+// Check if required variables exist
+echo "\n🔍 Checking required variables...\n";
+if (isset($conn)) {
+    echo "✅ Database connection (\$conn) is available\n";
+} else {
+    echo "❌ Database connection (\$conn) is missing\n";
+}
+
+if (isset($start_count)) {
+    echo "✅ Start count (\$start_count) is available\n";
+} else {
+    echo "⚠️  Start count (\$start_count) is missing - setting default value\n";
+    $start_count = time();
+}
+
 // Get all cron files
 $cronFiles = glob(__DIR__.'/cron/*.php');
-echo "Found " . count($cronFiles) . " cron files:\n";
+echo "\nFound " . count($cronFiles) . " cron files:\n";
 
 foreach ($cronFiles as $index => $cron) {
     $filename = basename($cron);
