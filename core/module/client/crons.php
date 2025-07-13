@@ -1,51 +1,79 @@
 <?php
 
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+
 echo "=== CRON DEBUG START ===\n";
 echo "Time: " . date('Y-m-d H:i:s') . "\n";
-echo "Memory usage: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n\n";
+echo "Memory usage: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n";
+echo "PHP version: " . PHP_VERSION . "\n";
+echo "Error reporting: " . error_reporting() . "\n\n";
 
-// Include necessary files first
-echo "📁 Including necessary files...\n";
+// Include only essential files
+echo "📁 Including essential files...\n";
 
-// Try to include common files that cron files might need
-$includeFiles = [
-    __DIR__ . '/../../../int/config.php',
-    __DIR__ . '/../../../int/int.php',
-    __DIR__ . '/../../../core/lib/autoload.php',
-    __DIR__ . '/../../../int/classes/smmapi.php'
-];
+// 1. Include config
+echo "🔄 Trying to include: config.php\n";
+try {
+    $config = require __DIR__ . '/../../../int/config.php';
+    echo "✅ Included: config.php\n";
+    echo "Database: " . $config['db']['name'] . "\n";
+} catch (Exception $e) {
+    echo "❌ ERROR in config.php: " . $e->getMessage() . "\n";
+    exit(1);
+}
 
-foreach ($includeFiles as $includeFile) {
-    if (file_exists($includeFile)) {
-        try {
-            require_once $includeFile;
-            echo "✅ Included: " . basename($includeFile) . "\n";
-        } catch (Exception $e) {
-            echo "⚠️  Warning including " . basename($includeFile) . ": " . $e->getMessage() . "\n";
-        }
+// 2. Create database connection
+echo "🔄 Creating database connection...\n";
+try {
+    $conn = new PDO(
+        "mysql:host=" . $config["db"]["host"] . ";dbname=" . $config["db"]["name"] . ";charset=" . $config["db"]["charset"] . ";", 
+        $config["db"]["user"], 
+        $config["db"]["pass"]
+    );
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "✅ Database connection created successfully\n";
+} catch (PDOException $e) {
+    echo "❌ Database connection failed: " . $e->getMessage() . "\n";
+    exit(1);
+}
+
+// 3. Include SMMApi class
+echo "🔄 Trying to include: smmapi.php\n";
+try {
+    require_once __DIR__ . '/../../../int/classes/smmapi.php';
+    echo "✅ Included: smmapi.php\n";
+    
+    // Test if classes are available
+    if (class_exists('SMMApi')) {
+        echo "✅ SMMApi class is available\n";
+        $smmapi = new SMMApi();
     } else {
-        echo "⚠️  File not found: " . basename($includeFile) . "\n";
+        echo "❌ SMMApi class not found\n";
     }
+    
+    if (class_exists('socialsmedia_api')) {
+        echo "✅ socialsmedia_api class is available\n";
+        $fapi = new socialsmedia_api();
+    } else {
+        echo "❌ socialsmedia_api class not found\n";
+    }
+    
+} catch (Exception $e) {
+    echo "❌ ERROR in smmapi.php: " . $e->getMessage() . "\n";
 }
 
-// Check if required variables exist
-echo "\n🔍 Checking required variables...\n";
-if (isset($conn)) {
-    echo "✅ Database connection (\$conn) is available\n";
-} else {
-    echo "❌ Database connection (\$conn) is missing\n";
-}
+// Set default variables
+$start_count = time();
+echo "✅ Set \$start_count = " . $start_count . "\n";
 
-if (isset($start_count)) {
-    echo "✅ Start count (\$start_count) is available\n";
-} else {
-    echo "⚠️  Start count (\$start_count) is missing - setting default value\n";
-    $start_count = time();
-}
+echo "Memory after includes: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n\n";
 
 // Get all cron files
 $cronFiles = glob(__DIR__.'/cron/*.php');
-echo "\nFound " . count($cronFiles) . " cron files:\n";
+echo "Found " . count($cronFiles) . " cron files:\n";
 
 foreach ($cronFiles as $index => $cron) {
     $filename = basename($cron);
