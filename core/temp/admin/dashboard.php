@@ -123,7 +123,7 @@
 // ดึงข้อมูลจาก DB
 $total_customers = $conn->query("SELECT COUNT(*) FROM clients")->fetchColumn();
 $new_customers_today = $conn->query("SELECT COUNT(*) FROM clients WHERE DATE(register_date) = CURDATE()")->fetchColumn();
-$total_balance = $conn->query("SELECT SUM(balance) FROM clients")->fetchColumn();
+$total_balance = $conn->query("SELECT SUM(payment_amount) FROM payments WHERE payment_status='3'")->fetchColumn();
 $total_orders = $conn->query("SELECT COUNT(*) FROM orders")->fetchColumn();
 $orders_today = $conn->query("SELECT COUNT(*) FROM orders WHERE DATE(order_create) = CURDATE()")->fetchColumn();
 $revenue_today = $conn->query("SELECT SUM(payment_amount) FROM payments WHERE payment_status='3' AND DATE(payment_create_date) = CURDATE()")->fetchColumn();
