@@ -2429,8 +2429,8 @@ elseif ($method_name == "paymentv2"):
 
             if (!isset($data->data->receiver->proxy->value)) {
                 // echo "[ERROR] Missing proxy value from response.<br>";
-                exit;
                 header("Location: /paymentv2/status.php?date=$date&?error=system error");
+                exit;
 
             }
 
