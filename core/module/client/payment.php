@@ -2214,8 +2214,8 @@ elseif ($method_name == "paymentv2"):
 
     // echo "[DEBUG] Extras:<br>";
     // var_dump($extras);
-    echo "[DEBUG] paymentType angpao";
     if ($_POST["paymentType"] == "angpao") {
+        echo "[DEBUG] paymentType angpao";
         $phoneangpao = $extras["phoneangpao"];
         $url_angpao = $_POST["angpaoLink"];
         $voucher_hash = explode("?v=", $url_angpao);
@@ -2376,7 +2376,7 @@ elseif ($method_name == "paymentv2"):
         }
     } else if ($_POST["paymentType"] == "qr") {
 
-        echo "[DEBUG] paymentType angpao";
+        echo "[DEBUG] paymentType qr";
         // เตรียม auth สำหรับ cURL
         $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
         // echo "[DEBUG] Auth Header (Base64): $auth<br>";
@@ -2384,10 +2384,10 @@ elseif ($method_name == "paymentv2"):
         $post_payload = ['payload' => $_POST['idkey']];
         echo "[DEBUG] Payload to API:<br>";
         var_dump($post_payload);
-        if (empty($post_payload["payload"])) {
-            header("Location: /paymentv2/status.php?date=$date&error=system error");
-            exit;
-        }
+        // if (empty($post_payload["payload"])) {
+        //     header("Location: /paymentv2/status.php?date=$date&error=system error");
+        //     exit;
+        // }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
@@ -2412,8 +2412,8 @@ elseif ($method_name == "paymentv2"):
         }
         curl_close($curl);
 
-        // echo "<br>[DEBUG] API Response:<br>";
-        // echo $response . "<br>";
+        echo "<br>[DEBUG] API Response:<br>";
+        echo $response . "<br>";
 
         $data = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
