@@ -2558,21 +2558,31 @@ elseif ($method_name == "paymentv2"):
                         // echo "[DEBUG] Time invalid (shouldn’t reach here because forced true).<br>";
                         $update = $conn->prepare("UPDATE payments SET payment_status=:status, payment_delivery=:delivery WHERE payment_privatecode=:code");
                         $update = $update->execute(array("status" => 2, "delivery" => 1, "code" => $order_id));
-                        header("Location: /paymentv2/status.php??date=$date&error=โอนเงินไม่ตรงเวลาที่กำหนด");
+                        header("Location: /paymentv2/status.php?date=$date&error=Duplicate slip.");
                     }
                 } else {
                     unset($_SESSION['cybersafepayment']);
                     unset($_SESSION['cybersafepayment_privatecode']);
                     // echo "[ERROR] Proxy does not match account bank.<br>";
-                    header("Location: /paymentv2/status.php?date=$date&error=สลิปไม่ตรงกับบัญชีในระบบ");
+                    header("Location: /paymentv2/status.php??date=$date&error=โอนเงินไม่ตรงเวลาที่กำหนด");
                 }
             } else {
                 unset($_SESSION['cybersafepayment']);
                 unset($_SESSION['cybersafepayment_privatecode']);
                 // echo "[ERROR] Invalid or empty response from API.<br>";
-                header("Location: /paymentv2/status.php?date=$date&error=Invalid response from payment gateway.");
+                header("Location: /paymentv2/status.php?date=$date&error=สลิปไม่ตรงกับบัญชีในระบบ");
                 exit;
             }
+        } else {
+            if ($sendmail) {
+                // echo "[DEBUG] Sending Email alert<br>";
+                sendMail([
+                    "subject" => "system payment error.",
+                    "body" => "checkslip error data: $data",
+                    "mail" => $settings["admin_mail"]
+                ]);
+            }
+            header("Location: /paymentv2/status.php?date=$date&error=system error plase contect admin");
         }
     } else {
         // echo "paymentType noy found";
