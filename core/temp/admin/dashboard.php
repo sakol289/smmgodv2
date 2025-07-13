@@ -251,7 +251,7 @@ $status_labels = [
       <div class="summary-card d-flex align-items-center">
         <div class="summary-icon" style="background:linear-gradient(135deg,#d1fae5 60%,#a7f3d0 100%);color:#10b981;"><i class="fa fa-wallet"></i></div>
         <div class="summary-content">
-          <div class="summary-title">ยอดเงินรวม</div>
+          <div class="summary-title">ยอดเติมเงินรวมทั้งหมด</div>
           <div class="summary-value">฿<?=number_format($total_balance,2)?></div>
           <div class="summary-change text-info"><i class="fa fa-calendar-day"></i> <?=$today_th?></div>
         </div>
