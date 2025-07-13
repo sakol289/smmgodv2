@@ -1,33 +1,88 @@
 <?php
-echo "TESTstartv2";
 
-foreach ( glob(__DIR__.'/cron/*.php') as $cron ) {
-  require $cron;
+echo "=== CRON DEBUG START ===\n";
+echo "Time: " . date('Y-m-d H:i:s') . "\n";
+echo "Memory usage: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n\n";
+
+// Get all cron files
+$cronFiles = glob(__DIR__.'/cron/*.php');
+echo "Found " . count($cronFiles) . " cron files:\n";
+
+foreach ($cronFiles as $index => $cron) {
+    $filename = basename($cron);
+    echo "\n--- Processing file " . ($index + 1) . "/" . count($cronFiles) . " ---\n";
+    echo "File: " . $filename . "\n";
+    echo "Full path: " . $cron . "\n";
+    echo "File size: " . round(filesize($cron) / 1024, 2) . " KB\n";
+    echo "Last modified: " . date('Y-m-d H:i:s', filemtime($cron)) . "\n";
+    
+    // Check if file is readable
+    if (!is_readable($cron)) {
+        echo "❌ ERROR: File not readable\n";
+        continue;
+    }
+    
+    // Check file syntax
+    $syntaxCheck = shell_exec("php -l " . escapeshellarg($cron) . " 2>&1");
+    if (strpos($syntaxCheck, 'No syntax errors') === false) {
+        echo "❌ SYNTAX ERROR: " . $syntaxCheck . "\n";
+        continue;
+    } else {
+        echo "✅ Syntax OK\n";
+    }
+    
+    // Try to include the file
+    echo "🔄 Including file...\n";
+    $startTime = microtime(true);
+    $startMemory = memory_get_usage();
+    
+    try {
+        // Capture output
+        ob_start();
+        
+        // Include the file
+        require $cron;
+        
+        // Get output
+        $output = ob_get_clean();
+        
+        $endTime = microtime(true);
+        $endMemory = memory_get_usage();
+        $executionTime = round($endTime - $startTime, 3);
+        $memoryUsed = round(($endMemory - $startMemory) / 1024 / 1024, 2);
+        
+        echo "✅ File executed successfully\n";
+        echo "⏱️  Execution time: " . $executionTime . " seconds\n";
+        echo "💾 Memory used: " . $memoryUsed . " MB\n";
+        
+        if (!empty($output)) {
+            echo "📤 Output: " . substr($output, 0, 200) . (strlen($output) > 200 ? "..." : "") . "\n";
+        } else {
+            echo "📤 No output\n";
+        }
+        
+    } catch (ParseError $e) {
+        ob_end_clean();
+        echo "❌ PARSE ERROR: " . $e->getMessage() . "\n";
+        echo "Line: " . $e->getLine() . "\n";
+    } catch (Exception $e) {
+        ob_end_clean();
+        echo "❌ EXCEPTION: " . $e->getMessage() . "\n";
+        echo "File: " . $e->getFile() . "\n";
+        echo "Line: " . $e->getLine() . "\n";
+    } catch (Error $e) {
+        ob_end_clean();
+        echo "❌ ERROR: " . $e->getMessage() . "\n";
+        echo "File: " . $e->getFile() . "\n";
+        echo "Line: " . $e->getLine() . "\n";
+    }
+    
+    echo "--- End of file " . $filename . " ---\n";
 }
 
+echo "\n=== CRON DEBUG END ===\n";
+echo "Final memory usage: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n";
+echo "Peak memory usage: " . round(memory_get_peak_usage() / 1024 / 1024, 2) . " MB\n";
+echo "Total execution time: " . round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 3) . " seconds\n";
 
-// $curl = curl_init();
-echo "TESTendv3";
-// curl_setopt_array($curl, array(
-//   CURLOPT_URL => 'https://discord.com/api/webhooks/1393636682451914874/XdbNOC4Dq-Z11GpKdA0Ahe6JIH0HsbB8LWxy7CNNvconqeDL_qKaES4MYpqA5Oc2JOP6',
-//   CURLOPT_RETURNTRANSFER => true,
-//   CURLOPT_ENCODING => '',
-//   CURLOPT_MAXREDIRS => 10,
-//   CURLOPT_TIMEOUT => 0,
-//   CURLOPT_FOLLOWLOCATION => true,
-//   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//   CURLOPT_CUSTOMREQUEST => 'POST',
-//   CURLOPT_POSTFIELDS =>'{
-//     "content":"test123"
-// }',
-//   CURLOPT_HTTPHEADER => array(
-//     'Content-Type: application/json',
-//     'Cookie: __cfruid=2323196b2a4bb7a35b527f7635353b5fa84eafa2-1752339306; __dcfduid=507137a47a2911ef9daa92b24e560943; __sdcfduid=507137a47a2911ef9daa92b24e560943bfbec8649541aead8be987d1226466081ad845689cb1e1cb4f926de78c38f074; _cfuvid=X6mD7ZIT6d8as_rk2u9WVZZAw1h9lGSz7uVSrj7Tj0Q-1752339306093-0.0.1.1-604800000'
-//   ),
-// ));
-
-// $response = curl_exec($curl);
-
-// curl_close($curl);
-// echo $response;
-echo "TESTendv4";
+?>
