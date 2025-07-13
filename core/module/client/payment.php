@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 $method_name  = route(1);
 
@@ -2184,10 +2184,10 @@ elseif ($method_name == "weepay"):
 
 elseif ($method_name == "paymentv2"):
     $date = date("Y-m-d H:i:s");
-    echo "[DEBUG] Start paymentv2<br>";
+    // echo "[DEBUG] Start paymentv2<br>";
 
     $order_id = $_SESSION['cybersafepayment_privatecode'];
-    echo "[DEBUG] Order ID: $order_id<br>";
+    // echo "[DEBUG] Order ID: $order_id<br>";
 
     $googlesecret = $settings["recaptcha_secret"];
     $grecaptcharesponse = $_POST['g-recaptcha-response'];
@@ -2199,7 +2199,7 @@ elseif ($method_name == "paymentv2"):
 
     $captcha_control = json_decode($captcha_control_raw);
     if (!$grecaptcharesponse || !$captcha_control || !$captcha_control->success) {
-        echo "[ERROR] CAPTCHA verification failed.<br>";
+        // echo "[ERROR] CAPTCHA verification failed.<br>";
         unset($_SESSION['cybersafepayment']);
         unset($_SESSION['cybersafepayment_privatecode']);
         header("Location: /paymentv2/status.php?date=$date&error=Please verify that you are not a robot.");
@@ -2214,8 +2214,8 @@ elseif ($method_name == "paymentv2"):
 
     // echo "[DEBUG] Extras:<br>";
     // var_dump($extras);
+
     if ($_POST["paymentType"] == "angpao") {
-        echo "[DEBUG] paymentType angpao";
         $phoneangpao = $extras["phoneangpao"];
         $url_angpao = $_POST["angpaoLink"];
         $voucher_hash = explode("?v=", $url_angpao);
@@ -2376,18 +2376,17 @@ elseif ($method_name == "paymentv2"):
         }
     } else if ($_POST["paymentType"] == "qr") {
 
-        echo "[DEBUG] paymentType qr";
         // เตรียม auth สำหรับ cURL
         $auth = base64_encode("{$extras['ClientID']}:{$extras['ClientSecret']}");
         // echo "[DEBUG] Auth Header (Base64): $auth<br>";
 
         $post_payload = ['payload' => $_POST['idkey']];
-        echo "[DEBUG] Payload to API:<br>";
-        var_dump($post_payload);
-        // if (empty($post_payload["payload"])) {
-        //     header("Location: /paymentv2/status.php?date=$date&error=system error");
-        //     exit;
-        // }
+        // echo "[DEBUG] Payload to API:<br>";
+        // var_dump($post_payload);
+        if (empty($post_payload["payload"])) {
+            header("Location: /paymentv2/status.php?date=$date&error=system error");
+            exit;
+        }
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://suba.rdcw.co.th/v1/inquiry',
@@ -2412,8 +2411,8 @@ elseif ($method_name == "paymentv2"):
         }
         curl_close($curl);
 
-        echo "<br>[DEBUG] API Response:<br>";
-        echo $response . "<br>";
+        // echo "<br>[DEBUG] API Response:<br>";
+        // echo $response . "<br>";
 
         $data = json_decode($response);
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -2430,8 +2429,8 @@ elseif ($method_name == "paymentv2"):
 
             if (!isset($data->data->receiver->proxy->value)) {
                 // echo "[ERROR] Missing proxy value from response.<br>";
-                header("Location: /paymentv2/status.php?date=$date&?error=system error");
                 exit;
+                header("Location: /paymentv2/status.php?date=$date&?error=system error");
 
             }
 
@@ -2442,7 +2441,7 @@ elseif ($method_name == "paymentv2"):
 
             // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
             if (countDigit($proxyValue, $accbank) <= 4) {
-                echo "[DEBUG] Proxy matches accbank<br>";
+                // echo "[DEBUG] Proxy matches accbank<br>";
 
                 if (isWithinTenMinutes($data->data->transTime)) {
                     // if (true) {
