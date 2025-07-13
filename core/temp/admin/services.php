@@ -222,7 +222,7 @@
                                 <td class="service-block__type" nowrap=""><?php echo servicePackageType($services[$i]["service_package"]);
                                                                           if ($services[$i]["service_dripfeed"] == 2): echo ' <i class="fa fa-tint"></i>';
                                                                           endif; ?></td>
-                                <td class="service-block__provider"><?php if ($services[$i]["service_api"] != 0): echo '111';
+                                <td class="service-block__provider"><?php if ($services[$i]["service_api"] != 0): echo $services[$i]["api_name"];
                                                                     else: echo "Manuel";
                                                                     endif;  ?> <?php if ($services[$i]["service_api"] != 0): echo '<div class="service-block__provider-value">' . $services[$i]["api_service"] . '</div>';
                                                                                 endif; ?></td>
