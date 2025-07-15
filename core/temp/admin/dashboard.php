@@ -168,6 +168,14 @@ function thai_date($date) {
     $y = date('Y', strtotime($date)) + 543;
     return "$d $m $y";
 }
+function thai_date_time($date) {
+  $thai_months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  $d = date('j', strtotime($date));
+  $m = $thai_months[(int)date('m', strtotime($date))-1];
+  $y = date('Y', strtotime($date)) + 543;
+  $time = date('H:i', strtotime($date));
+  return "$d $m $y $time";
+}
 $today_th = thai_date(date('Y-m-d'));
 
 // สถานะทั้งหมดและ label ภาษาไทย
@@ -222,6 +230,19 @@ $latest_orders = $conn->query("
   JOIN clients c ON o.client_id = c.client_id
   ORDER BY o.order_create DESC
   LIMIT 10
+")->fetchAll(PDO::FETCH_ASSOC);
+
+// Orders with working time > 1 day
+$long_orders = $conn->query("
+  SELECT o.*, c.username, s.service_name,
+    TIMESTAMPDIFF(HOUR, o.order_create, NOW()) as hours_diff
+  FROM orders o
+  JOIN clients c ON o.client_id = c.client_id
+  JOIN services s ON o.service_id = s.service_id
+  WHERE TIMESTAMPDIFF(HOUR, o.order_create, NOW()) > 24
+    AND o.order_status NOT IN ('partial', 'canceled', 'completed')
+  ORDER BY o.order_create ASC
+  LIMIT 20
 ")->fetchAll(PDO::FETCH_ASSOC);
 
 $status_labels = [
@@ -394,11 +415,80 @@ $status_labels = [
                 <td><?=htmlspecialchars($row['username'])?></td>
                 <td><?=thai_date_short($row['order_create'])?></td>
                 <td>฿<?=number_format($row['order_charge'],2)?></td>
-                <td><span class="badge bg-primary"><?= $status_labels[$row['order_status']] ?? $row['order_status'] ?></span></td>
+                <td><span class="badge bg-primary">
+                  <?= htmlspecialchars($row['order_status']) ?>
+                  <?php if (isset($status_labels[$row['order_status']])): ?>
+                    (<?= $status_labels[$row['order_status']] ?>)
+                  <?php endif; ?>
+                </span></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders with working time > 1 day -->
+  <div class="card mb-4">
+    <div class="card-header"><strong>ออเดอร์ที่ใช้เวลาทำงานเกิน 1 วัน (สถานะไม่ใช่บางส่วน/ยกเลิก/สำเร็จ)</strong></div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>เลขออเดอร์</th>
+              <th>ลูกค้า</th>
+              <th>บริการ</th>
+              <th>จำนวน</th>
+              <th>ลิงก์</th>
+              <th>สถานะ</th>
+              <th>เวลาสั่ง</th>
+              <th>เวลาทำงาน (ชม.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($long_orders as $row): ?>
+              <tr>
+                <td><?=htmlspecialchars($row['order_id'])?></td>
+                <td><?=htmlspecialchars($row['username'])?></td>
+                <td>
+                  <?php
+                    // ดึงชื่อบริการ
+                    $service = $conn->query("SELECT service_name FROM services WHERE service_id = '{$row['service_id']}'")->fetchColumn();
+                    echo htmlspecialchars($service);
+                  ?>
+                </td>
+                <td><?=number_format($row['order_quantity'])?></td>
+                <td>
+                  <?php if (!empty($row['order_url'])): ?>
+                    <p><?=htmlspecialchars($row['order_url'])?></p>
+                  <?php else: ?>
+                    -
+                  <?php endif; ?>
+                </td>
+                <td><span class="badge bg-primary">
+                  <?= htmlspecialchars($row['order_status']) ?>
+                  <?php if (isset($status_labels[$row['order_status']])): ?>
+                    (<?= $status_labels[$row['order_status']] ?>)
+                  <?php endif; ?>
+                </span></td>
+                <td><?=thai_date_time($row['order_create'])?></td>
+                <?php
+                  $start = new DateTime($row['order_create']);
+                  $end = new DateTime(); // เวลาปัจจุบัน
+                  $diff = $start->diff($end);
+                  $hours = $diff->days * 24 + $diff->h;
+                  $minutes = $diff->i;
+                ?>
+                <td><?=$hours?> ชม. <?=$minutes?> นาที</td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+        <?php if (empty($long_orders)): ?>
+          <div class="alert alert-info text-center">ไม่มีออเดอร์ที่เข้าเงื่อนไข</div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
@@ -422,7 +512,9 @@ $status_labels = [
           labels: <?=json_encode($days)?>,
           datasets: [
             <?php $colors = ['#4361ee','#f72585','#4cc9f0','#fbbf24','#6366f1','#e63946']; $i=0; $ds = []; foreach($order_statuses as $status => $th_label){
-              $ds[] = "{\n              label: '$th_label',\n              data: ".json_encode($order_data[$status]).",\n              borderColor: '{$colors[$i%count($colors)]}',\n              backgroundColor: '{$colors[$i%count($colors)]}22',\n              tension: 0.3,\n              fill: true\n            }";
+              $label = $status;
+              if ($th_label) $label .= ' (' . $th_label . ')';
+              $ds[] = "{\n              label: '$label',\n              data: ".json_encode($order_data[$status]).",\n              borderColor: '{$colors[$i%count($colors)]}',\n              backgroundColor: '{$colors[$i%count($colors)]}22',\n              tension: 0.3,\n              fill: true\n            }";
               $i++;
             } echo implode(",\n", $ds); ?>
           ]
@@ -462,7 +554,7 @@ $status_labels = [
       new Chart(statusPieCtx, {
         type: 'pie',
         data: {
-          labels: <?=json_encode(array_values($order_statuses))?>,
+          labels: <?=json_encode(array_map(function($k, $v) { return $k . ' (' . $v . ')'; }, array_keys($order_statuses), $order_statuses))?>,
           datasets: [{
             data: <?=json_encode($order_status_pie)?>,
             backgroundColor: ['#4361ee','#f72585','#4cc9f0','#fbbf24','#6366f1','#e63946'],
