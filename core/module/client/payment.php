@@ -2570,7 +2570,8 @@ elseif ($method_name == "paymentv2"):
                 unset($_SESSION['cybersafepayment']);
                 unset($_SESSION['cybersafepayment_privatecode']);
                 // echo "[ERROR] Invalid or empty response from API.<br>";
-                header("Location: /paymentv2/status.php?date=$date&error=สลิปไม่ตรงกับบัญชีในระบบ");
+                $debug01 = countDigit($proxyValue, $accbank);
+                header("Location: /paymentv2/status.php?date=$date&error=สลิปไม่ตรงกับบัญชีในระบบ&countDigit=$debug01&accbank=$accbank&proxyValue=$proxyValue");
                 exit;
             }
         } else {
