@@ -2440,7 +2440,7 @@ elseif ($method_name == "paymentv2"):
             // echo "[DEBUG] Proxy: $proxyValue | AccBank: $accbank | Amount: $amountinapi<br>";
 
             // เปรียบเทียบเลขบัญชี (ท้าย 4 ตัว)
-            if (countDigit($proxyValue, $accbank) <= 4) {
+            if (countDigit($proxyValue, $accbank) >= 4) {
                 // echo "[DEBUG] Proxy matches accbank<br>";
 
                 if (isWithinTenMinutes($data->data->transTime)) {
