@@ -285,7 +285,8 @@ foreach ($services as $service) {
         $slow_services[] = [
             'service_id' => $service['service_id'],
             'service_name' => $service['service_name'],
-            'avg_text' => "{$hours} ชม. {$minutes} นาที"
+            'avg_text' => "{$hours} ชม. {$minutes} นาที",
+            'avg_seconds' => round($avg)
         ];
     }
 }
@@ -449,7 +450,7 @@ foreach ($services as $service) {
             <?php foreach($latest_orders as $row): ?>
               <tr>
                 <td><?=htmlspecialchars($row['username'])?></td>
-                <td><?=thai_date_short($row['order_create'])?></td>
+                <td><?=thai_date_time($row['order_create'])?></td>
                 <td>฿<?=number_format($row['order_charge'],2)?></td>
                 <td><span class="badge bg-primary">
                   <?= htmlspecialchars($row['order_status']) ?>
@@ -540,6 +541,7 @@ foreach ($services as $service) {
               <th>ไอดีบริการ</th>
               <th>ชื่อบริการ</th>
               <th>เวลาสำเร็จเฉลี่ย</th>
+              <th>วินาที</th>
             </tr>
           </thead>
           <tbody>
@@ -548,6 +550,7 @@ foreach ($services as $service) {
                 <td><?=htmlspecialchars($row['service_id'])?></td>
                 <td><?=htmlspecialchars($row['service_name'])?></td>
                 <td><?=$row['avg_text']?></td>
+                <td><?=number_format($row['avg_seconds'])?></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
