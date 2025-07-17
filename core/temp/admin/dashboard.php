@@ -245,22 +245,8 @@ $long_orders = $conn->query("
   LIMIT 20
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-// Query for completed orders that took more than 6 hours
-$long_completed_orders = $conn->query("
-  SELECT o.*, c.username, s.service_name,
-    TIMESTAMPDIFF(HOUR, o.order_create, o.last_check) as hours_diff,
-    TIMESTAMPDIFF(MINUTE, o.order_create, o.last_check) as minutes_diff
-  FROM orders o
-  JOIN clients c ON o.client_id = c.client_id
-  JOIN services s ON o.service_id = s.service_id
-  WHERE o.order_status = 'completed'
-    AND o.last_check IS NOT NULL
-    AND TIMESTAMPDIFF(HOUR, o.order_create, o.last_check) > 6
-  ORDER BY o.last_check DESC
-  LIMIT 20
-")->fetchAll(PDO::FETCH_ASSOC);
 
-// var_dump($long_completed_orders);
+
 
 $status_labels = [
   'pending' => 'รอดำเนินการ',
@@ -543,59 +529,6 @@ foreach ($services as $service) {
     </div>
   </div>
 
-  <div class="card mb-4">
-    <div class="card-header"><strong>บริการที่ใช้เวลาสำเร็จนานเกิน 6 ชั่วโมง</strong></div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>ชื่อบริการ</th>
-              <th>เลขออเดอร์</th>
-              <th>ลูกค้า</th>
-              <th>จำนวน</th>
-              <th>ลิงก์</th>
-              <th>สถานะ</th>
-              <th>เวลาสั่ง</th>
-              <th>ใช้เวลา</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach($long_completed_orders as $row): ?>
-              <tr>
-                <td><?=htmlspecialchars($row['service_name'])?></td>
-                <td><?=htmlspecialchars($row['order_id'])?></td>
-                <td><?=htmlspecialchars($row['username'])?></td>
-                <td><?=number_format($row['order_quantity'])?></td>
-                <td><?php if (!empty($row['order_url'])): ?>
-                  <a href="<?=htmlspecialchars($row['order_url'])?>" target="_blank">ลิงก์</a>
-                <?php else: ?>-
-                <?php endif; ?></td>
-                <td><span class="badge bg-primary">
-                  <?= htmlspecialchars($row['order_status']) ?>
-                  <?php if (isset($status_labels[$row['order_status']])): ?>
-                    (<?= $status_labels[$row['order_status']] ?>)
-                  <?php endif; ?>
-                </span></td>
-                <td><?=thai_date_time($row['order_create'])?></td>
-                <?php
-                  $start = new DateTime($row['order_create']);
-                  $end = new DateTime($row['last_check']);
-                  $diff = $start->diff($end);
-                  $hours = $diff->days * 24 + $diff->h;
-                  $minutes = $diff->i;
-                ?>
-                <td><?=$hours?> ชม. <?=$minutes?> นาที</td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-        <?php if (empty($long_completed_orders)): ?>
-          <div class="alert alert-info text-center">ไม่มีบริการที่ใช้เวลาสำเร็จนานเกิน 6 ชั่วโมง</div>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
 
   <div class="card mb-4">
     <div class="card-header"><strong>บริการที่ใช้เวลาสำเร็จนานเกิน 6 ชั่วโมง (เฉลี่ย 10 ออเดอร์ล่าสุด)</strong></div>
